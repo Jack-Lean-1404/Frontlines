@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Battle Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Battle Simulator</h1>
+
+    <form method="POST">
+
+        <!-- Attacker -->
+        <div class="card">
+            <h2>Attacker</h2>
+
+            <label>Unit Type</label>
+            <input type="text" name="attacker_unit" placeholder="e.g. Infantry">
+
+            <label>Size (1–5)</label>
+            <input type="number" name="attacker_size" min="1" max="5">
+
+            <label>Strength</label>
+            <input type="number" name="attacker_strength">
+
+            <label>Modifiers</label>
+            <select name="attacker_modifier">
+                <option value="none">None</option>
+                <option value="hq">No HQ</option>
+                <option value="supply">No Supply</option>
+                <option value="river">River Crossing</option>
+                <option value="urban">Urban Defence</option>
+            </select>
+        </div>
+
+        <!-- Defender -->
+        <div class="card">
+            <h2>Defender</h2>
+
+            <label>Unit Type</label>
+            <input type="text" name="defender_unit" placeholder="e.g. Tank">
+
+            <label>Size (1–5)</label>
+            <input type="number" name="defender_size" min="1" max="5">
+
+            <label>Defence</label>
+            <input type="number" name="defender_defence">
+
+            <label>Modifiers</label>
+            <select name="defender_modifier">
+                <option value="none">None</option>
+                <option value="hq">No HQ</option>
+                <option value="supply">No Supply</option>
+                <option value="urban">Urban Defence</option>
+            </select>
+        </div>
+
+        <!-- Action -->
+        <div class="action">
+            <button type="submit">Simulate Combat</button>
+        </div>
+
+    </form>
+
+    <!-- Result -->
+    <div class="result">
+        {% if result %}
+            <h2>Result</h2>
+            <p>{{ result }}</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
