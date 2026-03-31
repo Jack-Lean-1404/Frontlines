@@ -10,6 +10,14 @@ body {
     max-width: 900px;
     margin: 40px auto;
     padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
 }
 
 h1 {
@@ -116,4 +124,17 @@ select {
     background: #0f172a;
     border-left: 4px solid #38bdf8;
     font-size: 14px;
+}
+
+button, select, input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.unit-preview-container {
+  display: flex;
+  justify-content: center;   /* horizontal centering */
+  align-items: center;       /* vertical centering (optional) */
 }
