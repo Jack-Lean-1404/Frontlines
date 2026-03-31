@@ -273,6 +273,9 @@ document.getElementById("battleForm").addEventListener("submit", async (e) => {
         <p>Base: ${result.defender.base}</p>
         <p>Modified: ${result.defender.modified}</p>
         <p>Roll: ${result.defender.roll}</p>
+
+        <h3>Special</h3>
+        <p>${result.special.length ? result.special.join("<br>") : "None"}</p>
     `;
 });
 

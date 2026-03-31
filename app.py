@@ -14,6 +14,14 @@ NAT_GRD_CITY = 2
 MECH_ARM = 4
 AWACS = 1.5
 
+# ===== SPECIAL UNIT IDS =====
+HELICOPTER_ID = {"8"}      
+ARTILLERY_ID = {"9"}
+MECHANISED_ARTILLERY_ID = {"10"}
+COASTAL_DEFENCE_ID = {"11"}
+ANTI_AIR_ID = {"12"}
+SUBMARINE_ID = {"29"}
+
 # ===== LOAD ALL UNITS (FOR DROPDOWN) =====
 def load_units():
     units = []
@@ -194,26 +202,67 @@ def simulate():
     else:
         outcome = "Attacker loses size"
 
-    # ===== SPECIAL RULES (FIXED) =====
+    # ===== SPECIAL RULES =====
     special = []
-    unit_name = attacker["name"].lower()
 
-    if "helicopter" in unit_name:
+    attacker_id = attacker["id"]
+    defender_id = defender["id"]
+
+    print(attacker["id"], defender["id"])
+
+    # ===== HELICOPTER =====
+    if attacker_id in HELICOPTER_ID:
         roll = random.randint(0, 100)
-        special.append(f"Helicopter survival roll: {roll}%")
-        if roll < 25:
-            special.append("Helicopter loses size")
+        if roll > 50:
+            special.append(f"Attack Helicopter remains operational. Roll: {roll}%")
+        else:
+            special.append(f"Attack Helicopter is destroyed. Roll: {roll}%")
 
-    if "artillery" in unit_name:
+        if roll < 25:
+            if attacker_id in HELICOPTER_ID:
+                outcome = "Attacker loses size"
+            else:
+                outcome = "Defender loses size"
+
+    # ===== ARTILLERY =====
+    if attacker_id in ARTILLERY_ID or defender_id in ARTILLERY_ID:
         roll = random.randint(0, 100)
         if roll > 50:
             special.append("Target suppressed")
         else:
             special.append("Target loses size")
 
-    if "submarine" in unit_name:
+    # ===== MECHANISED ARTILLERY =====
+    if attacker_id in MECHANISED_ARTILLERY_ID or defender_id in MECHANISED_ARTILLERY_ID:
+        roll = random.randint(0, 100)
+        special.append(f"Mechanised artillery strike roll: {roll}")
+
+        if roll > 60:
+            special.append("Heavy strike — target loses extra size")
+        else:
+            special.append("Standard artillery effect")
+
+    # ===== COASTAL DEFENCE =====
+    if attacker_id in COASTAL_DEFENCE_ID or defender_id in COASTAL_DEFENCE_ID:
+        special.append("Coastal defence bonus applied")
+
+    # ===== ANTI-AIR =====
+    if attacker_id in ANTI_AIR_ID or defender_id in ANTI_AIR_ID:
+        if attacker_id in HELICOPTER_ID or defender_id in HELICOPTER_ID:
+            roll = random.randint(0, 100)
+            special.append(f"Anti-air roll vs helicopter: {roll}%")
+
+            if roll > 50:
+                if attacker_id in HELICOPTER_ID:
+                    outcome = "Attacker loses size"
+                else:
+                    outcome = "Defender loses size"
+
+    # ===== SUBMARINE =====
+    if attacker_id in SUBMARINE_ID or defender_id in SUBMARINE_ID:
         roll = random.randint(1, 4)
         special.append(f"Sub roll: {roll}")
+
         if roll == 1:
             outcome = "Attacker loses size"
         else:
