@@ -1,0 +1,161 @@
+unit_id,unit,size,label
+1,Motorised Infantry,1,X - Company
+1,Motorised Infantry,2,XX - Battalion
+1,Motorised Infantry,3,XXX - Brigade
+1,Motorised Infantry,4,XXXX - Division
+1,Motorised Infantry,5,XXXXX - Corps
+2,Mechanised Infantry,1,X - Company
+2,Mechanised Infantry,2,XX - Battalion
+2,Mechanised Infantry,3,XXX - Brigade
+2,Mechanised Infantry,4,XXXX - Division
+2,Mechanised Infantry,5,XXXXX - Corps
+3,Armoured,1,X - Company
+3,Armoured,2,XX - Battalion
+3,Armoured,3,XXX - Brigade
+3,Armoured,4,XXXX - Division
+3,Armoured,5,XXXXX - Corps
+4,Engineer,1,X - Company
+4,Engineer,2,XX - Battalion
+4,Engineer,3,XXX - Brigade
+4,Engineer,4,XXXX - Division
+4,Engineer,5,XXXXX - Corps
+5,Logistics,1,X - Company
+5,Logistics,2,XX - Battalion
+5,Logistics,3,XXX - Brigade
+5,Logistics,4,XXXX - Division
+5,Logistics,5,XXXXX - Corps
+6,HQ,1,X - Company
+6,HQ,2,XX - Battalion
+6,HQ,3,XXX - Brigade
+6,HQ,4,XXXX - Division
+6,HQ,5,XXXXX - Corps
+7,National Guard,1,X - Company
+7,National Guard,2,XX - Battalion
+7,National Guard,3,XXX - Brigade
+7,National Guard,4,XXXX - Division
+7,National Guard,5,XXXXX - Corps
+8,Attack Helicopter,1,X - Detachment
+8,Attack Helicopter,2,XX - Element
+8,Attack Helicopter,3,XXX - Air Calvary
+8,Attack Helicopter,4,XXXX - Rotor WIng
+9,Artillery,1,X - Platoon
+9,Artillery,2,XX - Section
+9,Artillery,3,XXX - Battery
+9,Artillery,4,XXXX - Regiment
+10,Mechanised Artillery,1,X - Platoon
+10,Mechanised Artillery,2,XX - Section
+10,Mechanised Artillery,3,XXX - Battery
+10,Mechanised Artillery,4,XXXX - Regiment
+11,Coastal Defence,1,X - Platoon
+11,Coastal Defence,2,XX - Section
+11,Coastal Defence,3,XXX - Battery
+11,Coastal Defence,4,XXXX - Regiment
+12,Anti-Air,1,X - Platoon
+12,Anti-Air,2,XX - Section
+12,Anti-Air,3,XXX - Battery
+12,Anti-Air,4,XXXX - Regiment
+13,Air Superiority Fighter,1,X - Pair
+13,Air Superiority Fighter,2,XX - Flight
+13,Air Superiority Fighter,3,XXX - Squadron
+13,Air Superiority Fighter,4,XXXX - Wing
+13,Air Superiority Fighter,5,XXXXX - Group
+14,Multi-role Fighter,1,X - Pair
+14,Multi-role Fighter,2,XX - Flight
+14,Multi-role Fighter,3,XXX - Squadron
+14,Multi-role Fighter,4,XXXX - Wing
+14,Multi-role Fighter,5,XXXXX - Group
+15,Attack Fighter,1,X - Pair
+15,Attack Fighter,2,XX - Flight
+15,Attack Fighter,3,XXX - Squadron
+15,Attack Fighter,4,XXXX - Wing
+15,Attack Fighter,5,XXXXX - Group
+16,Bomber,1,X - Pair
+16,Bomber,2,XX - Flight
+16,Bomber,3,XXX - Squadron
+16,Bomber,4,XXXX - Wing
+16,Bomber,5,XXXXX - Group
+17,Stealth Bomber,1,X - Pair
+17,Stealth Bomber,2,XX - Flight
+17,Stealth Bomber,3,XXX - Squadron
+17,Stealth Bomber,4,XXXX - Wing
+17,Stealth Bomber,5,XXXXX - Group
+18,Stealth Air Superiority Fighter,1,X - Pair
+18,Stealth Air Superiority Fighter,2,XX - Flight
+18,Stealth Air Superiority Fighter,3,XXX - Squadron
+18,Stealth Air Superiority Fighter,4,XXXX - Wing
+18,Stealth Air Superiority Fighter,5,XXXXX - Group
+19,Stealth Multi-Role Fighter,1,X - Pair
+19,Stealth Multi-Role Fighter,2,XX - Flight
+19,Stealth Multi-Role Fighter,3,XXX - Squadron
+19,Stealth Multi-Role Fighter,4,XXXX - Wing
+19,Stealth Multi-Role Fighter,5,XXXXX - Group
+20,AWACS,1,X - Pair
+20,AWACS,2,XX - Flight
+20,AWACS,3,XXX - Squadron
+20,AWACS,4,XXXX - Wing
+20,AWACS,5,XXXXX - Group
+21,Tanker,1,X - Pair
+21,Tanker,2,XX - Flight
+21,Tanker,3,XXX - Squadron
+21,Tanker,4,XXXX - Wing
+21,Tanker,5,XXXXX - Group
+22,Strategic Airlift Aircraft,1,X - Pair
+22,Strategic Airlift Aircraft,2,XX - Flight
+22,Strategic Airlift Aircraft,3,XXX - Squadron
+22,Strategic Airlift Aircraft,4,XXXX - Wing
+22,Strategic Airlift Aircraft,5,XXXXX - Group
+23,Marine Patrol Aircraft,1,X - Pair
+23,Marine Patrol Aircraft,2,XX - Flight
+23,Marine Patrol Aircraft,3,XXX - Squadron
+23,Marine Patrol Aircraft,4,XXXX - Wing
+23,Marine Patrol Aircraft,5,XXXXX - Group
+24,Naval Multi-Role Fighter,1,X - Pair
+24,Naval Multi-Role Fighter,2,XX - Flight
+24,Naval Multi-Role Fighter,3,XXX - Squadron
+24,Naval Multi-Role Fighter,4,XXXX - Wing
+24,Naval Multi-Role Fighter,5,XXXXX - Group
+25,Corvette,1,X - Ship
+25,Corvette,2,XX - Formation
+25,Corvette,3,XXX - Flotilla
+25,Corvette,4,XXXX - Fleet
+25,Corvette,5,XXXXX - Task Force
+26,Frigate,1,X - Ship
+26,Frigate,2,XX - Formation
+26,Frigate,3,XXX - Flotilla
+26,Frigate,4,XXXX - Fleet
+26,Frigate,5,XXXXX - Task Force
+27,Destroyer,1,X - Ship
+27,Destroyer,2,XX - Formation
+27,Destroyer,3,XXX - Flotilla
+27,Destroyer,4,XXXX - Fleet
+27,Destroyer,5,XXXXX - Task Force
+28,Cruiser,1,X - Ship
+28,Cruiser,2,XX - Formation
+28,Cruiser,3,XXX - Flotilla
+28,Cruiser,4,XXXX - Fleet
+28,Cruiser,5,XXXXX - Task Force
+29,Submarine,1,X - Ship
+29,Submarine,2,XX - Formation
+29,Submarine,3,XXX - Flotilla
+29,Submarine,4,XXXX - Fleet
+29,Submarine,5,XXXXX - Task Force
+30,Supply Ship,1,X - Ship
+30,Supply Ship,2,XX - Formation
+30,Supply Ship,3,XXX - Flotilla
+30,Supply Ship,4,XXXX - Fleet
+30,Supply Ship,5,XXXXX - Task Force
+31,Amphibious Assualt Ship,1,X - Ship
+31,Amphibious Assualt Ship,2,XX - Formation
+31,Amphibious Assualt Ship,3,XXX - Flotilla
+31,Amphibious Assualt Ship,4,XXXX - Fleet
+31,Amphibious Assualt Ship,5,XXXXX - Task Force
+32,Aircraft Carrier,1,X - Ship
+32,Aircraft Carrier,2,XX - Formation
+32,Aircraft Carrier,3,XXX - Flotilla
+32,Aircraft Carrier,4,XXXX - Fleet
+32,Aircraft Carrier,5,XXXXX - Task Force
+33,Transport,1,X - Ship
+33,Transport,2,XX - Formation
+33,Transport,3,XXX - Flotilla
+33,Transport,4,XXXX - Fleet
+33,Transport,5,XXXXX - Task Force

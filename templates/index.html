@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Battle Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Battle Simulator</h1>
+
+    <form id="battleForm">
+
+        <!-- Attacker -->
+        <div class="card">
+            <h2>Attacker</h2>
+
+            <label>Unit Type</label>
+            <select id="attacker_unit">
+                {% for unit in units %}
+                    <option value="{{ unit.id }}">{{ unit.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Size</label>
+            <select name="attacker_size" id="attacker_size"></select>
+
+            <p id="attacker_info"></p>
+            <p id="attacker_calc"></p>
+
+            <label>Modifiers</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="attacker_mod" value="no_hq"> No HQ</label>
+                <label><input type="checkbox" name="attacker_mod" value="no_supply"> No Supply</label>
+                <label><input type="checkbox" name="attacker_mod" value="river"> River Crossing</label>
+                <label><input type="checkbox" name="attacker_mod" value="urban"> Urban Bonus</label>
+                <label><input type="checkbox" name="attacker_mod" value="mech"> Mechanised/Armour Bonus</label>
+                <label><input type="checkbox" name="attacker_mod" value="awacs"> AWACS Support</label>
+            </div>
+        </div>
+
+        <!-- Defender -->
+        <div class="card">
+            <h2>Defender</h2>
+
+            <label>Unit Type</label>
+            <select id="defender_unit">
+                {% for unit in units %}
+                    <option value="{{ unit.id }}">{{ unit.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Size</label>
+            <!-- ✅ FIXED -->
+            <select name="defender_size" id="defender_size"></select>
+
+            <p id="defender_info"></p>
+            <p id="defender_calc"></p>
+
+            <label>Modifiers</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="defender_mod" value="no_hq"> No HQ</label>
+                <label><input type="checkbox" name="defender_mod" value="no_supply"> No Supply</label>
+                <label><input type="checkbox" name="defender_mod" value="urban"> Urban Bonus</label>
+                <label><input type="checkbox" name="defender_mod" value="awacs"> AWACS Support</label>
+            </div>
+        </div>
+
+        <div class="action">
+            <button type="submit">Simulate Combat</button>
+        </div>
+
+    </form>
+
+    <div class="result"></div>
+
+</div>
+
+<script>
+
+// ===== TEMP SIZE LABELS (prevents crash) =====
+const SIZE_LABELS = JSON.parse('{{ size_labels | tojson | safe }}');
+
+// ===== FETCH UNIT INFO =====
+async function fetchUnitStats(unitName) {
+    const res = await fetch("/get_unit_stats", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({unit_id: unitName})
+    });
+
+    return await res.json();
+}
+
+function updateSizeDropdown(selectId, unitSelectId) {
+    const select = document.getElementById(selectId);
+    const unitId = document.getElementById(unitSelectId).value;
+    const currentValue = select.value;
+
+    select.innerHTML = "";
+
+    const unitSizes = SIZE_LABELS[unitId];
+
+    for (let i = 1; i <= 5; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+
+        if (unitSizes && unitSizes[i.toString()]) {
+            option.textContent = unitSizes[i.toString()];
+        } else {
+            option.textContent = `${"X".repeat(i)} — Unit`;
+        }
+
+        select.appendChild(option);
+    }
+
+    select.value = currentValue || "1";
+}
+
+function calculatePreview(base, size, mods, type) {
+    let result = base;
+    let steps = [`Base: ${base}`];
+
+    let multiplier = (type.toLowerCase() === "special")
+        ? Math.pow(2, size - 1)
+        : size;
+
+    steps.push(`Size: ×${multiplier}`);
+    result *= multiplier;
+
+    for (const mod of mods) {
+
+        if (mod === "no_supply") {
+            steps.push("No Supply: = 0");
+            return steps.join("<br>"); // ✅ hard stop (cleaner)
+        }
+
+        if (mod === "no_hq") {
+            result *= 0.5;
+            steps.push("No HQ: ×0.5");
+        }
+
+        if (mod === "river") {
+            result *= 0.5;
+            steps.push("River: ×0.5");
+        }
+
+        if (mod === "urban") {
+            let bonus = 2 * size;
+            result += bonus;
+            steps.push(`Urban: +${bonus}`);
+        }
+
+        if (mod === "mech") {
+            let bonus = 4 * size;
+            result += bonus;
+            steps.push(`Mech: +${bonus}`);
+        }
+
+        if (mod === "awacs") {
+            result *= 1.5;
+            steps.push("AWACS: ×1.5");
+        }
+    }
+
+    steps.push(`<b>Final: ${Math.round(result)}</b>`);
+    return steps.join("<br>");
+}
+
+// ===== UPDATE INFO =====
+async function updateUnitInfo(selectId, infoId, calcId, sizeId, modName) {
+    const unitName = document.getElementById(selectId).value;
+    const size = parseInt(document.getElementById(sizeId).value);
+
+    const data = await fetchUnitStats(unitName);
+
+    if (!data.error) {
+        document.getElementById(infoId).innerHTML = `
+            <b>Strength:</b> ${data.strength}<br>
+            <b>Defence:</b> ${data.defence}<br>
+            <b>Type:</b> ${data.type}
+        `;
+
+        const mods = [...document.querySelectorAll(`[name="${modName}"]:checked`)].map(e => e.value);
+
+        document.getElementById(calcId).innerHTML =
+            calculatePreview(data.strength, size, mods, data.type);
+    }
+}
+
+// ===== LISTENERS =====
+function attachListeners() {
+
+    const attackerMods = document.querySelectorAll('[name="attacker_mod"]');
+    const defenderMods = document.querySelectorAll('[name="defender_mod"]');
+
+    document.getElementById("attacker_unit").addEventListener("change", () => {
+        updateSizeDropdown("attacker_size", "attacker_unit");
+        updateUnitInfo("attacker_unit", "attacker_info", "attacker_calc", "attacker_size", "attacker_mod");
+    });
+
+    document.getElementById("defender_unit").addEventListener("change", () => {
+        updateSizeDropdown("defender_size", "defender_unit");
+        updateUnitInfo("defender_unit", "defender_info", "defender_calc", "defender_size", "defender_mod");
+    });
+
+    // ✅ FIX: size listeners
+    document.getElementById("attacker_size").addEventListener("change", () =>
+        updateUnitInfo("attacker_unit", "attacker_info", "attacker_calc", "attacker_size", "attacker_mod")
+    );
+
+    document.getElementById("defender_size").addEventListener("change", () =>
+        updateUnitInfo("defender_unit", "defender_info", "defender_calc", "defender_size", "defender_mod")
+    );
+
+    attackerMods.forEach(mod =>
+        mod.addEventListener("change", () =>
+            updateUnitInfo("attacker_unit", "attacker_info", "attacker_calc", "attacker_size", "attacker_mod")
+        )
+    );
+
+    defenderMods.forEach(mod =>
+        mod.addEventListener("change", () =>
+            updateUnitInfo("defender_unit", "defender_info", "defender_calc", "defender_size", "defender_mod")
+        )
+    );
+}
+
+// ===== INIT =====
+window.onload = () => {
+    attachListeners();
+
+    updateSizeDropdown("attacker_size", "attacker_unit");
+    updateSizeDropdown("defender_size", "defender_unit");
+
+    updateUnitInfo("attacker_unit", "attacker_info", "attacker_calc", "attacker_size", "attacker_mod");
+    updateUnitInfo("defender_unit", "defender_info", "defender_calc", "defender_size", "defender_mod");
+};
+
+// ===== SUBMIT =====
+document.getElementById("battleForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = {
+        attacker_unit_id: document.getElementById("attacker_unit").value,
+        attacker_size: document.getElementById("attacker_size").value,
+        attacker_mods: [...document.querySelectorAll('[name="attacker_mod"]:checked')].map(e => e.value),
+
+        defender_unit_id: document.getElementById("defender_unit").value,
+        defender_size: document.getElementById("defender_size").value,
+        defender_mods: [...document.querySelectorAll('[name="defender_mod"]:checked')].map(e => e.value)
+    };
+
+    const res = await fetch("/simulate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    document.querySelector(".result").innerHTML = `
+        <h2>${result.battle_type} Battle</h2>
+        <p><b>Outcome:</b> ${result.outcome}</p>
+
+        <h3>Attacker</h3>
+        <p>Base: ${result.attacker.base}</p>
+        <p>Modified: ${result.attacker.modified}</p>
+        <p>Roll: ${result.attacker.roll}</p>
+
+        <h3>Defender</h3>
+        <p>Base: ${result.defender.base}</p>
+        <p>Modified: ${result.defender.modified}</p>
+        <p>Roll: ${result.defender.roll}</p>
+    `;
+});
+
+</script>
+
+</body>
+</html>
