@@ -21,6 +21,10 @@ MECHANISED_ARTILLERY_ID = {"10"}
 COASTAL_DEFENCE_ID = {"11"}
 ANTI_AIR_ID = {"12"}
 SUBMARINE_ID = {"29"}
+ANTI_AIR_ID = {"12"}
+STEALTH_IDS = {"17", "18", "19"}
+SUBMARINE_IDS = {"29"}          # your sub ID
+ASW_IDS = {"27", "29", "23"}    # destroyer, sub, MPA
 
 # ===== LOAD ALL UNITS (FOR DROPDOWN) =====
 def load_units():
@@ -191,6 +195,7 @@ def simulate():
         False
     )
 
+    
     atk_roll = random.randint(0, max(0, atk_mod))
     def_roll = random.randint(0, max(0, def_mod))
 
@@ -213,7 +218,7 @@ def simulate():
     # ===== HELICOPTER =====
     if attacker_id in HELICOPTER_ID:
         roll = random.randint(0, 100)
-        if roll > 50:
+        if roll > 25:
             special.append(f"Attack Helicopter remains operational. Roll: {roll}%")
         else:
             special.append(f"Attack Helicopter is destroyed. Roll: {roll}%")
@@ -224,49 +229,184 @@ def simulate():
             else:
                 outcome = "Defender loses size"
 
-    # ===== ARTILLERY =====
-    if attacker_id in ARTILLERY_ID or defender_id in ARTILLERY_ID:
+    # ===== ARTILLERY LOGIC =====
+
+    attacker_is_artillery = attacker_id in ARTILLERY_ID or attacker_id in MECHANISED_ARTILLERY_ID
+    defender_is_artillery = defender_id in ARTILLERY_ID or defender_id in MECHANISED_ARTILLERY_ID
+
+
+    # ===== CASE 1: ARTILLERY vs ARTILLERY =====
+    if attacker_is_artillery and defender_is_artillery:
         roll = random.randint(0, 100)
+
         if roll > 50:
-            special.append("Target suppressed")
+            special.append(f"Artillery Duel: Target Suppressed. Roll: {roll}%")
+        elif 25 < roll <= 50:
+            special.append(f"Artillery Duel: Target Destroyed. Roll: {roll}%")
         else:
-            special.append("Target loses size")
+            special.append(f"Artillery Duel: Missed. Roll: {roll}%")
 
-    # ===== MECHANISED ARTILLERY =====
-    if attacker_id in MECHANISED_ARTILLERY_ID or defender_id in MECHANISED_ARTILLERY_ID:
+        outcome = "See Special"
+
+
+    # ===== CASE 2: ATTACKER IS ARTILLERY =====
+    elif attacker_is_artillery:
         roll = random.randint(0, 100)
-        special.append(f"Mechanised artillery strike roll: {roll}")
 
-        if roll > 60:
-            special.append("Heavy strike — target loses extra size")
+        if roll > 50:
+            special.append(f"Artillery Strike: Target Suppressed. Roll: {roll}%")
+        elif 25 < roll <= 50:
+            special.append(f"Artillery Strike: Target Destroyed. Roll: {roll}%")
         else:
-            special.append("Standard artillery effect")
+            special.append(f"Artillery Strike: Missed. Roll: {roll}%")
+        
+        outcome = "See Special"
 
-    # ===== COASTAL DEFENCE =====
-    if attacker_id in COASTAL_DEFENCE_ID or defender_id in COASTAL_DEFENCE_ID:
-        special.append("Coastal defence bonus applied")
+        # Optional counter-battery ONLY if defender artillery
+        if defender_is_artillery:
+            cb_roll = random.randint(0, 100)
 
-    # ===== ANTI-AIR =====
-    if attacker_id in ANTI_AIR_ID or defender_id in ANTI_AIR_ID:
-        if attacker_id in HELICOPTER_ID or defender_id in HELICOPTER_ID:
-            roll = random.randint(0, 100)
-            special.append(f"Anti-air roll vs helicopter: {roll}%")
+            if cb_roll > 50:
+                special.append(f"Counter-Battery: Suppressed. Roll: {cb_roll}%")
+            elif 25 < cb_roll <= 50:
+                special.append(f"Counter-Battery: Destroyed. Roll: {cb_roll}%")
+            else:
+                special.append(f"Counter-Battery: Missed. Roll: {cb_roll}%")
+        
+            outcome = "See Special"
 
-            if roll > 50:
-                if attacker_id in HELICOPTER_ID:
-                    outcome = "Attacker loses size"
-                else:
-                    outcome = "Defender loses size"
 
-    # ===== SUBMARINE =====
-    if attacker_id in SUBMARINE_ID or defender_id in SUBMARINE_ID:
-        roll = random.randint(1, 4)
-        special.append(f"Sub roll: {roll}")
+    # ===== CASE 3: DEFENDER IS ARTILLERY =====
+    elif defender_is_artillery:
+        # 🚫 NO artillery used — too close
+        special.append("Artillery cannot fire (too close range)")
 
-        if roll == 1:
-            outcome = "Attacker loses size"
+        # 👉 DO NOTHING ELSE — fall back to normal combat
+
+
+    # ===== CASE 4: NO ARTILLERY =====
+    else:
+        pass  # normal combat already handled by your roll system
+
+    # ===== FLAGS =====
+    attacker_is_air = attacker["type"].lower() == "air"
+    defender_is_air = defender["type"].lower() == "air"
+
+    attacker_id = str(attacker["id"])
+    defender_id = str(defender["id"])
+
+    attacker_is_stealth = attacker_id in STEALTH_IDS
+    defender_is_stealth = defender_id in STEALTH_IDS
+
+    is_sead = attacker_is_air and defender_id in ANTI_AIR_ID
+
+
+    # ===== SEAD (OVERRIDES AA) =====
+    if is_sead:
+        special.append("SEAD Operation Initiated")
+
+        # ---- AA fires ONCE ----
+        hit_chance = 20 if attacker_is_stealth else 80
+        aa_roll = random.randint(1, 100)
+
+        if aa_roll <= hit_chance:
+            special.append(f"SEAD: Aircraft hit by AA. Roll: {aa_roll}% → Attacker loses size")
+            outcome = "See Special"
+        
         else:
-            outcome = "Defender loses size"
+            special.append(f"SEAD: Aircraft evaded AA. Roll: {aa_roll}%")
+            outcome = "See Special"
+
+            # ---- SEAD strike ----
+            sead_roll = random.randint(1, 100)
+
+            if sead_roll <= 60:
+                special.append(f"SEAD successful. Roll: {sead_roll}% → Anti-Air destroyed")
+                outcome = "See Special"
+            else:
+                special.append(f"SEAD failed. Roll: {sead_roll}%")
+                outcome = "See Special"
+
+
+    # ===== NORMAL ANTI-AIR (ONLY IF NOT SEAD) =====
+    elif attacker_id in ANTI_AIR_ID and defender_is_air:
+
+        hit_chance = 20 if defender_is_stealth else 80
+        roll = random.randint(1, 100)
+
+        if roll <= hit_chance:
+            special.append(f"Anti-Air hit aircraft. Roll: {roll}% → Defender loses size")
+            outcome = "See Special"
+        else:
+            special.append(f"Anti-Air missed. Roll: {roll}%")
+            outcome = "See Special"
+
+
+    elif defender_id in ANTI_AIR_ID and attacker_is_air:
+
+        hit_chance = 20 if attacker_is_stealth else 80
+        roll = random.randint(1, 100)
+
+        if roll <= hit_chance:
+            special.append(f"Anti-Air hit aircraft. Roll: {roll}% → Attacker loses size")
+            outcome = "See Special"
+        else:
+            special.append(f"Anti-Air missed. Roll: {roll}%")
+            outcome = "See Special"
+
+    # ===== SUBMARINE & ASW =====
+
+    attacker_id = str(attacker["id"])
+    defender_id = str(defender["id"])
+
+    attacker_is_sub = attacker_id in SUBMARINE_IDS
+    defender_is_sub = defender_id in SUBMARINE_IDS
+
+    attacker_is_naval = attacker["type"].lower() == "naval"
+    defender_is_naval = defender["type"].lower() == "naval"
+
+    attacker_is_asw = attacker_id in ASW_IDS
+    defender_is_asw = defender_id in ASW_IDS
+
+
+    # ===== SUBMARINE ATTACK (OVERRIDES NORMAL COMBAT) =====
+    # Only when submarine is the attacker vs naval unit
+
+    if attacker_is_sub and defender_is_naval:
+
+        roll = random.randint(1, 100)
+
+        if roll <= 25:
+            special.append(f"Submarine attack failed. Roll: {roll}%")
+            outcome = "See Special"
+        
+        else:
+            special.append(f"Submarine strike successful. Roll: {roll}% → Defender loses size")
+            outcome = "See Special"
+
+
+    # ===== DEFENSIVE EVASION (WHEN SUB IS TARGETED) =====
+    elif defender_is_sub:
+
+        # Check if attacker can engage submarine (ASW)
+        if attacker_is_asw:
+
+            evade_roll = random.randint(1, 100)
+
+            if evade_roll <= 50:
+                special.append(f"Submarine evaded attack. Roll: {evade_roll}% → No damage")
+
+                # 🚫 Cancel result of combat
+                outcome = "See Special"
+
+            else:
+                special.append(f"Submarine hit by ASW. Roll: {evade_roll}%")
+
+                outcome = "See Special"
+
+        else:
+            # Non-ASW units (you said handle later, but safe placeholder)
+            special.append("Target is a submarine — attacker lacks ASW capability")
 
     return jsonify({
         "battle_type": get_battle_type(attacker, defender),
