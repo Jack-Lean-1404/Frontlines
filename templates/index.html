@@ -13,66 +13,113 @@
 
     <form id="battleForm">
 
-        <!-- Attacker -->
-        <div class="card">
-            <h2>Attacker</h2>
+    <!-- Attacker -->
+    <div class="card">
+        <h2>Attacker</h2>
 
-            <label>Unit Type</label>
-            <select id="attacker_unit">
-                {% for unit in units %}
-                    <option value="{{ unit.id }}">{{ unit.name }}</option>
-                {% endfor %}
-            </select>
+        <label>Unit Type</label>
+        <select id="attacker_unit">
+            {% for unit in units %}
+                <option value="{{ unit.id }}">{{ unit.name }}</option>
+            {% endfor %}
+        </select>
 
-            <label>Size</label>
-            <select name="attacker_size" id="attacker_size"></select>
+        <label>Size</label>
+        <select name="attacker_size" id="attacker_size"></select>
 
+        <!-- ✅ Wrapped preview -->
+        <div class="unit-preview">
             <p id="attacker_info"></p>
             <p id="attacker_calc"></p>
-
-            <label>Modifiers</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="attacker_mod" value="no_hq"> No HQ</label>
-                <label><input type="checkbox" name="attacker_mod" value="no_supply"> No Supply</label>
-                <label><input type="checkbox" name="attacker_mod" value="river"> River Crossing</label>
-                <label><input type="checkbox" name="attacker_mod" value="urban"> Urban Bonus</label>
-                <label><input type="checkbox" name="attacker_mod" value="mech"> Mechanised/Armour Bonus</label>
-                <label><input type="checkbox" name="attacker_mod" value="awacs"> AWACS Support</label>
-            </div>
         </div>
 
-        <!-- Defender -->
-        <div class="card">
-            <h2>Defender</h2>
+        <label>Modifiers</label>
+        <div class="checkbox-group">
 
-            <label>Unit Type</label>
-            <select id="defender_unit">
-                {% for unit in units %}
-                    <option value="{{ unit.id }}">{{ unit.name }}</option>
-                {% endfor %}
-            </select>
+            <label>
+                <input type="checkbox" name="attacker_mod" value="no_hq">
+                <span>No HQ</span>
+            </label>
 
-            <label>Size</label>
-            <!-- ✅ FIXED -->
-            <select name="defender_size" id="defender_size"></select>
+            <label>
+                <input type="checkbox" name="attacker_mod" value="no_supply">
+                <span>No Supply</span>
+            </label>
 
+            <label>
+                <input type="checkbox" name="attacker_mod" value="river">
+                <span>River Crossing</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="attacker_mod" value="urban">
+                <span>Urban Bonus</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="attacker_mod" value="mech">
+                <span>Mechanised / Armour Bonus</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="attacker_mod" value="awacs">
+                <span>AWACS Support</span>
+            </label>
+
+        </div>
+    </div>
+
+    <!-- Defender -->
+    <div class="card">
+        <h2>Defender</h2>
+
+        <label>Unit Type</label>
+        <select id="defender_unit">
+            {% for unit in units %}
+                <option value="{{ unit.id }}">{{ unit.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Size</label>
+        <select name="defender_size" id="defender_size"></select>
+
+        <!-- ✅ Wrapped preview -->
+        <div class="unit-preview">
             <p id="defender_info"></p>
             <p id="defender_calc"></p>
-
-            <label>Modifiers</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="defender_mod" value="no_hq"> No HQ</label>
-                <label><input type="checkbox" name="defender_mod" value="no_supply"> No Supply</label>
-                <label><input type="checkbox" name="defender_mod" value="urban"> Urban Bonus</label>
-                <label><input type="checkbox" name="defender_mod" value="awacs"> AWACS Support</label>
-            </div>
         </div>
 
-        <div class="action">
-            <button type="submit">Simulate Combat</button>
-        </div>
+        <label>Modifiers</label>
+        <div class="checkbox-group">
 
-    </form>
+            <label>
+                <input type="checkbox" name="defender_mod" value="no_hq">
+                <span>No HQ</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="defender_mod" value="no_supply">
+                <span>No Supply</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="defender_mod" value="urban">
+                <span>Urban Bonus</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="defender_mod" value="awacs">
+                <span>AWACS Support</span>
+            </label>
+
+        </div>
+    </div>
+
+    <div class="action">
+        <button type="submit">Simulate Combat</button>
+    </div>
+
+</form>
 
     <div class="result"></div>
 
