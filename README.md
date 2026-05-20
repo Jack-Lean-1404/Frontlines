@@ -1,217 +1,290 @@
-# Frontlines
+# Frontlines Webapp
 
-## Overview
-
-**Frontlines** is a Flask-based web application designed to simulate combat interactions between military units. It uses structured unit data stored in CSV files and applies simulation logic to determine outcomes such as destruction, suppression, or survival.
-
-This project is intended for **game design experimentation**, allowing rapid iteration of unit stats and combat mechanics without requiring a full database or complex backend.
+A browser-based geopolitical strategy platform where players manage nations, military units, resources, diplomacy, and strategic operations through a persistent web dashboard.
 
 ---
 
-## Features
+# Overview
 
-* Unit vs Unit combat simulation
-* Data-driven design using CSV files
-* Web-based interface for quick testing
-* Expandable combat logic system
-* Lightweight Flask backend
+see [setup.md](setup.md) for setting up the project.
 
----
+## Core Features
 
-## Tech Stack
-
-| Layer    | Technology                     |
-| -------- | ------------------------------ |
-| Backend  | Python (Flask)                 |
-| Frontend | HTML, CSS (Jinja2 templating)  |
-| Data     | CSV files                      |
-| Logic    | Python (randomised simulation) |
+- Nation login and authentication system
+- Player nation dashboards
+- Resource economy and upkeep systems
+- Military unit management
+- Turn-based gameplay mechanics
+- Administrative control panel
+- Activity logging and event history
+- Database-driven statistics and progression systems
 
 ---
 
-## Project Structure
+# Tech Stack
 
+| Layer | Technology |
+|---|---|
+| Frontend | HTML, CSS, JavaScript |
+| Backend | Python |
+| Database | MySQL |
+| Hosting | Render |
+| IDE | VS Code |
+| Database Tooling | MySQL Workbench |
+| Version Control | Git + GitHub |
+
+---
+
+# Repository Structure
+
+```text
+/backend
+├── app.py
+├── .env
+└── /auth
+
+/database
+├── schema.sql
+
+/frontend
+├── /css
+├── /js
+├── /images
+└── *.html
+
+/other
+
+README.md
+requirements.txt
+setup.md
 ```
-Frontlines/
-│
-├── app.py                # Main Flask application and simulation logic
-├── UnitValues.csv        # Core unit statistics
-├── UnitSizes.csv         # Unit size modifiers
-│
-├── templates/
-│   └── index.html        # Frontend UI
-│
-├── static/
-│   └── styles.css        # Styling for the application
-│
-└── README.md             # Project documentation
+
+---
+
+# System Architecture
+
+## Frontend
+
+The frontend uses:
+
+- HTML for structure
+- CSS for styling
+- Vanilla JavaScript for interactivity
+
+### Responsibilities
+
+- Display nation dashboards
+- Handle user interaction
+- Send API requests
+- Display dynamic game data
+
+---
+
+## Backend
+
+The Python backend:
+
+- Handles authentication
+- Processes gameplay logic
+- Validates player actions
+- Communicates with MySQL
+- Returns JSON API responses
+
+---
+
+## Database
+
+MySQL stores:
+
+- Users
+- Nations
+- Military units
+- Resources
+- Diplomatic relations
+- Turn history
+- Game statistics
+
+---
+
+# Development Workflow
+
+## Branching Rules
+
+Never commit directly to `main`.
+
+Only jack can do a Pull Request from `development` to `main`
+
+Use branches:
+
+```text
+main = live website
+development = in progress
 ```
 
 ---
 
-## Installation & Setup
+# Commit Naming
 
-### 1. Clone the repository
+Examples:
 
 ```bash
-git clone https://github.com/Jack-Lean-1404/Frontlines.git
-cd Frontlines
-```
+git commit -m "Add nation dashboard API"
 
-### 2. Install dependencies
+git commit -m "Fix login session timeout"
 
-```bash
-pip install flask
-```
-
-### 3. Run the application
-
-```bash
-python app.py
-```
-
-### 4. Open in browser
-
-```
-http://127.0.0.1:5000
+git commit -m "Refactor combat calculation service"
 ```
 
 ---
 
-## How It Works
+# Coding Standards
 
-### 1. Data Loading
+## Python
 
-* Unit data is stored in `UnitValues.csv`
-* Additional modifiers (e.g., size) are stored in `UnitSizes.csv`
-* These are loaded into Python when the app starts or when needed
-
----
-
-### 2. User Interaction
-
-* The user selects units via the web interface
-* A request is sent to the Flask backend
+- Use `snake_case`
+- Separate routes, services, and database logic
 
 ---
 
-### 3. Simulation Engine
+## HTML / CSS
 
-The backend:
-
-1. Retrieves unit stats
-2. Applies combat rules
-3. Uses randomness for variability
-4. Produces an outcome
+- Use semantic HTML
+- Keep CSS modular
+- Avoid inline styling
+- Use reusable components where possible
 
 ---
 
-### 4. Output
+## JavaScript
 
-The result is returned to the frontend and displayed to the user.
-
----
-
-## Combat Outcomes
-
-The system currently supports outcomes such as:
-
-* **Destroyed** — Unit is eliminated
-* **Suppressed** — Unit is weakened but still active
-* **No Impact / Survives** — No meaningful damage
+- Use `camelCase`
+- Keep functions focused and modular
+- Avoid duplicated logic
+- Separate API calls from UI rendering
 
 ---
 
-## Modifying the Game
+## SQL
 
-### Add a New Unit
-
-1. Open `UnitValues.csv`
-2. Add a new row with appropriate stats
-3. Restart the app
-
----
-
-### Change Combat Balance
-
-Modify the logic inside:
-
-```
-app.py → simulate()
-```
+- Use lowercase SQL keywords
+- Use singular table names
+- Define proper foreign keys
+- Avoid direct production edits
 
 ---
 
-### Update UI
+# Deployment
 
-Edit:
+## Render Hosting
 
-```
-templates/index.html
-static/styles.css
+The application is deployed using Render.
+
+---
+
+# Deployment Flow
+
+1. Push changes to GitHub
+2. Render automatically deploys from `main`
+3. Verify deployment logs
+4. Test production environment
+
+---
+
+# Production Environment Variables
+
+Configured through the Render dashboard:
+
+```env
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+SECRET_KEY=
+API_KEYS=
 ```
 
 ---
 
-## Common Issues
+# Production Database Rules
 
-### `NameError: app is not defined`
+Do NOT:
 
-Ensure:
+- Modify production schema directly
+- Run destructive SQL queries
+- Delete rows manually
+- Push untested migrations
 
-```python
-app = Flask(__name__)
+---
+
+# API Documentation
+
+## Login Endpoint
+
+### Request
+
+```http
+POST /api/login
 ```
 
-appears **before any `@app.route` decorators**
+### Request Body
+
+```json
+{
+  "username": "player1",
+  "password": "password"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "token": "jwt-token"
+}
+```
 
 ---
 
-### CSV Not Loading
+# Database Schema Reference
 
-* Ensure files are in the root directory
-* Check column names match expected fields
+## users
 
----
-
-### Page Loads but No Units Appear
-
-* Backend may not be passing `units` to the template
-* Check `home()` route in `app.py`
+| Column | Type |
+|---|---|
+| id | INT |
+| username | VARCHAR |
+| password_hash | VARCHAR |
 
 ---
 
-## Design Notes
+## nations
 
-This project intentionally uses:
-
-* CSV instead of a database (for simplicity and rapid iteration)
-* A single-file backend (`app.py`) for accessibility
-
-As the project scales, consider:
-
-* Moving logic into modules
-* Introducing a database (SQLite/PostgreSQL)
-* Adding validation and testing
+| Column | Type |
+|---|---|
+| id | INT |
+| nation_name | VARCHAR |
+| treasury | BIGINT |
 
 ---
 
-## Future Improvements
+# Team Roles
 
-* Modular combat engine
-* Unit abilities system
-* Persistent storage (database)
-* Multiplayer or turn-based system
-* Advanced UI (React or similar)
-
----
-
-## Contributing
-
-This project is currently in active development. Contributions, refactors, and feature ideas are welcome.
+| Role | Responsibility | Name
+|---|---|---|
+| Project Lead | Architecture and approvals | Jack
+| Frontend Developer | UI/UX systems | Brad
+| Backend Developer | APIs and gameplay logic | Jack
+| Database Administrator | MySQL maintenance | Jack
+| Game Designer | Gameplay Decisions | Jack
 
 ---
 
-## License
+# Important Rules
 
-No license currently specified.
+Contact Jack before:
+
+- Changing database schema
+- Modifying authentication systems
+- Editing deployment configuration
+- Refactoring shared systems
+- Modifying production infrastructure

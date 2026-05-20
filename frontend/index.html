@@ -12,7 +12,7 @@
 
         {% for unit in units %}
 
-        <div class="unit-card">
+        <div class="example">
 
             <h2>{{ unit.name }}</h2>
 
@@ -24,6 +24,11 @@
             <p>
                 Defence:
                 {{ unit.defence }}
+            </p>
+
+            <p>
+                description:
+                {{ unit.description }}
             </p>
 
         </div>
