@@ -199,6 +199,8 @@ Git is downloading all project files from GitHub onto your computer.
 
 This may take a minute.
 
+Open discord and dowload the .env file found in the info channel and place that file inside the `frontline` repo. 
+
 ---
 
 # Step 7 – Open The Project Folder
