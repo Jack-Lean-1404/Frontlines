@@ -1,17 +1,21 @@
 from flask import Flask, render_template
 import mysql.connector
+import os
 
 app = Flask(__name__)
+
+db_password = os.getenv("DB_PASSWORD")
+
 
 @app.route("/")
 def home():
 
     # CONNECT TO DATABASE (connect to the database with the following information)
     db = mysql.connector.connect(
-        host="frontlines-db.clkco440god3.ap-southeast-2.rds.amazonaws.com",
-        user="admin",
-        password="Frontlinesdb!",
-        database="frontlines"
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
 
     # CREATE CURSOR (SQL Script)

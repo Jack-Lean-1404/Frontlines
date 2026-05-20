@@ -35,32 +35,6 @@ see [setup.md](setup.md) for setting up the project.
 
 ---
 
-# Repository Structure
-
-```text
-/backend
-├── app.py
-├── .env
-└── /auth
-
-/database
-├── schema.sql
-
-/frontend
-├── /css
-├── /js
-├── /images
-└── *.html
-
-/other
-
-README.md
-requirements.txt
-setup.md
-```
-
----
-
 # System Architecture
 
 ## Frontend
