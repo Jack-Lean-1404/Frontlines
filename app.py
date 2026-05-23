@@ -43,20 +43,6 @@ def dashboard():
 
     return render_template("dashboard.html")
 
-# Admin Panel
-@app.route("/admin")
-def admin():
-
-    # NOT LOGGED IN
-    if "user_id" not in session:
-        return redirect(url_for("access"))
-
-    # NOT ADMIN
-    if session["role"] != "admin":
-        return "Access Denied", 403
-
-    return render_template("admin.html")
-
 
 # SIGN UP
 @app.route("/signup", methods=["POST"])
@@ -135,6 +121,7 @@ def login():
         session["user_id"] = user["user_id"]
         session["nation_id"] = user["nation_id"]
         session["role"] = user["role"]
+        session["username"] = user["username"]
 
 
         update_query = """
@@ -171,6 +158,85 @@ def logout():
     session.clear()
 
     return redirect(url_for("home"))
+
+# ADMIN USER MANAGEMENT
+@app.route("/admin")
+def admin_dashboard():
+
+    print("test")
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    db = get_db_connection()
+
+    cursor = db.cursor(dictionary=True)
+
+    # GET ALL USERS
+    cursor.execute("""
+        SELECT * FROM frontlinesdb.users;
+    """)
+
+    users = cursor.fetchall()
+
+    # GET ALL NATIONS
+    cursor.execute("""
+        SELECT * FROM frontlinesdb.nations;
+    """)
+
+    nations = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+
+    return render_template(
+        "admin.html",
+        users=users,
+        nations=nations
+    )
+
+# ASSIGN NATION TO PLAYER
+@app.route("/admin/assign_nation", methods=["POST"])
+def assign_nation():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    user_id = request.form["user_id"]
+    nation_id = request.form["nation_id"]
+
+    db = get_db_connection()
+
+    cursor = db.cursor()
+
+    query = """
+        UPDATE frontlinesdb.users
+        SET nation_id = %s
+        WHERE user_id = %s
+    """
+
+    cursor.execute(
+        query,
+        (nation_id, user_id)
+    )
+
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
 
 if __name__ == "__main__": 
     app.run(debug=True)
