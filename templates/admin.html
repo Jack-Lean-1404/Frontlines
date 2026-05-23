@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Unit Database Example</title>
+    <title>Admin Panel</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
+    
 <nav>
     <ul>
         <li><a href="{{ url_for('home') }}">Home</a></li>
@@ -13,13 +13,12 @@
         <li><a href="{{ url_for('admin') }}">Admin Panel</a></li>
         <button onclick="window.location.href='/logout'">
             Logout
-        </button>   
+        </button>
     </ul>
 </nav>
 
 <body>
-
-    <h1>Homepage stuff</h1>
-
+    <h1>Admin Panel</h1>
+    <p>Welcome, Admin!</p>
 </body>
 </html>

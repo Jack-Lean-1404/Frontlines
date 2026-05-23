@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login/Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<nav>
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('access') }}">Login/Signup</a></li>
+        <li><a href="{{ url_for('admin') }}">Admin Panel</a></li>
+        <button onclick="window.location.href='/logout'">
+            Logout
+        </button>
+    </ul>
+</nav>
+
+<body>
+
+    <h1>Login/Signup</h1>
+
+    <!-- SIGN UP FORM -->
+    <h2>Sign Up</h2>
+
+    <form id="signupForm">
+
+        <label>Username</label><br>
+        <input type="text" id="signupUsername" required><br><br>
+
+        <label>Email</label><br>
+        <input type="email" id="signupEmail" required><br><br>
+
+        <label>Password</label><br>
+        <input type="password" id="signupPassword" required><br><br>
+
+        <button type="submit">Sign Up</button>
+
+    </form>
+
+    <hr>
+
+    <!-- LOGIN FORM -->
+    <h2>Login</h2>
+
+    <form id="loginForm">
+
+        <label>Username</label><br>
+        <input type="text" id="loginUsername" required><br><br>
+
+        <label>Password</label><br>
+        <input type="password" id="loginPassword" required><br><br>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+
+    <script>
+
+        // SIGN UP
+        document.getElementById("signupForm").addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                // Send signup data to backend
+                const response = await fetch("/signup", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        username: document.getElementById("signupUsername").value,
+
+                        email: document.getElementById("signupEmail").value,
+
+                        password: document.getElementById("signupPassword").value
+                    })
+                });
+
+                const data = await response.json();
+
+                // If signup is successful, redirect to dashboard. Otherwise, show error message.
+                if (data.redirect) {
+
+                    window.location.href = data.redirect;
+
+                } else {
+
+                    alert(data.message || data.error);
+                }
+            }
+        );
+
+
+        // LOGIN
+        document.getElementById("loginForm").addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+                
+                // Send login data to server
+                const response = await fetch("/login", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        username: document.getElementById("loginUsername").value,
+
+                        password: document.getElementById("loginPassword").value
+                    })
+                });
+
+                const data = await response.json();
+
+                // If login is successful, redirect to dashboard. Otherwise, show error message.
+                if (data.redirect) {
+
+                    window.location.href = data.redirect;
+
+                } else {
+
+                    alert(data.error);
+}
+            }
+        );
+
+    </script>
+
+</body>
+</html>
