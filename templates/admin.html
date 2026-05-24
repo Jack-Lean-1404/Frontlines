@@ -55,6 +55,112 @@
 
     {% endfor %}
 
+    <h2>Create New Units</h2>
+
+    <form method="POST" action="/admin/add_new_units">
+
+        <input
+            type="text"
+            name="unit_name"
+            placeholder="Unit Name"
+        >
+
+        <select name="unit_class">
+
+            <option value="land">Land</option>
+            <option value="air">Air</option>
+            <option value="sea">Sea</option>
+            <option value="special">Special</option>
+
+        </select>
+
+        <input
+            type="text"
+            name="unit_group"
+            placeholder="Unit Organization Group"
+        >
+
+        <input
+            type="number"
+            name="strength"
+            placeholder="Unit Strength"
+        >
+
+        <input
+            type="number"
+            name="defence"
+            placeholder="Unit Defence"
+        >
+        <input
+            type="number"
+            name="movement"
+            placeholder="Unit Movement"
+        >
+
+        <input
+            type="number"
+            name="unit_size"
+            placeholder="Unit Size"
+        >
+
+        <input
+            type="number"
+            name="money_cost"
+            placeholder="Money Cost"
+        >
+
+        <input
+            type="number"
+            name="cm_cost"
+            placeholder="CM Cost"
+        >
+
+        <input
+            type="number"
+            name="rm_cost"
+            placeholder="RM Cost"
+        >
+
+        <input
+            type="number"
+            name="money_upkeep"
+            placeholder="Money Upkeep"
+        >
+
+        <textarea
+            name="description"
+            placeholder="Unit Description"
+        ></textarea>
+
+
+        <button type="submit">
+
+            Add New Unit
+
+        </button>
+
+    </form>
+
+    <h2>Current Unit Types</h2>
+
+    {% for unit in units %}
+
+        <hr>
+
+        <h3>{{ unit.unit_name }}</h3>
+        <p>Class: {{ unit.unit_class }}</p>
+        <p>Organization Group: {{ unit.unit_group }}</p>
+        <p>Strength: {{ unit.strength }}</p>
+        <p>Defence: {{ unit.defence }}</p>
+        <p>Movement: {{ unit.movement }}</p>
+        <p>Unit Size: {{ unit.unit_size }}</p>
+        <p>Money Cost: {{ unit.money_cost }}</p>
+        <p>CM Cost: {{ unit.cm_cost }}</p>
+        <p>RM Cost: {{ unit.rm_cost }}</p>
+        <p>Money Upkeep: {{ unit.money_upkeep }}</p>
+        <p>Description: {{ unit.description }}</p>
+
+    {% endfor %}
 
 </body>
 </html>

@@ -191,6 +191,14 @@ def admin_dashboard():
 
     nations = cursor.fetchall()
 
+    # GET ALL UNIT TYPES
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.units;
+    """)
+
+    units = cursor.fetchall()
+
     cursor.close()
     db.close()
 
@@ -198,7 +206,8 @@ def admin_dashboard():
     return render_template(
         "admin.html",
         users=users,
-        nations=nations
+        nations=nations,
+        units=units
     )
 
 # ASSIGN NATION TO PLAYER
@@ -229,6 +238,73 @@ def assign_nation():
     cursor.execute(
         query,
         (nation_id, user_id)
+    )
+
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
+
+@app.route("/admin/add_new_units", methods=["POST"])
+def add_new_units():
+
+    if session["role"] != "admin":
+        return "Forbidden", 403
+
+    unit_name = request.form["unit_name"]
+    unit_class = request.form["unit_class"]
+    unit_group = request.form["unit_group"]
+    strength = request.form["strength"]
+    defence = request.form["defence"]
+    movement = request.form["movement"]
+    unit_size = request.form["unit_size"]
+    money_cost = request.form["money_cost"]
+    cm_cost = request.form["cm_cost"]
+    rm_cost = request.form["rm_cost"]
+    money_upkeep = request.form["money_upkeep"]
+    description = request.form["description"]
+
+    db = get_db_connection()
+
+    cursor = db.cursor()
+
+    query = """
+        INSERT INTO units
+        (
+            unit_name,
+            unit_class,
+            unit_group,
+            strength,
+            defence,
+            movement,
+            unit_size,
+            money_cost,
+            cm_cost,
+            rm_cost,
+            money_upkeep,
+            description
+        )
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """
+
+    cursor.execute(
+        query,
+        (
+            unit_name,
+            unit_class,
+            unit_group,
+            strength,
+            defence,
+            movement,
+            unit_size,
+            money_cost,
+            cm_cost,
+            rm_cost,
+            money_upkeep,
+            description,
+        )
     )
 
     db.commit()
