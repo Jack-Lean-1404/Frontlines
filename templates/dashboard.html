@@ -5,17 +5,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<nav>
-    <ul>
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-        <li><a href="{{ url_for('access') }}">Login/Signup</a></li>
-        <li><a href="{{ url_for('admin_dashboard') }}">Admin Panel</a></li>
-        <button onclick="window.location.href='/logout'">
-            Logout
-        </button>
-    </ul>
-</nav>
+// Display the navbar from the components folder
+{% include 'components/navbar.html' %}
 
 <body>
 dashboard stuff 
