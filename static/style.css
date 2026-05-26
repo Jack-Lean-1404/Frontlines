@@ -16,3 +16,12 @@ body {
     width: 250px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
+
+/* Style for the nation flag image */
+.nation-flag {
+
+    width: 250px;
+
+    border-radius: 8px;
+}

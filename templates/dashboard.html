@@ -10,6 +10,9 @@
 
 <body>
 <h1>{{ nation.name }}</h1>
+<img src="{{ url_for('static', filename=nation.flag) }}" alt="Flag of {{ nation.name }}" class="nation-flag">
+
+
 
 <hr>
 
@@ -34,5 +37,35 @@
     </p>
 
 {% endfor %}
+
+<h2>National Treasury</h2>
+
+<p>Display line graph of treasury changes over time.</p>
+
+<H2>Notifications</H2>
+<p>Display notifications about recent events, such as attacks, research completion, etc.</p>
+<p>In a list (table format)</p>
+
+<h2>Actions</h2>
+
+<div class="dashboard-actions">
+
+    <button onclick="window.location.href='/economy'">
+        Economy Management
+    </button>
+
+    <button onclick="window.location.href='/recruit'">
+        Recruit Units
+    </button>
+
+    <button onclick="window.location.href='/military'">
+        Buildings & Infrastructure
+    </button>
+
+    <button onclick="window.location.href='/research'">
+        Research & Technology
+    </button>
+
+</div>
 </body>
 </html>
