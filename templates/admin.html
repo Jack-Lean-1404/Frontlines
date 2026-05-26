@@ -162,5 +162,158 @@
 
     {% endfor %}
 
+    <h2>Select Unit</h2>
+
+    <form method="GET" action="/admin">
+
+        <select name="unit_id">
+
+            {% for unit in units %}
+
+                <option
+                    value="{{ unit.unit_id }}"
+
+                    {% if selected_unit and selected_unit.unit_id == unit.unit_id %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ unit.unit_name }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button type="submit">
+
+            Load Unit
+
+        </button>
+
+    </form>
+
+    {% if selected_unit %}
+
+        <hr>
+
+        <h2>Edit Unit</h2>
+
+        <form method="POST" action="/admin/update_unit">
+
+            <!-- UNIT ID -->
+            <input
+                type="hidden"
+                name="unit_id"
+                value="{{ selected_unit.unit_id }}"
+            >
+
+            <!-- UNIT NAME -->
+            <label>Unit Name</label><br>
+            <input
+                type="text"
+                name="unit_name"
+                value="{{ selected_unit.unit_name }}"
+            ><br><br>
+
+            <!-- UNIT CLASS -->
+            <label>Unit Class</label><br>
+            <input
+                type="text"
+                name="unit_class"
+                value="{{ selected_unit.unit_class }}"
+            ><br><br>
+
+            <!-- UNIT GROUP -->
+            <label>Unit Group</label><br>
+            <input
+                type="text"
+                name="unit_group"
+                value="{{ selected_unit.unit_group }}"
+            ><br><br>
+
+            <!-- STRENGTH -->
+            <label>Strength</label><br>
+            <input
+                type="number"
+                name="strength"
+                value="{{ selected_unit.strength }}"
+            ><br><br>
+
+            <!-- DEFENCE -->
+            <label>Defence</label><br>
+            <input
+                type="number"
+                name="defence"
+                value="{{ selected_unit.defence }}"
+            ><br><br>
+
+            <!-- MOVEMENT -->
+            <label>Movement</label><br>
+            <input
+                type="number"
+                name="movement"
+                value="{{ selected_unit.movement }}"
+            ><br><br>
+
+            <!-- UNIT SIZE -->
+            <label>Unit Size</label><br>
+            <input
+                type="text"
+                name="unit_size"
+                value="{{ selected_unit.unit_size }}"
+            ><br><br>
+
+            <!-- MONEY COST -->
+            <label>Money Cost</label><br>
+            <input
+                type="number"
+                name="money_cost"
+                value="{{ selected_unit.money_cost }}"
+            ><br><br>
+
+            <!-- CM COST -->
+            <label>CM Cost</label><br>
+            <input
+                type="number"
+                name="cm_cost"
+                value="{{ selected_unit.cm_cost }}"
+            ><br><br>
+
+            <!-- RM COST -->
+            <label>RM Cost</label><br>
+            <input
+                type="number"
+                name="rm_cost"
+                value="{{ selected_unit.rm_cost }}"
+            ><br><br>
+
+            <!-- MONEY UPKEEP -->
+            <label>Money Upkeep</label><br>
+            <input
+                type="number"
+                name="money_upkeep"
+                value="{{ selected_unit.money_upkeep }}"
+            ><br><br>
+
+            <!-- DESCRIPTION -->
+            <label>Description</label><br>
+            <textarea
+                name="description"
+                rows="5"
+                cols="50"
+            >{{ selected_unit.description }}</textarea><br><br>
+
+            <button type="submit">
+
+                Update Unit
+
+            </button>
+
+        </form>
+
+    {% endif %}
+
 </body>
 </html>

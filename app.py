@@ -163,8 +163,6 @@ def logout():
 @app.route("/admin")
 def admin_dashboard():
 
-    print("test")
-
     # CHECK LOGIN
     if "user_id" not in session:
         return redirect(url_for("access"))
@@ -177,37 +175,62 @@ def admin_dashboard():
 
     cursor = db.cursor(dictionary=True)
 
-    # GET ALL USERS
+    # -------------------------
+    # GET USERS
+    # -------------------------
     cursor.execute("""
-        SELECT * FROM frontlinesdb.users;
+        SELECT *
+        FROM frontlinesdb.users
     """)
 
     users = cursor.fetchall()
 
-    # GET ALL NATIONS
+    # -------------------------
+    # GET NATIONS
+    # -------------------------
     cursor.execute("""
-        SELECT * FROM frontlinesdb.nations;
+        SELECT *
+        FROM frontlinesdb.nations
     """)
 
     nations = cursor.fetchall()
 
-    # GET ALL UNIT TYPES
+    # -------------------------
+    # GET ALL UNITS
+    # -------------------------
     cursor.execute("""
         SELECT *
-        FROM frontlinesdb.units;
+        FROM frontlinesdb.units
     """)
 
     units = cursor.fetchall()
 
+    # -------------------------
+    # SELECTED UNIT
+    # -------------------------
+    selected_unit = None
+
+    unit_id = request.args.get("unit_id")
+
+    if unit_id:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.units
+            WHERE unit_id = %s
+        """, (unit_id,))
+
+        selected_unit = cursor.fetchone()
+
     cursor.close()
     db.close()
-
 
     return render_template(
         "admin.html",
         users=users,
         nations=nations,
-        units=units
+        units=units,
+        selected_unit=selected_unit
     )
 
 # ASSIGN NATION TO PLAYER
@@ -313,6 +336,86 @@ def add_new_units():
     db.close()
 
     return redirect(url_for("admin_dashboard"))
+
+# UPDATE UNIT
+@app.route("/admin/update_unit", methods=["POST"])
+def update_unit():
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Forbidden", 403
+
+    unit_id = request.form["unit_id"]
+
+    unit_name = request.form["unit_name"]
+    unit_class = request.form["unit_class"]
+    unit_group = request.form["unit_group"]
+
+    strength = request.form["strength"]
+    defence = request.form["defence"]
+    movement = request.form["movement"]
+
+    unit_size = request.form["unit_size"]
+
+    money_cost = request.form["money_cost"]
+    cm_cost = request.form["cm_cost"]
+    rm_cost = request.form["rm_cost"]
+
+    money_upkeep = request.form["money_upkeep"]
+
+    description = request.form["description"]
+
+    db = get_db_connection()
+
+    cursor = db.cursor()
+
+    query = """
+        UPDATE units
+        SET
+            unit_name = %s,
+            unit_class = %s,
+            unit_group = %s,
+            strength = %s,
+            defence = %s,
+            movement = %s,
+            unit_size = %s,
+            money_cost = %s,
+            cm_cost = %s,
+            rm_cost = %s,
+            money_upkeep = %s,
+            description = %s
+        WHERE unit_id = %s
+    """
+
+    cursor.execute(
+        query,
+        (
+            unit_name,
+            unit_class,
+            unit_group,
+            strength,
+            defence,
+            movement,
+            unit_size,
+            money_cost,
+            cm_cost,
+            rm_cost,
+            money_upkeep,
+            description,
+            unit_id
+        )
+    )
+
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(
+        url_for(
+            "admin_dashboard",
+        )
+    )
 
 if __name__ == "__main__": 
     app.run(debug=True)
