@@ -9,6 +9,30 @@
 {% include 'components/navbar.html' %}
 
 <body>
-dashboard stuff 
+<h1>{{ nation.name }}</h1>
+
+<hr>
+
+<h2>Resources</h2>
+
+{% for resource in resources %}
+
+    <p>
+
+        {{ resource.name }}:
+
+        {% if resource.measurement_convention == "$" %}
+
+            {{ resource.measurement_convention }}{{ "{:,}".format(resource.amount) }}
+
+        {% else %}
+
+            {{ "{:,}".format(resource.amount) }} {{ resource.measurement_convention }}
+
+        {% endif %}
+
+    </p>
+
+{% endfor %}
 </body>
 </html>

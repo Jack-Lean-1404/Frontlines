@@ -38,10 +38,51 @@ def access():
 @app.route("/dashboard")
 def dashboard():
 
+    # Check login 
     if "user_id" not in session:
         return redirect(url_for("access"))
 
-    return render_template("dashboard.html")
+    db = get_db_connection()
+
+    cursor = db.cursor(dictionary=True)
+
+    # -------------------------
+    # GET NATION
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM nations
+        WHERE nation_id = %s
+    """, (session["nation_id"],))
+
+    nation = cursor.fetchone()
+
+    # -------------------------
+    # GET RESOURCES
+    # -------------------------
+    cursor.execute("""
+        SELECT
+            nation_resources.amount,
+            resources.name,
+            resources.measurement_convention
+        FROM nation_resources
+
+        JOIN resources
+            ON nation_resources.resource_id = resources.resource_id
+
+        WHERE nation_resources.nation_id = %s
+    """, (session["nation_id"],))
+
+    resources = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return render_template(
+        "dashboard.html",
+        nation=nation,
+        resources=resources
+    )
 
 
 # SIGN UP
