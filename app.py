@@ -60,6 +60,8 @@ def dashboard():
 
     nation = cursor.fetchone()
 
+    nation_id = nation["nation_id"]
+
     # -------------------------
     # GET RESOURCES
     # -------------------------
@@ -78,14 +80,42 @@ def dashboard():
 
     resources = cursor.fetchall()
 
+    # -------------------------
+    # GET MONEY HISTORY FOR CHART
+    # -------------------------
+    cursor.execute("""
+        SELECT
+            gt.turn_id,
+            rh.amount
+        FROM resource_history rh
+        JOIN game_turns gt
+            ON rh.turn_id = gt.turn_id
+        WHERE rh.nation_id = %s
+        AND rh.resource_id = %s
+        ORDER BY gt.turn_id ASC
+    """, (nation_id, 1))
+
+    money_history = cursor.fetchall()
+
+    turn_labels = []
+    money_values = []
+
+    for row in money_history:
+        turn_labels.append(row["turn_id"])
+        money_values.append(row["amount"])
+
     cursor.close()
     db.close()
 
     return render_template(
         "dashboard.html",
         nation=nation,
-        resources=resources
+        resources=resources,
+        turn_labels=turn_labels,
+        money_values=money_values
     )
+
+
 
 
 # SIGN UP

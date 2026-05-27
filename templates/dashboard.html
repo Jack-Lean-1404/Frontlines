@@ -11,6 +11,8 @@
 {% include 'components/navbar.html' %}
 
 <body>
+
+
 <h1>{{ nation.name }}</h1>
 <img src="{{ url_for('static', filename=nation.flag) }}" alt="Flag of {{ nation.name }}" class="nation-flag">
 
@@ -43,7 +45,42 @@
 <h2>National Treasury</h2>
 
 <p>Display line graph of treasury changes over time.</p>
+<div class="chart-container">
+    <canvas id="moneyChart"></canvas>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const turnLabels = JSON.parse('{{ turn_labels | tojson | safe }}');
+        const moneyValues = JSON.parse('{{ money_values | tojson | safe }}');
+
+        const ctx = document.getElementById('moneyChart');
+
+        new Chart(ctx, {
+            type: 'line',
+
+            data: {
+                labels: turnLabels,
+
+                datasets: [{
+                    label: 'Money',
+                    data: moneyValues,
+                    tension: 0.3
+                }]
+            },
+
+            options: {
+                responsive: true,
+
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</div>
 <H2>Notifications</H2>
 <p>Display notifications about recent events, such as attacks, research completion, etc.</p>
 <p>In a list (table format)</p>
