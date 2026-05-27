@@ -7,10 +7,12 @@ import mysql.connector
 import os
 
 
-load_dotenv()
+load_dotenv(dotenv_path=".env")
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
+
+print(os.getenv("SECRET_KEY"))
 
 # DATABASE CONNECTION FUNCTION Witth the following code, we can connect to the database whenever we need to by calling the get_db_connection() function
 def get_db_connection():
@@ -459,4 +461,4 @@ def update_unit():
     )
 
 if __name__ == "__main__": 
-    app.run(debug=True)
+    app.run()
