@@ -142,26 +142,6 @@
     </form>
 
     <h2>Current Unit Types</h2>
-
-    {% for unit in units %}
-
-        <hr>
-
-        <h3>{{ unit.unit_name }}</h3>
-        <p>Class: {{ unit.unit_class }}</p>
-        <p>Organization Group: {{ unit.unit_group }}</p>
-        <p>Strength: {{ unit.strength }}</p>
-        <p>Defence: {{ unit.defence }}</p>
-        <p>Movement: {{ unit.movement }}</p>
-        <p>Unit Size: {{ unit.unit_size }}</p>
-        <p>Money Cost: {{ unit.money_cost }}</p>
-        <p>CM Cost: {{ unit.cm_cost }}</p>
-        <p>RM Cost: {{ unit.rm_cost }}</p>
-        <p>Money Upkeep: {{ unit.money_upkeep }}</p>
-        <p>Description: {{ unit.description }}</p>
-
-    {% endfor %}
-
     <h2>Select Unit</h2>
 
     <form method="GET" action="/admin">
@@ -312,6 +292,126 @@
             </button>
 
         </form>
+
+    {% endif %}
+
+
+    <hr>
+
+    <h2>Nation Resource Management</h2>
+
+    <!-- SELECT NATION -->
+
+    <form method="GET" action="/admin">
+
+        <select name="nation_id">
+
+            <option value="">
+                Select Nation
+            </option>
+
+            {% for nation in nations %}
+
+                <option
+                    value="{{ nation.nation_id }}"
+
+                    {% if selected_nation and nation.nation_id == selected_nation.nation_id %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ nation.name }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button type="submit">
+
+            Load Nation
+
+        </button>
+
+    </form>
+
+    <!-- RESOURCE MANAGEMENT -->
+
+    {% if selected_nation %}
+
+        <hr>
+
+        <h3>
+
+            Managing Resources For:
+            {{ selected_nation.name }}
+
+        </h3>
+
+        <table border="1" cellpadding="10">
+
+            <tr>
+
+                <th>Resource</th>
+                <th>Amount</th>
+                <th>Update</th>
+
+            </tr>
+
+            {% for resource in nation_resources %}
+
+                <tr>
+
+                    <td>
+
+                        {{ resource.name }}
+
+                    </td>
+
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="/admin/update_resource"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="resource_id"
+                                value="{{ resource.resource_id }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="nation_id"
+                                value="{{ selected_nation.nation_id }}"
+                            >
+
+                            <input
+                                type="number"
+                                name="amount"
+                                value="{{ resource.amount }}"
+                            >
+
+                    </td>
+
+                    <td>
+
+                            <button type="submit">
+
+                                Update
+
+                            </button>
+
+                        </form>
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
 
     {% endif %}
 

@@ -265,6 +265,56 @@ def admin_dashboard():
 
         selected_unit = cursor.fetchone()
 
+    # -------------------------
+    # SELECTED NATION
+    # -------------------------
+    selected_nation = None
+
+    nation_resources = []
+
+    nation_id = request.args.get("nation_id")
+
+    if nation_id:
+
+        # GET NATION
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nations
+            WHERE nation_id = %s
+        """, (nation_id,))
+
+        selected_nation = cursor.fetchone()
+
+        # GET NATION RESOURCES
+        cursor.execute("""
+            SELECT
+                nation_resources.resource_id,
+                nation_resources.amount,
+
+                resources.resource_id,
+                resources.name,
+                resources.measurement_convention
+
+            FROM frontlinesdb.nation_resources
+
+            JOIN frontlinesdb.resources
+                ON nation_resources.resource_id = resources.resource_id
+
+            WHERE nation_resources.nation_id = %s
+        """, (nation_id,))
+
+        nation_resources = cursor.fetchall()
+
+    # -------------------------
+    # GET ALL RESOURCE TYPES
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.resources
+    """)
+
+    resources = cursor.fetchall()
+
     cursor.close()
     db.close()
 
@@ -273,7 +323,11 @@ def admin_dashboard():
         users=users,
         nations=nations,
         units=units,
-        selected_unit=selected_unit
+        selected_unit=selected_unit,
+
+        selected_nation=selected_nation,
+        nation_resources=nation_resources,
+        resources=resources
     )
 
 # ASSIGN NATION TO PLAYER
@@ -457,6 +511,40 @@ def update_unit():
     return redirect(
         url_for(
             "admin_dashboard",
+        )
+    )
+
+# UPDATE RESOURCE
+@app.route("/admin/update_resource", methods=["POST"])
+def update_resource():
+
+    if session["role"] != "admin":
+        return "Forbidden", 403
+
+    resource_id = request.form["resource_id"]
+    nation_id = request.form["nation_id"]
+    amount = request.form["amount"]
+
+    db = get_db_connection()
+
+    cursor = db.cursor()
+
+    cursor.execute("""
+        UPDATE nation_resources
+        SET amount = %s
+        WHERE resource_id = %s
+        AND nation_id = %s
+    """, (amount, resource_id, nation_id))
+
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(
+        url_for(
+            "admin_dashboard",
+            nation_id=nation_id
         )
     )
 
