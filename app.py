@@ -44,7 +44,6 @@ def dashboard():
     if "user_id" not in session:
         return redirect(url_for("access"))
 
-    print(session["nation_id"])
 
     db = get_db_connection()
 
@@ -81,9 +80,6 @@ def dashboard():
 
     cursor.close()
     db.close()
-
-    print(nation)
-    print(session["nation_id"])
 
     return render_template(
         "dashboard.html",
@@ -531,15 +527,43 @@ def update_resource():
     amount = request.form["amount"]
 
     db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
 
-    cursor = db.cursor()
+    # GET CURRENT GAME TURN
+    cursor.execute("""
+        SELECT turn_id
+        FROM game_turns
+        ORDER BY turn_id DESC
+        LIMIT 1
+    """)
 
+    current_turn = cursor.fetchone()
+
+    turn_id = current_turn["turn_id"]
+
+    # UPDATE CURRENT RESOURCE
     cursor.execute("""
         UPDATE nation_resources
         SET amount = %s
         WHERE resource_id = %s
         AND nation_id = %s
     """, (amount, resource_id, nation_id))
+
+    # INSERT RESOURCE HISTORY
+    cursor.execute("""
+        INSERT INTO resource_history ( 
+            nation_id,
+            resource_id,
+            turn_id,
+            amount
+        )
+        VALUES (%s, %s, %s, %s)
+    """, (
+        nation_id,
+        resource_id,
+        turn_id,
+        amount
+    ))
 
     db.commit()
 
