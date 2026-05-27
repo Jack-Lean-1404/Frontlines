@@ -44,6 +44,8 @@ def dashboard():
     if "user_id" not in session:
         return redirect(url_for("access"))
 
+    print(session["nation_id"])
+
     db = get_db_connection()
 
     cursor = db.cursor(dictionary=True)
@@ -79,6 +81,9 @@ def dashboard():
 
     cursor.close()
     db.close()
+
+    print(nation)
+    print(session["nation_id"])
 
     return render_template(
         "dashboard.html",
