@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Production</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/images/Logo-Blue.png">
+</head>
+
+ <!-- Display the navbar from the components folder -->
+{% include 'components/navbar.html' %}
+
+
+
+
+<body>
+    <div class="production-page">
+
+        <!-- Unit Shop -->
+        <aside class="unit-shop">
+            <h2>Unit Shop</h2>
+
+            <div class="shop-filters">
+
+                <button class="filter-btn active" data-filter="all">
+                    All
+                </button>
+
+                <button class="filter-btn" data-filter="land">
+                    Ground
+                </button>
+
+                <button class="filter-btn" data-filter="air">
+                    Air
+                </button>
+
+                <button class="filter-btn" data-filter="sea">
+                    Naval
+                </button>
+
+                <button class="filter-btn" data-filter="special">
+                    Special
+                </button>
+
+            </div>
+
+            <input
+                type="text"
+                id="unit-search"
+                placeholder="Search units...">
+
+            <div class="unit-grid">
+
+                {% for unit in units %}
+                    <div class="unit-card"
+                        data-strength="{{ unit.strength }}"
+                        data-defence="{{ unit.defence }}"
+                        data-cost="{{ unit.money_cost }}"
+                        data-build-time="{{ unit.build_time }}"
+                        data-class="{{ unit.unit_class }}">
+ 
+
+                        <div class="unit-card-left">
+
+                            <h3>{{ unit.unit_name }}</h3>
+
+                            <p>{{ unit.unit_class.capitalize() }}</p>
+
+
+                            <select class="tier-selector">
+
+                                <option value="1">
+                                    Tier 1 - Company
+                                </option>
+
+                                <option value="2">
+                                    Tier 2 - Battalion
+                                </option>
+
+                                <option value="3">
+                                    Tier 3 - Regiment
+                                </option>
+
+                                <option value="4">
+                                    Tier 4 - Division
+                                </option>
+
+                                <option value="5">
+                                    Tier 5 - Corps
+                                </option>
+
+                            </select>
+
+                            <div class="unit-stats">
+                                <span class="atk-value">ATK{{ unit.strength }} • </span>
+                                <span class="def-value">DEF {{ unit.defence }} • </span>
+                                <span>MOV {{ unit.movement }}</span>
+                            </div>
+
+                            <div class="unit-cost">
+                                $
+                                <span class="cost-value">
+                                    {{ "{:,}".format(unit.money_cost) }}
+                                </span>
+
+                                •
+
+                                <span class="build-time-value">
+                                    {{ unit.build_time }}
+                                </span>
+
+                                Turns
+                            </div>
+
+                        </div>
+
+                        <div class="unit-card-right">
+
+                            <div class="unit-icon">
+                                🪖
+                            </div>
+
+                            <div class="unit-actions">
+
+                                <button>Build</button>
+
+                                <button
+                                    class="details-btn"
+                                    data-unit-id="{{ unit.unit_id }}"
+                                    onclick="loadUnitDetails(this.dataset.unitId)">
+                                    Details
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+        </aside>
+
+
+
+
+        <!-- Unit Encyclopedia -->
+        <section class="unit-details">
+
+            <div class="wiki-header">
+                <h2>Mechanised Infantry Brigade</h2>
+                <p>Ground • Mechanised Infantry</p>
+            </div>
+
+            <div class="wiki-section">
+                <h3>Role</h3>
+                <p>
+                    Frontline mechanised formation capable of
+                    supporting offensive and defensive operations.
+                </p>
+            </div>
+
+            <div class="wiki-section">
+                <h3>Combat Statistics</h3>
+
+                <div class="stat-grid">
+                    <div>Attack: 8</div>
+                    <div>Defence: 6</div>
+                    <div>Movement: 3</div>
+                    <div>Range: 1</div>
+                </div>
+            </div>
+
+            <div class="wiki-section">
+                <h3>Economics</h3>
+
+                <div class="stat-grid">
+                    <div>Cost: $250M</div>
+                    <div>Build Time: 3 Turns</div>
+                    <div>Oil Upkeep: 5</div>
+                    <div>Money Upkeep: $1.5M</div>
+                </div>
+            </div>
+
+            <div class="wiki-section">
+                <h3>Strengths</h3>
+                <ul>
+                    <li>Good mobility</li>
+                    <li>Flexible deployment</li>
+                    <li>Strong against light infantry</li>
+                </ul>
+            </div>
+
+            <div class="wiki-section">
+                <h3>Weaknesses</h3>
+                <ul>
+                    <li>Vulnerable to armor</li>
+                    <li>Moderate upkeep costs</li>
+                </ul>
+            </div>
+
+            <button class="build-btn">
+                Build Unit
+            </button>
+
+        </section>
+
+
+        <!-- Production Lines -->
+        <aside class="production-panel">
+
+            <h2>Production Lines</h2>
+
+            <div class="domain-section">
+
+                <h3>Ground Production (3/3)</h3>
+
+                <div class="production-line">
+
+                    <div class="line-header">
+                        Ground Line 1
+                    </div>
+
+                    <div class="active-build">
+                        <strong>Mechanised Infantry Brigade</strong>
+
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+
+                        <p>2 Turns Remaining</p>
+                    </div>
+
+                    <div class="queue">
+                        <h4>Queue</h4>
+
+                        <div class="queue-item">
+                            SP Artillery Regiment
+                        </div>
+
+                        <div class="queue-item">
+                            MBT Battalion
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="production-line idle">
+
+                    <div class="line-header">
+                        Ground Line 2
+                    </div>
+
+                    <p>Ready For Production</p>
+
+                </div>
+
+                <div class="production-line idle">
+
+                    <div class="line-header">
+                        Ground Line 3
+                    </div>
+
+                    <p>Ready For Production</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="domain-section">
+
+                <h3>Air Production (1/2)</h3>
+
+                <div class="production-line idle">
+                    <div class="line-header">
+                        Air Line 1
+                    </div>
+
+                    <p>Ready For Production</p>
+                </div>
+
+            </div>
+
+
+            <div class="domain-section">
+
+                <h3>Naval Production (0/1)</h3>
+
+                <div class="production-line idle">
+                    <div class="line-header">
+                        Naval Line 1
+                    </div>
+
+                    <p>Ready For Production</p>
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+<script src="{{ url_for('static', filename='js/production.js') }}"></script>
+</body>
+</html>

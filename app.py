@@ -115,8 +115,28 @@ def dashboard():
         money_values=money_values
     )
 
+# Production Page
+@app.route("/production")
+def production():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
 
+    cursor.execute("""
+        SELECT *
+        FROM units
+        WHERE is_active = 1
+        ORDER BY money_cost ASC
+    """)
 
+    units = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "production.html",
+        units=units
+    )
 
 # SIGN UP
 @app.route("/signup", methods=["POST"])
