@@ -53,6 +53,7 @@
 
                 {% for unit in units %}
                     <div class="unit-card"
+                        data-unit-id="{{ unit.unit_id }}"
                         data-strength="{{ unit.strength }}"
                         data-defence="{{ unit.defence }}"
                         data-cost="{{ unit.money_cost }}"
@@ -130,12 +131,12 @@
 
                             <div class="unit-actions">
 
-                                <button
-                                    class="details-btn"
-                                    data-unit-id="{{ unit.unit_id }}"
-                                    onclick="loadUnitDetails(this.dataset.unitId)">
-                                    Details
-                                </button>
+                            <button
+                                class="details-btn"
+                                data-unit-id="{{ unit.unit_id }}"
+                                onclick="loadUnitDetails(this.dataset.unitId)">
+                                Details
+                            </button>
 
                                 <button>Build</button>
                             </div>
@@ -149,66 +150,13 @@
         </aside>
 
 
+        <section class="unit-details" id="unit-details-panel">
 
+            <h2>Unit Wiki</h2>
 
-        <!-- Unit Encyclopedia -->
-        <section class="unit-details">
-
-            <div class="wiki-header">
-                <h2>Mechanised Infantry Brigade</h2>
-                <p>Ground • Mechanised Infantry</p>
-            </div>
-
-            <div class="wiki-section">
-                <h3>Role</h3>
-                <p>
-                    Frontline mechanised formation capable of
-                    supporting offensive and defensive operations.
-                </p>
-            </div>
-
-            <div class="wiki-section">
-                <h3>Combat Statistics</h3>
-
-                <div class="stat-grid">
-                    <div>Attack: 8</div>
-                    <div>Defence: 6</div>
-                    <div>Movement: 3</div>
-                    <div>Range: 1</div>
-                </div>
-            </div>
-
-            <div class="wiki-section">
-                <h3>Economics</h3>
-
-                <div class="stat-grid">
-                    <div>Cost: $250M</div>
-                    <div>Build Time: 3 Turns</div>
-                    <div>Oil Upkeep: 5</div>
-                    <div>Money Upkeep: $1.5M</div>
-                </div>
-            </div>
-
-            <div class="wiki-section">
-                <h3>Strengths</h3>
-                <ul>
-                    <li>Good mobility</li>
-                    <li>Flexible deployment</li>
-                    <li>Strong against light infantry</li>
-                </ul>
-            </div>
-
-            <div class="wiki-section">
-                <h3>Weaknesses</h3>
-                <ul>
-                    <li>Vulnerable to armor</li>
-                    <li>Moderate upkeep costs</li>
-                </ul>
-            </div>
-
-            <button class="build-btn">
-                Build Unit
-            </button>
+            <p>
+                Select a unit from the shop to view detailed information.
+            </p>
 
         </section>
 

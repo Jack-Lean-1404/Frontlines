@@ -653,5 +653,58 @@ def update_resource():
         )
     )
 
+
+@app.route("/api/unit/<int:unit_id>")
+def get_unit(unit_id):
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT *
+        FROM units
+        JOIN unit_wiki
+            ON units.unit_id = unit_wiki.unit_id
+        WHERE units.unit_id = %s
+    """, (unit_id,))
+
+    unit = cursor.fetchone()
+
+    cursor.execute("""
+        SELECT tier_name
+        FROM unit_organisation_tiers
+        WHERE tier_type = %s
+        AND tier = 1
+    """, (unit["unit_group"],))
+
+    organisation = cursor.fetchone()
+
+    unit["organisation_name"] = organisation["tier_name"]
+
+    cursor.execute("""
+        SELECT *
+        FROM resources
+        WHERE is_active = 1
+    """)
+
+    resources = cursor.fetchall()
+
+    resource_units = {}
+
+    for resource in resources:
+        resource_units[
+            resource["name"]
+        ] = resource["measurement_convention"]
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "unit": unit,
+        "resource_units": resource_units
+    })
+
+
+
 if __name__ == "__main__": 
     app.run()
