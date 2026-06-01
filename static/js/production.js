@@ -93,7 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
             selector.addEventListener("change", () => {
 
                 const card =
-                    selector.closest(".unit-card");
+                        selector.closest(".unit-card");
+
+                card.querySelector(".current-tier")
+                    .textContent =
+                    selector.options[selector.selectedIndex].text;
 
                 const tier =
                     parseInt(selector.value);

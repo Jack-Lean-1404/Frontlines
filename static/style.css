@@ -109,7 +109,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 20px;
+    gap: 0px;
 
     background: #ffffff;
     border: 1px solid #444;
@@ -118,16 +118,17 @@ body {
 }
 
 .unit-card-left {
-    flex: 1;
+    flex: 2;
 }
 
 .unit-card-right {
-    width: 120px;
+    flex: 1;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    margin-right: 15px;
 }
 
 .unit-card h3 {
@@ -148,8 +149,16 @@ body {
 }
 
 .unit-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85px;
+    padding-bottom: 10px;
+}
+
+.unit-icon img {
+    max-height: 85px;
+    width: auto;
 }
 
 .unit-actions {
@@ -158,6 +167,98 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+
+.unit-domain[data-class="land"] {
+    display: inline-block;
+
+    padding: 5px 8px;
+    text-transform: uppercase;
+
+    margin: 10px 0;
+    background: #224729;
+    color: white;
+
+    border-radius: 8px;
+}
+
+.unit-tags {
+    display: flex;
+    gap: 10px;
+
+    margin-bottom: 10px;
+}
+
+.unit-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.unit-header h3 {
+    margin: 0;
+}
+
+.unit-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.unit-stats {
+    display: flex;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.unit-domain[data-class="air"] {
+    display: inline-block;
+
+
+    margin-bottom: 8px;
+
+    border-radius: 4px;
+
+    background: #7a7a7a;
+    color: white;
+
+    font-size: 0.8rem;
+
+    text-transform: uppercase;
+}
+
+.unit-domain[data-class="sea"] {
+    display: inline-block;
+
+
+    margin-bottom: 8px;
+
+    border-radius: 4px;
+
+    background: #0066b9;
+    color: white;
+
+    font-size: 0.8rem;
+    font-weight: bold;
+
+    text-transform: uppercase;
+}
+
+.unit-domain[data-class="special"] {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    border-radius: 4px;
+
+    background: #ffa600;
+    color: white;
+
+    font-size: 0.8rem;
+    font-weight: bold;
+
+    text-transform: uppercase;
 }
 
 /* =========================
@@ -273,6 +374,21 @@ button {
 
 .unit-actions button {
     width: 100%;
+}
+
+.tier-selector {
+
+    padding: 5px;
+
+    margin: 10px 0;
+
+    background: #2f3640;
+
+    color: white;
+
+    border-radius: 8px;
+
+    text-transform: uppercase;
 }
 
 button:hover {

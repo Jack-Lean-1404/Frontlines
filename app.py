@@ -130,12 +130,38 @@ def production():
 
     units = cursor.fetchall()
 
+     # Organisation Levels
+    cursor.execute("""
+        SELECT *
+        FROM unit_organisation_tiers
+        ORDER BY tier_type, tier
+    """)
+    organisation_rows = cursor.fetchall()
+
     cursor.close()
     conn.close()
 
+    organisation_names = {}
+
+    for row in organisation_rows:
+
+        group_id = row["tier_type"]
+        tier = row["tier"]
+        name = row["tier_name"]
+
+        if group_id not in organisation_names:
+            organisation_names[group_id] = {}
+
+        organisation_names[group_id][tier] = name
+        
+    for unit in units:
+        unit["unit_group"] = int(unit["unit_group"])
+
+    print(organisation_names)
     return render_template(
         "production.html",
-        units=units
+        units=units,
+        organisation_names=organisation_names
     )
 
 # SIGN UP
