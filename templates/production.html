@@ -67,9 +67,7 @@
 
                                 <h3>{{ unit.unit_name }}</h3>
 
-                                <div class="tier-badge current-tier">
-                                    <h3>{{ organisation_names[unit.unit_group][1] }}</h3>
-                                </div>
+                        
 
                             </div>
 
@@ -138,7 +136,11 @@
                                 Details
                             </button>
 
-                                <button>Build</button>
+                            <button
+                                data-unit-id="{{ unit.unit_id }}"
+                                onclick="buildUnit(this.dataset.unitId)">
+                                Build
+                            </button>
                             </div>
 
                         </div>
@@ -164,97 +166,13 @@
         <!-- Production Lines -->
         <aside class="production-panel">
 
-            <h2>Production Lines</h2>
-
-            <div class="domain-section">
-
-                <h3>Ground Production (3/3)</h3>
-
-                <div class="production-line">
-
-                    <div class="line-header">
-                        Ground Line 1
-                    </div>
-
-                    <div class="active-build">
-                        <strong>Mechanised Infantry Brigade</strong>
-
-                        <div class="progress-bar">
-                            <div class="progress"></div>
-                        </div>
-
-                        <p>2 Turns Remaining</p>
-                    </div>
-
-                    <div class="queue">
-                        <h4>Queue</h4>
-
-                        <div class="queue-item">
-                            SP Artillery Regiment
-                        </div>
-
-                        <div class="queue-item">
-                            MBT Battalion
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="production-line idle">
-
-                    <div class="line-header">
-                        Ground Line 2
-                    </div>
-
-                    <p>Ready For Production</p>
-
-                </div>
-
-                <div class="production-line idle">
-
-                    <div class="line-header">
-                        Ground Line 3
-                    </div>
-
-                    <p>Ready For Production</p>
-
-                </div>
-
-            </div>
-
-
-            <div class="domain-section">
-
-                <h3>Air Production (1/2)</h3>
-
-                <div class="production-line idle">
-                    <div class="line-header">
-                        Air Line 1
-                    </div>
-
-                    <p>Ready For Production</p>
-                </div>
-
-            </div>
-
-
-            <div class="domain-section">
-
-                <h3>Naval Production (0/1)</h3>
-
-                <div class="production-line idle">
-                    <div class="line-header">
-                        Naval Line 1
-                    </div>
-
-                    <p>Ready For Production</p>
-                </div>
-
-            </div>
+            <div id="production-panel"></div>
 
         </aside>
 
     </div>
+
+    
 
 <script src="{{ url_for('static', filename='js/production.js') }}"></script>
 </body>

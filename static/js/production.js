@@ -66,10 +66,6 @@ function getScaledStats(unit, unitId) {
 
 }
 
-function loadUnitDetails(unitId) {
-    console.log("Loading unit:", unitId);
-}
-
 let currentFilter = "all";
 
 function updateUnitDisplay() {
@@ -133,8 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
             updateUnitDisplay();
 
         });
-
     });
+
+    loadProductionLines();
 
     // Search Bar
     document.getElementById("unit-search")
@@ -155,9 +152,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 const card =
                         selector.closest(".unit-card");
 
-                card.querySelector(".current-tier")
-                    .textContent =
-                    selector.options[selector.selectedIndex].text;
+                const tierBadge =
+                    card.querySelector(".current-tier");
+
+                console.log(tierBadge);
+
+                if (tierBadge) {
+                    tierBadge.textContent =
+                        selector.options[selector.selectedIndex].text;
+                }
 
                 const tier =
                     parseInt(selector.value);
@@ -213,6 +216,22 @@ async function loadUnitDetails(unitId) {
 
     const stats = getScaledStats(unit, unitId);
 
+    const card =
+    document.querySelector(
+        `.unit-card[data-unit-id="${unitId}"]`
+    );
+
+    const tierSelector =
+        card.querySelector(".tier-selector");
+
+    const organisationName =
+        tierSelector.options[
+            tierSelector.selectedIndex
+        ].text;
+
+    console.log(unit);
+    console.log(unit.organisation_name);
+
     const strengthsHtml =
     unit.strengths
         .split("\n")
@@ -233,7 +252,7 @@ async function loadUnitDetails(unitId) {
 
             <div class="wiki-header">
                 <h2>${unit.unit_name}</h2>
-                <p>${unit.unit_class} • ${unit.organisation_name}</p>
+                <p>${unit.unit_class} • ${organisationName}</p>
             </div>
 
             <div class="wiki-section">
@@ -330,8 +349,9 @@ async function loadUnitDetails(unitId) {
                 </p>
             </div>
 
-            <button class="build-btn">
-                Build Unit
+            <button
+                onclick="buildUnit(${unit.unit_id})">
+                Build
             </button>
 
         </section>
@@ -339,4 +359,263 @@ async function loadUnitDetails(unitId) {
 
         `;
     
+
+
+}
+
+async function buildUnit(unitId) {
+
+    const card =
+        document.querySelector(
+            `.unit-card[data-unit-id="${unitId}"]`
+        );
+
+    const tier =
+        parseInt(
+            card.querySelector(".tier-selector").value
+        );
+
+    const response =
+        await fetch("/api/build-unit", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type":
+                    "application/json"
+            },
+
+            body: JSON.stringify({
+
+                unit_id: unitId,
+                tier: tier
+
+            })
+
+        });
+
+    const result =
+        await response.json();
+
+    console.log(result);
+
+    await loadProductionLines();
+}
+
+async function loadProductionLines() {
+
+    const response =
+        await fetch("/api/production");
+
+    const rows =
+        await response.json();
+
+    const groupedLines = {};
+
+    rows.forEach(row => {
+
+        if (!groupedLines[row.line_id]) {
+
+            groupedLines[row.line_id] = {
+                line_name: row.line_name,
+                line_type: row.line_type,
+                queue: []
+            };
+
+        }
+
+        if (row.unit_name) {
+
+            groupedLines[row.line_id]
+                .queue
+                .push(row);
+
+        }
+
+    });
+
+    const productionGroups = {
+        land: [],
+        air: [],
+        sea: []
+    };
+
+    Object.values(groupedLines)
+        .forEach(line => {
+
+            productionGroups[line.line_type]
+                .push(line);
+
+        });
+
+    let html = `
+        <h2>Production Lines</h2>
+    `;
+
+    const categories = [
+        {
+            key: "land",
+            title: "Ground Production"
+        },
+        {
+            key: "air",
+            title: "Air Production"
+        },
+        {
+            key: "sea",
+            title: "Naval Production"
+        }
+    ];
+
+    categories.forEach(category => {
+
+        const lines =
+            productionGroups[category.key];
+
+        const activeLines =
+            lines.filter(
+                line => line.queue.length > 0
+            ).length;
+
+        html += `
+            <div class="production-group">
+
+                <h3>
+                    ${category.title}
+                    (${activeLines}/${lines.length})
+                </h3>
+        `;
+
+        lines.forEach(line => {
+
+            html += `
+                <div class="production-line">
+
+                    <h4>${line.line_name}</h4>
+            `;
+
+            if (line.queue.length > 0) {
+
+                const active =
+                    line.queue[0];
+
+                const totalTime =
+                    active.build_time +
+                    (active.tier - 1);
+
+                const progress =
+                    (
+                        (totalTime - active.turns_remaining)
+                        / totalTime
+                    ) * 100;
+
+                html += `
+                    <p>
+                        ${active.unit_name}
+                        ${active.tier_name}
+                    </p>
+
+                    <div class="production-progress">
+
+                        <div
+                            class="production-progress-fill"
+                            style="width: ${progress}%">
+                        </div>
+
+                    </div>
+
+                    <div class="production-status">
+
+                        <span>
+                            ${active.turns_remaining}
+                            Turns Remaining
+                        </span>
+                        <button
+                            class="cancel-button"
+                            onclick="cancelQueue(${active.queue_id})">
+                            Cancel
+                        </button>
+
+
+                        </button>
+                    </div>
+                `;
+
+                if (line.queue.length > 1) {
+
+                    html += `
+                        <hr>
+
+                        <h5>Queue</h5>
+                    `;
+
+                    line.queue
+                        .slice(1)
+                        .forEach(unit => {
+
+                            html += `
+                                <div class="queue-item">
+
+                                    <span>
+                                        • ${unit.unit_name}
+                                        ${unit.tier_name}
+                                    </span>
+
+                                    <button
+                                        class="cancel-button"
+                                        onclick="cancelQueue(${unit.queue_id})">
+                                        Cancel
+                                    </button>
+
+                                </div>
+                            `;
+
+                        });
+
+                }
+
+            } else {
+
+                html += `
+                    <p>
+                        Ready For Production
+                    </p>
+                `;
+            }
+
+            html += `
+                </div>
+            `;
+
+        });
+
+        html += `
+            </div>
+        `;
+
+    });
+
+    document
+        .getElementById("production-panel")
+        .innerHTML = html;
+
+}
+
+async function cancelQueue(queueId) {
+
+    const response =
+        await fetch(
+            `/api/cancel-queue/${queueId}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+    const result =
+        await response.json();
+
+    console.log(result);
+
+    await loadProductionLines();
+
 }
