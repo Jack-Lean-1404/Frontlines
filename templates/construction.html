@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Production</title>
+    <title>Construction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="/static/images/Logo-Blue.png">
@@ -17,10 +17,10 @@
     <div class="production-page">
 
         <!-- Unit Shop -->
-        {% include "components/production_shop.html" %}
+        {% include "components/building_shop.html" %}
 
         <!-- Unit Wiki -->
-        {% include "components/production_details.html" %}
+        {% include "components/building_details.html" %}
 
         <!-- Production Lines -->
         {% include "components/production_queue.html" %}
@@ -28,6 +28,6 @@
     </div>
 
 
-<script src="{{ url_for('static', filename='js/production.js') }}"></script>
+<script src="{{ url_for('static', filename='js/construction.js') }}"></script>
 </body>
 </html>

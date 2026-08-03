@@ -1,37 +1,10 @@
-<nav>
-
-    <ul>
-
-        <li>
-            <a href="{{ url_for('home') }}">
-                Home
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ url_for('dashboard') }}">
-                Dashboard
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ url_for('admin_dashboard') }}">
-                Admin Panel
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ url_for('access') }}">
-                Login/Signup
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ url_for('logout') }}">
-                Logout
-            </a>
-        </li>
-
-    </ul>
-
-</nav>
+<!-- Navigation Links -->
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('admin_dashboard') }}">Admin Panel</a></li>
+                <li><a href="{{ url_for('access') }}">Login / Signup</a></li>
+                <li><a href="{{ url_for('logout') }}" class="logout">Logout</a></li>
+            </ul>
+        </nav>

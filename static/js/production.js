@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const tierBadge =
                     card.querySelector(".current-tier");
 
-                console.log(tierBadge);
+                // console.log(tierBadge);
 
                 if (tierBadge) {
                     tierBadge.textContent =
@@ -229,8 +229,8 @@ async function loadUnitDetails(unitId) {
             tierSelector.selectedIndex
         ].text;
 
-    console.log(unit);
-    console.log(unit.organisation_name);
+    // console.log(unit);
+    // console.log(unit.organisation_name);
 
     const strengthsHtml =
     unit.strengths
@@ -397,7 +397,7 @@ async function buildUnit(unitId) {
     const result =
         await response.json();
 
-    console.log(result);
+    // console.log(result);
 
     await loadProductionLines();
 }
@@ -614,7 +614,7 @@ async function cancelQueue(queueId) {
     const result =
         await response.json();
 
-    console.log(result);
+    // console.log(result);
 
     await loadProductionLines();
 

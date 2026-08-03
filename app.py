@@ -12,7 +12,7 @@ load_dotenv(dotenv_path=".env")
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
-print(os.getenv("SECRET_KEY"))
+# print(os.getenv("SECRET_KEY"))
 
 # DATABASE CONNECTION FUNCTION Witth the following code, we can connect to the database whenever we need to by calling the get_db_connection() function
 def get_db_connection():
@@ -157,12 +157,56 @@ def production():
     for unit in units:
         unit["unit_group"] = int(unit["unit_group"])
 
-    print(organisation_names)
     return render_template(
-        "production.html",
-        units=units,
-        organisation_names=organisation_names
-    )
+    "production.html",
+    units=units,
+    organisation_names=organisation_names
+)
+
+# Construction Page
+@app.route("/construction")
+def construction():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT *
+        FROM buildings
+        ORDER BY money_cost ASC
+    """)
+
+    buildings = cursor.fetchall()
+
+    #  # Organisation Levels
+    # cursor.execute("""
+    #     SELECT *
+    #     FROM unit_organisation_tiers
+    #     ORDER BY tier_type, tier
+    # """)
+    # organisation_rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    # for row in organisation_rows:
+
+    #     group_id = row["tier_type"]
+    #     tier = row["tier"]
+    #     name = row["tier_name"]
+
+    #     if group_id not in organisation_names:
+    #         organisation_names[group_id] = {}
+
+    #     organisation_names[group_id][tier] = name
+        
+    # for unit in units:
+    #     unit["unit_group"] = int(unit["unit_group"])
+
+    return render_template(
+    "construction.html",
+    buildings=buildings
+)
+
 
 @app.route("/api/production")
 def get_production():
@@ -291,6 +335,87 @@ def cancel_queue(queue_id):
         "success": True
     })
 
+@app.route(
+    "/api/cancel-construction/<int:queue_id>",
+    methods=["DELETE"]
+)
+def cancel_construction(queue_id):
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Find which building line this queue item belongs to
+    cursor.execute("""
+        SELECT line_id
+        FROM building_queue
+        WHERE queue_id = %s
+    """, (queue_id,))
+
+    queue_item = cursor.fetchone()
+
+    if not queue_item:
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+            "success": False,
+            "error": "Queue item not found"
+        }), 404
+
+    line_id = queue_item["line_id"]
+
+    # Delete the queue item
+    cursor.execute("""
+        DELETE
+        FROM building_queue
+        WHERE queue_id = %s
+    """, (queue_id,))
+
+    # Get remaining items in order
+    cursor.execute("""
+        SELECT queue_id
+        FROM building_queue
+        WHERE line_id = %s
+        ORDER BY position
+    """, (line_id,))
+
+    remaining = cursor.fetchall()
+
+    # Recalculate positions and statuses
+    position = 1
+
+    for item in remaining:
+
+        status = (
+            "building"
+            if position == 1
+            else "queued"
+        )
+
+        cursor.execute("""
+            UPDATE building_queue
+            SET
+                position = %s,
+                status = %s
+            WHERE queue_id = %s
+        """, (
+            position,
+            status,
+            item["queue_id"]
+        ))
+
+        position += 1
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "success": True
+    })
+
 # SIGN UP
 @app.route("/signup", methods=["POST"])
 def signup():
@@ -355,9 +480,9 @@ def login():
 
     user = cursor.fetchone()
 
-    print("Entered password:", password)
-    print("Stored hash:", user["password_hash"])
-    print(check_password_hash(user["password_hash"], password))
+    # print("Entered password:", password)
+    # print("Stored hash:", user["password_hash"])
+    # print(check_password_hash(user["password_hash"], password))
 
     if user and check_password_hash(
         user["password_hash"],
@@ -840,8 +965,6 @@ def build_unit():
     unit_id = data["unit_id"]
     tier = data["tier"]
 
-    print(unit_id, tier)
-
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -939,6 +1062,177 @@ def build_unit():
         "line": line["line_name"],
         "position": position
     })
+
+
+@app.route("/api/building/<int:building_id>")
+def get_building(building_id):
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT *
+        FROM buildings
+
+        JOIN building_wiki
+            ON buildings.building_id = building_wiki.building_id
+
+        WHERE buildings.building_id = %s
+    """, (building_id,))
+
+    building = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "building": building
+    })
+
+@app.route("/api/build-building", methods=["POST"])
+def build_building():
+
+    data = request.get_json()
+
+    building_id = data["building_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get the building
+    cursor.execute("""
+        SELECT *
+        FROM buildings
+        WHERE building_id = %s
+    """, (building_id,))
+
+    building = cursor.fetchone()
+
+    # Find the shortest construction line for this nation
+    cursor.execute("""
+        SELECT
+            bl.line_id,
+            bl.line_name,
+            COUNT(bq.queue_id) AS queue_size
+
+        FROM building_lines bl
+
+        LEFT JOIN building_queue bq
+            ON bl.line_id = bq.line_id
+
+        WHERE bl.nation_id = %s
+
+        GROUP BY
+            bl.line_id,
+            bl.line_name
+
+        ORDER BY
+            queue_size ASC,
+            bl.line_id ASC
+
+        LIMIT 1
+    """, (session["nation_id"],))
+
+    line = cursor.fetchone()
+
+    if not line:
+
+        return jsonify({
+            "success": False,
+            "error": "No construction line found"
+        }), 400
+
+    # Current queue size
+    cursor.execute("""
+        SELECT COUNT(*) AS queue_size
+        FROM building_queue
+        WHERE line_id = %s
+    """, (line["line_id"],))
+
+    queue_size = cursor.fetchone()["queue_size"]
+
+    position = queue_size + 1
+
+    status = "building" if position == 1 else "queued"
+
+    cursor.execute("""
+        INSERT INTO building_queue
+        (
+            line_id,
+            building_id,
+            position,
+            turns_remaining,
+            status
+        )
+        VALUES
+        (
+            %s,
+            %s,
+            %s,
+            %s,
+            %s
+        )
+    """, (
+        line["line_id"],
+        building_id,
+        position,
+        building["build_time"],
+        status
+    ))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "success": True,
+        "line": line["line_name"],
+        "position": position
+    })
+
+@app.route("/api/construction")
+def get_construction():
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT
+
+            bl.line_id,
+            bl.line_name,
+
+            bq.queue_id,
+            bq.position,
+            bq.turns_remaining,
+            bq.status,
+
+            b.building_name,
+            b.build_time
+
+        FROM building_lines bl
+
+        LEFT JOIN building_queue bq
+            ON bl.line_id = bq.line_id
+
+        LEFT JOIN buildings b
+            ON bq.building_id = b.building_id
+
+        WHERE bl.nation_id = %s
+
+        ORDER BY
+            bl.line_id,
+            bq.position
+
+    """, (session["nation_id"],))
+
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify(rows)
 
 if __name__ == "__main__": 
     app.run()

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="/static/images/Logo-Blue.png">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
 </head>
 
- <!-- Display the navbar from the components folder -->
 {% include 'components/navbar.html' %}
 
 <body>
@@ -97,7 +98,7 @@
         Production
     </button>
 
-    <button onclick="window.location.href='/military'">
+    <button onclick="window.location.href='/construction'">
         Buildings & Infrastructure
     </button>
 

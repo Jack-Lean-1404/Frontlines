@@ -1,0 +1,120 @@
+<aside class="unit-shop">
+            <h2>Building Shop</h2>
+
+            <div class="shop-filters">
+
+                <button class="filter-btn active" data-filter="all">
+                    All
+                </button>
+
+                <button class="filter-btn" data-filter="district">
+                    District
+                </button>
+
+                <button class="filter-btn" data-filter="facility">
+                    Facility
+                </button>
+
+                <button class="filter-btn" data-filter="infrastructure">
+                     Infrastructure
+                </button>
+
+            </div>
+
+            <input
+                type="text"
+                id="building-search"
+                placeholder="Search Buildings...">
+
+            <div class="unit-grid">
+
+                {% for building in buildings %}
+                    <div class="building-card"
+                        data-building-id="{{ building.building_id }}"
+                        data-cost="{{ building.money_cost }}"
+                        data-build-time="{{ building.build_time }}"
+                        data-class="{{ building.building_type }}">
+ 
+
+                        <div class="unit-card-left">
+
+                            <div class="unit-header">
+
+                                <h3>{{ building.building_name }}</h3>
+
+                        
+
+                            </div>
+
+                            <div class="unit-tags">
+
+                                <div class="unit-domain"
+                                    data-class="{{ building.building_type }}">
+                                    {{ building.building_type.capitalize() }}
+                                </div>
+                            </div>
+
+                            <div class="unit-stats">
+
+                                <span>
+                                    CM {{ "{:,}".format(building.cm_cost) }}
+                                </span>
+
+                                <span>
+                                    RM {{ "{:,}".format(building.rm_cost) }}
+                                </span>
+
+                                <span>
+                                    ${{ "{:,}".format(building.money_upkeep) }}/T
+                                </span>
+
+                            </div>
+
+                            <div class="unit-cost">
+                                $
+                                <span class="cost-value">
+                                    {{ "{:,}".format(building.money_cost) }}
+                                </span>
+
+                                •
+
+                                <span class="build-time-value">
+                                    {{ building.build_time }}
+                                </span>
+
+                                Turns
+                            </div>
+
+                        </div>
+
+                        <div class="unit-card-right">
+
+                            <div class="unit-icon">
+                                 <span class="building-placeholder-icon">
+                                    🏗️
+                                </span>
+                            </div>  
+
+                            <div class="unit-actions">
+
+                            <button
+                                class="details-btn"
+                                data-building-id="{{ building.building_id }}"
+                                onclick="loadBuildingDetails(this.dataset.buildingId)">
+                                Details
+                            </button>
+
+                            <button
+                                data-building-id="{{ building.building_id }}"
+                                onclick="buildBuilding(this.dataset.buildingId)">
+                                Build
+                            </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+        </aside>

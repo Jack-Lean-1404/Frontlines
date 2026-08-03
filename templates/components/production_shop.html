@@ -1,0 +1,133 @@
+<aside class="unit-shop">
+            <h2>Unit Shop</h2>
+
+            <div class="shop-filters">
+
+                <button class="filter-btn active" data-filter="all">
+                    All
+                </button>
+
+                <button class="filter-btn" data-filter="land">
+                    Ground
+                </button>
+
+                <button class="filter-btn" data-filter="air">
+                    Air
+                </button>
+
+                <button class="filter-btn" data-filter="sea">
+                    Naval
+                </button>
+
+                <button class="filter-btn" data-filter="special">
+                    Special
+                </button>
+
+            </div>
+
+            <input
+                type="text"
+                id="unit-search"
+                placeholder="Search units...">
+
+            <div class="unit-grid">
+
+                {% for unit in units %}
+                    <div class="unit-card"
+                        data-unit-id="{{ unit.unit_id }}"
+                        data-strength="{{ unit.strength }}"
+                        data-defence="{{ unit.defence }}"
+                        data-cost="{{ unit.money_cost }}"
+                        data-build-time="{{ unit.build_time }}"
+                        data-class="{{ unit.unit_class }}">
+ 
+
+                        <div class="unit-card-left">
+
+                            <div class="unit-header">
+
+                                <h3>{{ unit.unit_name }}</h3>
+
+                        
+
+                            </div>
+
+                            <div class="unit-tags">
+
+                                <div class="unit-domain"
+                                    data-class="{{ unit.unit_class }}">
+                                    {{ unit.unit_class.capitalize() }}
+                                </div>
+
+
+
+                                <select class="tier-selector">
+
+                                    {% for tier in range(1, 6) %}
+                                    <option value="{{ tier }}">
+                                        {{ organisation_names[unit.unit_group][tier] }}
+                                    </option>
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+                            <div class="unit-stats">
+                                <span>
+                                    ATK <span class="atk-value">{{ unit.strength }}</span>
+                                </span> 
+                                <span>
+                                    DEF <span class="def-value">{{ unit.defence }}</span>
+                                </span> 
+                                <span>
+                                    MOV <span class="mov-value">{{ unit.movement }}</span>
+                                </span> 
+                            </div>
+
+                            <div class="unit-cost">
+                                $
+                                <span class="cost-value">
+                                    {{ "{:,}".format(unit.money_cost) }}
+                                </span>
+
+                                •
+
+                                <span class="build-time-value">
+                                    {{ unit.build_time }}
+                                </span>
+
+                                Turns
+                            </div>
+
+                        </div>
+
+                        <div class="unit-card-right">
+
+                            <div class="unit-icon">
+                                <img src="{{ url_for('static', filename='images/unit_icons/' + unit.unit_icon) }}">
+                            </div>
+
+                            <div class="unit-actions">
+
+                            <button
+                                class="details-btn"
+                                data-unit-id="{{ unit.unit_id }}"
+                                onclick="loadUnitDetails(this.dataset.unitId)">
+                                Details
+                            </button>
+
+                            <button
+                                data-unit-id="{{ unit.unit_id }}"
+                                onclick="buildUnit(this.dataset.unitId)">
+                                Build
+                            </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+        </aside>

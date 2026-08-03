@@ -35,6 +35,96 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+/* ===========================
+   NAVBAR
+=========================== */
+
+.navbar {
+    background: #111827;
+    border-bottom: 2px solid #2563eb;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 70px;
+}
+
+/* Logo */
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.logo img {
+    height: 42px;
+    margin-right: 12px;
+}
+
+/* Navigation */
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links li {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #d1d5db;
+    font-weight: 500;
+    transition: 0.2s;
+    padding: 8px 0;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-links a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #2563eb;
+    transition: width 0.25s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Logout */
+
+.logout {
+    color: #ef4444 !important;
+}
+
+.logout:hover {
+    color: #ff6b6b !important;
+}
+
+
 /* =========================
    PRODUCTION PAGE LAYOUT
 ========================= */
@@ -186,6 +276,7 @@ body {
 .unit-tags {
     display: flex;
     gap: 10px;
+    align-items: center;
 
     margin-bottom: 10px;
 }
@@ -215,50 +306,79 @@ body {
 .unit-domain[data-class="air"] {
     display: inline-block;
 
+    padding: 5px 8px;
+    text-transform: uppercase;
 
-    margin-bottom: 8px;
-
-    border-radius: 4px;
-
+    margin: 10px 0;
     background: #7a7a7a;
     color: white;
 
-    font-size: 0.8rem;
-
-    text-transform: uppercase;
+    border-radius: 8px;
 }
 
 .unit-domain[data-class="sea"] {
     display: inline-block;
 
+    padding: 5px 8px;
+    text-transform: uppercase;
 
-    margin-bottom: 8px;
-
-    border-radius: 4px;
-
+    margin: 10px 0;
     background: #0066b9;
     color: white;
 
-    font-size: 0.8rem;
-    font-weight: bold;
-
-    text-transform: uppercase;
+    border-radius: 8px;
 }
 
 .unit-domain[data-class="special"] {
     display: inline-block;
 
-    margin-bottom: 8px;
+    padding: 5px 8px;
+    text-transform: uppercase;
 
-    border-radius: 4px;
-
+    margin: 10px 0;
     background: #ffa600;
     color: white;
 
-    font-size: 0.8rem;
-    font-weight: bold;
+    border-radius: 8px;
+}
 
+.unit-domain[data-class="district"] {
+    display: inline-block;
+
+    padding: 5px 8px;
     text-transform: uppercase;
+
+    margin: 10px 0;
+    background: #2e7d32;
+    color: white;
+
+    border-radius: 8px;
+}
+
+.unit-domain[data-class="facility"] {
+    display: inline-block;
+
+    padding: 5px 8px;
+    text-transform: uppercase;
+
+    margin: 10px 0;
+    background: #1565c0;
+    color: white;
+
+    border-radius: 8px;
+}
+
+.unit-domain[data-class="infrastructure"] {
+    display: inline-block;
+
+    padding: 5px 8px;
+    text-transform: uppercase;
+
+    margin: 10px 0;
+    background: #ef6c00;
+    color: white;
+
+    border-radius: 8px;
 }
 
 /* =========================
@@ -381,8 +501,6 @@ button {
 
     padding: 5px;
 
-    margin: 10px 0;
-
     background: #2f3640;
 
     color: white;
@@ -465,3 +583,18 @@ button:hover {
 .cancel-button button:hover {
     background: #302f2f;
 }
+
+.building-card {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0;
+
+    background: #fff;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 15px;
+
+}
+
