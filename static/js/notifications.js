@@ -80,18 +80,3 @@ const NotificationManager = {
     }
 
 };
-
-NotificationManager.show({
-
-    title: "Construction Started",
-
-    message:
-        "Mining District assigned to Construction Line 2.",
-
-    icon: "🏗️",
-
-    type: "success",
-
-    duration: 5000
-
-});

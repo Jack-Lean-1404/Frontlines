@@ -81,13 +81,40 @@ async function buildBuilding(buildingId) {
         });
 
     const result =
-    await response.json();
+        await response.json();
 
-    console.log(result);
+    if (result.success) {
 
-    await loadConstructionLines();
+        NotificationManager.show({
 
-}
+            title: "Construction Started",
+
+            message: `${result.building_name} added to ${result.line}.`,
+
+            icon: "🏗️",
+
+            type: "success"
+
+        });
+
+        await loadConstructionLines();
+
+    }
+    else {
+
+        NotificationManager.show({
+
+            title: "Construction Failed",
+
+            message: result.error,
+
+            icon: "❌",
+
+            type: "error"
+
+        });
+
+}}
 
 async function loadConstructionLines() {
 
@@ -251,7 +278,21 @@ async function cancelConstruction(queueId) {
     const result =
         await response.json();
 
-    console.log(result);
+    if (result.success) {
+
+        NotificationManager.show({
+
+            title: "Construction Cancelled",
+
+            message: result.message,
+
+            icon: "🚫",
+
+            type: "warning"
+
+        });
+
+    }
 
     await loadConstructionLines();
 

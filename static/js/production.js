@@ -397,9 +397,28 @@ async function buildUnit(unitId) {
     const result =
         await response.json();
 
-    // console.log(result);
+    if (result.success) {
 
-    await loadProductionLines();
+        NotificationManager.show(result);
+
+        await loadProductionLines();
+
+    }
+    else {
+
+        NotificationManager.show({
+
+            title: "Production Failed",
+
+            message: result.error,
+
+            type: "error",
+
+            icon: "❌"
+
+        });
+
+    }
 }
 
 async function loadProductionLines() {
@@ -611,11 +630,29 @@ async function cancelQueue(queueId) {
             }
         );
 
-    const result =
-        await response.json();
+    const result = await response.json();
 
-    // console.log(result);
+    if (result.success) {
 
-    await loadProductionLines();
+        NotificationManager.show(result);
+
+        await loadProductionLines();
+
+    }
+    else {
+
+        NotificationManager.show({
+
+            title: "Production Failed",
+
+            message: result.error,
+
+            type: "error",
+
+            icon: "❌"
+
+        });
+
+    }
 
 }

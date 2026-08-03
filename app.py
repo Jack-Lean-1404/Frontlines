@@ -265,9 +265,16 @@ def cancel_queue(queue_id):
 
     # Find which production line this queue item belongs to
     cursor.execute("""
-        SELECT line_id
-        FROM production_queue
-        WHERE queue_id = %s
+        SELECT
+            pq.line_id,
+            u.unit_name
+
+        FROM production_queue pq
+
+        JOIN units u
+            ON pq.unit_id = u.unit_id
+
+        WHERE pq.queue_id = %s
     """, (queue_id,))
 
     queue_item = cursor.fetchone()
@@ -283,6 +290,7 @@ def cancel_queue(queue_id):
         }), 404
 
     line_id = queue_item["line_id"]
+    unit_name = queue_item["unit_name"]
 
     # Delete the queue item
     cursor.execute("""
@@ -332,7 +340,17 @@ def cancel_queue(queue_id):
     conn.close()
 
     return jsonify({
-        "success": True
+
+        "success": True,
+
+        "title": "Production Cancelled",
+
+        "message": f"{unit_name} removed from the production queue.",
+
+        "type": "warning",
+
+        "icon": "🚫"
+
     })
 
 @app.route(
@@ -346,9 +364,16 @@ def cancel_construction(queue_id):
 
     # Find which building line this queue item belongs to
     cursor.execute("""
-        SELECT line_id
-        FROM building_queue
-        WHERE queue_id = %s
+        SELECT
+            bq.line_id,
+            b.building_name
+
+        FROM building_queue bq
+
+        JOIN buildings b
+            ON bq.building_id = b.building_id
+
+        WHERE bq.queue_id = %s
     """, (queue_id,))
 
     queue_item = cursor.fetchone()
@@ -364,6 +389,7 @@ def cancel_construction(queue_id):
         }), 404
 
     line_id = queue_item["line_id"]
+    building_name = queue_item["building_name"]
 
     # Delete the queue item
     cursor.execute("""
@@ -413,8 +439,13 @@ def cancel_construction(queue_id):
     conn.close()
 
     return jsonify({
-        "success": True
-    })
+
+    "success": True,
+
+    "message":
+        f"{building_name} removed from construction queue."
+
+})
 
 # SIGN UP
 @app.route("/signup", methods=["POST"])
@@ -1058,9 +1089,24 @@ def build_unit():
     conn.close()
 
     return jsonify({
+
         "success": True,
+
+        "title": "Production Started",
+
+        "message":
+            f"{unit['unit_name']} assigned to {line['line_name']}.",
+
+        "type": "success",
+
+        "icon": "🛡️",
+
         "line": line["line_name"],
+
+        "unit_name": unit["unit_name"],
+
         "position": position
+
     })
 
 
@@ -1186,9 +1232,13 @@ def build_building():
     conn.close()
 
     return jsonify({
+
         "success": True,
-        "line": line["line_name"],
-        "position": position
+
+        "building_name": building["building_name"],
+
+        "line": line["line_name"]
+
     })
 
 @app.route("/api/construction")
