@@ -16,6 +16,10 @@
 
     <p>Welcome, {{ session.username }}!</p>
 
+    <form action="/admin/process_turn" method="POST">
+        <button type="submit">Advance Turn</button>
+    </form>
+
     <h2>Assign Nations To Players</h2>
 
     {% for user in users %}

@@ -388,7 +388,7 @@ async function buildUnit(unitId) {
             body: JSON.stringify({
 
                 unit_id: unitId,
-                tier: tier
+                tier_id: tier
 
             })
 

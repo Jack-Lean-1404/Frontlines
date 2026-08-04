@@ -27,6 +27,40 @@
 
     </div>
 
+    <div id="miningPopup" class="popup-overlay" style="display: none;">
+
+    <div class="popup">
+
+            <h2>Mining District</h2>
+
+            <p>Select the resource this Mining District will extract.</p>
+
+            <label>
+                <input type="radio" name="miningResource" value="2" checked>
+                Common Metal
+            </label>
+
+            <br>
+
+            <label>
+                <input type="radio" name="miningResource" value="3">
+                Rare Metal
+            </label>
+
+            <br><br>
+
+            <button id="confirmMiningButton">
+                Build
+            </button>
+
+            <button onclick="closeMiningPopup()">
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
 
 <script src="{{ url_for('static', filename='js/notifications.js') }}"></script>
 <script src="{{ url_for('static', filename='js/construction.js') }}"></script>

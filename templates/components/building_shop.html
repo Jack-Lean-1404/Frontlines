@@ -97,18 +97,19 @@
 
                             <div class="unit-actions">
 
-                            <button
-                                class="details-btn"
-                                data-building-id="{{ building.building_id }}"
-                                onclick="loadBuildingDetails(this.dataset.buildingId)">
-                                Details
-                            </button>
+                                <button
+                                    class="details-btn"
+                                    data-building-id="{{ building.building_id }}"
+                                    onclick="loadBuildingDetails(this.dataset.buildingId)">
+                                    Details
+                                </button>
 
-                            <button
-                                data-building-id="{{ building.building_id }}"
-                                onclick="buildBuilding(this.dataset.buildingId)">
-                                Build
-                            </button>
+                                <button
+                                    data-building-id="{{ building.building_id }}"
+                                    data-building-name="{{ building.building_name }}"
+                                    onclick="startBuilding(this)">
+                                    Build
+                                </button>
                             </div>
 
                         </div>

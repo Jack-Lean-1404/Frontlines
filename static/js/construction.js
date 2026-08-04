@@ -61,7 +61,34 @@ async function loadBuildingDetails(buildingId) {
 
 }
 
-async function buildBuilding(buildingId) {
+let selectedMiningBuilding = null;
+
+function showMiningPopup(buildingId) {
+
+    selectedMiningBuilding = buildingId;
+
+    document.getElementById("miningPopup").style.display = "flex";
+}
+
+function closeMiningPopup() {
+
+    document.getElementById("miningPopup").style.display = "none";
+}
+
+function startBuilding(button) {
+
+    const buildingId = button.dataset.buildingId;
+    const buildingName = button.dataset.buildingName;
+
+    if (buildingName === "Mining District") {
+        showMiningPopup(buildingId);
+    }
+    else {
+        buildBuilding(buildingId);
+    }
+}
+
+async function buildBuilding(buildingId, resourceId = null) {
 
     const response =
         await fetch("/api/build-building", {
@@ -74,7 +101,8 @@ async function buildBuilding(buildingId) {
 
             body: JSON.stringify({
 
-                building_id: buildingId
+                building_id: buildingId,
+                resource_id: resourceId
 
             })
 
@@ -375,3 +403,21 @@ document.addEventListener("DOMContentLoaded", () => {
     updateBuildingDisplay();
 
 });
+
+document
+    .getElementById("confirmMiningButton")
+    .addEventListener("click", async function () {
+
+        const resourceId =
+            document.querySelector(
+                'input[name="miningResource"]:checked'
+            ).value;
+
+        closeMiningPopup();
+
+        await buildBuilding(
+            selectedMiningBuilding,
+            parseInt(resourceId)
+        );
+
+    });
