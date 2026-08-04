@@ -130,17 +130,17 @@ async function buildBuilding(buildingId, resourceId = null) {
     }
     else {
 
-        NotificationManager.show({
+    NotificationManager.show({
 
-            title: "Construction Failed",
+        title: result.title,
 
-            message: result.error,
+        message: result.message,
 
-            icon: "❌",
+        icon: result.icon,
 
-            type: "error"
+        type: result.type
 
-        });
+    });
 
 }}
 

@@ -80,6 +80,67 @@ def dashboard():
 
     resources = cursor.fetchall()
 
+        # -------------------------
+    # NATION SUMMARY
+    # -------------------------
+
+    cursor.execute("""
+        SELECT COUNT(*) AS total
+        FROM nation_buildings
+        WHERE nation_id = %s
+    """, (nation_id,))
+
+    buildings = cursor.fetchone()["total"]
+
+    cursor.execute("""
+        SELECT COUNT(*) AS total
+        FROM nation_units
+        WHERE nation_id = %s
+        AND status = 'active'
+    """, (nation_id,))
+
+    units = cursor.fetchone()["total"]
+
+    cursor.execute("""
+        SELECT COUNT(*) AS total
+        FROM building_queue bq
+
+        JOIN building_lines bl
+            ON bq.line_id = bl.line_id
+
+        WHERE bl.nation_id = %s
+    """, (nation_id,))
+
+    construction = cursor.fetchone()["total"]
+
+    cursor.execute("""
+        SELECT COUNT(*) AS total
+        FROM production_queue pq
+
+        JOIN production_lines pl
+            ON pq.line_id = pl.line_id
+
+        WHERE pl.nation_id = %s
+    """, (nation_id,))
+
+    production = cursor.fetchone()["total"]
+
+    summary = {
+
+        "cities": nation["cities"],
+
+        "capital": 1,
+
+        "buildings": buildings,
+
+        "units": units,
+
+        "construction": construction,
+
+        "production": production
+
+    }
+
     # -------------------------
     # GET MONEY HISTORY FOR CHART
     # -------------------------
@@ -111,6 +172,7 @@ def dashboard():
         "dashboard.html",
         nation=nation,
         resources=resources,
+        summary=summary,
         turn_labels=turn_labels,
         money_values=money_values
     )
@@ -146,7 +208,7 @@ def production():
     for row in organisation_rows:
 
         group_id = row["tier_type"]
-        tier_id = row["tier_id"]
+        tier_id = row["tier"]
         name = row["tier_name"]
 
         if group_id not in organisation_names:
@@ -1618,6 +1680,87 @@ def build_unit():
 
     cursor.execute("""
         SELECT
+            resource_id,
+            amount
+        FROM nation_resources
+        WHERE nation_id = %s
+    """,
+    (
+        session["nation_id"],
+    ))
+
+    resources = {
+        row["resource_id"]: row["amount"]
+        for row in cursor.fetchall()
+    }
+
+    required = [
+    (1, "Money", "💰", unit["money_cost"]),
+    (2, "Common Metal", "⛏️", unit["cm_cost"]),
+    (3, "Rare Metal", "💎", unit["rm_cost"]),
+]
+
+    for resource_id, name, icon, cost in required:
+
+        if resources[resource_id] < cost:
+
+            cursor.close()
+            conn.close()
+
+            return jsonify({
+
+                "success": False,
+
+                "title": "Production Failed",
+
+                "message": f"Not enough {name}.",
+
+                "icon": icon,
+
+                "type": "error"
+
+            })
+
+    for resource_id, _, _, cost in required:
+
+        cursor.execute("""
+            UPDATE nation_resources
+            SET amount = amount - %s
+            WHERE nation_id = %s
+            AND resource_id = %s
+        """,
+        (
+            cost,
+            session["nation_id"],
+            resource_id
+        ))
+
+
+    # -------------------------------------------------
+    # TEMPORARY:
+    # Special units still need a production line.
+    # Route them based on organisation group until
+    # production_type is added to the database.
+    # -------------------------------------------------
+
+    line_type = unit["unit_class"]
+
+    if line_type == "special":
+
+        if unit["unit_group"] == "4":
+            # Helicopter
+            line_type = "air"
+
+        elif unit["unit_group"] == "6":
+            # Submarine
+            line_type = "sea"
+
+        else:
+            # Engineers, Logistics, HQ, Artillery, etc.
+            line_type = "land"
+
+    cursor.execute("""
+        SELECT
             pl.line_id,
             pl.line_name,
             COUNT(pq.queue_id) AS queue_size
@@ -1641,17 +1784,30 @@ def build_unit():
             pl.line_id ASC
 
         LIMIT 1
-        """, (
-            session["nation_id"],
-            unit["unit_class"]
-        ))
+    """,
+    (
+        session["nation_id"],
+        line_type
+    ))
 
     line = cursor.fetchone()
 
     if not line:
+        cursor.close()
+        conn.close()
+
         return jsonify({
+
             "success": False,
-            "error": "No production line found"
+
+            "title": "Production Failed",
+
+            "message": "No production line found.",
+
+            "icon": "❌",
+
+            "type": "error"
+
         }), 400
 
     cursor.execute("""
@@ -1771,6 +1927,112 @@ def build_building():
 
     building = cursor.fetchone()
 
+    cursor.execute("""
+        SELECT
+            resource_id,
+            amount
+        FROM nation_resources
+        WHERE nation_id = %s
+    """,
+    (
+        session["nation_id"],
+    ))
+
+    resources = {
+            row["resource_id"]: row["amount"]
+            for row in cursor.fetchall()
+        }
+
+    if resources[1] < building["money_cost"]:
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+
+            "success": False,
+
+            "title": "Construction Failed",
+
+            "message": "You do not have enough Money.",
+
+            "icon": "💰",
+
+            "type": "error"
+
+        })
+    
+    if resources[2] < building["cm_cost"]:
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+
+            "success": False,
+
+            "title": "Construction Failed",
+
+            "message": "You do not have enough Common Metal.",
+
+            "icon": "⛏️",
+
+            "type": "error"
+
+        })
+
+    if resources[3] < building["rm_cost"]:
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+
+            "success": False,
+
+            "title": "Construction Failed",
+
+            "message": "You do not have enough Rare Metal.",
+
+            "icon": "💎",
+
+            "type": "error"
+
+        })
+
+    cursor.execute("""
+        UPDATE nation_resources
+        SET amount = amount - %s
+        WHERE nation_id = %s
+        AND resource_id = 1
+    """,
+    (
+        building["money_cost"],
+        session["nation_id"]
+    ))
+
+    cursor.execute("""
+        UPDATE nation_resources
+        SET amount = amount - %s
+        WHERE nation_id = %s
+        AND resource_id = 2
+    """,
+    (
+        building["cm_cost"],
+        session["nation_id"]
+    ))
+
+    cursor.execute("""
+        UPDATE nation_resources
+        SET amount = amount - %s
+        WHERE nation_id = %s
+        AND resource_id = 3
+    """,
+    (
+        building["rm_cost"],
+        session["nation_id"]
+    ))
+
     # Find the shortest construction line for this nation
     cursor.execute("""
         SELECT
@@ -1800,9 +2062,22 @@ def build_building():
 
     if not line:
 
+        cursor.close()
+        conn.close()
+
         return jsonify({
+
+
             "success": False,
-            "error": "No construction line found"
+
+            "title": "Construction Failed",
+
+            "message": "No construction line found.",
+
+            "icon": "❌",
+
+            "type": "error"
+
         }), 400
 
     # Current queue size

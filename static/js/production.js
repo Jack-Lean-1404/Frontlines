@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 card.querySelector(".build-time-value")
                     .textContent =
-                    baseBuildTime * multiplier;
+                    baseBuildTime + (multiplier - 1);
 
             });
 
@@ -228,9 +228,6 @@ async function loadUnitDetails(unitId) {
         tierSelector.options[
             tierSelector.selectedIndex
         ].text;
-
-    // console.log(unit);
-    // console.log(unit.organisation_name);
 
     const strengthsHtml =
     unit.strengths
@@ -358,8 +355,6 @@ async function loadUnitDetails(unitId) {
 
 
         `;
-    
-
 
 }
 
@@ -397,26 +392,11 @@ async function buildUnit(unitId) {
     const result =
         await response.json();
 
+    NotificationManager.show(result);
+
     if (result.success) {
 
-        NotificationManager.show(result);
-
         await loadProductionLines();
-
-    }
-    else {
-
-        NotificationManager.show({
-
-            title: "Production Failed",
-
-            message: result.error,
-
-            type: "error",
-
-            icon: "❌"
-
-        });
 
     }
 }
