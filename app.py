@@ -8,6 +8,16 @@ from flask import redirect, url_for
 import mysql.connector
 import os
 
+from economy import (
+    get_money_income,
+    get_money_upkeep,
+    get_oil_production,
+    get_oil_consumption,
+    get_cm_production,
+    get_cm_consumption,
+    get_rm_production,
+    get_rm_consumption
+)
 
 load_dotenv(dotenv_path=".env")
 
@@ -47,9 +57,12 @@ def dashboard():
         return redirect(url_for("access"))
 
 
+
     db = get_db_connection()
 
     cursor = db.cursor(dictionary=True)
+
+    
 
     # -------------------------
     # GET NATION
@@ -63,6 +76,22 @@ def dashboard():
     nation = cursor.fetchone()
 
     nation_id = nation["nation_id"]
+
+    money_income = get_money_income(cursor, nation_id)
+    money_upkeep = get_money_upkeep(cursor, nation_id)
+    money_net = money_income - money_upkeep
+
+    oil_production = get_oil_production(cursor, nation_id)
+    oil_consumption = get_oil_consumption(cursor, nation_id)
+    oil_net = oil_production - oil_consumption
+
+    cm_production = get_cm_production(cursor, nation_id)
+    cm_consumption = get_cm_consumption(cursor, nation_id)
+    cm_net = cm_production - cm_consumption
+
+    rm_production = get_rm_production(cursor, nation_id)
+    rm_consumption = get_rm_consumption(cursor, nation_id)
+    rm_net = rm_production - rm_consumption
 
     # -------------------------
     # GET RESOURCES
@@ -417,6 +446,7 @@ def dashboard():
     print(construction_lines)
     print(production_lines)
 
+
     return render_template(
         "dashboard.html",
         current_page="overview",
@@ -429,6 +459,21 @@ def dashboard():
         infrastructure=infrastructure,
         construction_lines=construction_lines,
         production_lines=production_lines,
+        money_income=money_income,
+        money_upkeep=money_upkeep,
+        money_net=money_net,
+
+        oil_production=oil_production,
+        oil_consumption=oil_consumption,
+        oil_net=oil_net,
+
+        cm_production=cm_production,
+        cm_consumption=cm_consumption,
+        cm_net=cm_net,
+
+        rm_production=rm_production,
+        rm_consumption=rm_consumption,
+        rm_net=rm_net,
     )
 
 @app.route("/economy")
@@ -1083,34 +1128,32 @@ def process_turn():
     # ECONOMY
     # ==========================================
 
-    # Select all active nations and their capitals and cities
+    # Get all active nations
     cursor.execute("""
-    SELECT
-        nation_id,
-        capital_count,
-        city_count
-    FROM nations
-    WHERE is_active = 1
+        SELECT nation_id
+        FROM nations
+        WHERE is_active = 1
     """)
 
     nations = cursor.fetchall()
 
     for nation in nations:
-        income = (
-            nation["capital_count"] * 200000000 +
-            nation["city_count"] * 50000000
+
+        income = get_money_income(
+            cursor,
+            nation["nation_id"]
         )
 
-        print(f"Nation {nation['nation_id']} earned ${income:,}")
+        print(
+            f"Nation {nation['nation_id']} "
+            f"earned ${income:,}"
+        )
 
         cursor.execute("""
-        UPDATE nation_resources
-
-        SET amount = amount + %s
-
-        WHERE nation_id = %s
-
-        AND resource_id = 1
+            UPDATE nation_resources
+            SET amount = amount + %s
+            WHERE nation_id = %s
+            AND resource_id = 1
         """,
         (
             income,
