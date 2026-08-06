@@ -80,7 +80,7 @@ def dashboard():
 
     resources = cursor.fetchall()
 
-        # -------------------------
+    # -------------------------
     # NATION SUMMARY
     # -------------------------
 
@@ -127,13 +127,17 @@ def dashboard():
 
     summary = {
 
-        "cities": nation["cities"],
+        "cities": nation["city_count"],
 
-        "capital": 1,
+        "capital": nation["capital_count"],
 
         "buildings": buildings,
 
         "units": units,
+
+        "military_score": nation["military_score"],
+
+        "economic_score": nation["economic_score"],
 
         "construction": construction,
 
@@ -142,9 +146,237 @@ def dashboard():
     }
 
     # -------------------------
+    # MILITARY OVERVIEW
+    # -------------------------
+
+    cursor.execute("""
+        SELECT
+            u.unit_name,
+            u.unit_class,
+            uot.tier_name,
+            nu.tier_level,
+            COUNT(*) AS total
+
+        FROM nation_units nu
+
+        JOIN units u
+            ON nu.unit_id = u.unit_id
+
+        JOIN unit_organisation_tiers uot
+            ON uot.tier_type = u.unit_group
+        AND uot.tier = nu.tier_level
+
+        WHERE
+            nu.nation_id = %s
+        AND
+            nu.status = 'active'
+
+        GROUP BY
+            u.unit_name,
+            u.unit_class,
+            nu.tier_level,
+            uot.tier_name
+
+        ORDER BY
+            FIELD(u.unit_class, 'land', 'air', 'sea', 'special'),
+            u.unit_name,
+            nu.tier_level
+    """, (nation_id,))
+
+    rows = cursor.fetchall()
+
+    military = {
+        "land": {},
+        "air": {},
+        "sea": {},
+        "special": {}
+    }
+
+    for row in rows:
+
+        unit_class = row["unit_class"]
+
+        unit_name = row["unit_name"]
+
+        if unit_class not in military:
+
+            military[unit_class] = {}
+
+        if unit_name not in military[unit_class]:
+
+            military[unit_class][unit_name] = []
+
+        military[unit_class][unit_name].append({
+
+            "tier": row["tier_name"],
+
+            "count": row["total"]
+
+        })
+
+    # -------------------------
+    # INFRASTRUCTURE
+    # -------------------------
+
+    cursor.execute("""
+        SELECT
+            b.building_type,
+            b.building_name,
+            COUNT(*) AS total
+
+        FROM nation_buildings nb
+
+        JOIN buildings b
+            ON nb.building_id = b.building_id
+
+        WHERE
+            nb.nation_id = %s
+
+        GROUP BY
+            b.building_type,
+            b.building_name
+
+        ORDER BY
+            b.building_type,
+            b.building_name
+    """, (nation_id,))
+
+    rows = cursor.fetchall()
+
+    titles = {
+
+        "district": "Districts",
+
+        "infrastructure": "Infrastructure",
+
+        "facility": "Facilities"
+
+    }
+
+    infrastructure = {}
+
+    for row in rows:
+
+        building_type = titles.get(
+            row["building_type"].lower(),
+            row["building_type"].title()
+        )
+
+        if building_type not in infrastructure:
+
+            infrastructure[building_type] = {}
+
+        infrastructure[building_type][row["building_name"]] = row["total"]
+
+    # -------------------------
+    # ACTIVE CONSTRUCTION
+    # -------------------------
+
+    cursor.execute("""
+        SELECT
+
+            bl.line_name,
+
+            b.building_name,
+
+            bq.turns_remaining,
+
+            b.build_time
+
+        FROM building_lines bl
+
+        LEFT JOIN building_queue bq
+            ON bl.line_id = bq.line_id
+
+        LEFT JOIN buildings b
+            ON bq.building_id = b.building_id
+
+        WHERE
+            bl.nation_id = %s
+        AND
+            bq.status = 'building'
+
+        ORDER BY bl.line_id
+    """, (nation_id,))
+
+    construction_lines = cursor.fetchall()
+
+    for row in construction_lines:
+
+        if row["build_time"]:
+
+            row["progress"] = (
+                (row["build_time"] - row["turns_remaining"])
+                / row["build_time"]
+            ) * 100
+
+        else:
+
+            row["progress"] = 0
+
+    # -------------------------
+    # ACTIVE UNIT PRODUCTION
+    # -------------------------
+
+    cursor.execute("""
+        SELECT
+
+            pl.line_name,
+
+            u.unit_name,
+
+            pq.turns_remaining,
+
+            pq.tier,
+
+            u.build_time,
+
+            t.tier_name
+
+        FROM production_lines pl
+
+        LEFT JOIN production_queue pq
+            ON pl.line_id = pq.line_id
+
+        LEFT JOIN units u
+            ON pq.unit_id = u.unit_id
+
+        LEFT JOIN unit_organisation_tiers t
+            ON
+                t.tier_type = u.unit_group
+            AND
+                t.tier = pq.tier
+
+        WHERE
+            pl.nation_id = %s
+        AND
+            pq.status = 'building'
+
+        ORDER BY pl.line_id
+    """, (nation_id,))
+
+    production_lines = cursor.fetchall()
+
+    for row in production_lines:
+
+        if row["build_time"]:
+
+            row["progress"] = (
+                (row["build_time"] - row["turns_remaining"])
+                / row["build_time"]
+            ) * 100
+
+        else:
+
+            row["progress"] = 0
+
+
+
+    # -------------------------
     # GET MONEY HISTORY FOR CHART
     # -------------------------
     cursor.execute("""
+
         SELECT
             gt.turn_id,
             rh.amount
@@ -168,13 +400,20 @@ def dashboard():
     cursor.close()
     db.close()
 
+    print(construction_lines)
+    print(production_lines)
+
     return render_template(
         "dashboard.html",
         nation=nation,
         resources=resources,
         summary=summary,
         turn_labels=turn_labels,
-        money_values=money_values
+        money_values=money_values,
+        military=military,
+        infrastructure=infrastructure,
+        construction_lines=construction_lines,
+        production_lines=production_lines,
     )
 
 # Production Page
