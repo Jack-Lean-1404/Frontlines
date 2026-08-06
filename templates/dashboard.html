@@ -11,25 +11,9 @@
 
 {% include 'components/navbar.html' %}
 
+{% include "partials/nation_header.html" %}
+
 <body>
-
-
-<div class="dashboard-header">
-
-    <img
-        src="{{ url_for('static', filename='' + nation.flag) }}"
-        class="dashboard-flag"
-        alt="{{ nation.name }}">
-
-    <div class="dashboard-title">
-
-        <h1>{{ nation.name }}</h1>
-
-        <p>Player Dashboard</p>
-
-    </div>
-
-</div>
 
 <div class="dashboard-grid">
 
@@ -78,50 +62,73 @@
 
     <!-- Resources -->
     <section class="dashboard-card">
-        <section class="dashboard-card">
 
-            <h2>Resources</h2>
+        <h2>Resources</h2>
 
-            <div class="summary-row">
+        <div class="summary-row">
 
-                <span>Money</span>
+            <span>Money</span>
 
-                <strong>$0</strong>
+            <strong>${{ "{:,.0f}".format(resource_values[1]["amount"]) }}</strong>
 
-            </div>
+        </div>
 
-            <div class="summary-row">
+        <div class="summary-row">
 
-                <span>Oil</span>
+            <span>Oil</span>
 
-                <strong>0 bbl</strong>
+            <strong>
 
-            </div>
+                {{ "{:,.0f}".format(resource_values[4]["amount"]) }}
 
-            <div class="summary-row">
+                {{ resource_values[4]["unit"] }}
 
-                <span>Common Metal</span>
+            </strong>
 
-                <strong>0 t</strong>
+        </div>
 
-            </div>
+        <div class="summary-row">
 
-            <div class="summary-row">
+            <span>Common Metal</span>
 
-                <span>Rare Metal</span>
+            <strong>
 
-                <strong>0 t</strong>
+                {{ "{:,.0f}".format(resource_values[2]["amount"]) }}
 
-            </div>
+                {{ resource_values[2]["unit"] }}
 
-            <div class="summary-row">
+            </strong>
 
-                <span>Research</span>
+        </div>
 
-                <strong>0 RP</strong>
+        <div class="summary-row">
 
-            </div>
-        </section>
+            <span>Rare Metal</span>
+
+            <strong>
+
+                {{ "{:,.0f}".format(resource_values[3]["amount"]) }}
+
+                {{ resource_values[3]["unit"] }}
+
+            </strong>
+
+        </div>
+
+        <div class="summary-row">
+
+            <span>Research</span>
+
+            <strong>
+
+                {{ "{:,.0f}".format(resource_values[5]["amount"]) }}
+
+                {{ resource_values[5]["unit"] }}
+
+            </strong>
+
+        </div>
+
     </section>
 
     <!-- Economy -->
@@ -470,26 +477,6 @@
 <p>Display notifications about recent events, such as attacks, research completion, etc.</p>
 <p>In a list (table format)</p>
 
-<h2>Actions</h2>
 
-<div class="dashboard-actions">
-
-    <button onclick="window.location.href='/economy'">
-        Economy Management
-    </button>
-
-    <button onclick="window.location.href='/production'">
-        Production
-    </button>
-
-    <button onclick="window.location.href='/construction'">
-        Buildings & Infrastructure
-    </button>
-
-    <button onclick="window.location.href='/research'">
-        Research & Technology
-    </button>
-
-</div>
 </body>
 </html>

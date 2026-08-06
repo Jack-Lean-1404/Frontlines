@@ -1,3 +1,5 @@
+from importlib import resources
+
 from flask import Flask, render_template, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
@@ -67,6 +69,7 @@ def dashboard():
     # -------------------------
     cursor.execute("""
         SELECT
+            nation_resources.resource_id,
             nation_resources.amount,
             resources.name,
             resources.measurement_convention
@@ -79,6 +82,17 @@ def dashboard():
     """, (session["nation_id"],))
 
     resources = cursor.fetchall()
+
+    resource_values = {}
+
+    for resource in resources:
+
+        resource_values[resource["resource_id"]] = {
+
+            "amount": resource["amount"],
+            "unit": resource["measurement_convention"]
+
+        }
 
     # -------------------------
     # NATION SUMMARY
@@ -405,8 +419,9 @@ def dashboard():
 
     return render_template(
         "dashboard.html",
-        nation=nation,
+        current_page="overview",
         resources=resources,
+        resource_values=resource_values,
         summary=summary,
         turn_labels=turn_labels,
         money_values=money_values,
@@ -415,6 +430,19 @@ def dashboard():
         construction_lines=construction_lines,
         production_lines=production_lines,
     )
+
+@app.route("/economy")
+def economy():
+    return render_template("economy.html", current_page="economy")
+
+
+@app.route("/research")
+def research():
+    return render_template("research.html", current_page="research")
+
+@app.route("/diplomacy")
+def diplomacy():
+    return render_template("diplomacy.html", current_page="diplomacy")
 
 # Production Page
 @app.route("/production")
@@ -460,6 +488,7 @@ def production():
 
     return render_template(
     "production.html",
+    current_page="production",
     units=units,
     organisation_names=organisation_names
 )
@@ -505,7 +534,8 @@ def construction():
 
     return render_template(
     "construction.html",
-    buildings=buildings
+    buildings=buildings,
+    current_page="construction"
 )
 
 
@@ -2418,6 +2448,43 @@ def get_construction():
     conn.close()
 
     return jsonify(rows)
+
+
+@app.context_processor
+def inject_nation():
+
+    if "nation_id" not in session:
+
+        return {}
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT *
+        FROM nations
+        WHERE nation_id = %s
+    """, (session["nation_id"],))
+
+    nation = cursor.fetchone()
+
+     # Current Turn
+    cursor.execute("""
+        SELECT current_turn
+        FROM game_state
+    """)
+
+    turn = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return {
+        "nation": nation,
+        "current_turn": turn["current_turn"]
+    }
+
+
 
 if __name__ == "__main__": 
     app.run()

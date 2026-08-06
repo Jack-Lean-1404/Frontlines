@@ -1,0 +1,84 @@
+    <div class="nation-header">
+
+        <div class="nation-header-top">
+
+        <div class="nation-left">
+
+        <img
+            src="{{ url_for('static', filename='' + nation.flag) }}"
+            class="dashboard-flag"
+            alt="{{ nation.name }}">
+
+            <div class="nation-info">
+
+                <h1>{{ nation.name }}</h1>
+
+                <div class="nation-summary">
+
+                    <span>Military Score: {{ nation.military_score }}</span>
+
+                    <span>Economic Score: {{ nation.economic_score }}</span>
+
+                    <span>{{ nation.city_count }} Cities</span>
+
+                    <span>{{ nation.capital_count }} Capital</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="turn-info">
+
+            <h3>
+                Current Turn
+                <span>{{ current_turn }}</span>
+
+            </h3>
+
+        </div>
+
+    </div>
+
+    <nav class="nation-nav">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="{% if current_page == 'overview' %}active{% endif %}">
+            Overview
+        </a>
+
+        <a
+            href="{{ url_for('diplomacy') }}"
+            class="{% if current_page == 'diplomacy' %}active{% endif %}">
+            Diplomacy
+        </a>
+
+        <a
+            href="{{ url_for('economy') }}"
+            class="{% if current_page == 'economy' %}active{% endif %}">
+            Economy
+        </a>
+
+        <a
+            href="{{ url_for('production') }}"
+            class="{% if current_page == 'production' %}active{% endif %}">
+            Production
+        </a>
+
+        <a
+            href="{{ url_for('construction') }}"
+            class="{% if current_page == 'construction' %}active{% endif %}">
+            Construction
+        </a>
+
+        <a
+            href="{{ url_for('research') }}"
+            class="{% if current_page == 'research' %}active{% endif %}">
+            Research
+        </a>
+
+    </nav>
+
+</div>
