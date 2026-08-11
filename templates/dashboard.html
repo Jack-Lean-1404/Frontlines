@@ -9,474 +9,424 @@
     <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
 </head>
 
-{% include 'components/navbar.html' %}
-
-{% include "partials/nation_header.html" %}
-
 <body>
 
-<div class="dashboard-grid">
+    {% include 'components/navbar.html' %}
 
-    <!-- Nation -->
-    <section class="dashboard-card">
-        <section class="dashboard-card">
+        <section class="game-container">
 
-            <h2>Nation Summary</h2>
+            {% include "partials/nation_header.html" %}
 
-            <table class="summary-table">
+            <div class="dashboard-grid">
 
-                <tr>
-                    <td>Cities</td>
-                    <td>{{ summary.cities }}</td>
-                </tr>
+            <!-- Nation -->
+            <section class="dashboard-card">
 
-                <tr>
-                    <td>Capital</td>
-                    <td>{{ summary.capital }}</td>
-                </tr>
+                <h2>Nation Summary</h2>
 
-                <tr>
-                    <td>Buildings</td>
-                    <td>{{ summary.buildings }}</td>
-                </tr>
+                <table class="summary-table">
 
-                <tr>
-                    <td>Military Units</td>
-                    <td>{{ summary.units }}</td>
-                </tr>
+                    <tr>
+                        <td>Cities</td>
+                        <td>{{ summary.cities }}</td>
+                    </tr>
 
-                <tr>
-                    <td>Construction</td>
-                    <td>{{ summary.construction }}</td>
-                </tr>
+                    <tr>
+                        <td>Capital</td>
+                        <td>{{ summary.capital }}</td>
+                    </tr>
 
-                <tr>
-                    <td>Production</td>
-                    <td>{{ summary.production }}</td>
-                </tr>
+                    <tr>
+                        <td>Buildings</td>
+                        <td>{{ summary.buildings }}</td>
+                    </tr>
 
-            </table>
+                    <tr>
+                        <td>Military Units</td>
+                        <td>{{ summary.units }}</td>
+                    </tr>
 
-        </section>
-    </section>
+                    <tr>
+                        <td>Construction</td>
+                        <td>{{ summary.construction }}</td>
+                    </tr>
 
-    <!-- Resources -->
-    <section class="dashboard-card">
+                    <tr>
+                        <td>Production</td>
+                        <td>{{ summary.production }}</td>
+                    </tr>
+
+                </table>
+
+            </section>
+
+
+            <!-- Resources -->
+            <section class="dashboard-card">
 
-        <h2>Resources</h2>
-
-        <div class="summary-row">
-
-            <span>Money</span>
-
-            <strong>${{ "{:,.0f}".format(resource_values[1]["amount"]) }}</strong>
-
-        </div>
-
-        <div class="summary-row">
-
-            <span>Oil</span>
-
-            <strong>
-
-                {{ "{:,.0f}".format(resource_values[4]["amount"]) }}
-
-                {{ resource_values[4]["unit"] }}
-
-            </strong>
-
-        </div>
-
-        <div class="summary-row">
-
-            <span>Common Metal</span>
-
-            <strong>
-
-                {{ "{:,.0f}".format(resource_values[2]["amount"]) }}
-
-                {{ resource_values[2]["unit"] }}
-
-            </strong>
-
-        </div>
-
-        <div class="summary-row">
-
-            <span>Rare Metal</span>
-
-            <strong>
-
-                {{ "{:,.0f}".format(resource_values[3]["amount"]) }}
-
-                {{ resource_values[3]["unit"] }}
-
-            </strong>
-
-        </div>
-
-        <div class="summary-row">
-
-            <span>Research</span>
-
-            <strong>
-
-                {{ "{:,.0f}".format(resource_values[5]["amount"]) }}
-
-                {{ resource_values[5]["unit"] }}
-
-            </strong>
-
-        </div>
-
-    </section>
-
-    <!-- Economy -->
-    <section class="dashboard-card">
-        <section class="dashboard-card">
-
-            <h2>Economy Overview</h2>
-
-            <h3>Money</h3>
-
-            <div class="summary-row">
-
-                <span>Income</span>
-
-                <strong>+${{ "{:,.0f}".format(money_income) }}</strong>
-
-            </div>
-
-            <div class="summary-row">
-
-                <span>Upkeep</span>
-
-                <strong>-${{ "{:,.0f}".format(money_upkeep) }}</strong>
-
-            </div>
-
-            <div class="summary-row">
-
-                <span><strong>Net</strong></span>
-
-                <strong>${{ "{:,.0f}".format(money_net) }}</strong>
-
-            </div>
-
-            <hr>
-
-            <h3>Oil</h3>
-
-            <div class="summary-row">
-
-                <span>Production</span>
-
-                <strong>+{{ "{:,.0f}".format(oil_production) }} {{ resource_values[4]["unit"] }}</strong>
-
-            </div>
-
-            <div class="summary-row">
-
-                <span>Consumption</span>
-
-                <strong>-{{ "{:,.0f}".format(oil_consumption) }} {{ resource_values[4]["unit"] }}</strong>
-
-            </div>
-
-            <div class="summary-row">
-
-                <span><strong>Net</strong></span>
-
-                <strong>{{ "{:,.0f}".format(oil_net) }} {{ resource_values[4]["unit"] }}</strong>
-
-            </div>
-
-            <hr>
-
-            <h3>Common Metal</h3>
-
-            <div class="summary-row">
-
-                <span>Production</span>
-
-                <strong>+{{ "{:,.0f}".format(cm_production) }} {{ resource_values[2]["unit"] }}</strong>
-
-            </div>
-
-            <div class="summary-row">
-
-                <span>Consumption</span>
-
-                <strong>-{{ "{:,.0f}".format(cm_consumption) }} {{ resource_values[2]["unit"] }}</strong>
-
-            </div>
-
-            <div class="summary-row">
-
-                <span><strong>Net</strong></span>
-
-                <strong>{{ "{:,.0f}".format(cm_net) }} {{ resource_values[2]["unit"] }}</strong>
-
-            </div>
-
-            <hr>
-
-            <h3>Rare Metal</h3>
-
-            <div class="summary-row">
-
-                <span>Production</span>
-
-                <strong>+{{ "{:,.0f}".format(rm_production) }} {{ resource_values[3]["unit"] }}</strong>
-
-            </div>
-
-            <div class="summary-row">
-
-                <span>Consumption</span>
-
-                <strong>-{{ "{:,.0f}".format(rm_consumption) }} {{ resource_values[3]["unit"] }}</strong>
-
-            </div>
-
-            <div class="summary-row">
-
-                <span><strong>Net</strong></span>
-
-                <strong>{{ "{:,.0f}".format(rm_net) }} {{ resource_values[3]["unit"] }}</strong>
-
-            </div>
-
-        </section>
-    </section>
-
-    <!-- Production -->
-    <section class="dashboard-card">
-        <section class="dashboard-card">
-
-            <h2>Active Production</h2>
-
-            <h3>Construction</h3>
-
-            {% if construction_lines %}
-
-                {% for item in construction_lines %}
-
-                    <h4>{{ item.line_name }}</h4>
-
-                    <p>{{ item.building_name }}</p>
-
-                    <div class="construction-progress">
-
-                        <div
-                            class="construction-progress-fill"
-                            style="--progress: {{ item.progress }}%;">
+                <h2>Resources</h2>
+
+                <div class="summary-row">
+                    <span>Money</span>
+                    <strong>
+                        ${{ "{:,.0f}".format(resource_values[1]["amount"]) }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Oil</span>
+                    <strong>
+                        {{ "{:,.0f}".format(resource_values[4]["amount"]) }}
+                        {{ resource_values[4]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Common Metal</span>
+                    <strong>
+                        {{ "{:,.0f}".format(resource_values[2]["amount"]) }}
+                        {{ resource_values[2]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Rare Metal</span>
+                    <strong>
+                        {{ "{:,.0f}".format(resource_values[3]["amount"]) }}
+                        {{ resource_values[3]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Research</span>
+                    <strong>
+                        {{ "{:,.0f}".format(resource_values[5]["amount"]) }}
+                        {{ resource_values[5]["unit"] }}
+                    </strong>
+                </div>
+
+            </section>
+
+
+            <!-- Economy -->
+            <section class="dashboard-card">
+
+                <h2>Economy Overview</h2>
+
+                <h3>Money</h3>
+
+                <div class="summary-row">
+                    <span>Income</span>
+                    <strong>+${{ "{:,.0f}".format(money_income) }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Upkeep</span>
+                    <strong>-${{ "{:,.0f}".format(money_upkeep) }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span><strong>Net</strong></span>
+                    <strong>${{ "{:,.0f}".format(money_net) }}</strong>
+                </div>
+
+                <hr>
+
+                <h3>Oil</h3>
+
+                <div class="summary-row">
+                    <span>Production</span>
+                    <strong>
+                        +{{ "{:,.0f}".format(oil_production) }}
+                        {{ resource_values[4]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Consumption</span>
+                    <strong>
+                        -{{ "{:,.0f}".format(oil_consumption) }}
+                        {{ resource_values[4]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span><strong>Net</strong></span>
+                    <strong>
+                        {{ "{:,.0f}".format(oil_net) }}
+                        {{ resource_values[4]["unit"] }}
+                    </strong>
+                </div>
+
+                <hr>
+
+                <h3>Common Metal</h3>
+
+                <div class="summary-row">
+                    <span>Production</span>
+                    <strong>
+                        +{{ "{:,.0f}".format(cm_production) }}
+                        {{ resource_values[2]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Consumption</span>
+                    <strong>
+                        -{{ "{:,.0f}".format(cm_consumption) }}
+                        {{ resource_values[2]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span><strong>Net</strong></span>
+                    <strong>
+                        {{ "{:,.0f}".format(cm_net) }}
+                        {{ resource_values[2]["unit"] }}
+                    </strong>
+                </div>
+
+                <hr>
+
+                <h3>Rare Metal</h3>
+
+                <div class="summary-row">
+                    <span>Production</span>
+                    <strong>
+                        +{{ "{:,.0f}".format(rm_production) }}
+                        {{ resource_values[3]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Consumption</span>
+                    <strong>
+                        -{{ "{:,.0f}".format(rm_consumption) }}
+                        {{ resource_values[3]["unit"] }}
+                    </strong>
+                </div>
+
+                <div class="summary-row">
+                    <span><strong>Net</strong></span>
+                    <strong>
+                        {{ "{:,.0f}".format(rm_net) }}
+                        {{ resource_values[3]["unit"] }}
+                    </strong>
+                </div>
+
+            </section>
+
+
+            <!-- Production -->
+            <section class="dashboard-card">
+
+                <h2>Active Production</h2>
+
+                <h3>Construction</h3>
+
+                {% if construction_lines %}
+
+                    {% for item in construction_lines %}
+
+                        <h4>{{ item.line_name }}</h4>
+
+                        <p>{{ item.building_name }}</p>
+
+                        <div class="construction-progress">
+                            <div
+                                class="construction-progress-fill"
+                                style="--progress: {{ item.progress }}%;">
+                            </div>
                         </div>
-
-                    </div>
-
-                    <div class="summary-row">
-
-                        <span>{{ item.turns_remaining }} Turns Remaining</span>
-
-                    </div>
-
-                {% endfor %}
-
-            {% else %}
-
-                <p>No active construction.</p>
-
-            {% endif %}
-
-            <hr>
-
-            <h3>Military Production</h3>
-
-            {% if production_lines %}
-
-                {% for item in production_lines %}
-
-                    <h4>{{ item.line_name }}</h4>
-
-                    <p>
-
-                        {{ item.unit_name }}
-
-                        ({{ item.tier_name }})
-
-                    </p>
-
-                    <div class="production-progress">
-
-                        <div
-                            class="production-progress-fill"
-                            style="--progress: {{ item.progress }}%;">
-                        </div>
-
-                    </div>
-
-                    <div class="summary-row">
-
-                        <span>{{ item.turns_remaining }} Turns Remaining</span>
-
-                    </div>
-
-                {% endfor %}
-
-            {% else %}
-
-                <p>No active production.</p>
-
-            {% endif %}
-
-        </section>
-    </section>
-
-    <!-- Military -->
-    <section class="dashboard-card">
-        <section class="dashboard-card">
-
-            <h2>Military Forces</h2>
-
-            {% for branch, units in military.items() %}
-
-                <h3>{{ branch|upper }}</h3>
-
-                {% for unit_name, tiers in units.items() %}
-
-                    <h4>{{ unit_name }}</h4>
-
-                    {% for tier in tiers %}
 
                         <div class="summary-row">
+                            <span>{{ item.turns_remaining }} Turns Remaining</span>
+                        </div>
 
-                            <span>{{ tier.tier }}</span>
+                    {% endfor %}
 
-                            <strong>{{ tier.count }}</strong>
+                {% else %}
 
+                    <p>No active construction.</p>
+
+                {% endif %}
+
+                <hr>
+
+                <h3>Military Production</h3>
+
+                {% if production_lines %}
+
+                    {% for item in production_lines %}
+
+                        <h4>{{ item.line_name }}</h4>
+
+                        <p>
+                            {{ item.unit_name }}
+                            ({{ item.tier_name }})
+                        </p>
+
+                        <div class="production-progress">
+                            <div
+                                class="production-progress-fill"
+                                style="--progress: {{ item.progress }}%;">
+                            </div>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>{{ item.turns_remaining }} Turns Remaining</span>
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p>No active production.</p>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- Military -->
+            <section class="dashboard-card">
+
+                <h2>Military Forces</h2>
+
+                {% for branch, units in military.items() %}
+
+                    <h3>{{ branch|upper }}</h3>
+
+                    {% for unit_name, tiers in units.items() %}
+
+                        <h4>{{ unit_name }}</h4>
+
+                        {% for tier in tiers %}
+
+                            <div class="summary-row">
+                                <span>{{ tier.tier }}</span>
+                                <strong>{{ tier.count }}</strong>
+                            </div>
+
+                        {% endfor %}
+
+                    {% endfor %}
+
+                {% endfor %}
+
+            </section>
+
+
+            <!-- Infrastructure -->
+            <section class="dashboard-card">
+
+                <h2>Infrastructure</h2>
+
+                {% for building_type, buildings in infrastructure.items() %}
+
+                    <h3>{{ building_type }}</h3>
+
+                    {% for building_name, count in buildings.items() %}
+
+                        <div class="summary-row">
+                            <span>{{ building_name }}</span>
+                            <strong>{{ count }}</strong>
                         </div>
 
                     {% endfor %}
 
                 {% endfor %}
 
-            {% endfor %}
+            </section>
 
-        </section>
-    </section>
 
-    <!-- Infrastructure -->
-    <section class="dashboard-card">
-        <section class="dashboard-card">
+            <!-- Recent Events -->
+            <section class="dashboard-card">
 
-            <h2>Infrastructure</h2>
+                <h2>Recent Events</h2>
 
-            {% for building_type, buildings in infrastructure.items() %}
+                <div id="recent-events">
 
-                <h3>{{ building_type }}</h3>
+                    <div class="recent-event-empty">
 
-                {% for building_name, count in buildings.items() %}
+                        <span class="recent-event-icon">
+                            ℹ
+                        </span>
 
-                    <div class="summary-row">
-
-                        <span>{{ building_name }}</span>
-
-                        <strong>{{ count }}</strong>
+                        <div>
+                            <strong>
+                                Loading events...
+                            </strong>
+                        </div>
 
                     </div>
 
-                {% endfor %}
-
-            {% endfor %}
-
-        </section>
-    </section>
-
-    <!-- Recent Events -->
-    <section class="dashboard-card">
-
-        <h2>Recent Events</h2>
-
-        <div id="recent-events">
-
-            <div class="recent-event-empty">
-
-                <span class="recent-event-icon">
-                    ℹ
-                </span>
-
-                <div>
-
-                    <strong>
-                        Loading events...
-                    </strong>
-
                 </div>
 
-            </div>
+            </section>
+
+        </section>
+
+
+        <!-- National Treasury -->
+
+        <h2>National Treasury</h2>
+
+        <p>Display line graph of treasury changes over time.</p>
+
+        <div class="chart-container">
+
+            <canvas id="moneyChart"></canvas>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+                const turnLabels = JSON.parse('{{ turn_labels | tojson | safe }}');
+                const moneyValues = JSON.parse('{{ money_values | tojson | safe }}');
+
+                const ctx = document.getElementById('moneyChart');
+
+                new Chart(ctx, {
+                    type: 'line',
+
+                    data: {
+                        labels: turnLabels,
+
+                        datasets: [{
+                            label: 'Money',
+                            data: moneyValues,
+                            tension: 0.3
+                        }]
+                    },
+
+                    options: {
+                        responsive: true,
+
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
 
         </div>
 
-    </section>
 
-</div>
+        <!-- Notifications -->
 
+        <h2>Notifications</h2>
 
+        <p>
+            Display notifications about recent events, such as attacks,
+            research completion, etc.
+        </p>
 
-
-
-
-
-
-
-
-
-
-
-<h2>National Treasury</h2>
-
-<p>Display line graph of treasury changes over time.</p>
-<div class="chart-container">
-    <canvas id="moneyChart"></canvas>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        const turnLabels = JSON.parse('{{ turn_labels | tojson | safe }}');
-        const moneyValues = JSON.parse('{{ money_values | tojson | safe }}');
-
-        const ctx = document.getElementById('moneyChart');
-
-        new Chart(ctx, {
-            type: 'line',
-
-            data: {
-                labels: turnLabels,
-
-                datasets: [{
-                    label: 'Money',
-                    data: moneyValues,
-                    tension: 0.3
-                }]
-            },
-
-            options: {
-                responsive: true,
-
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
-</div>
-<H2>Notifications</H2>
-<p>Display notifications about recent events, such as attacks, research completion, etc.</p>
-<p>In a list (table format)</p>
-
+        <p>
+            In a list (table format)
+        </p>
+    </div>
 
 </body>
 

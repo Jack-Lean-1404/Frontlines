@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Under Construction</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
+</head>
+
+{% include 'components/navbar.html' %}
+
+{% include "partials/nation_header.html" %}
+
+<div class="under-construction-page">
+
+    <div class="under-construction-card">
+
+        <div class="under-construction-icon">
+            ⚒
+        </div>
+
+        <h1>
+            Under Construction
+        </h1>
+
+        <p class="under-construction-subtitle">
+            This section of Frontlines is currently under development.
+        </p>
+
+        <div class="under-construction-divider"></div>
+
+        <p class="under-construction-message">
+            The requested feature is not yet available.
+            Development is underway and this section will be
+            available in a future update.
+        </p>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="under-construction-button">
+
+            Return to Dashboard
+
+        </a>
+
+    </div>
+
+</div>

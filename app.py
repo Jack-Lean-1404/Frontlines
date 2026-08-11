@@ -4281,7 +4281,7 @@ def create_trade():
                 int(receiver_unit_quantity)
             ))
 
-            
+
         # --------------------------------------
         # CREATE TRADE NOTIFICATION
         # --------------------------------------
@@ -5099,6 +5099,15 @@ def accept_trade(trade_offer_id):
 
         cursor.close()
         conn.close()
+
+
+@app.route("/under-construction")
+def under_construction():
+
+    return render_template(
+        "under_construction.html",
+        current_page=None
+    )
 
 if __name__ == "__main__": 
     app.run()

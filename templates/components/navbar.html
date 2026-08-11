@@ -1,13 +1,38 @@
 <!-- Navigation Links -->
-        <nav>
-            <ul class="nav-links">
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('admin_dashboard') }}">Admin Panel</a></li>
-                <li><a href="{{ url_for('access') }}">Login / Signup</a></li>
-                <li><a href="{{ url_for('logout') }}" class="logout">Logout</a></li>
-            </ul>
-        </nav>
+    <nav class="site-navbar">
+        <div class="site-navbar-inner">
+
+            <!-- Brand -->
+            <a href="/" class="site-brand">
+                FRONTLINES
+            </a>
+
+            <!-- Main Website Links -->
+            <div class="site-nav-links">
+                <a href="/" class="site-nav-link">Home</a>
+                <a href="/game" class="site-nav-link">Game</a>
+                <a href="/wiki" class="site-nav-link">Wiki</a>
+                <a href="/news" class="site-nav-link">News</a>
+                <a href="/about" class="site-nav-link">About</a>
+            </div>
+
+            <!-- Account -->
+            <div class="site-nav-account">
+                <a href="/dashboard" class="site-dashboard-button">
+                    Dashboard
+                </a>
+
+                <a href="/admin" class="site-nav-link">
+                    Admin Panel
+                </a>
+
+                <a href="/logout" class="site-nav-link logout-link">
+                    Logout
+                </a>
+            </div>
+
+        </div>
+    </nav>
 
         <div id="notification-container"></div>
 

@@ -1,6 +1,12 @@
 body {
     font-family: Arial, sans-serif;
     background: #f4f4f4;
+    margin: 0;
+}
+
+.game-container {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
     padding: 40px;
 }
 
@@ -2078,4 +2084,323 @@ button:hover {
 
 .trade-decline-button:hover {
     background: #f3f4f6;
+}
+
+/* =========================================================
+   UNDER CONSTRUCTION
+   ========================================================= */
+
+.under-construction-page {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+
+.under-construction-card {
+    width: 100%;
+    max-width: 600px;
+
+    padding: 50px 45px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #d9dde3;
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+
+/* Icon */
+
+.under-construction-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef1f5;
+
+    font-size: 32px;
+}
+
+
+/* Heading */
+
+.under-construction-card h1 {
+    margin: 0 0 10px;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    color: #1f2937;
+}
+
+
+.under-construction-subtitle {
+    margin: 0;
+
+    font-size: 16px;
+
+    color: #6b7280;
+}
+
+
+/* Divider */
+
+.under-construction-divider {
+    width: 60px;
+    height: 2px;
+
+    margin: 25px auto;
+
+    background: #d9dde3;
+}
+
+
+/* Message */
+
+.under-construction-message {
+    max-width: 480px;
+
+    margin: 0 auto 30px;
+
+    line-height: 1.6;
+
+    font-size: 14px;
+
+    color: #6b7280;
+}
+
+
+/* Button */
+
+.under-construction-button {
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    border-radius: 5px;
+
+    background: #1f2937;
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.under-construction-button:hover {
+    background: #111827;
+
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   MAIN WEBSITE NAVBAR
+   ========================================================= */
+
+.site-navbar {
+    width: 100%;
+    height: 100px;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    position: relative;
+    z-index: 1000;
+
+    box-sizing: border-box;
+}
+
+.site-navbar-inner {
+    width: 100%;
+    max-width: none;
+    height: 100px;
+
+    margin: 0;
+    padding: 0 48px;
+
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   FRONTLINES BRAND
+   ========================================================= */
+
+.site-brand {
+    color: #173b63;
+    font-size: 35px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    text-decoration: none;
+
+    margin-right: 42px;
+
+    transition: color 0.15s ease;
+}
+
+.site-brand:hover {
+    color: #285f98;
+}
+
+
+/* =========================================================
+   MAIN WEBSITE LINKS
+   ========================================================= */
+
+.site-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.site-nav-link {
+    height: 100px;
+    padding: 0 15px;
+
+    display: flex;
+    align-items: center;
+
+    color: #4b5563;
+    font-size: 20px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        color 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.site-nav-link:hover {
+    color: #1f5b94;
+    background: #f5f7fa;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.site-nav-account {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+/* =========================================================
+   DASHBOARD BUTTON
+   ========================================================= */
+
+.site-dashboard-button {
+    height: 40px;
+    padding: 0 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #2f659d;
+    color: #ffffff;
+
+    border-radius: 6px;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.site-dashboard-button:hover {
+    background: #245683;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+.site-nav-link.logout-link {
+    color: #b42318;
+}
+
+.site-nav-link.logout-link:hover {
+    color: #b42318;
+    background: #fff5f5;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .site-navbar {
+        height: auto;
+    }
+
+    .site-navbar-inner {
+        height: auto;
+        min-height: 64px;
+
+        padding: 12px 20px;
+
+        flex-wrap: wrap;
+    }
+
+    .site-brand {
+        margin-right: auto;
+    }
+
+    .site-nav-account {
+        margin-left: 20px;
+    }
+
+    .site-nav-links {
+        width: 100%;
+        order: 3;
+
+        margin-top: 8px;
+
+        overflow-x: auto;
+    }
+
+    .site-nav-link {
+        height: 44px;
+        padding: 0 12px;
+    }
 }
