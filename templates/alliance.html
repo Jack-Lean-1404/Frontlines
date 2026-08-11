@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Alliance</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
+</head>
+
+{% include 'components/navbar.html' %}
+
+{% include "partials/nation_header.html" %}
+
+<section class="dashboard-card">
+
+    <div class="alliance-header">
+
+        <div>
+
+            <h2>
+                {{ alliance.alliance_name }}
+            </h2>
+
+            <span class="alliance-code">
+                [{{ alliance.alliance_code }}]
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="summary-row">
+
+        <span>Leader</span>
+
+        <strong>
+            {{ alliance.founder_name }}
+        </strong>
+
+    </div>
+
+    <div class="summary-row">
+
+        <span>Created</span>
+
+        <strong>
+            Turn {{ alliance.created_turn }}
+        </strong>
+
+    </div>
+
+    <section class="invite-button">
+        <a
+            href="{{ url_for(
+                'invite_to_alliance',
+                alliance_id=alliance.alliance_id
+            ) }}"
+            class="primary-button">
+
+            Invite Nation
+
+        </a>
+    </section>
+
+</section>
+
+
+<section class="dashboard-card">
+
+    <h2>Members</h2>
+
+    {% for member in members %}
+
+        <div class="diplomacy-card">
+
+            <div class="diplomacy-left">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename=member.flag
+                    ) }}"
+                    class="diplomacy-flag"
+                    alt="{{ member.name }}">
+
+                <div>
+
+                    <h3>
+                        {{ member.name }}
+                    </h3>
+
+                    {% if member.is_leader %}
+
+                        <p>
+                            Alliance Leader
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</section>
+

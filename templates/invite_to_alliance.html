@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Invite To Alliance</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
+</head>
+
+{% include 'components/navbar.html' %}
+
+{% include "partials/nation_header.html" %}
+
+<section class="dashboard-card">
+
+    <h2>Invite Nation</h2>
+
+    <p>
+        Invite a nation to join
+        <strong>
+            [{{ alliance.alliance_code }}]
+            {{ alliance.alliance_name }}
+        </strong>.
+    </p>
+
+    <form method="POST">
+
+        <div class="form-group">
+
+            <label for="nation_id">
+                Nation
+            </label>
+
+            <select
+                id="nation_id"
+                name="nation_id"
+                required>
+
+                <option value="">
+                    Select a nation
+                </option>
+
+                {% for nation in available_nations %}
+
+                    <option value="{{ nation.nation_id }}">
+
+                        {{ nation.name }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <button
+            type="submit"
+            class="primary-button">
+
+            Send Invitation
+
+        </button>
+
+    </form>
+
+</section>

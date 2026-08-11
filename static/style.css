@@ -1155,3 +1155,927 @@ button:hover {
     line-height: 1;
 
 }
+
+.diplomacy-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.diplomacy-card:last-child{
+
+    border-bottom:none;
+
+}
+
+.diplomacy-left{
+
+    display:flex;
+
+    gap:20px;
+
+    align-items:center;
+
+}
+
+.diplomacy-flag{
+
+    width:200px;
+
+    border-radius:8px;
+
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+
+}
+
+.diplomacy-left h3{
+
+    margin:0 0 10px 0;
+
+}
+
+.diplomacy-left p{
+
+    margin:4px 0;
+
+    color:#666;
+
+}
+
+.diplomacy-right{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:15px;
+
+}
+
+.relationship-allied{
+
+    color:#2e7d32;
+
+    font-weight:700;
+
+}
+
+.relationship-friendly{
+
+    color:#43a047;
+
+    font-weight:700;
+
+}
+
+.relationship-neutral{
+
+    color:#666;
+
+    font-weight:700;
+
+}
+
+.relationship-hostile{
+
+    color:#ef6c00;
+
+    font-weight:700;
+
+}
+
+.relationship-war{
+
+    color:#c62828;
+
+    font-weight:700;
+
+}
+
+.profile-flag{
+
+    width:140px;
+
+    border-radius:10px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+
+}
+
+.diplomacy-profile{
+
+    display:flex;
+
+    gap:30px;
+
+    align-items:flex-start;
+
+}
+
+.primary-button {
+    background: #2f5d8a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* ==========================================
+   ALLIANCE PAGES
+   ========================================== */
+
+
+/* ---------- Create Alliance ---------- */
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 20px;
+
+    max-width: 600px;
+
+}
+
+.form-group label {
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+
+    color: #243447;
+
+}
+
+.form-group input {
+
+    padding: 12px 14px;
+
+    font-size: 1rem;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+
+    outline: none;
+
+    transition: .2s;
+
+    box-sizing: border-box;
+
+}
+
+.form-group input:focus {
+
+    border-color: #2d5d94;
+
+    box-shadow: 0 0 0 2px rgba(45, 93, 148, .1);
+
+}
+
+.form-group small {
+
+    margin-top: 6px;
+
+    color: #777;
+
+    font-size: .85rem;
+
+}
+
+
+/* ---------- Alliance Page ---------- */
+
+.alliance-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+
+}
+
+.alliance-code {
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    color: #2d5d94;
+
+}
+
+.alliance-member-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+.alliance-member-info h3 {
+
+    margin: 0 0 6px 0;
+
+}
+
+.alliance-member-info p {
+
+    margin: 4px 0;
+
+    color: #666;
+
+}
+
+/* ---------- Diplomacy Alliance Overview ---------- */
+
+.alliance-overview {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 30px;
+
+}
+
+.alliance-overview h3 {
+
+    margin: 0 0 6px 0;
+
+    font-size: 1.4rem;
+
+    color: #243447;
+
+}
+
+.alliance-summary {
+
+    flex: 1;
+
+    max-width: 400px;
+
+}
+
+.alliance-code {
+
+    color: #2d5d94;
+
+    font-weight: 700;
+
+    font-size: .95rem;
+
+}
+
+.form-group select {
+
+    padding: 12px 14px;
+
+    font-size: 1rem;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+
+    background: white;
+
+    outline: none;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+}
+
+.form-group select:focus {
+
+    border-color: #2d5d94;
+
+    box-shadow: 0 0 0 2px rgba(45, 93, 148, .1);
+
+}
+
+/* ==========================================
+   RECENT EVENTS
+   ========================================== */
+
+.recent-event {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    padding: 14px 4px;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+.recent-event:last-child {
+
+    border-bottom: none;
+
+}
+
+.recent-event-icon {
+
+    width: 24px;
+
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    color: white;
+
+    background: #4d90e8;
+
+    border-radius: 3px;
+
+    font-weight: 700;
+
+}
+
+.recent-event-content {
+
+    flex: 1;
+
+}
+
+.recent-event-content strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #243447;
+
+}
+
+.recent-event-content p {
+
+    margin: 0 0 4px 0;
+
+    color: #666;
+
+}
+
+.recent-event-content small {
+
+    color: #999;
+
+}
+
+.recent-event-empty {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    padding: 10px 4px;
+
+}
+
+.recent-event-empty strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+}
+
+.recent-event-empty p {
+
+    margin: 0;
+
+    color: #666;
+
+}
+
+/* ==========================================
+   NOTIFICATION ACTIONS
+   ========================================== */
+
+.notification-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 12px;
+
+}
+
+.notification-actions button {
+
+    flex: 1;
+
+    padding: 8px 12px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.notification-accept {
+
+    background: #2d5d94;
+
+    color: white;
+
+}
+
+.notification-accept:hover {
+
+    background: #234b78;
+
+}
+
+.notification-decline {
+
+    background: #eee;
+
+    color: #555;
+
+}
+
+.notification-decline:hover {
+
+    background: #ddd;
+
+}
+
+.invite-button {
+    margin-top: 20px;
+}
+
+/* ==========================================
+   TRADE
+   ========================================== */
+
+.trade-description {
+
+    color: #666;
+
+    margin-bottom: 25px;
+
+}
+
+.trade-section {
+
+    margin: 20px 0;
+
+}
+
+.trade-section h3 {
+
+    margin-bottom: 15px;
+
+    color: #243447;
+
+}
+
+.trade-section select {
+
+    padding: 12px 14px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+
+    background: white;
+
+    font-size: 1rem;
+
+    box-sizing: border-box;
+
+}
+
+.trade-item-row {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+
+}
+
+.trade-item-row select {
+
+    flex: 1;
+
+}
+
+.trade-item-row input {
+
+    width: 150px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+
+    font-size: 1rem;
+
+    box-sizing: border-box;
+
+}
+
+.trade-section select:focus,
+.trade-item-row input:focus {
+
+    outline: none;
+
+    border-color: #2d5d94;
+
+}
+
+.trade-section hr {
+
+    margin: 25px 0;
+
+    border: none;
+
+    border-top: 1px solid #ddd;
+
+}
+
+/* ==========================================
+   TRADE TOGGLE
+   ========================================== */
+
+.trade-toggle {
+
+    display: flex;
+
+    gap: 0;
+
+    margin-bottom: 15px;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+.trade-toggle-button {
+
+    padding: 10px 20px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #666;
+
+    font-size: 0.95rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    border-bottom: 2px solid transparent;
+
+    transition: 0.2s;
+
+}
+
+.trade-toggle-button:hover {
+
+    color: #2d5d94;
+
+}
+
+.trade-toggle-button.active {
+
+    color: #2d5d94;
+
+    border-bottom-color: #2d5d94;
+
+}
+
+.trade-option {
+
+    width: 100%;
+
+}
+
+/* ==========================================
+   TRADE COLUMNS
+   ========================================== */
+
+.trade-columns {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+
+    margin-top: 25px;
+
+}
+
+
+.trade-columns .trade-section {
+
+    padding: 20px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    background: #fafafa;
+
+}
+
+
+.trade-columns .trade-section h3 {
+
+    margin-top: 0;
+
+    margin-bottom: 15px;
+
+}
+
+.trade-columns + .primary-button {
+
+    margin-top: 25px;
+
+}
+
+/* =========================================================
+   TRADE OFFERS
+   ========================================================= */
+
+.trade-offers-section {
+    margin-top: 30px;
+}
+
+
+.trade-offers-section h2 {
+    margin-bottom: 18px;
+}
+
+
+/* Individual offer */
+
+.trade-offer-card {
+    background: #f8f9fb;
+    border: 1px solid #d9dde3;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+
+/* Offer header */
+
+.trade-offer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 20px;
+
+    background: #eef1f5;
+    border-bottom: 1px solid #d9dde3;
+}
+
+
+.trade-offer-header h3 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+}
+
+
+.trade-offer-header p {
+    margin: 0;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+
+/* Status */
+
+.trade-offer-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+
+.trade-offer-status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+
+.trade-offer-status.accepted {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+
+.trade-offer-status.declined {
+    background: #f8d7da;
+    color: #842029;
+}
+
+
+.trade-offer-status.cancelled {
+    background: #e2e3e5;
+    color: #41464b;
+}
+
+
+/* Give / Receive columns */
+
+.trade-offer-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+
+.trade-offer-side {
+    padding: 18px 20px;
+}
+
+
+.trade-offer-side + .trade-offer-side {
+    border-left: 1px solid #d9dde3;
+}
+
+
+.trade-offer-side h4 {
+    margin: 0 0 12px 0;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    color: #6b7280;
+}
+
+
+/* Individual trade item */
+
+.trade-offer-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 12px;
+
+    background: white;
+    border: 1px solid #e1e4e8;
+    border-radius: 5px;
+
+    margin-bottom: 8px;
+}
+
+
+.trade-offer-item:last-child {
+    margin-bottom: 0;
+}
+
+
+.trade-offer-item strong {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.trade-offer-item span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+
+/* Empty state */
+
+.trade-offers-empty {
+    padding: 20px;
+
+    text-align: center;
+
+    color: #6b7280;
+
+    background: #f8f9fb;
+    border: 1px dashed #cfd4da;
+    border-radius: 8px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .trade-offer-columns {
+        grid-template-columns: 1fr;
+    }
+
+
+    .trade-offer-side + .trade-offer-side {
+        border-left: none;
+        border-top: 1px solid #d9dde3;
+    }
+
+
+    .trade-offer-header {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+}
+
+/* =========================================================
+   TRADE OFFER ACTIONS
+   ========================================================= */
+
+.trade-offer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    padding: 14px 20px;
+
+    border-top: 1px solid #d9dde3;
+    background: #f1f3f6;
+}
+
+
+.trade-accept-button {
+    min-width: 90px;
+}
+
+
+.trade-decline-button {
+    min-width: 90px;
+    color: #dd5a5a;
+
+    padding: 8px 16px;
+
+    border: 1px solid #c9ced6;
+    border-radius: 5px;
+
+    background: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.trade-decline-button:hover {
+    background: #f3f4f6;
+}

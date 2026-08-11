@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Diplomacy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
+</head>
+
+{% include 'components/navbar.html' %}
+
+{% include "partials/nation_header.html" %}
+
+<body>
+
+    <section class="dashboard-card">
+
+        <h2>Trade</h2>
+
+        <a
+            href="{{ url_for('trade') }}"
+            class="primary-button">
+
+            Trade
+
+        </a>
+
+    </section>
+
+    <section class="dashboard-card">
+
+        <h2>Current Alliance</h2>
+
+        {% if current_alliance %}
+
+            <div class="alliance-overview">
+
+                <div>
+
+                    <h3>
+                        {{ current_alliance.alliance_name }}
+                    </h3>
+
+                    <span class="alliance-code">
+                        [{{ current_alliance.alliance_code }}]
+                    </span>
+
+                </div>
+
+                <div class="alliance-summary">
+
+                    <div class="summary-row">
+
+                        <span>Leader</span>
+
+                        <strong>
+                            {{ current_alliance.founder_name }}
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <span>Created</span>
+
+                        <strong>
+                            Turn {{ current_alliance.created_turn }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <a
+                    href="{{ url_for(
+                        'alliance',
+                        alliance_id=current_alliance.alliance_id
+                    ) }}"
+                    class="primary-button">
+
+                    View Alliance
+
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <p>
+                You are not currently a member of an alliance.
+            </p>
+
+            <a
+                href="{{ url_for('create_alliance') }}"
+                class="primary-button">
+
+                Create Alliance
+
+            </a>
+
+        {% endif %}
+
+    </section>
+
+    <h1>Diplomatic Relations</h1>
+
+    <section class="dashboard-card">
+
+        <h2>Diplomatic Relations</h2>
+
+        {% for relation in relations %}
+
+        <div class="diplomacy-card">
+
+            <div class="diplomacy-left">
+
+                <img
+                    src="{{ url_for('static', filename='' + relation.flag) }}"
+                    class="diplomacy-flag"
+                    alt="{{ relation.name }}">
+
+                <div>
+
+                    <h3>
+
+                        <a>
+
+                            {{ relation.name }}
+
+                        </a>
+
+                    </h3>
+
+                    <p>
+
+                        Alliance:
+
+                        {% if relation.alliance_name %}
+
+                            [{{ relation.alliance_code }}]
+
+                            {{ relation.alliance_name }}
+
+                        {% else %}
+
+                            None
+
+                        {% endif %}
+
+                    </p>
+
+                    <p>
+
+                        Military Score:
+
+                        {{ "{:,.0f}".format(relation.military_score) }}
+
+                    </p>
+
+                    <p>
+
+                        Economic Score:
+
+                        {{ "{:,.0f}".format(relation.economic_score) }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="diplomacy-right">
+
+                <span class="relationship-{{ relation.relationship|lower }}">
+
+                    {{ relation.relationship }}
+
+                </span>
+                
+                    <a
+                        href="{{ url_for('diplomacy_nation', nation_id=relation.nation_id) }}"
+                        class="primary-button">
+
+                        View Nation
+
+                    </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </section>
+</body>
+</html>

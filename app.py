@@ -487,7 +487,613 @@ def research():
 
 @app.route("/diplomacy")
 def diplomacy():
-    return render_template("diplomacy.html", current_page="diplomacy")
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+    SELECT
+
+        n.nation_id,
+        n.name,
+        n.flag,
+        n.military_score,
+        n.economic_score,
+
+        dr.relationship,
+
+        a.alliance_name,
+        a.alliance_code
+
+    FROM diplomatic_relations dr
+
+    JOIN nations n
+
+    ON (
+
+        (dr.nation_a = %s AND dr.nation_b = n.nation_id)
+
+        OR
+
+        (dr.nation_b = %s AND dr.nation_a = n.nation_id)
+
+    )
+
+    LEFT JOIN alliance_members am
+
+    ON n.nation_id = am.nation_id
+
+    LEFT JOIN alliances a
+
+    ON am.alliance_id = a.alliance_id
+
+    ORDER BY n.name
+
+    """,
+    (
+        nation_id,
+        nation_id
+    ))
+
+    relations = cursor.fetchall()
+
+    print(relations)
+
+    cursor.execute("""
+        SELECT
+
+            a.alliance_id,
+            a.alliance_code,
+            a.alliance_name,
+            a.founder_nation_id,
+            a.created_turn,
+
+            n.name AS founder_name
+
+        FROM alliance_members am
+
+        JOIN alliances a
+            ON am.alliance_id = a.alliance_id
+
+        JOIN nations n
+            ON a.founder_nation_id = n.nation_id
+
+        WHERE am.nation_id = %s
+
+    """, (nation_id,))
+
+    current_alliance = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "diplomacy.html",
+        current_page="diplomacy",
+        relations=relations,
+        current_alliance=current_alliance
+    )
+
+
+@app.route("/diplomacy/<int:nation_id>")
+def diplomacy_nation(nation_id):
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+    SELECT
+
+        n.nation_id,
+        n.name,
+        n.flag,
+        n.capital_count,
+        n.city_count,
+        n.military_score,
+        n.economic_score,
+
+        a.alliance_name,
+        a.alliance_code
+
+    FROM nations n
+
+    LEFT JOIN alliance_members am
+
+    ON n.nation_id = am.nation_id
+
+    LEFT JOIN alliances a
+
+    ON am.alliance_id = a.alliance_id
+
+    WHERE
+
+        n.nation_id = %s
+
+    """, (nation_id,))
+
+    nation = cursor.fetchone()
+
+    cursor.execute("""
+    SELECT relationship
+
+    FROM diplomatic_relations
+
+    WHERE
+
+    (nation_a=%s AND nation_b=%s)
+
+    OR
+
+    (nation_b=%s AND nation_a=%s)
+
+    """,
+    (
+        session["nation_id"],
+        nation_id,
+
+        session["nation_id"],
+        nation_id
+    ))
+
+    relationship = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+
+        "diplomacy_nation.html",
+
+        current_page="diplomacy",
+
+        viewed_nation=nation,
+
+        relationship=relationship
+
+    )
+
+@app.route("/alliance/create", methods=["GET", "POST"])
+def create_alliance():
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    if request.method == "POST":
+
+        alliance_name = request.form["alliance_name"].strip()
+        alliance_code = request.form["alliance_code"].strip().upper()
+
+        # Validate alliance name
+        if not alliance_name:
+
+            cursor.close()
+            conn.close()
+
+            return "Alliance name is required."
+
+        # Validate alliance code
+        if len(alliance_code) != 3 or not alliance_code.isalpha():
+
+            cursor.close()
+            conn.close()
+
+            return "Alliance code must be exactly 3 letters."
+
+        # Check whether the code already exists
+        cursor.execute("""
+            SELECT alliance_id
+            FROM alliances
+            WHERE alliance_code = %s
+        """, (alliance_code,))
+
+        existing_alliance = cursor.fetchone()
+
+        if existing_alliance:
+
+            cursor.close()
+            conn.close()
+
+            return "That alliance code is already in use."
+
+        # Check whether the nation is already in an alliance
+        cursor.execute("""
+            SELECT alliance_member_id
+            FROM alliance_members
+            WHERE nation_id = %s
+        """, (nation_id,))
+
+        existing_membership = cursor.fetchone()
+
+        if existing_membership:
+
+            cursor.close()
+            conn.close()
+
+            return "Your nation is already a member of an alliance."
+
+        # Get current turn
+        cursor.execute("""
+            SELECT current_turn
+            FROM game_state
+            LIMIT 1
+        """)
+
+        game_state = cursor.fetchone()
+
+        current_turn = game_state["current_turn"]
+
+        # Create alliance
+        cursor.execute("""
+            INSERT INTO alliances (
+                alliance_code,
+                alliance_name,
+                founder_nation_id,
+                created_turn
+            )
+            VALUES (%s, %s, %s, %s)
+        """, (
+            alliance_code,
+            alliance_name,
+            nation_id,
+            current_turn
+        ))
+
+        alliance_id = cursor.lastrowid
+
+        # Add founder as first member
+        cursor.execute("""
+            INSERT INTO alliance_members (
+                alliance_id,
+                nation_id,
+                joined_turn
+            )
+            VALUES (%s, %s, %s)
+        """, (
+            alliance_id,
+            nation_id,
+            current_turn
+        ))
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return redirect(
+            url_for(
+                "alliance",
+                alliance_id=alliance_id
+            )
+        )
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "create_alliance.html",
+        current_page="diplomacy"
+    )
+
+@app.route("/alliance/<int:alliance_id>")
+def alliance(alliance_id):
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get alliance information
+    cursor.execute("""
+        SELECT
+
+            a.alliance_id,
+            a.alliance_code,
+            a.alliance_name,
+            a.founder_nation_id,
+            a.created_turn,
+
+            n.name AS founder_name
+
+        FROM alliances a
+
+        JOIN nations n
+            ON a.founder_nation_id = n.nation_id
+
+        WHERE a.alliance_id = %s
+
+    """, (alliance_id,))
+
+    alliance = cursor.fetchone()
+
+    # Make sure alliance exists
+    if not alliance:
+
+        cursor.close()
+        conn.close()
+
+        return "Alliance not found.", 404
+
+    # Get alliance members
+    cursor.execute("""
+        SELECT
+
+            n.nation_id,
+            n.name,
+            n.flag,
+            am.joined_turn,
+
+            CASE
+
+                WHEN n.nation_id = a.founder_nation_id
+
+                THEN 1
+
+                ELSE 0
+
+            END AS is_leader
+
+        FROM alliance_members am
+
+        JOIN nations n
+            ON am.nation_id = n.nation_id
+
+        JOIN alliances a
+            ON am.alliance_id = a.alliance_id
+
+        WHERE am.alliance_id = %s
+
+        ORDER BY is_leader DESC, n.name
+
+    """, (alliance_id,))
+
+    members = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+
+        "alliance.html",
+
+        current_page="diplomacy",
+
+        alliance=alliance,
+
+        members=members
+
+    )
+
+@app.route(
+    "/alliance/<int:alliance_id>/invite",
+    methods=["GET", "POST"]
+)
+def invite_to_alliance(alliance_id):
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Check that current nation belongs to the alliance
+    cursor.execute("""
+        SELECT alliance_member_id
+        FROM alliance_members
+        WHERE alliance_id = %s
+        AND nation_id = %s
+    """, (
+        alliance_id,
+        nation_id
+    ))
+
+    membership = cursor.fetchone()
+
+    if not membership:
+
+        cursor.close()
+        conn.close()
+
+        return "You are not a member of this alliance.", 403
+
+    # Get alliance information
+    cursor.execute("""
+        SELECT
+            alliance_id,
+            alliance_name,
+            alliance_code
+        FROM alliances
+        WHERE alliance_id = %s
+    """, (alliance_id,))
+
+    alliance = cursor.fetchone()
+
+    if not alliance:
+
+        cursor.close()
+        conn.close()
+
+        return "Alliance not found.", 404
+
+    # Handle invitation
+    if request.method == "POST":
+
+        invited_nation_id = request.form["nation_id"]
+
+        # Check nation exists
+        cursor.execute("""
+            SELECT
+                nation_id,
+                name
+            FROM nations
+            WHERE nation_id = %s
+        """, (invited_nation_id,))
+
+        invited_nation = cursor.fetchone()
+
+        if not invited_nation:
+
+            cursor.close()
+            conn.close()
+
+            return "Nation not found.", 404
+
+        # Prevent inviting yourself
+        if int(invited_nation_id) == nation_id:
+
+            cursor.close()
+            conn.close()
+
+            return "You cannot invite your own nation.", 400
+
+        # Check whether nation is already in an alliance
+        cursor.execute("""
+            SELECT alliance_member_id
+            FROM alliance_members
+            WHERE nation_id = %s
+        """, (invited_nation_id,))
+
+        existing_membership = cursor.fetchone()
+
+        if existing_membership:
+
+            cursor.close()
+            conn.close()
+
+            return "That nation is already a member of an alliance.", 400
+
+        # Check for existing pending invitation
+        cursor.execute("""
+            SELECT invitation_id
+            FROM alliance_invitations
+            WHERE alliance_id = %s
+            AND nation_id = %s
+            AND status = 'Pending'
+        """, (
+            alliance_id,
+            invited_nation_id
+        ))
+
+        existing_invitation = cursor.fetchone()
+
+        if existing_invitation:
+
+            cursor.close()
+            conn.close()
+
+            return "That nation already has a pending invitation.", 400
+
+        # Get current turn
+        cursor.execute("""
+            SELECT current_turn
+            FROM game_state
+            LIMIT 1
+        """)
+
+        game_state = cursor.fetchone()
+
+        current_turn = game_state["current_turn"]
+
+        # Create invitation
+        cursor.execute("""
+            INSERT INTO alliance_invitations (
+                alliance_id,
+                nation_id,
+                invited_turn,
+                status
+            )
+            VALUES (%s, %s, %s, 'Pending')
+        """, (
+            alliance_id,
+            invited_nation_id,
+            current_turn
+        ))
+
+        invitation_id = cursor.lastrowid
+
+        # Create Recent Event
+        cursor.execute("""
+            INSERT INTO nation_events (
+                nation_id,
+                event_type,
+                title,
+                message,
+                created_turn
+            )
+            VALUES (%s, %s, %s, %s, %s)
+        """, (
+            invited_nation_id,
+            "diplomacy",
+            "Alliance Invitation",
+            f"{alliance['alliance_name']} [{alliance['alliance_code']}] has invited you to join.",
+            current_turn
+        ))
+
+        # Create notification
+        cursor.execute("""
+            INSERT INTO notifications (
+                nation_id,
+                type,
+                title,
+                message,
+                icon,
+                created_turn,
+                reference_id,
+                persistent
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            invited_nation_id,
+            "alliance_invitation",
+            "Alliance Invitation",
+            f"{alliance['alliance_name']} [{alliance['alliance_code']}] has invited you to join.",
+            "🤝",
+            current_turn,
+            invitation_id,
+            True
+        ))
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return redirect(
+            url_for(
+                "alliance",
+                alliance_id=alliance_id
+            )
+        )
+
+    # Get nations that can be invited
+    cursor.execute("""
+        SELECT
+            n.nation_id,
+            n.name,
+            n.flag
+
+        FROM nations n
+
+        LEFT JOIN alliance_members am
+            ON n.nation_id = am.nation_id
+
+        WHERE am.nation_id IS NULL
+        AND n.nation_id != %s
+
+        ORDER BY n.name
+    """, (nation_id,))
+
+    available_nations = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "invite_to_alliance.html",
+        current_page="diplomacy",
+        alliance=alliance,
+        available_nations=available_nations
+    )
 
 # Production Page
 @app.route("/production")
@@ -2527,7 +3133,1972 @@ def inject_nation():
         "current_turn": turn["current_turn"]
     }
 
+@app.route("/api/notifications")
+def get_notifications():
 
+    if "nation_id" not in session:
+
+        return jsonify([])
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT
+
+            notification_id,
+            type,
+            title,
+            message,
+            icon,
+            created_turn,
+            is_read,
+            reference_id,
+            persistent
+
+        FROM notifications
+
+        WHERE nation_id = %s
+        AND is_read = FALSE
+
+        ORDER BY notification_id DESC
+
+    """, (nation_id,))
+
+    notifications = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify(notifications)
+
+
+@app.route(
+    "/api/alliance-invitation/<int:invitation_id>/accept",
+    methods=["POST"]
+)
+def accept_alliance_invitation(invitation_id):
+
+    if "nation_id" not in session:
+
+        return jsonify([])
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Find pending invitation
+    cursor.execute("""
+        SELECT
+            ai.invitation_id,
+            ai.alliance_id,
+            a.alliance_name,
+            a.alliance_code
+
+        FROM alliance_invitations ai
+
+        JOIN alliances a
+            ON ai.alliance_id = a.alliance_id
+
+        WHERE ai.invitation_id = %s
+        AND ai.nation_id = %s
+        AND ai.status = 'Pending'
+    """, (
+        invitation_id,
+        nation_id
+    ))
+
+    invitation = cursor.fetchone()
+
+    if not invitation:
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+            "success": False,
+            "error": "This invitation is no longer valid.",
+            "type": "error",
+            "title": "Alliance Invitation",
+            "message": "This invitation is no longer valid.",
+            "icon": "❌"
+        }), 400
+
+    # Make sure nation isn't already in an alliance
+    cursor.execute("""
+        SELECT alliance_member_id
+        FROM alliance_members
+        WHERE nation_id = %s
+    """, (nation_id,))
+
+    existing_membership = cursor.fetchone()
+
+    if existing_membership:
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+            "success": False,
+            "error": "You are already a member of an alliance.",
+            "type": "error",
+            "title": "Alliance Invitation",
+            "message": "You are already a member of an alliance.",
+            "icon": "❌"
+        }), 400
+
+    # Get current turn
+    cursor.execute("""
+        SELECT current_turn
+        FROM game_state
+        LIMIT 1
+    """)
+
+    game_state = cursor.fetchone()
+
+    current_turn = game_state["current_turn"]
+
+    # Add nation to alliance
+    cursor.execute("""
+        INSERT INTO alliance_members (
+            alliance_id,
+            nation_id,
+            joined_turn
+        )
+        VALUES (%s, %s, %s)
+    """, (
+        invitation["alliance_id"],
+        nation_id,
+        current_turn
+    ))
+
+    # Mark invitation accepted
+    cursor.execute("""
+        UPDATE alliance_invitations
+
+        SET status = 'Accepted'
+
+        WHERE invitation_id = %s
+    """, (invitation_id,))
+
+    # Add Recent Event
+    cursor.execute("""
+        INSERT INTO nation_events (
+            nation_id,
+            event_type,
+            title,
+            message,
+            created_turn
+        )
+        VALUES (%s, %s, %s, %s, %s)
+    """, (
+        nation_id,
+        "diplomacy",
+        "Alliance Joined",
+        f"You joined {invitation['alliance_name']} [{invitation['alliance_code']}].",
+        current_turn
+    ))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "success": True,
+        "type": "success",
+        "title": "Alliance Joined",
+        "message": f"You joined {invitation['alliance_name']} [{invitation['alliance_code']}].",
+        "icon": "🤝"
+    })
+
+
+@app.route(
+    "/api/alliance-invitation/<int:invitation_id>/decline",
+    methods=["POST"]
+)
+def decline_alliance_invitation(invitation_id):
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Find pending invitation
+    cursor.execute("""
+        SELECT
+            ai.invitation_id,
+            ai.alliance_id,
+            a.alliance_name,
+            a.alliance_code
+
+        FROM alliance_invitations ai
+
+        JOIN alliances a
+            ON ai.alliance_id = a.alliance_id
+
+        WHERE ai.invitation_id = %s
+        AND ai.nation_id = %s
+        AND ai.status = 'Pending'
+    """, (
+        invitation_id,
+        nation_id
+    ))
+
+    invitation = cursor.fetchone()
+
+    if not invitation:
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+            "success": False,
+            "error": "This invitation is no longer valid.",
+            "type": "error",
+            "title": "Alliance Invitation",
+            "message": "This invitation is no longer valid.",
+            "icon": "❌"
+        }), 400
+
+    # Get current turn
+    cursor.execute("""
+        SELECT current_turn
+        FROM game_state
+        LIMIT 1
+    """)
+
+    game_state = cursor.fetchone()
+
+    current_turn = game_state["current_turn"]
+
+    # Mark invitation declined
+    cursor.execute("""
+        UPDATE alliance_invitations
+
+        SET status = 'Declined'
+
+        WHERE invitation_id = %s
+    """, (invitation_id,))
+
+    # Add Recent Event
+    cursor.execute("""
+        INSERT INTO nation_events (
+            nation_id,
+            event_type,
+            title,
+            message,
+            created_turn
+        )
+        VALUES (%s, %s, %s, %s, %s)
+    """, (
+        nation_id,
+        "diplomacy",
+        "Alliance Invitation Declined",
+        f"You declined the invitation to join {invitation['alliance_name']} [{invitation['alliance_code']}].",
+        current_turn
+    ))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "success": True,
+        "type": "info",
+        "title": "Invitation Declined",
+        "message": f"You declined the invitation to join {invitation['alliance_name']} [{invitation['alliance_code']}].",
+        "icon": "ℹ️"
+    })
+
+
+@app.route("/api/notifications/<int:notification_id>/read", methods=["POST"])
+def mark_notification_read(notification_id):
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE notifications
+
+        SET is_read = TRUE
+
+        WHERE notification_id = %s
+        AND nation_id = %s
+
+    """, (
+        notification_id,
+        nation_id
+    ))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "success": True
+    })
+
+@app.route("/api/events")
+def get_events():
+
+    if "nation_id" not in session:
+
+        return jsonify([])
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT
+
+            event_id,
+            event_type,
+            title,
+            message,
+            created_turn,
+            created_at
+
+        FROM nation_events
+
+        WHERE nation_id = %s
+
+        ORDER BY event_id DESC
+
+        LIMIT 10
+
+    """, (nation_id,))
+
+    events = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify(events)
+
+@app.route("/trade")
+def trade():
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get all other active nations
+    cursor.execute("""
+        SELECT
+            nation_id,
+            name,
+            flag
+        FROM nations
+        WHERE is_active = 1
+        AND nation_id != %s
+        ORDER BY name
+    """, (nation_id,))
+
+    nations = cursor.fetchall()
+
+    # Get resources available to the current nation
+    cursor.execute("""
+        SELECT
+            r.resource_id,
+            r.name,
+            nr.amount
+
+        FROM resources r
+
+        JOIN nation_resources nr
+            ON r.resource_id = nr.resource_id
+
+        WHERE nr.nation_id = %s
+
+        ORDER BY r.resource_id
+    """, (nation_id,))
+
+    resources = cursor.fetchall()
+
+    # Get units available to the current nation
+    cursor.execute("""
+        SELECT
+            u.unit_id,
+            u.unit_name,
+            u.unit_group,
+            nu.tier_level,
+            uot.tier_name,
+            COUNT(nu.nation_unit_id) AS quantity
+
+        FROM units u
+
+        JOIN nation_units nu
+            ON u.unit_id = nu.unit_id
+
+        LEFT JOIN unit_organisation_tiers uot
+            ON uot.tier_type = u.unit_group
+            AND uot.tier = nu.tier_level
+
+        WHERE nu.nation_id = %s
+
+        AND nu.status = 'active'
+
+        GROUP BY
+            u.unit_id,
+            u.unit_name,
+            u.unit_group,
+            nu.tier_level,
+            uot.tier_name
+
+        ORDER BY
+            u.unit_name,
+            nu.tier_level
+    """, (nation_id,))
+
+    units = cursor.fetchall()
+
+    # ------------------------------------------
+    # Incoming Trade Offers
+    # ------------------------------------------
+
+    cursor.execute("""
+        SELECT
+            t.trade_offer_id,
+            t.sender_nation_id,
+            t.receiver_nation_id,
+            t.status,
+            t.created_turn,
+            n.name AS sender_name,
+            n.flag AS sender_flag
+
+        FROM trade_offers t
+
+        JOIN nations n
+            ON t.sender_nation_id = n.nation_id
+
+        WHERE t.receiver_nation_id = %s
+
+        ORDER BY t.trade_offer_id DESC
+    """, (nation_id,))
+
+    incoming_offers = cursor.fetchall()
+
+
+    # ------------------------------------------
+    # Outgoing Trade Offers
+    # ------------------------------------------
+
+    cursor.execute("""
+        SELECT
+            t.trade_offer_id,
+            t.sender_nation_id,
+            t.receiver_nation_id,
+            t.status,
+            t.created_turn,
+            n.name AS receiver_name,
+            n.flag AS receiver_flag
+
+        FROM trade_offers t
+
+        JOIN nations n
+            ON t.receiver_nation_id = n.nation_id
+
+        WHERE t.sender_nation_id = %s
+
+        ORDER BY t.trade_offer_id DESC
+    """, (nation_id,))
+
+
+    outgoing_offers = cursor.fetchall()
+
+    # ------------------------------------------
+    # Incoming Offer Items
+    # ------------------------------------------
+
+    cursor.execute("""
+        SELECT
+            toi.trade_offer_id,
+            toi.side,
+            toi.resource_id,
+            toi.unit_id,
+            toi.tier_level,
+            toi.quantity,
+
+            r.name AS resource_name,
+
+            u.unit_name,
+            u.unit_group,
+            uot.tier_name
+
+        FROM trade_offer_items toi
+
+        LEFT JOIN resources r
+            ON toi.resource_id = r.resource_id
+
+        LEFT JOIN units u
+            ON toi.unit_id = u.unit_id
+
+        LEFT JOIN unit_organisation_tiers uot
+            ON uot.tier_type = u.unit_group
+            AND uot.tier = toi.tier_level
+
+        JOIN trade_offers t
+            ON toi.trade_offer_id = t.trade_offer_id
+
+        WHERE t.receiver_nation_id = %s
+
+        ORDER BY toi.trade_offer_id DESC
+    """, (nation_id,))
+
+    incoming_offer_items = cursor.fetchall()
+
+    # ------------------------------------------
+    # Outgoing Offer Items
+    # ------------------------------------------
+
+    cursor.execute("""
+        SELECT
+            toi.trade_offer_id,
+            toi.side,
+            toi.resource_id,
+            toi.unit_id,
+            toi.tier_level,
+            toi.quantity,
+
+            r.name AS resource_name,
+
+            u.unit_name,
+            u.unit_group,
+            uot.tier_name
+
+        FROM trade_offer_items toi
+
+        LEFT JOIN resources r
+            ON toi.resource_id = r.resource_id
+
+        LEFT JOIN units u
+            ON toi.unit_id = u.unit_id
+
+        LEFT JOIN unit_organisation_tiers uot
+            ON uot.tier_type = u.unit_group
+            AND uot.tier = toi.tier_level
+
+        JOIN trade_offers t
+            ON toi.trade_offer_id = t.trade_offer_id
+
+        WHERE t.sender_nation_id = %s
+
+        ORDER BY toi.trade_offer_id DESC
+    """, (nation_id,))
+
+    outgoing_offer_items = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "trade.html",
+        current_page="trade",
+        nations=nations,
+        resources=resources,
+        units=units,
+        incoming_offers=incoming_offers,
+        outgoing_offers=outgoing_offers,
+        incoming_offer_items=incoming_offer_items,
+        outgoing_offer_items=outgoing_offer_items
+    )
+
+@app.route("/trade/create", methods=["POST"])
+def create_trade():
+
+    sender_nation_id = session["nation_id"]
+
+    receiver_nation_id = request.form.get(
+        "receiver_nation_id"
+    )
+
+    sender_resource_id = request.form.get(
+        "sender_resource_id"
+    )
+
+    sender_resource_quantity = request.form.get(
+        "sender_resource_quantity"
+    )
+
+    sender_unit = request.form.get(
+        "sender_unit_id"
+    )
+
+    sender_unit_quantity = request.form.get(
+        "sender_unit_quantity"
+    )
+
+    receiver_resource_id = request.form.get(
+        "receiver_resource_id"
+    )
+
+    receiver_resource_quantity = request.form.get(
+        "receiver_resource_quantity"
+    )
+
+    receiver_unit = request.form.get(
+        "receiver_unit_id"
+    )
+
+    receiver_unit_quantity = request.form.get(
+        "receiver_unit_quantity"
+    )
+
+
+    # ------------------------------------------
+    # BASIC VALIDATION
+    # ------------------------------------------
+
+    if not receiver_nation_id:
+
+        return "You must select a nation.", 400
+
+
+    try:
+
+        receiver_nation_id = int(
+            receiver_nation_id
+        )
+
+    except ValueError:
+
+        return "Invalid nation.", 400
+
+
+    if receiver_nation_id == sender_nation_id:
+
+        return "You cannot trade with yourself.", 400
+
+
+    if not (
+        sender_resource_id
+        or sender_unit
+    ):
+
+        return "You must offer something.", 400
+
+
+    if not (
+        receiver_resource_id
+        or receiver_unit
+    ):
+
+        return "You must request something.", 400
+
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+
+    try:
+
+        # --------------------------------------
+        # VERIFY RECEIVER
+        # --------------------------------------
+
+        cursor.execute("""
+            SELECT nation_id
+            FROM nations
+            WHERE nation_id = %s
+            AND is_active = 1
+        """, (
+            receiver_nation_id,
+        ))
+
+        receiver = cursor.fetchone()
+
+
+        if not receiver:
+
+            raise ValueError(
+                "Nation not found."
+            )
+
+
+        # --------------------------------------
+        # GET CURRENT TURN
+        # --------------------------------------
+
+        cursor.execute("""
+            SELECT current_turn
+            FROM game_state
+            LIMIT 1
+        """)
+
+        game_state = cursor.fetchone()
+
+
+        if not game_state:
+
+            raise ValueError(
+                "Game state could not be found."
+            )
+
+
+        current_turn = game_state[
+            "current_turn"
+        ]
+
+
+        # --------------------------------------
+        # SENDER RESOURCE
+        # --------------------------------------
+
+        if sender_resource_id:
+
+            try:
+
+                sender_resource_id = int(
+                    sender_resource_id
+                )
+
+                quantity = int(
+                    sender_resource_quantity
+                )
+
+            except (ValueError, TypeError):
+
+                raise ValueError(
+                    "Invalid resource information."
+                )
+
+
+            if quantity <= 0:
+
+                raise ValueError(
+                    "Invalid resource quantity."
+                )
+
+
+            cursor.execute("""
+                SELECT amount
+                FROM nation_resources
+                WHERE nation_id = %s
+                AND resource_id = %s
+            """, (
+                sender_nation_id,
+                sender_resource_id
+            ))
+
+            resource = cursor.fetchone()
+
+
+            if not resource:
+
+                raise ValueError(
+                    "You do not own this resource."
+                )
+
+
+            if resource["amount"] < quantity:
+
+                raise ValueError(
+                    "You do not have enough of this resource."
+                )
+
+
+        # --------------------------------------
+        # SENDER UNIT
+        # --------------------------------------
+
+        sender_unit_id = None
+        sender_unit_tier = None
+
+
+        if sender_unit:
+
+            try:
+
+                parts = sender_unit.split(":")
+
+
+                if len(parts) != 2:
+
+                    raise ValueError
+
+
+                sender_unit_id = int(
+                    parts[0]
+                )
+
+                sender_unit_tier = int(
+                    parts[1]
+                )
+
+                quantity = int(
+                    sender_unit_quantity
+                )
+
+            except (ValueError, TypeError):
+
+                raise ValueError(
+                    "Invalid unit information."
+                )
+
+
+            if quantity <= 0:
+
+                raise ValueError(
+                    "Invalid unit quantity."
+                )
+
+
+            # Make sure this formation actually exists
+            # in the sender's army.
+
+            cursor.execute("""
+                SELECT
+                    COUNT(*) AS quantity
+                FROM nation_units
+                WHERE nation_id = %s
+                AND unit_id = %s
+                AND tier_level = %s
+                AND status = 'active'
+            """, (
+                sender_nation_id,
+                sender_unit_id,
+                sender_unit_tier
+            ))
+
+            available = cursor.fetchone()
+
+
+            if available["quantity"] < quantity:
+
+                raise ValueError(
+                    "You do not have enough of this unit formation."
+                )
+
+
+        # --------------------------------------
+        # RECEIVER RESOURCE
+        # --------------------------------------
+
+        if receiver_resource_id:
+
+            try:
+
+                receiver_resource_id = int(
+                    receiver_resource_id
+                )
+
+                quantity = int(
+                    receiver_resource_quantity
+                )
+
+            except (ValueError, TypeError):
+
+                raise ValueError(
+                    "Invalid requested resource information."
+                )
+
+
+            if quantity <= 0:
+
+                raise ValueError(
+                    "Invalid requested resource quantity."
+                )
+
+
+            # We only verify that the resource exists.
+            #
+            # We DO NOT check the receiver's
+            # stockpile because that information
+            # is private.
+
+            cursor.execute("""
+                SELECT resource_id
+                FROM resources
+                WHERE resource_id = %s
+            """, (
+                receiver_resource_id,
+            ))
+
+            resource = cursor.fetchone()
+
+
+            if not resource:
+
+                raise ValueError(
+                    "Requested resource does not exist."
+                )
+
+
+        # --------------------------------------
+        # RECEIVER UNIT
+        # --------------------------------------
+
+        receiver_unit_id = None
+        receiver_unit_tier = None
+
+
+        if receiver_unit:
+
+            try:
+
+                parts = receiver_unit.split(":")
+
+
+                if len(parts) != 2:
+
+                    raise ValueError
+
+
+                receiver_unit_id = int(
+                    parts[0]
+                )
+
+                receiver_unit_tier = int(
+                    parts[1]
+                )
+
+                quantity = int(
+                    receiver_unit_quantity
+                )
+
+            except (ValueError, TypeError):
+
+                raise ValueError(
+                    "Invalid requested unit."
+                )
+
+
+            if quantity <= 0:
+
+                raise ValueError(
+                    "Invalid requested unit quantity."
+                )
+
+
+            # Verify the unit exists.
+
+            cursor.execute("""
+                SELECT
+                    unit_id,
+                    unit_group
+                FROM units
+                WHERE unit_id = %s
+                AND is_active = 1
+            """, (
+                receiver_unit_id,
+            ))
+
+            unit = cursor.fetchone()
+
+
+            if not unit:
+
+                raise ValueError(
+                    "Requested unit does not exist."
+                )
+
+
+            # Verify the formation tier exists
+            # for this unit group.
+
+            cursor.execute("""
+                SELECT tier_id
+                FROM unit_organisation_tiers
+                WHERE tier_type = %s
+                AND tier = %s
+                LIMIT 1
+            """, (
+                unit["unit_group"],
+                receiver_unit_tier
+            ))
+
+            tier = cursor.fetchone()
+
+
+            if not tier:
+
+                raise ValueError(
+                    "Invalid requested unit formation."
+                )
+
+
+        # --------------------------------------
+        # CREATE TRADE OFFER
+        # --------------------------------------
+
+        cursor.execute("""
+            INSERT INTO trade_offers (
+                sender_nation_id,
+                receiver_nation_id,
+                status,
+                created_turn
+            )
+
+            VALUES (
+                %s,
+                %s,
+                'Pending',
+                %s
+            )
+        """, (
+            sender_nation_id,
+            receiver_nation_id,
+            current_turn
+        ))
+
+
+        trade_offer_id = cursor.lastrowid
+
+
+        # --------------------------------------
+        # SENDER RESOURCE ITEM
+        # --------------------------------------
+
+        if sender_resource_id:
+
+            cursor.execute("""
+                INSERT INTO trade_offer_items (
+                    trade_offer_id,
+                    side,
+                    resource_id,
+                    unit_id,
+                    tier_level,
+                    quantity
+                )
+
+                VALUES (
+                    %s,
+                    'Sender',
+                    %s,
+                    NULL,
+                    NULL,
+                    %s
+                )
+            """, (
+                trade_offer_id,
+                sender_resource_id,
+                int(sender_resource_quantity)
+            ))
+
+
+        # --------------------------------------
+        # SENDER UNIT ITEM
+        # --------------------------------------
+
+        if sender_unit_id:
+
+            cursor.execute("""
+                INSERT INTO trade_offer_items (
+                    trade_offer_id,
+                    side,
+                    resource_id,
+                    unit_id,
+                    tier_level,
+                    quantity
+                )
+
+                VALUES (
+                    %s,
+                    'Sender',
+                    NULL,
+                    %s,
+                    %s,
+                    %s
+                )
+            """, (
+                trade_offer_id,
+                sender_unit_id,
+                sender_unit_tier,
+                int(sender_unit_quantity)
+            ))
+
+
+        # --------------------------------------
+        # RECEIVER RESOURCE ITEM
+        # --------------------------------------
+
+        if receiver_resource_id:
+
+            cursor.execute("""
+                INSERT INTO trade_offer_items (
+                    trade_offer_id,
+                    side,
+                    resource_id,
+                    unit_id,
+                    tier_level,
+                    quantity
+                )
+
+                VALUES (
+                    %s,
+                    'Receiver',
+                    %s,
+                    NULL,
+                    NULL,
+                    %s
+                )
+            """, (
+                trade_offer_id,
+                receiver_resource_id,
+                int(receiver_resource_quantity)
+            ))
+
+
+        # --------------------------------------
+        # RECEIVER UNIT ITEM
+        # --------------------------------------
+
+        if receiver_unit_id:
+
+            cursor.execute("""
+                INSERT INTO trade_offer_items (
+                    trade_offer_id,
+                    side,
+                    resource_id,
+                    unit_id,
+                    tier_level,
+                    quantity
+                )
+
+                VALUES (
+                    %s,
+                    'Receiver',
+                    NULL,
+                    %s,
+                    %s,
+                    %s
+                )
+            """, (
+                trade_offer_id,
+                receiver_unit_id,
+                receiver_unit_tier,
+                int(receiver_unit_quantity)
+            ))
+
+            
+        # --------------------------------------
+        # CREATE TRADE NOTIFICATION
+        # --------------------------------------
+
+        cursor.execute("""
+            SELECT
+                n.name AS sender_name
+            FROM nations n
+            WHERE n.nation_id = %s
+        """, (
+            sender_nation_id,
+        ))
+
+        sender = cursor.fetchone()
+
+
+        # Get the items in the trade
+
+        cursor.execute("""
+            SELECT
+                toi.side,
+                toi.quantity,
+
+                r.name AS resource_name,
+
+                u.unit_name,
+                u.unit_group,
+                uot.tier_name
+
+            FROM trade_offer_items toi
+
+            LEFT JOIN resources r
+                ON toi.resource_id = r.resource_id
+
+            LEFT JOIN units u
+                ON toi.unit_id = u.unit_id
+
+            LEFT JOIN unit_organisation_tiers uot
+                ON uot.tier_type = u.unit_group
+                AND uot.tier = toi.tier_level
+
+            WHERE toi.trade_offer_id = %s
+
+            ORDER BY toi.trade_item_id
+        """, (
+            trade_offer_id,
+        ))
+
+        trade_items = cursor.fetchall()
+
+
+        # Build notification text
+
+        give_items = []
+        receive_items = []
+
+
+        for item in trade_items:
+
+            if item["resource_name"]:
+
+                item_name = item["resource_name"]
+
+            else:
+
+                item_name = (
+                    f"{item['unit_name']} "
+                    f"{item['tier_name']}"
+                )
+
+
+            item_text = (
+                f"{item_name} × "
+                f"{item['quantity']:,}"
+            )
+
+
+            if item["side"] == "Sender":
+
+                give_items.append(
+                    item_text
+                )
+
+            else:
+
+                receive_items.append(
+                    item_text
+                )
+
+
+        give_text = "<br>".join(
+            give_items
+        )
+
+        receive_text = "<br>".join(
+            receive_items
+        )
+
+
+        notification_message = f"""
+        <strong>{sender['sender_name']}</strong> has sent you a trade offer.
+
+        <br>
+
+        <strong>They Give:</strong><br>
+        {give_text}
+
+        <br>
+
+        <strong>They Request:</strong><br>
+        {receive_text}
+        """
+
+
+        cursor.execute("""
+            INSERT INTO notifications (
+                nation_id,
+                type,
+                title,
+                message,
+                icon,
+                created_turn,
+                is_read,
+                reference_id,
+                persistent
+            )
+
+            VALUES (
+                %s,
+                'trade_offer',
+                'Trade Offer',
+                %s,
+                '⇄',
+                %s,
+                0,
+                %s,
+                1
+            )
+        """, (
+            receiver_nation_id,
+            notification_message,
+            current_turn,
+            trade_offer_id
+        ))
+
+        conn.commit()
+
+    except ValueError as error:
+
+        conn.rollback()
+
+        cursor.close()
+        conn.close()
+
+        return str(error), 400
+
+
+    except Exception:
+
+        conn.rollback()
+
+        cursor.close()
+        conn.close()
+
+        raise
+
+
+    cursor.close()
+    conn.close()
+
+
+    return redirect(
+        url_for("trade")
+    )
+
+@app.route("/api/trade/nation/<int:nation_id>/units")
+def trade_nation_units(nation_id):
+
+    current_nation_id = session["nation_id"]
+
+    if nation_id == current_nation_id:
+
+        return {
+            "success": False,
+            "error": "Invalid nation."
+        }, 400
+
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+
+    cursor.execute("""
+        SELECT
+            u.unit_id,
+            u.unit_name,
+            u.unit_group,
+            nu.tier_level,
+            uot.tier_name,
+            COUNT(nu.nation_unit_id) AS quantity
+
+        FROM units u
+
+        JOIN nation_units nu
+            ON u.unit_id = nu.unit_id
+
+        LEFT JOIN unit_organisation_tiers uot
+            ON uot.tier_type = u.unit_group
+            AND uot.tier = nu.tier_level
+
+        WHERE nu.nation_id = %s
+
+        AND nu.status = 'active'
+
+        GROUP BY
+            u.unit_id,
+            u.unit_name,
+            u.unit_group,
+            nu.tier_level,
+            uot.tier_name
+
+        ORDER BY
+            u.unit_name,
+            nu.tier_level
+    """, (nation_id,))
+
+
+    units = cursor.fetchall()
+
+
+    cursor.close()
+    conn.close()
+
+
+    return {
+        "success": True,
+        "units": units
+    }
+
+@app.route("/api/trade/<int:trade_offer_id>/decline", methods=["POST"])
+def decline_trade(trade_offer_id):
+
+    nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+
+        cursor.execute("""
+            SELECT
+                trade_offer_id,
+                sender_nation_id,
+                receiver_nation_id,
+                status
+            FROM trade_offers
+            WHERE trade_offer_id = %s
+            FOR UPDATE
+        """, (trade_offer_id,))
+
+        offer = cursor.fetchone()
+
+        if not offer:
+
+            raise ValueError(
+                "Trade offer not found."
+            )
+
+        # Only the receiver can decline.
+
+        if offer["receiver_nation_id"] != nation_id:
+
+            raise ValueError(
+                "You cannot decline this trade offer."
+            )
+
+        # It must still be pending.
+
+        if offer["status"] != "Pending":
+
+            raise ValueError(
+                "This trade offer is no longer pending."
+            )
+
+        cursor.execute("""
+            UPDATE trade_offers
+            SET status = 'Declined'
+            WHERE trade_offer_id = %s
+        """, (trade_offer_id,))
+
+        conn.commit()
+
+        return {
+            "success": True,
+            "title": "Trade Declined",
+            "message": "The trade offer has been declined.",
+            "type": "info",
+            "icon": "ℹ"
+        }
+
+    except ValueError as error:
+
+        conn.rollback()
+
+        return {
+            "success": False,
+            "title": "Trade Failed",
+            "message": str(error),
+            "type": "error",
+            "icon": "❌"
+        }, 400
+
+    except Exception:
+
+        conn.rollback()
+
+        raise
+
+    finally:
+
+        cursor.close()
+        conn.close()
+
+@app.route("/api/trade/<int:trade_offer_id>/accept", methods=["POST"])
+def accept_trade(trade_offer_id):
+
+    receiver_nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+
+        # --------------------------------------
+        # LOCK THE TRADE OFFER
+        # --------------------------------------
+
+        cursor.execute("""
+            SELECT
+                trade_offer_id,
+                sender_nation_id,
+                receiver_nation_id,
+                status
+            FROM trade_offers
+            WHERE trade_offer_id = %s
+            FOR UPDATE
+        """, (trade_offer_id,))
+
+        offer = cursor.fetchone()
+
+
+        if not offer:
+
+            raise ValueError(
+                "Trade offer not found."
+            )
+
+
+        # Only receiver can accept.
+
+        if (
+            offer["receiver_nation_id"]
+            != receiver_nation_id
+        ):
+
+            raise ValueError(
+                "You cannot accept this trade offer."
+            )
+
+
+        # Prevent double acceptance.
+
+        if offer["status"] != "Pending":
+
+            raise ValueError(
+                "This trade offer is no longer pending."
+            )
+
+
+        sender_nation_id = (
+            offer["sender_nation_id"]
+        )
+
+
+        # --------------------------------------
+        # GET ALL TRADE ITEMS
+        # --------------------------------------
+
+        cursor.execute("""
+            SELECT
+                trade_item_id,
+                side,
+                resource_id,
+                unit_id,
+                tier_level,
+                quantity
+            FROM trade_offer_items
+            WHERE trade_offer_id = %s
+            ORDER BY trade_item_id
+        """, (trade_offer_id,))
+
+        items = cursor.fetchall()
+
+
+        if not items:
+
+            raise ValueError(
+                "This trade offer contains no items."
+            )
+
+
+        # --------------------------------------
+        # SEPARATE THE TWO SIDES
+        # --------------------------------------
+
+        sender_items = [
+            item
+            for item in items
+            if item["side"] == "Sender"
+        ]
+
+        receiver_items = [
+            item
+            for item in items
+            if item["side"] == "Receiver"
+        ]
+
+
+        if not sender_items:
+
+            raise ValueError(
+                "This trade offer has nothing to give."
+            )
+
+
+        if not receiver_items:
+
+            raise ValueError(
+                "This trade offer has nothing to receive."
+            )
+
+
+        # --------------------------------------
+        # VALIDATE SENDER'S OFFER
+        # --------------------------------------
+
+        for item in sender_items:
+
+            quantity = item["quantity"]
+
+
+            if quantity <= 0:
+
+                raise ValueError(
+                    "Trade contains an invalid quantity."
+                )
+
+
+            # RESOURCE
+
+            if item["resource_id"] is not None:
+
+                cursor.execute("""
+                    SELECT
+                        amount
+                    FROM nation_resources
+                    WHERE nation_id = %s
+                    AND resource_id = %s
+                    FOR UPDATE
+                """, (
+                    sender_nation_id,
+                    item["resource_id"]
+                ))
+
+                resource = cursor.fetchone()
+
+
+                if not resource:
+
+                    raise ValueError(
+                        "The sender no longer has the offered resource."
+                    )
+
+
+                if resource["amount"] < quantity:
+
+                    raise ValueError(
+                        "The sender no longer has enough of the offered resource."
+                    )
+
+
+            # UNIT
+
+            elif item["unit_id"] is not None:
+
+                cursor.execute("""
+                    SELECT
+                        nation_unit_id
+                    FROM nation_units
+                    WHERE nation_id = %s
+                    AND unit_id = %s
+                    AND tier_level = %s
+                    AND status = 'active'
+                    FOR UPDATE
+                """, (
+                    sender_nation_id,
+                    item["unit_id"],
+                    item["tier_level"]
+                ))
+
+                units = cursor.fetchall()
+
+
+                if len(units) < quantity:
+
+                    raise ValueError(
+                        "The sender no longer has enough of the offered unit formation."
+                    )
+
+
+            else:
+
+                raise ValueError(
+                    "Invalid trade item."
+                )
+
+
+        # --------------------------------------
+        # VALIDATE RECEIVER'S OFFER
+        # --------------------------------------
+
+        for item in receiver_items:
+
+            quantity = item["quantity"]
+
+
+            if quantity <= 0:
+
+                raise ValueError(
+                    "Trade contains an invalid quantity."
+                )
+
+
+            # RESOURCE
+
+            if item["resource_id"] is not None:
+
+                cursor.execute("""
+                    SELECT
+                        amount
+                    FROM nation_resources
+                    WHERE nation_id = %s
+                    AND resource_id = %s
+                    FOR UPDATE
+                """, (
+                    receiver_nation_id,
+                    item["resource_id"]
+                ))
+
+                resource = cursor.fetchone()
+
+
+                if not resource:
+
+                    raise ValueError(
+                        "You do not have the requested resource."
+                    )
+
+
+                if resource["amount"] < quantity:
+
+                    raise ValueError(
+                        "You no longer have enough of the requested resource."
+                    )
+
+
+            # UNIT
+
+            elif item["unit_id"] is not None:
+
+                cursor.execute("""
+                    SELECT
+                        nation_unit_id
+                    FROM nation_units
+                    WHERE nation_id = %s
+                    AND unit_id = %s
+                    AND tier_level = %s
+                    AND status = 'active'
+                    FOR UPDATE
+                """, (
+                    receiver_nation_id,
+                    item["unit_id"],
+                    item["tier_level"]
+                ))
+
+                units = cursor.fetchall()
+
+
+                if len(units) < quantity:
+
+                    raise ValueError(
+                        "You no longer have enough of the requested unit formation."
+                    )
+
+
+            else:
+
+                raise ValueError(
+                    "Invalid trade item."
+                )
+
+
+        # --------------------------------------
+        # TRANSFER SENDER RESOURCES
+        # --------------------------------------
+
+        for item in sender_items:
+
+            if item["resource_id"] is not None:
+
+                quantity = item["quantity"]
+
+
+                cursor.execute("""
+                    UPDATE nation_resources
+                    SET amount = amount - %s
+                    WHERE nation_id = %s
+                    AND resource_id = %s
+                """, (
+                    quantity,
+                    sender_nation_id,
+                    item["resource_id"]
+                ))
+
+
+                cursor.execute("""
+                    UPDATE nation_resources
+                    SET amount = amount + %s
+                    WHERE nation_id = %s
+                    AND resource_id = %s
+                """, (
+                    quantity,
+                    receiver_nation_id,
+                    item["resource_id"]
+                ))
+
+
+        # --------------------------------------
+        # TRANSFER RECEIVER RESOURCES
+        # --------------------------------------
+
+        for item in receiver_items:
+
+            if item["resource_id"] is not None:
+
+                quantity = item["quantity"]
+
+
+                cursor.execute("""
+                    UPDATE nation_resources
+                    SET amount = amount - %s
+                    WHERE nation_id = %s
+                    AND resource_id = %s
+                """, (
+                    quantity,
+                    receiver_nation_id,
+                    item["resource_id"]
+                ))
+
+
+                cursor.execute("""
+                    UPDATE nation_resources
+                    SET amount = amount + %s
+                    WHERE nation_id = %s
+                    AND resource_id = %s
+                """, (
+                    quantity,
+                    sender_nation_id,
+                    item["resource_id"]
+                ))
+
+
+        # --------------------------------------
+        # TRANSFER SENDER UNITS
+        # --------------------------------------
+
+        for item in sender_items:
+
+            if item["unit_id"] is not None:
+
+                quantity = item["quantity"]
+
+
+                cursor.execute("""
+                    SELECT
+                        nation_unit_id
+                    FROM nation_units
+                    WHERE nation_id = %s
+                    AND unit_id = %s
+                    AND tier_level = %s
+                    AND status = 'active'
+                    LIMIT %s
+                    FOR UPDATE
+                """, (
+                    sender_nation_id,
+                    item["unit_id"],
+                    item["tier_level"],
+                    quantity
+                ))
+
+                selected_units = cursor.fetchall()
+
+
+                for unit in selected_units:
+
+                    cursor.execute("""
+                        UPDATE nation_units
+                        SET nation_id = %s
+                        WHERE nation_unit_id = %s
+                    """, (
+                        receiver_nation_id,
+                        unit["nation_unit_id"]
+                    ))
+
+
+        # --------------------------------------
+        # TRANSFER RECEIVER UNITS
+        # --------------------------------------
+
+        for item in receiver_items:
+
+            if item["unit_id"] is not None:
+
+                quantity = item["quantity"]
+
+
+                cursor.execute("""
+                    SELECT
+                        nation_unit_id
+                    FROM nation_units
+                    WHERE nation_id = %s
+                    AND unit_id = %s
+                    AND tier_level = %s
+                    AND status = 'active'
+                    LIMIT %s
+                    FOR UPDATE
+                """, (
+                    receiver_nation_id,
+                    item["unit_id"],
+                    item["tier_level"],
+                    quantity
+                ))
+
+                selected_units = cursor.fetchall()
+
+
+                for unit in selected_units:
+
+                    cursor.execute("""
+                        UPDATE nation_units
+                        SET nation_id = %s
+                        WHERE nation_unit_id = %s
+                    """, (
+                        sender_nation_id,
+                        unit["nation_unit_id"]
+                    ))
+
+
+        # --------------------------------------
+        # MARK TRADE ACCEPTED
+        # --------------------------------------
+
+        cursor.execute("""
+            UPDATE trade_offers
+            SET status = 'Accepted'
+            WHERE trade_offer_id = %s
+        """, (
+            trade_offer_id,
+        ))
+
+
+        conn.commit()
+
+
+        return {
+            "success": True,
+            "title": "Trade Accepted",
+            "message": "The trade has been completed successfully.",
+            "type": "success",
+            "icon": "✓"
+        }
+
+
+    except ValueError as error:
+
+        conn.rollback()
+
+        return {
+            "success": False,
+            "title": "Trade Failed",
+            "message": str(error),
+            "type": "error",
+            "icon": "❌"
+        }, 400
+
+
+    except Exception:
+
+        conn.rollback()
+
+        raise
+
+
+    finally:
+
+        cursor.close()
+        conn.close()
 
 if __name__ == "__main__": 
     app.run()

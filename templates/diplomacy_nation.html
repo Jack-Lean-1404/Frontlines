@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nation</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
+</head>
+
+{% include 'components/navbar.html' %}
+
+{% include "partials/nation_header.html" %}
+
+<section class="dashboard-card">
+
+    <div class="diplomacy-profile">
+
+        <img
+                    src="{{ url_for('static', filename='' + viewed_nation.flag) }}"
+                    class="diplomacy-flag"
+                    alt="{{ viewed_nation.name }}">
+
+        <div>
+
+            <h2>{{ viewed_nation.name }}</h2>
+
+            <p>
+
+                <strong>Relationship:</strong>
+
+                {{ relationship.relationship }}
+
+            </p>
+
+            <p>
+
+                <strong>Alliance:</strong>
+
+                {% if viewed_nation.alliance_name %}
+
+                    [{{ viewed_nation.alliance_code }}]
+
+                    {{ viewed_nation.alliance_name }}
+
+                {% else %}
+
+                    None
+
+                {% endif %}
+
+            </p>
+
+            <p>
+
+                <strong>Military Score:</strong>
+
+                {{ viewed_nation.military_score }}
+
+            </p>
+
+            <p>
+
+                <strong>Economic Score:</strong>
+
+                {{ viewed_nation.economic_score }}
+
+            </p>
+
+            <p>
+
+                <strong>Cities:</strong>
+
+                {{ viewed_nation.city_count }}
+
+            </p>
+
+            <p>
+
+                <strong>Capital:</strong>
+
+                {{ viewed_nation.capital_count }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>

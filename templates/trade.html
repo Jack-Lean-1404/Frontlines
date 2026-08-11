@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Trade</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+
+    <link
+        rel="icon"
+        href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
+
+</head>
+
+<body>
+
+    {% include 'components/navbar.html' %}
+
+    {% include "partials/nation_header.html" %}
+
+
+    <main class="dashboard-container">
+
+        <section class="dashboard-card">
+
+            <h2>Trade</h2>
+
+            <p class="trade-description">
+
+                Create a trade offer with another nation.
+
+            </p>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('create_trade') }}">
+
+
+                <!-- Trade Partner -->
+
+                <div class="trade-section">
+
+                    <h3>Trade With</h3>
+
+                    <select
+                        name="receiver_nation_id"
+                        required
+                        id="trade-nation-select">
+
+                        <option value="">
+                            Select Nation
+                        </option>
+
+                        {% for nation in nations %}
+
+                            <option
+                                value="{{ nation.nation_id }}">
+
+                                {{ nation.name }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <hr>
+
+
+                <div class="trade-columns">
+
+                    <!-- You Give -->
+
+                    <div class="trade-section">
+
+                        <h3>You Give</h3>
+
+                        <div class="trade-toggle">
+
+                            <button
+                                type="button"
+                                class="trade-toggle-button active"
+                                data-target="sender-resources">
+
+                                Resources
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="trade-toggle-button"
+                                data-target="sender-units">
+
+                                Units
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- Sender Resources -->
+
+                        <div
+                            id="sender-resources"
+                            class="trade-option">
+
+                            <div class="trade-item-row">
+
+                                <select name="sender_resource_id">
+
+                                    <option value="">
+                                        Select Resource
+                                    </option>
+
+                                    {% for resource in resources %}
+
+                                        <option
+                                            value="{{ resource.resource_id }}">
+
+                                            {{ resource.name }}
+                                            — {{ "{:,.0f}".format(resource.amount) }}
+
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                                <input
+                                    type="number"
+                                    name="sender_resource_quantity"
+                                    min="1"
+                                    placeholder="Quantity">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Sender Units -->
+
+                        <div
+                            id="sender-units"
+                            class="trade-option"
+                            style="display: none;">
+
+                            <div class="trade-item-row">
+
+                                <select name="sender_unit_id">
+
+                                    <option value="">
+                                        Select Unit
+                                    </option>
+
+                                    {% for unit in units %}
+
+                                        <option
+                                            value="{{ unit.unit_id }}:{{ unit.tier_level }}">
+
+                                            {{ unit.unit_name }} {{ unit.tier_name }} — {{ unit.quantity }}
+
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                                <input
+                                    type="number"
+                                    name="sender_unit_quantity"
+                                    min="1"
+                                    placeholder="Quantity">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- You Receive -->
+
+                    <div class="trade-section">
+
+                        <h3>You Receive</h3>
+
+                        <div class="trade-toggle">
+
+                            <button
+                                type="button"
+                                class="trade-toggle-button active"
+                                data-target="receiver-resources">
+
+                                Resources
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="trade-toggle-button"
+                                data-target="receiver-units">
+
+                                Units
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- Receiver Resources -->
+
+                        <div
+                            id="receiver-resources"
+                            class="trade-option">
+
+                            <div class="trade-item-row">
+
+                                <select name="receiver_resource_id">
+
+                                    <option value="">
+                                        Select Resource
+                                    </option>
+
+                                    {% for resource in resources %}
+
+                                        <option
+                                            value="{{ resource.resource_id }}">
+
+                                            {{ resource.name }}
+
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                                <input
+                                    type="number"
+                                    name="receiver_resource_quantity"
+                                    min="1"
+                                    placeholder="Quantity">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Receiver Units -->
+
+                        <div
+                            id="receiver-units"
+                            class="trade-option"
+                            style="display: none;">
+
+                            <div class="trade-item-row">
+
+                                <select
+                                    name="receiver_unit_id"
+                                    id="receiver-unit-select">
+
+                                    <option value="">
+                                        Select Unit
+                                    </option>
+
+                                    {% for unit in units %}
+
+                                        <option
+                                            value="{{ unit.unit_id }}">
+
+                                            {{ unit.unit_name }}
+
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                                <input
+                                    type="number"
+                                    name="receiver_unit_quantity"
+                                    min="1"
+                                    placeholder="Quantity">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="primary-button">
+
+                    Send Trade Offer
+
+                </button>
+
+            </form>
+
+        </section>
+
+        <hr>
+
+            <section class="trade-offers-section">
+
+                <h2>Incoming Trade Offers</h2>
+
+                {% if incoming_offers %}
+
+                    {% for offer in incoming_offers %}
+
+                        <div class="trade-offer-card">
+
+                            <div class="trade-offer-header">
+
+                                <div>
+
+                                    <h3>
+                                        {{ offer.sender_name }}
+                                    </h3>
+
+                                    <p>
+                                        Turn {{ offer.created_turn }}
+                                    </p>
+
+                                </div>
+
+                                <span class="trade-offer-status {{ offer.status|lower }}">
+                                    {{ offer.status }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="trade-offer-columns">
+
+                                <div class="trade-offer-side">
+
+                                    <h4>
+                                        They Give
+                                    </h4>
+
+                                    {% for item in incoming_offer_items %}
+
+                                        {% if item.trade_offer_id == offer.trade_offer_id
+                                            and item.side == "Sender" %}
+
+                                            <div class="trade-offer-item">
+
+                                                {% if item.resource_id %}
+
+                                                    <strong>
+                                                        {{ item.resource_name }}
+                                                    </strong>
+
+                                                {% else %}
+
+                                                    <strong>
+                                                        {{ item.unit_name }}
+                                                        {{ item.tier_name }}
+                                                    </strong>
+
+                                                {% endif %}
+
+                                                <span>
+                                                    × {{ "{:,.0f}".format(item.quantity) }}
+                                                </span>
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+
+                                <div class="trade-offer-side">
+
+                                    <h4>
+                                        They Request
+                                    </h4>
+
+                                    {% for item in incoming_offer_items %}
+
+                                        {% if item.trade_offer_id == offer.trade_offer_id
+                                            and item.side == "Receiver" %}
+
+                                            <div class="trade-offer-item">
+
+                                                {% if item.resource_id %}
+
+                                                    <strong>
+                                                        {{ item.resource_name }}
+                                                    </strong>
+
+                                                {% else %}
+
+                                                    <strong>
+                                                        {{ item.unit_name }}
+                                                        {{ item.tier_name }}
+                                                    </strong>
+
+                                                {% endif %}
+
+                                                <span>
+                                                    × {{ "{:,.0f}".format(item.quantity) }}
+                                                </span>
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+                                 {% if offer.status == "Pending" %}
+
+                                    <div class="trade-offer-actions">
+
+                                        <button
+                                            type="button"
+                                            class="primary-button trade-accept-button"
+                                            data-trade-id="{{ offer.trade_offer_id }}">
+
+                                            Accept
+
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            class="trade-decline-button"
+                                            data-trade-id="{{ offer.trade_offer_id }}">
+
+                                            Decline
+
+                                        </button>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="trade-offers-empty">
+                        You have no incoming trade offers.
+                    </p>
+
+                {% endif %}
+
+            </section>
+
+            <section class="trade-offers-section">
+
+                <h2>Outgoing Trade Offers</h2>
+
+                {% if outgoing_offers %}
+
+                    {% for offer in outgoing_offers %}
+
+                        <div class="trade-offer-card">
+
+                            <div class="trade-offer-header">
+
+                                <div>
+
+                                    <h3>
+                                        {{ offer.receiver_name }}
+                                    </h3>
+
+                                    <p>
+                                        Turn {{ offer.created_turn }}
+                                    </p>
+
+                                </div>
+
+                                <span class="trade-offer-status {{ offer.status|lower }}">
+                                    {{ offer.status }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="trade-offer-columns">
+
+                                <div class="trade-offer-side">
+
+                                    <h4>
+                                        You Give
+                                    </h4>
+
+                                    {% for item in outgoing_offer_items %}
+
+                                        {% if item.trade_offer_id == offer.trade_offer_id
+                                            and item.side == "Sender" %}
+
+                                            <div class="trade-offer-item">
+
+                                                {% if item.resource_id %}
+
+                                                    <strong>
+                                                        {{ item.resource_name }}
+                                                    </strong>
+
+                                                {% else %}
+
+                                                    <strong>
+                                                        {{ item.unit_name }}
+                                                        {{ item.tier_name }}
+                                                    </strong>
+
+                                                {% endif %}
+
+                                                <span>
+                                                    × {{ "{:,.0f}".format(item.quantity) }}
+                                                </span>
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+
+                                <div class="trade-offer-side">
+
+                                    <h4>
+                                        You Request
+                                    </h4>
+
+                                    {% for item in outgoing_offer_items %}
+
+                                        {% if item.trade_offer_id == offer.trade_offer_id
+                                            and item.side == "Receiver" %}
+
+                                            <div class="trade-offer-item">
+
+                                                {% if item.resource_id %}
+
+                                                    <strong>
+                                                        {{ item.resource_name }}
+                                                    </strong>
+
+                                                {% else %}
+
+                                                    <strong>
+                                                        {{ item.unit_name }}
+                                                        {{ item.tier_name }}
+                                                    </strong>
+
+                                                {% endif %}
+
+                                                <span>
+                                                    × {{ "{:,.0f}".format(item.quantity) }}
+                                                </span>
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+                            {% if offer.status == "Pending" %}
+
+                                <div class="trade-offer-actions">
+
+                                    <button
+                                        type="button"
+                                        class="primary-button trade-accept-button"
+                                        data-trade-id="{{ offer.trade_offer_id }}">
+
+                                        Accept
+
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="trade-decline-button"
+                                        data-trade-id="{{ offer.trade_offer_id }}">
+
+                                        Decline
+
+                                    </button>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="trade-offers-empty">
+                        You have no outgoing trade offers.
+                    </p>
+
+                {% endif %}
+
+            </section>
+        </hr>
+
+    </main>
+
+<script>
+
+document
+    .querySelectorAll(".trade-toggle-button")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const targetId =
+                button.dataset.target;
+
+            /*
+             * Find only the trade section
+             * this button belongs to.
+             */
+
+            const section =
+                button.closest(".trade-section");
+
+
+            /*
+             * Remove active state from
+             * the buttons in this section.
+             */
+
+            section
+                .querySelectorAll(".trade-toggle-button")
+                .forEach(otherButton => {
+
+                    otherButton.classList.remove("active");
+
+                });
+
+
+            /*
+             * Activate the clicked button.
+             */
+
+            button.classList.add("active");
+
+
+            /*
+             * Hide both options in
+             * this trade section.
+             */
+
+            section
+                .querySelectorAll(".trade-option")
+                .forEach(option => {
+
+                    option.style.display = "none";
+
+                });
+
+
+            /*
+             * Show the selected option.
+             */
+
+            const target =
+                document.getElementById(targetId);
+
+            target.style.display = "block";
+
+        });
+
+    });
+</script>
+
+<script>
+
+const tradeNationSelect =
+    document.getElementById(
+        "trade-nation-select"
+    );
+
+
+const receiverUnitSelect =
+    document.getElementById(
+        "receiver-unit-select"
+    );
+
+
+tradeNationSelect.addEventListener(
+    "change",
+    async function () {
+
+        const nationId =
+            this.value;
+
+
+        receiverUnitSelect.innerHTML = `
+
+            <option value="">
+                Select Unit
+            </option>
+
+        `;
+
+
+        if (!nationId) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/trade/nation/${nationId}/units`
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !result.success
+            ) {
+
+                NotificationManager.show({
+
+                    title: "Trade Error",
+
+                    message:
+                        result.error ||
+                        "Unable to load units.",
+
+                    type: "error",
+
+                    icon: "❌"
+
+                });
+
+                return;
+
+            }
+
+
+            result.units.forEach(
+                unit => {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    /*
+                     * We need both unit_id
+                     * and tier_level because:
+                     *
+                     * Motorised Infantry Company
+                     * and
+                     * Motorised Infantry Battalion
+                     *
+                     * have the same unit_id.
+                     */
+
+                    option.value =
+                        `${unit.unit_id}:${unit.tier_level}`;
+
+
+                    option.textContent =
+                        `${unit.unit_name} ${
+                            unit.tier_name
+                        } — ${
+                            Number(
+                                unit.quantity
+                            ).toLocaleString()
+                        }`;
+
+
+                    receiverUnitSelect
+                        .appendChild(option);
+
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Failed to load nation units:",
+                error
+            );
+
+
+            NotificationManager.show({
+
+                title: "Trade Error",
+
+                message:
+                    "Unable to load the selected nation's units.",
+
+                type: "error",
+
+                icon: "❌"
+
+            });
+
+        }
+
+    }
+
+);
+
+</script>
+
+
+<script>
+
+document
+    .querySelectorAll(".trade-accept-button")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            async function () {
+
+                const tradeId =
+                    this.dataset.tradeId;
+
+
+                this.disabled = true;
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/api/trade/${tradeId}/accept`,
+                            {
+                                method: "POST"
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    NotificationManager.show(
+                        result
+                    );
+
+
+                    if (result.success) {
+
+                        setTimeout(() => {
+
+                            location.reload();
+
+                        }, 500);
+
+                    }
+
+                    else {
+
+                        this.disabled = false;
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Trade acceptance failed:",
+                        error
+                    );
+
+
+                    NotificationManager.show({
+
+                        title: "Trade Failed",
+
+                        message:
+                            "Unable to process the trade.",
+
+                        type: "error",
+
+                        icon: "❌"
+
+                    });
+
+
+                    this.disabled = false;
+
+                }
+
+            }
+        );
+
+    });
+
+
+document
+    .querySelectorAll(".trade-decline-button")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            async function () {
+
+                const tradeId =
+                    this.dataset.tradeId;
+
+
+                this.disabled = true;
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/api/trade/${tradeId}/decline`,
+                            {
+                                method: "POST"
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    NotificationManager.show(
+                        result
+                    );
+
+
+                    if (result.success) {
+
+                        setTimeout(() => {
+
+                            location.reload();
+
+                        }, 500);
+
+                    }
+
+                    else {
+
+                        this.disabled = false;
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Trade decline failed:",
+                        error
+                    );
+
+
+                    NotificationManager.show({
+
+                        title: "Trade Failed",
+
+                        message:
+                            "Unable to decline the trade.",
+
+                        type: "error",
+
+                        icon: "❌"
+
+                    });
+
+
+                    this.disabled = false;
+
+                }
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+
+</html>
