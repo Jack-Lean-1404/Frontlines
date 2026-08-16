@@ -1,65 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Access</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='static/style.css') }}">
     <meta charset="UTF-8">
+    <title>Access | Frontlines</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="icon" type="image/x-icon" href="/static/images/Logo-Blue.png">
 </head>
 
- <!-- Display the navbar from the components folder -->
-{% include 'components/navbar.html' %}
-
 <body>
 
-    <h1>Login/Signup</h1>
+    <!-- Website Navbar -->
+    {% include 'components/navbar.html' %}
 
-    <!-- SIGN UP FORM -->
-    <h2>Sign Up</h2>
 
-    <form id="signupForm">
+    <!-- Authentication Page -->
 
-        <label>Username</label><br>
-        <input type="text" id="signupUsername" required><br><br>
+    <main class="auth-page">
 
-        <label>Email</label><br>
-        <input type="email" id="signupEmail" required><br><br>
+        <div class="auth-header">
 
-        <label>Password</label><br>
-        <input type="password" id="signupPassword" required><br><br>
+            <h1>Welcome to Frontlines</h1>
 
-        <button type="submit">Sign Up</button>
+            <p>
+                Sign in to your account or create a new account to begin.
+            </p>
 
-    </form>
+        </div>
 
-    <hr>
 
-    <!-- LOGIN FORM -->
-    <h2>Login</h2>
+        <div class="auth-container">
 
-    <form id="loginForm">
 
-        <label>Username</label><br>
-        <input type="text" id="loginUsername" required><br><br>
+            <!-- SIGN UP -->
 
-        <label>Password</label><br>
-        <input type="password" id="loginPassword" required><br><br>
+            <section class="auth-card">
 
-        <button type="submit">Login</button>
+                <div class="auth-card-header">
 
-    </form>
+                    <h2>Create Account</h2>
+
+                    <p>
+                        Create your Frontlines account.
+                    </p>
+
+                </div>
+
+
+                <form id="signupForm">
+
+                    <div class="auth-form-group">
+
+                        <label for="signupUsername">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="signupUsername"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="auth-form-group">
+
+                        <label for="signupEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="auth-form-group">
+
+                        <label for="signupPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-button"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- LOGIN -->
+
+            <section class="auth-card">
+
+                <div class="auth-card-header">
+
+                    <h2>Sign In</h2>
+
+                    <p>
+                        Sign in to continue to Frontlines.
+                    </p>
+
+                </div>
+
+
+                <form id="loginForm">
+
+                    <div class="auth-form-group">
+
+                        <label for="loginUsername">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="loginUsername"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="auth-form-group">
+
+                        <label for="loginPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-button"
+                    >
+                        Sign In
+                    </button>
+
+                </form>
+
+            </section>
+
+
+        </div>
+
+    </main>
 
 
     <script>
 
+        // =========================================================
         // SIGN UP
+        // =========================================================
+
         document.getElementById("signupForm").addEventListener(
             "submit",
             async function(event) {
 
                 event.preventDefault();
 
-                // Send signup data to backend
                 const response = await fetch("/signup", {
 
                     method: "POST",
@@ -70,17 +203,21 @@
 
                     body: JSON.stringify({
 
-                        username: document.getElementById("signupUsername").value,
+                        username:
+                            document.getElementById("signupUsername").value,
 
-                        email: document.getElementById("signupEmail").value,
+                        email:
+                            document.getElementById("signupEmail").value,
 
-                        password: document.getElementById("signupPassword").value
+                        password:
+                            document.getElementById("signupPassword").value
+
                     })
+
                 });
 
                 const data = await response.json();
 
-                // If signup is successful, redirect to dashboard. Otherwise, show error message.
                 if (data.redirect) {
 
                     window.location.href = data.redirect;
@@ -88,19 +225,23 @@
                 } else {
 
                     alert(data.message || data.error);
+
                 }
+
             }
         );
 
 
+        // =========================================================
         // LOGIN
+        // =========================================================
+
         document.getElementById("loginForm").addEventListener(
             "submit",
             async function(event) {
 
                 event.preventDefault();
-                
-                // Send login data to server
+
                 const response = await fetch("/login", {
 
                     method: "POST",
@@ -111,15 +252,18 @@
 
                     body: JSON.stringify({
 
-                        username: document.getElementById("loginUsername").value,
+                        username:
+                            document.getElementById("loginUsername").value,
 
-                        password: document.getElementById("loginPassword").value
+                        password:
+                            document.getElementById("loginPassword").value
+
                     })
+
                 });
 
                 const data = await response.json();
 
-                // If login is successful, redirect to dashboard. Otherwise, show error message.
                 if (data.redirect) {
 
                     window.location.href = data.redirect;
@@ -127,11 +271,14 @@
                 } else {
 
                     alert(data.error);
-}
+
+                }
+
             }
         );
 
     </script>
 
 </body>
+
 </html>
