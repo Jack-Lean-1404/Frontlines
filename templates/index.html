@@ -11,8 +11,300 @@
 {% include 'components/navbar.html' %}
 
 <body>
+    <section class="hero">
+        <img
+            src="{{ url_for('static', filename='images/Hero-1.jpg') }}"
+            alt="Frontlines Hero Image"
+            class="hero-image"
+        >
 
-    <h1>Homepage stuff</h1>
+        <div class="hero-overlay"></div>
 
+        <div class="hero-content">
+
+            <h1>FRONTLINES</h1>
+
+            <p>
+                Build your nation. Command your forces. Shape the future.
+            </p>
+
+            <a href="/dashboard" class="hero-button">
+                Enter the Game
+            </a>
+
+        </div>
+    </section>
+
+    <section class="quote-banner">
+        <p id="random-quote"></p>
+    </section>
+
+    <section class="about-frontlines">
+
+        <div class="about-frontlines-content">
+
+            <h2>What is Frontlines?</h2>
+
+            <p>
+                Frontlines is a strategic modern warfare board game where players take command of a nation and compete for territory, resources, and strategic advantage across land, sea, and air.
+            </p>
+
+            <p>
+                Build your economy, develop cities and infrastructure, manage strategic resources, and establish the industrial capacity needed to support your nation. Raise and equip your military, expand your influence, and outmaneuver your opponents through careful planning and decisive action.
+            </p>
+
+            <p>
+               Every decision matters - from the resources you control to the forces you deploy. 
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="gameplay-section">
+
+        <div class="gameplay-header">
+
+            <h2>The World Is Yours to Shape</h2>
+
+            <p>
+                Build a nation capable of surviving and thriving in a world
+                where every decision matters.
+            </p>
+
+        </div>
+
+
+        <div class="gameplay-grid">
+
+
+            <!-- Economy -->
+
+            <div class="gameplay-card">
+
+                <div class="gameplay-icon">
+                    $
+                </div>
+
+                <h3>Economy</h3>
+
+                <p>
+                    Build a powerful economy, manage national resources,
+                    and develop the industrial infrastructure needed to
+                    support your nation.
+                </p>
+
+            </div>
+
+
+            <!-- Military -->
+
+            <div class="gameplay-card">
+
+                <div class="gameplay-icon">
+                    +
+                </div>
+
+                <h3>Military</h3>
+
+                <p>
+                    Raise military forces, produce equipment, and build
+                    an armed force capable of defending your nation and
+                    projecting power abroad.
+                </p>
+
+            </div>
+
+
+            <!-- Diplomacy -->
+
+            <div class="gameplay-card">
+
+                <div class="gameplay-icon">
+                    ◇
+                </div>
+
+                <h3>Diplomacy</h3>
+
+                <p>
+                    Build relationships with other nations, negotiate
+                    agreements, manage rivalries, and decide who you
+                    can trust.
+                </p>
+
+            </div>
+
+
+            <!-- Research -->
+
+            <div class="gameplay-card">
+
+                <div class="gameplay-icon">
+                    ⚙
+                </div>
+
+                <h3>Research</h3>
+
+                <p>
+                    Invest in research and develop new technologies
+                    that can strengthen your economy, military, and
+                    national capabilities.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+    <section class="build-section">
+
+        <div class="build-image">
+
+            <img
+                src="{{ url_for('static', filename='images/dashboard-preview.png') }}"
+                alt="Frontlines game dashboard"
+            >
+
+        </div>
+
+
+        <div class="build-content">
+
+            <span class="section-label">
+                BUILD YOUR NATION
+            </span>
+
+            <h2>Shape the Future of Your Nation</h2>
+
+            <p>
+                Every nation begins with a foundation. Develop your cities,
+                expand your infrastructure, manage your resources, and build
+                an economy capable of supporting your ambitions.
+            </p>
+
+            <p>
+                Your decisions shape how your nation grows and determine
+                how prepared you are for the challenges ahead.
+            </p>
+
+            <a href="/dashboard" class="section-button">
+                Explore the Game
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="alterra-section">
+
+        <div class="alterra-content">
+
+            <span class="section-label">
+                THE WORLD OF FRONTLINES
+            </span>
+
+            <h2>Explore Alterra</h2>
+
+            <p>
+                Frontlines takes place on Alterra, an Earth-like world
+                shaped by dramatic geological forces.
+            </p>
+
+            <p>
+                Around 60 million years ago, the ancient supercontinent
+                of Primordia began to fracture and drift apart, eventually
+                forming the five continents known today:
+                <strong>Rivaran, Norland, Aurelia, Gaian,</strong> and
+                <strong>Thalassia.</strong>
+            </p>
+
+            <p>
+                Each continent developed its own distinct geography and
+                cultures, creating the diverse and evolving world in which
+                Frontlines unfolds.
+            </p>
+
+            <a href="/wiki" class="section-button">
+                Explore Alterra
+            </a>
+
+        </div>
+
+
+        <div class="alterra-image">
+
+            <img
+                src="{{ url_for('static', filename='images/alterra-map.png') }}"
+                alt="Map of Alterra"
+            >
+
+        </div>
+
+    </section>
+
+    <section class="command-section">
+
+        <img
+            src="{{ url_for('static', filename='images/command-forces.png') }}"
+            alt="Frontlines military forces"
+            class="command-image"
+        >
+
+        <div class="command-overlay"></div>
+
+        <div class="command-content">
+
+            <span class="section-label command-label">
+                COMMAND YOUR FORCES
+            </span>
+
+            <h2>Lead. Deploy. Defend.</h2>
+
+            <p>
+                Build and maintain a military capable of defending your
+                nation and projecting power across Alterra.
+            </p>
+
+            <p>
+                From infantry and armour to aircraft and naval forces,
+                every unit serves a purpose. Build your forces,
+                plan your strategy, and decide when to fight.
+            </p>
+
+            <a href="/game" class="section-button command-button">
+                Explore Military
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="final-cta">
+
+        <div class="final-cta-content">
+
+            <span class="section-label">
+                YOUR NATION AWAITS
+            </span>
+
+            <h2>Ready to Take Command?</h2>
+
+            <p>
+                Build your nation, command your forces, and shape the
+                future of Alterra.
+            </p>
+
+            <a href="/access" class="final-cta-button">
+                Login / Sign Up
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <script src="{{ url_for('static', filename='js/quotes.js') }}"></script>
 </body>
 </html>
