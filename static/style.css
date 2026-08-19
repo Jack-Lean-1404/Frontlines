@@ -2409,7 +2409,6 @@ button:hover {
    ========================================================= */
 
 .auth-page {
-    min-height: calc(100vh - 64px);
 
     display: flex;
     flex-direction: column;
@@ -3657,4 +3656,84 @@ button:hover {
         font-size: 16px;
     }
 
+}
+
+.site-footer {
+    background: #243447;
+    color: white;
+}
+
+.site-footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 45px 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.site-footer-brand {
+    max-width: 300px;
+}
+
+.site-footer-logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.site-footer-brand p {
+    margin-top: 10px;
+    color: #c5ced8;
+}
+
+.site-footer-links {
+    display: flex;
+    gap: 80px;
+}
+
+.site-footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.site-footer-column h3 {
+    margin: 0 0 8px;
+    font-size: 0.95rem;
+}
+
+.site-footer-column a {
+    color: #c5ced8;
+    text-decoration: none;
+}
+
+.site-footer-column a:hover {
+    color: white;
+}
+
+.site-footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    border-top: 1px solid rgba(255,255,255,.15);
+    display: flex;
+    justify-content: space-between;
+    color: #aeb8c3;
+    font-size: 0.9rem;
+}
+
+.site-footer-bottom div {
+    display: flex;
+    gap: 20px;
+}
+
+.site-footer-bottom a {
+    color: #aeb8c3;
+    text-decoration: none;
+}
+
+.site-footer-bottom a:hover {
+    color: white;
 }

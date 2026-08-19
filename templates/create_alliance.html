@@ -9,66 +9,74 @@
     <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
 </head>
 
-{% include 'components/navbar.html' %}
+<body>
 
-{% include "partials/nation_header.html" %}
+    {% include 'components/navbar.html' %}
 
-<section class="dashboard-card">
+    <main class="game-container">
 
-    <h2>Create Alliance</h2>
+        {% include "partials/nation_header.html" %}
 
-    <p>
-        Create a new alliance for your nation.
-    </p>
+        <section class="dashboard-card">
 
-    <form method="POST">
+            <h2>Create Alliance</h2>
 
-        <div class="form-group">
+            <p>
+                Create a new alliance for your nation.
+            </p>
 
-            <label for="alliance_name">
-                Alliance Name
-            </label>
+            <form method="POST">
 
-            <input
-                type="text"
-                id="alliance_name"
-                name="alliance_name"
-                maxlength="100"
-                required>
+                <div class="form-group">
 
-        </div>
+                    <label for="alliance_name">
+                        Alliance Name
+                    </label>
 
+                    <input
+                        type="text"
+                        id="alliance_name"
+                        name="alliance_name"
+                        maxlength="100"
+                        required>
 
-        <div class="form-group">
-
-            <label for="alliance_code">
-                Alliance Code
-            </label>
-
-            <input
-                type="text"
-                id="alliance_code"
-                name="alliance_code"
-                maxlength="4"
-                minlength="4"
-                pattern="[A-Za-z]{4}"
-                required>
-
-            <small>
-                Enter a unique four-letter code.
-            </small>
-
-        </div>
+                </div>
 
 
-        <button
-            type="submit"
-            class="primary-button">
+                <div class="form-group">
 
-            Create Alliance
+                    <label for="alliance_code">
+                        Alliance Code
+                    </label>
 
-        </button>
+                    <input
+                        type="text"
+                        id="alliance_code"
+                        name="alliance_code"
+                        maxlength="4"
+                        minlength="4"
+                        pattern="[A-Za-z]{4}"
+                        required>
 
-    </form>
+                    <small>
+                        Enter a unique four-letter code.
+                    </small>
 
-</section>
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-button">
+
+                    Create Alliance
+
+                </button>
+
+            </form>
+
+        </section>
+    </main> 
+</body>
+
+{% include 'partials/footer.html' %}

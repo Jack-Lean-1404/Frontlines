@@ -14,7 +14,7 @@
     <main class="game-container">
 
         {% include "partials/nation_header.html" %}
-        
+
         <div class="production-page">
 
             <!-- Unit Shop -->
@@ -29,6 +29,8 @@
         </div>
     </main>
 </body>
+
+{% include 'partials/footer.html' %}
 
 <script src="{{ url_for('static', filename='js/production.js') }}"></script>
 </html>
