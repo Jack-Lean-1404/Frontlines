@@ -9,61 +9,67 @@
     <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
 </head>
 
-{% include 'components/navbar.html' %}
+<body>
 
-{% include "partials/nation_header.html" %}
+    {% include 'components/navbar.html' %}
 
-<section class="dashboard-card">
+        <main class="game-container">
 
-    <h2>Invite Nation</h2>
+            {% include "partials/nation_header.html" %}
 
-    <p>
-        Invite a nation to join
-        <strong>
-            [{{ alliance.alliance_code }}]
-            {{ alliance.alliance_name }}
-        </strong>.
-    </p>
+            <section class="dashboard-card">
 
-    <form method="POST">
+                <h2>Invite Nation</h2>
 
-        <div class="form-group">
+                <p>
+                    Invite a nation to join
+                    <strong>
+                        [{{ alliance.alliance_code }}]
+                        {{ alliance.alliance_name }}
+                    </strong>.
+                </p>
 
-            <label for="nation_id">
-                Nation
-            </label>
+                <form method="POST">
 
-            <select
-                id="nation_id"
-                name="nation_id"
-                required>
+                    <div class="form-group">
 
-                <option value="">
-                    Select a nation
-                </option>
+                        <label for="nation_id">
+                            Nation
+                        </label>
 
-                {% for nation in available_nations %}
+                        <select
+                            id="nation_id"
+                            name="nation_id"
+                            required>
 
-                    <option value="{{ nation.nation_id }}">
+                            <option value="">
+                                Select a nation
+                            </option>
 
-                        {{ nation.name }}
+                            {% for nation in available_nations %}
 
-                    </option>
+                                <option value="{{ nation.nation_id }}">
 
-                {% endfor %}
+                                    {{ nation.name }}
 
-            </select>
+                                </option>
 
-        </div>
+                            {% endfor %}
 
-        <button
-            type="submit"
-            class="primary-button">
+                        </select>
 
-            Send Invitation
+                    </div>
 
-        </button>
+                    <button
+                        type="submit"
+                        class="primary-button">
 
-    </form>
+                        Send Invitation
 
-</section>
+                    </button>
+
+                </form>
+
+            </section>
+        </main>
+</body>

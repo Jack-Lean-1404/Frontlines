@@ -9,83 +9,89 @@
     <link rel="icon" href="{{ url_for('static', filename='images/Logo-Blue.png') }}">
 </head>
 
-{% include 'components/navbar.html' %}
+<body>
 
-{% include "partials/nation_header.html" %}
+    {% include 'components/navbar.html' %}
 
-<section class="dashboard-card">
+        <main class="game-container">
 
-    <div class="diplomacy-profile">
+            {% include "partials/nation_header.html" %}
 
-        <img
-                    src="{{ url_for('static', filename='' + viewed_nation.flag) }}"
-                    class="diplomacy-flag"
-                    alt="{{ viewed_nation.name }}">
+            <section class="dashboard-card">
 
-        <div>
+                <div class="diplomacy-profile">
 
-            <h2>{{ viewed_nation.name }}</h2>
+                    <img
+                                src="{{ url_for('static', filename='' + viewed_nation.flag) }}"
+                                class="diplomacy-flag"
+                                alt="{{ viewed_nation.name }}">
 
-            <p>
+                    <div>
 
-                <strong>Relationship:</strong>
+                        <h2>{{ viewed_nation.name }}</h2>
 
-                {{ relationship.relationship }}
+                        <p>
 
-            </p>
+                            <strong>Relationship:</strong>
 
-            <p>
+                            {{ relationship.relationship }}
 
-                <strong>Alliance:</strong>
+                        </p>
 
-                {% if viewed_nation.alliance_name %}
+                        <p>
 
-                    [{{ viewed_nation.alliance_code }}]
+                            <strong>Alliance:</strong>
 
-                    {{ viewed_nation.alliance_name }}
+                            {% if viewed_nation.alliance_name %}
 
-                {% else %}
+                                [{{ viewed_nation.alliance_code }}]
 
-                    None
+                                {{ viewed_nation.alliance_name }}
 
-                {% endif %}
+                            {% else %}
 
-            </p>
+                                None
 
-            <p>
+                            {% endif %}
 
-                <strong>Military Score:</strong>
+                        </p>
 
-                {{ viewed_nation.military_score }}
+                        <p>
 
-            </p>
+                            <strong>Military Score:</strong>
 
-            <p>
+                            {{ viewed_nation.military_score }}
 
-                <strong>Economic Score:</strong>
+                        </p>
 
-                {{ viewed_nation.economic_score }}
+                        <p>
 
-            </p>
+                            <strong>Economic Score:</strong>
 
-            <p>
+                            {{ viewed_nation.economic_score }}
 
-                <strong>Cities:</strong>
+                        </p>
 
-                {{ viewed_nation.city_count }}
+                        <p>
 
-            </p>
+                            <strong>Cities:</strong>
 
-            <p>
+                            {{ viewed_nation.city_count }}
 
-                <strong>Capital:</strong>
+                        </p>
 
-                {{ viewed_nation.capital_count }}
+                        <p>
 
-            </p>
+                            <strong>Capital:</strong>
 
-        </div>
+                            {{ viewed_nation.capital_count }}
 
-    </div>
+                        </p>
 
-</section>
+                    </div>
+
+                </div>
+
+            </section>
+        </main>
+</body>

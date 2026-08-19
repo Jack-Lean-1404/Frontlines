@@ -7,28 +7,28 @@
     <link rel="icon" type="image/x-icon" href="/static/images/Logo-Blue.png">
 </head>
 
- <!-- Display the navbar from the components folder -->
-{% include 'components/navbar.html' %}
-
-{% include "partials/nation_header.html" %}
-
-
 <body>
-    <div class="production-page">
 
-        <!-- Unit Shop -->
-        {% include "components/production_shop.html" %}
+    {% include 'components/navbar.html' %}
 
-        <!-- Unit Wiki -->
-        {% include "components/production_details.html" %}
+    <main class="game-container">
 
-        <!-- Production Lines -->
-        {% include "components/production_queue.html" %}
+        {% include "partials/nation_header.html" %}
+        
+        <div class="production-page">
 
-    </div>
+            <!-- Unit Shop -->
+            {% include "components/production_shop.html" %}
 
+            <!-- Unit Wiki -->
+            {% include "components/production_details.html" %}
 
-<script src="{{ url_for('static', filename='js/notifications.js') }}"></script>
-<script src="{{ url_for('static', filename='js/production.js') }}"></script>
+            <!-- Production Lines -->
+            {% include "components/production_queue.html" %}
+
+        </div>
+    </main>
 </body>
+
+<script src="{{ url_for('static', filename='js/production.js') }}"></script>
 </html>

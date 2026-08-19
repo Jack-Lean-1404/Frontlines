@@ -132,7 +132,6 @@ body {
     display: grid;
     grid-template-columns: 1fr 1.2fr 1fr;
     gap: 20px;
-    padding: 20px;
     height: calc(100vh);
     box-sizing: border-box;
 }
