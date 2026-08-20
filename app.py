@@ -2825,6 +2825,278 @@ def get_building(building_id):
         "building": building
     })
 
+def sync_construction_lines(nation_id):
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # --------------------------------------------------
+    # Count Construction Firms owned by the nation
+    # --------------------------------------------------
+
+    cursor.execute("""
+        SELECT COALESCE(SUM(quantity), 0) AS construction_firms
+        FROM nation_buildings
+        WHERE nation_id = %s
+        AND building_id = 8
+    """, (nation_id,))
+
+    construction_firms = max(
+        1,
+        int(cursor.fetchone()["construction_firms"])
+    )
+
+    # --------------------------------------------------
+    # Count existing construction lines
+    # --------------------------------------------------
+
+    cursor.execute("""
+        SELECT COUNT(*) AS line_count
+        FROM building_lines
+        WHERE nation_id = %s
+    """, (nation_id,))
+
+    current_lines = cursor.fetchone()["line_count"]
+
+    # --------------------------------------------------
+    # ADD construction lines
+    # --------------------------------------------------
+
+    while current_lines < construction_firms:
+
+        # Find next line number for the name
+        cursor.execute("""
+            SELECT COALESCE(
+                MAX(
+                    CAST(
+                        SUBSTRING_INDEX(line_name, ' ', -1)
+                        AS UNSIGNED
+                    )
+                ),
+                0
+            ) + 1 AS next_number
+            FROM building_lines
+            WHERE nation_id = %s
+        """, (nation_id,))
+
+        next_number = cursor.fetchone()["next_number"]
+
+        # Find next globally available line ID
+        cursor.execute("""
+            SELECT COALESCE(MAX(line_id), 0) + 1 AS next_line_id
+            FROM building_lines
+        """)
+
+        next_line_id = cursor.fetchone()["next_line_id"]
+
+        cursor.execute("""
+            INSERT INTO building_lines
+            (
+                line_id,
+                line_name,
+                nation_id
+            )
+            VALUES
+            (
+                %s,
+                %s,
+                %s
+            )
+        """, (
+            next_line_id,
+            f"District Line {next_number}",
+            nation_id
+        ))
+
+        current_lines += 1
+
+    # --------------------------------------------------
+    # REMOVE construction lines
+    # --------------------------------------------------
+
+    while current_lines > construction_firms:
+
+        # Find the highest-numbered line.
+        # This is the line we will remove.
+        cursor.execute("""
+            SELECT line_id, line_name
+            FROM building_lines
+            WHERE nation_id = %s
+            ORDER BY line_id DESC
+            LIMIT 1
+        """, (nation_id,))
+
+        line = cursor.fetchone()
+
+        if not line:
+            break
+
+        line_id = line["line_id"]
+
+        # --------------------------------------------------
+        # Find the currently building project
+        # --------------------------------------------------
+
+        cursor.execute("""
+            SELECT
+                bq.queue_id,
+                bq.building_id,
+                bq.position
+            FROM building_queue bq
+            WHERE bq.line_id = %s
+            AND bq.position = 1
+            LIMIT 1
+        """, (line_id,))
+
+        active_project = cursor.fetchone()
+
+        # --------------------------------------------------
+        # Delete the active project
+        #
+        # Resources are NOT refunded.
+        # --------------------------------------------------
+
+        if active_project:
+
+            cursor.execute("""
+                DELETE FROM building_queue
+                WHERE queue_id = %s
+            """, (
+                active_project["queue_id"],
+            ))
+
+        # --------------------------------------------------
+        # Get remaining queued projects
+        # --------------------------------------------------
+
+        cursor.execute("""
+            SELECT
+                queue_id,
+                building_id,
+                resource_id,
+                turns_remaining
+            FROM building_queue
+            WHERE line_id = %s
+            ORDER BY position
+        """, (line_id,))
+
+        queued_projects = cursor.fetchall()
+
+        # --------------------------------------------------
+        # Remove the destroyed line's remaining queue
+        # temporarily.
+        # --------------------------------------------------
+
+        cursor.execute("""
+            DELETE FROM building_queue
+            WHERE line_id = %s
+        """, (line_id,))
+
+        # --------------------------------------------------
+        # Get remaining construction lines
+        # --------------------------------------------------
+
+        cursor.execute("""
+            SELECT line_id
+            FROM building_lines
+            WHERE nation_id = %s
+            AND line_id != %s
+            ORDER BY line_id
+        """, (
+            nation_id,
+            line_id
+        ))
+
+        remaining_lines = cursor.fetchall()
+
+        # --------------------------------------------------
+        # Transfer queued projects to the shortest line
+        # --------------------------------------------------
+
+        for project in queued_projects:
+
+            shortest_line = None
+            shortest_queue = None
+
+            for remaining_line in remaining_lines:
+
+                cursor.execute("""
+                    SELECT COUNT(*) AS queue_size
+                    FROM building_queue
+                    WHERE line_id = %s
+                """, (
+                    remaining_line["line_id"],
+                ))
+
+                queue_size = cursor.fetchone()["queue_size"]
+
+                if (
+                    shortest_queue is None
+                    or queue_size < shortest_queue
+                ):
+
+                    shortest_queue = queue_size
+                    shortest_line = remaining_line["line_id"]
+
+            if shortest_line is None:
+                break
+
+            new_position = shortest_queue + 1
+
+            new_status = (
+                "building"
+                if new_position == 1
+                else "queued"
+            )
+
+            cursor.execute("""
+                INSERT INTO building_queue
+                (
+                    line_id,
+                    building_id,
+                    resource_id,
+                    position,
+                    turns_remaining,
+                    status
+                )
+                VALUES
+                (
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                )
+            """, (
+                shortest_line,
+                project["building_id"],
+                project["resource_id"],
+                new_position,
+                project["turns_remaining"],
+                new_status
+            ))
+
+        # --------------------------------------------------
+        # Delete the construction line
+        # --------------------------------------------------
+
+        cursor.execute("""
+            DELETE FROM building_lines
+            WHERE line_id = %s
+            AND nation_id = %s
+        """, (
+            line_id,
+            nation_id
+        ))
+
+        current_lines -= 1
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
 @app.route("/api/build-building", methods=["POST"])
 def build_building():
 
@@ -2832,6 +3104,12 @@ def build_building():
 
     building_id = data["building_id"]
     resource_id = data.get("resource_id")
+
+    nation_id = session["nation_id"]
+
+    # Make sure construction lines match
+    # the number of Construction Firms owned
+    sync_construction_lines(nation_id)
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -3058,6 +3336,12 @@ def build_building():
 @app.route("/api/construction")
 def get_construction():
 
+    nation_id = session["nation_id"]
+
+    # Make sure construction lines match
+    # the number of Construction Firms owned
+    sync_construction_lines(nation_id)
+
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -3089,7 +3373,7 @@ def get_construction():
             bl.line_id,
             bq.position
 
-    """, (session["nation_id"],))
+    """, (nation_id,))
 
     rows = cursor.fetchall()
 
