@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/images/Logo-Blue.png">
+</head>
+
+ <!-- Display the navbar from the components folder -->
+{% include 'components/navbar.html' %}
+
+<body>
+
+    <!-- ABOUT HERO -->
+    <section class="about-hero">
+
+        <div class="about-hero-content">
+
+            <span class="section-eyebrow">ABOUT FRONTLINES</span>
+
+            <h1>The Story Behind Frontlines</h1>
+
+            <p>
+                From a simple board game made for friends to an ambitious
+                strategy game built from the ground up.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHAT IS FRONTLINES -->
+    <section class="about-section">
+
+        <div class="about-container">
+
+            <div class="about-text">
+
+                <span class="section-eyebrow">WHAT IS FRONTLINES?</span>
+
+                <h2>A Game Built From An Idea</h2>
+
+                <p>
+                    Frontlines is an independently developed strategy game
+                    created by Jack Lean.
+                </p>
+
+                <p>
+                    It combines game design, programming, worldbuilding,
+                    economics, military systems and web development into
+                    one project.
+                </p>
+
+                <p>
+                    At its heart, Frontlines exists to create the kind of
+                    strategy game that I have always wanted to play — while
+                    creating something that friends can enjoy together.
+                </p>
+
+            </div>
+
+            <div class="about-image">
+
+                <div class="about-image-placeholder">
+                    <span>FRONTLINES</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHERE IT STARTED -->
+    <section class="about-section about-section-light">
+
+        <div class="about-container about-container-reverse">
+
+            <div class="about-image">
+
+                <div class="about-image-placeholder">
+                    <span>THE BEGINNING</span>
+                </div>
+
+            </div>
+
+            <div class="about-text">
+
+                <span class="section-eyebrow">WHERE IT STARTED</span>
+
+                <h2>It Started At School</h2>
+
+                <p>
+                    I've always loved 4X and strategy games, but I often felt
+                    that there was something missing.
+                </p>
+
+                <p>
+                    I wanted a strategy game focused on modern warfare,
+                    modern technology and modern military units. Instead,
+                    many of the games I found were focused on science fiction,
+                    fantasy, or historical periods.
+                </p>
+
+                <p>
+                    So I decided to make my own.
+                </p>
+
+                <p>
+                    The first version was a simple board game inspired by
+                    games like Risk, made for my friends to play at school.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EVOLUTION -->
+    <section class="about-section">
+
+        <div class="about-container">
+
+            <div class="about-text">
+
+                <span class="section-eyebrow">THE EVOLUTION</span>
+
+                <h2>Years Of Iteration</h2>
+
+                <p>
+                    The game didn't become Frontlines overnight.
+                </p>
+
+                <p>
+                    Over time, the project went through many different
+                    versions and countless games with friends.
+                </p>
+
+                <p>
+                    Projects such as <strong>Rising Storm</strong>,
+                    <strong>Rising Storm Remastered</strong>, and
+                    <strong>Geopolitics</strong> each introduced new ideas,
+                    mechanics and lessons.
+                </p>
+
+                <p>
+                    Eventually, those ideas came together to form
+                    Frontlines.
+                </p>
+
+            </div>
+
+            <div class="about-timeline">
+
+                <div class="timeline-item">
+                    <span>01</span>
+                    <strong>BOARD GAME</strong>
+                    <p>The original game created for friends.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <span>02</span>
+                    <strong>RISING STORM</strong>
+                    <p>A new version with expanded systems.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <span>03</span>
+                    <strong>GEOPOLITICS</strong>
+                    <p>Further experimentation with strategy and nations.</p>
+                </div>
+
+                <div class="timeline-item timeline-current">
+                    <span>04</span>
+                    <strong>FRONTLINES</strong>
+                    <p>The project as it exists today.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CREATOR -->
+    <section class="about-creator">
+
+        <div class="about-creator-inner">
+
+            <div class="creator-image">
+                <img src="{{ url_for('static', filename='images/Logo-Blue.png') }}"
+                    alt="Frontlines logo">
+            </div>
+
+            <div class="creator-text">
+
+                <span class="section-eyebrow">THE CREATOR</span>
+
+                <h2>Jack Lean</h2>
+
+                <h3>Creator &amp; Developer</h3>
+
+                <p>
+                    Frontlines is an independent project created and developed
+                    by Jack Lean.
+                </p>
+
+                <p>
+                    What started as a board game for a group of friends has
+                    grown into a much larger project involving game design,
+                    programming, web development, worldbuilding, economics,
+                    systems design and UI/UX.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHAT GOES INTO FRONTLINES -->
+    <section class="about-section about-section-light">
+
+        <div class="about-container-single">
+
+            <div class="about-heading">
+
+                <span class="section-eyebrow">THE PROJECT</span>
+
+                <h2>More Than A Game</h2>
+
+                <p>
+                    Frontlines brings together many different disciplines
+                    into one project.
+                </p>
+
+            </div>
+
+            <div class="about-project-grid">
+
+                <div class="about-project-card">
+                    <div class="project-number">01</div>
+                    <h3>Game Design</h3>
+                    <p>
+                        Designing mechanics and systems that make strategic
+                        decisions meaningful.
+                    </p>
+                </div>
+
+                <div class="about-project-card">
+                    <div class="project-number">02</div>
+                    <h3>Development</h3>
+                    <p>
+                        Building the web application and technology that
+                        powers Frontlines.
+                    </p>
+                </div>
+
+                <div class="about-project-card">
+                    <div class="project-number">03</div>
+                    <h3>Worldbuilding</h3>
+                    <p>
+                        Creating the world, nations, geography and history
+                        behind Frontlines.
+                    </p>
+                </div>
+
+                <div class="about-project-card">
+                    <div class="project-number">04</div>
+                    <h3>Systems</h3>
+                    <p>
+                        Developing interconnected economic, industrial,
+                        military and logistical systems.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FUTURE -->
+    <section class="about-future">
+
+        <div class="about-future-content">
+
+            <span class="section-eyebrow">THE FUTURE</span>
+
+            <h2>Still Building.</h2>
+
+            <p>
+                Frontlines is actively in development, with much more
+                to come.
+            </p>
+
+            <a href="/game" class="primary-button">
+                Explore Frontlines
+            </a>
+
+        </div>
+
+    </section>
+</body>
+
+{% include 'partials/footer.html' %}
+
+</html>

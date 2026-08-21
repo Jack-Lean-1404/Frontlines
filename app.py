@@ -43,6 +43,11 @@ def get_db_connection():
 def home():
     return render_template("index.html")
 
+# About
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 # Signup/Login Page
 @app.route("/access")
 def access():
