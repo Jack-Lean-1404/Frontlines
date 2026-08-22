@@ -384,3 +384,574 @@
         padding: 0 18px;
     }
 }
+
+/* =========================================================
+   WIKI ARTICLE LAYOUT
+   ========================================================= */
+
+.wiki-layout {
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr);
+
+    min-height: calc(100vh - 80px);
+
+    background: #f1f2f3;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.wiki-sidebar {
+    background: #ffffff;
+    border-right: 1px solid #dfe2e5;
+
+    padding: 35px 22px;
+
+    position: sticky;
+    top: 0;
+
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.wiki-sidebar-header {
+    display: flex;
+    flex-direction: column;
+
+    padding: 0 12px 25px;
+
+    border-bottom: 1px solid #e1e3e5;
+
+    margin-bottom: 25px;
+}
+
+.wiki-sidebar-header span {
+    color: #1f6fff;
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    letter-spacing: 0.15em;
+}
+
+.wiki-sidebar-header strong {
+    margin-top: 3px;
+
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.wiki-nav-section {
+    margin-bottom: 27px;
+}
+
+.wiki-nav-title {
+    display: block;
+
+    margin: 0 12px 9px;
+
+    color: #8a8f94;
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+}
+
+.wiki-nav-link {
+    display: block;
+
+    padding: 8px 12px;
+
+    border-left: 2px solid transparent;
+
+    color: #555b61;
+
+    font-size: 0.84rem;
+
+    text-decoration: none;
+
+    transition:
+        color 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.wiki-nav-link:hover {
+    background: #f1f3f5;
+
+    color: #1f6fff;
+
+    border-left-color: #1f6fff;
+}
+
+
+/* =========================================================
+   ARTICLE
+   ========================================================= */
+
+.wiki-article {
+    width: 100%;
+    max-width: 1050px;
+
+    padding: 55px 70px 100px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   BREADCRUMBS
+   ========================================================= */
+
+.wiki-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 35px;
+
+    color: #8a8f94;
+
+    font-size: 0.75rem;
+}
+
+.wiki-breadcrumbs a {
+    color: #1f6fff;
+    text-decoration: none;
+}
+
+.wiki-breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   ARTICLE TYPOGRAPHY
+   ========================================================= */
+
+.wiki-article h1 {
+    margin: 0 0 18px;
+
+    font-size: 3rem;
+
+    line-height: 1.05;
+
+    letter-spacing: -0.035em;
+}
+
+.wiki-article .article-intro {
+    max-width: 750px;
+
+    margin-bottom: 45px;
+
+    color: #62676d;
+
+    font-size: 1.05rem;
+
+    line-height: 1.75;
+}
+
+.wiki-article h2 {
+    margin: 50px 0 15px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #dfe2e5;
+
+    font-size: 1.7rem;
+
+    letter-spacing: -0.02em;
+}
+
+.wiki-article h3 {
+    margin: 30px 0 10px;
+
+    font-size: 1.15rem;
+}
+
+.wiki-article p {
+    max-width: 800px;
+
+    color: #555b61;
+
+    line-height: 1.75;
+}
+
+.wiki-article ul,
+.wiki-article ol {
+    max-width: 800px;
+
+    color: #555b61;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .wiki-layout {
+        display: block;
+    }
+
+    .wiki-sidebar {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+
+        border-right: none;
+        border-bottom: 1px solid #dfe2e5;
+    }
+
+    .wiki-navigation {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .wiki-nav-section {
+        margin-bottom: 10px;
+    }
+
+    .wiki-article {
+        padding: 45px 6% 80px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .wiki-navigation {
+        grid-template-columns: 1fr;
+    }
+
+    .wiki-article h1 {
+        font-size: 2.3rem;
+    }
+}
+
+/* =========================================================
+   WIKI ARTICLE IMAGES
+   ========================================================= */
+
+.wiki-article-image {
+    margin: 35px 0 45px;
+
+    background: #ffffff;
+    border: 1px solid #dfe2e5;
+}
+
+.wiki-article-image img {
+    display: block;
+
+    width: 100%;
+    max-height: 600px;
+
+    object-fit: contain;
+}
+
+.wiki-image-caption {
+    display: block;
+
+    padding: 12px 16px;
+
+    border-top: 1px solid #dfe2e5;
+
+    color: #858a90;
+
+    font-size: 0.7rem;
+}
+
+
+/* =========================================================
+   WORLD INFORMATION CARDS
+   ========================================================= */
+
+.wiki-info-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+
+    margin: 30px 0 45px;
+}
+
+.wiki-info-card {
+    display: block;
+
+    padding: 25px;
+
+    background: #ffffff;
+    border: 1px solid #dfe2e5;
+
+    color: inherit;
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.wiki-info-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #1f6fff;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.wiki-info-number {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: #1f6fff;
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+}
+
+.wiki-info-card h3 {
+    margin: 0 0 8px;
+
+    font-size: 1.2rem;
+}
+
+.wiki-info-card p {
+    margin: 0 0 18px;
+
+    font-size: 0.85rem;
+    line-height: 1.6;
+
+    color: #686d73;
+}
+
+
+/* =========================================================
+   WIKI LINK LIST
+   ========================================================= */
+
+.wiki-link-list {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 25px;
+}
+
+.wiki-link-list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 20px;
+
+    border-top: 1px solid #dfe2e5;
+
+    color: inherit;
+    text-decoration: none;
+
+    transition:
+        background 0.15s ease,
+        padding 0.15s ease;
+}
+
+.wiki-link-list a:last-child {
+    border-bottom: 1px solid #dfe2e5;
+}
+
+.wiki-link-list a:hover {
+    padding-left: 25px;
+
+    background: #ffffff;
+}
+
+.wiki-link-list strong {
+    font-size: 0.9rem;
+}
+
+.wiki-link-list span {
+    color: #777d83;
+
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .wiki-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wiki-link-list a {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+}
+
+/* =========================================================
+   CONTINENT LIST
+   ========================================================= */
+
+.wiki-continent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    margin: 35px 0 50px;
+}
+
+.wiki-continent-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+
+    min-height: 190px;
+
+    background: #ffffff;
+    border: 1px solid #dfe2e5;
+
+    color: inherit;
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.wiki-continent-card:hover {
+    transform: translateX(4px);
+
+    border-color: #1f6fff;
+
+    box-shadow: 0 7px 22px rgba(0, 0, 0, 0.05);
+}
+
+.wiki-continent-number {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 30px;
+
+    color: #1f6fff;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+
+    border-right: 1px solid #e2e4e6;
+}
+
+.wiki-continent-content {
+    padding: 30px 35px;
+}
+
+.wiki-continent-content h2 {
+    margin: 7px 0 10px;
+
+    padding: 0;
+
+    border: none;
+
+    font-size: 1.8rem;
+}
+
+.wiki-continent-content p {
+    max-width: 650px;
+
+    margin: 0 0 20px;
+
+    color: #686d73;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .wiki-continent-card {
+        grid-template-columns: 55px 1fr;
+    }
+
+    .wiki-continent-content {
+        padding: 25px;
+    }
+
+    .wiki-continent-content h2 {
+        font-size: 1.5rem;
+    }
+
+}
+
+/* =========================================================
+   BIOME GRID
+   ========================================================= */
+
+.wiki-biome-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+
+    margin: 30px 0 50px;
+}
+
+.wiki-biome-card {
+    padding: 25px;
+
+    background: #ffffff;
+    border: 1px solid #dfe2e5;
+}
+
+.wiki-biome-card h3 {
+    margin: 8px 0 10px;
+}
+
+.wiki-biome-card p {
+    margin: 0;
+
+    color: #686d73;
+
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   RESPONSIVE BIOME GRID
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .wiki-biome-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

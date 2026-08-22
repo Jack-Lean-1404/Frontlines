@@ -5402,5 +5402,21 @@ def under_construction():
 def wiki():
     return render_template("wiki/index.html")
 
+@app.route("/wiki/overview")
+def wiki_overview():
+    return render_template("wiki/overview.html")
+
+@app.route("/wiki/world/alterra")
+def wiki_alterra():
+    return render_template("wiki/world/alterra.html")
+
+@app.route("/wiki/world/continents")
+def wiki_continents():
+    return render_template("wiki/world/continents.html")
+
+@app.route("/wiki/world/continents/rivaran")
+def wiki_rivaran():
+    return render_template("wiki/world/continents/rivaran.html")
+
 if __name__ == "__main__": 
     app.run()

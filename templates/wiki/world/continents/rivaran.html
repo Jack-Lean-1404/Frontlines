@@ -1,0 +1,459 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Rivaran - Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+World / Continents / Rivaran
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    CONTINENT
+</span>
+
+<h1>Rivaran</h1>
+
+<p class="article-intro">
+    Rivaran is the easternmost continent of Alterra. Home to diverse
+    environments ranging from northern tundra and central forests to
+    western rainforests and eastern deserts, Rivaran is one of the
+    world's most geographically varied regions.
+</p>
+
+
+<!-- Rivaran Map -->
+
+<div class="wiki-article-image">
+
+    <img
+        src="{{ url_for('static', filename='images/rivaran-map.png') }}"
+        alt="Map of Rivaran showing nations and biomes"
+    >
+
+    <span class="wiki-image-caption">
+        Rivaran, showing national territories and major biomes.
+    </span>
+
+</div>
+
+
+<h2>Geography</h2>
+
+<p>
+    Rivaran is the easternmost of Alterra's five continents. It is
+    bordered by Norland to the northwest, Gaian to the west, and
+    Thalassia to the south. The Horizon Ocean lies to the east.
+</p>
+
+<p>
+    The continent is characterised by a highly varied landscape.
+    Mountains, forests, plains, savannas, deserts, tundra, and
+    rainforest all occur within Rivaran.
+</p>
+
+<p>
+    At the centre of the continent lies the Zenith Mountains, a major
+    mountain system that strongly influences Rivaran's climate and
+    river systems.
+</p>
+
+
+<h2>The Zenith Mountains</h2>
+
+<p>
+    The Zenith Mountains form the geographic centre of Rivaran and
+    represent one of the continent's most important natural features.
+</p>
+
+<p>
+    The mountains contain extensive areas of snow and ice. Meltwater
+    from the Zenith Mountains, combined with rainfall, feeds several
+    of Rivaran's major river systems.
+</p>
+
+<p>
+    The mountains also have a major influence on the continent's
+    climate. Moisture carried across the continent is forced upward
+    by the mountains, producing significant rainfall on the wetter
+    sides. Areas beyond the mountains receive considerably less
+    precipitation, contributing to the dry environments found across
+    eastern Rivaran.
+</p>
+
+
+<h2>Major Rivers</h2>
+
+
+<h3>Tiamy River</h3>
+
+<p>
+    The Tiamy River originates in the Zenith Mountains and flows
+    northeast toward the ocean.
+</p>
+
+<p>
+    Fed primarily by melting snow and ice from the mountains along
+    with rainfall, the river provides a major source of freshwater
+    for the Commonwealth of Tiamat.
+</p>
+
+<p>
+    The surrounding plains form one of Rivaran's most productive
+    agricultural regions. The fertile Tiamy basin is a major
+    contributor to Tiamat's food production and has earned the
+    country a reputation as one of the continent's principal
+    breadbaskets.
+</p>
+
+
+<h3>Verde River</h3>
+
+<p>
+    The Verde River flows northward from the Zenith Mountains toward
+    Rivaran's northern coast.
+</p>
+
+<p>
+    The river forms a major natural boundary between the Commonwealth
+    of Tiamat and the Federal Socialist Republic of Azerland.
+</p>
+
+<p>
+    Like the Tiamy, the Verde is sustained by precipitation and
+    mountain meltwater from the Zenith region, making it an important
+    source of freshwater for the surrounding regions.
+</p>
+
+
+<h3>Revolution River</h3>
+
+<p>
+    The Revolution River lies west of the Verde River within the
+    territory of the Federal Socialist Republic of Azerland.
+</p>
+
+<p>
+    Rather than forming an international border, the river divides
+    two regions of Azerland and is an important geographical feature
+    within the country.
+</p>
+
+
+<h2>Climate &amp; Biomes</h2>
+
+<p>
+    Rivaran contains some of the greatest environmental variation
+    found anywhere on Alterra. The central Zenith Mountains divide
+    major climatic regions and contribute to the continent's
+    distinctive rainfall patterns.
+</p>
+
+
+<div class="wiki-biome-grid">
+
+    <div class="wiki-biome-card">
+
+        <span class="wiki-info-number">
+            NORTH
+        </span>
+
+        <h3>Tundra</h3>
+
+        <p>
+            The northern regions of Rivaran are dominated by cold
+            tundra environments. Low temperatures and limited
+            vegetation make the region one of the continent's
+            harshest environments.
+        </p>
+
+    </div>
+
+
+    <div class="wiki-biome-card">
+
+        <span class="wiki-info-number">
+            WEST
+        </span>
+
+        <h3>Rainforest</h3>
+
+        <p>
+            Dense rainforest extends across much of western Rivaran,
+            stretching toward the Tempest Sea. High rainfall and
+            warm conditions support an extensive jungle ecosystem.
+        </p>
+
+    </div>
+
+
+    <div class="wiki-biome-card">
+
+        <span class="wiki-info-number">
+            CENTRAL
+        </span>
+
+        <h3>Forests</h3>
+
+        <p>
+            Large forest regions occupy the areas surrounding the
+            continent's major river systems, particularly between
+            the Verde and Tiamy rivers.
+        </p>
+
+    </div>
+
+
+    <div class="wiki-biome-card">
+
+        <span class="wiki-info-number">
+            CENTRAL &amp; EAST
+        </span>
+
+        <h3>Plains</h3>
+
+        <p>
+            Extensive plains support agriculture and settlement
+            across central and eastern Rivaran. The fertile plains
+            around the Tiamy are particularly important to Tiamat.
+        </p>
+
+    </div>
+
+
+    <div class="wiki-biome-card">
+
+        <span class="wiki-info-number">
+            SOUTH
+        </span>
+
+        <h3>Savanna</h3>
+
+        <p>
+            South of the Zenith Mountains lies a broad savanna region
+            extending toward Thalassia.
+        </p>
+
+    </div>
+
+
+    <div class="wiki-biome-card">
+
+        <span class="wiki-info-number">
+            EAST
+        </span>
+
+        <h3>Desert</h3>
+
+        <p>
+            A large desert occupies much of eastern Rivaran. The
+            region lies within the rain shadow of the Zenith Mountains
+            and receives significantly less rainfall than western
+            areas.
+        </p>
+
+    </div>
+
+</div>
+
+
+<h2>The Nations of Rivaran</h2>
+
+<p>
+    Several of Alterra's nations are located across Rivaran. Their
+    borders cross the continent's varied geography, placing different
+    nations in control of important rivers, agricultural regions,
+    mountain passes, coastlines, and maritime routes.
+</p>
+
+
+<div class="wiki-link-list">
+
+    <a href="#">
+
+        <strong>Commonwealth of Tiamat</strong>
+
+        <span>
+            Explore Tiamat and its agricultural heartland.
+        </span>
+
+    </a>
+
+
+    <a href="#">
+
+        <strong>Federal Socialist Republic of Azerland</strong>
+
+        <span>
+            Explore Azerland and its western Rivaran territories.
+        </span>
+
+    </a>
+
+
+    <a href="#">
+
+        <strong>Meridian Republic</strong>
+
+        <span>
+            Explore the Meridian Republic and its central plains.
+        </span>
+
+    </a>
+
+
+    <a href="#">
+
+        <strong>Bellavistian Theocratic Republic</strong>
+
+        <span>
+            Explore Bellavistia and its southeastern island chain.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Bellavistian Archipelago</h2>
+
+<p>
+    Off the southeastern coast of Rivaran lies the island chain
+    controlled by the Bellavistian Theocratic Republic.
+</p>
+
+<p>
+    The archipelago is heavily forested and forms a distinctive
+    geographic region separated from mainland Rivaran by open water.
+    Bellavistia's position gives it control over a significant
+    portion of the southeastern maritime approaches.
+</p>
+
+
+<h2>The Western Seas</h2>
+
+<h3>Tempest Sea</h3>
+
+<p>
+    The Tempest Sea lies along Rivaran's western coast and separates
+    much of the continent from the neighbouring landmass of Gaian.
+</p>
+
+
+<h3>Aurum Strait</h3>
+
+<p>
+    The Aurum Strait lies southwest of Rivaran and provides a major
+    maritime passage between the continent and the surrounding
+    waters.
+</p>
+
+
+<h2>The Great Ocean Routes</h2>
+
+<p>
+    Rivaran occupies a strategically important position along
+    Alterra's global maritime network.
+</p>
+
+<p>
+    The extreme depths, severe weather, powerful currents, and other
+    hazards found throughout the open ocean make long-distance
+    navigation across Alterra extremely dangerous.
+</p>
+
+<p>
+    As a result, the Great Northern Route and Great Southern Route
+    provide the only reliably navigable corridors for ships seeking
+    to travel around the planet.
+</p>
+
+
+<h3>Great Northern Route</h3>
+
+<p>
+    The Great Northern Route runs east-west across the northern
+    ocean. It provides one of the two principal safe passages for
+    long-distance maritime travel around Alterra.
+</p>
+
+
+<h3>Great Southern Route</h3>
+
+<p>
+    The Great Southern Route runs east-west across the southern
+    ocean and provides the second major safe passage around the
+    planet.
+</p>
+
+<p>
+    Together, the two routes form critical links between the
+    continents and are among the most important maritime trade
+    corridors in the world.
+</p>
+
+
+<h2>Strategic Importance</h2>
+
+<p>
+    Rivaran's geography gives it considerable strategic importance.
+    Its position between several continents and the Horizon Ocean
+    places it at the centre of major maritime and commercial routes.
+</p>
+
+<p>
+    Control of the Great Northern and Great Southern Routes can
+    influence global trade, while control of major ports and coastal
+    territory provides nations with access to these vital corridors.
+</p>
+
+<p>
+    The continent's rivers and fertile agricultural regions are
+    equally important. Freshwater from the Zenith Mountains supports
+    large populations and productive farmland, while the continent's
+    varied terrain creates natural defensive positions and distinct
+    strategic regions.
+</p>
+
+
+<h2>Explore Rivaran</h2>
+
+<div class="wiki-link-list">
+
+    <a href="/wiki/world/continents">
+
+        <strong>Continents</strong>
+
+        <span>
+            Return to the list of Alterra's five continents.
+        </span>
+
+    </a>
+
+
+    <a href="/wiki/world/alterra">
+
+        <strong>Alterra</strong>
+
+        <span>
+            Return to the main overview of Alterra.
+        </span>
+
+    </a>
+
+
+    <a href="#">
+
+        <strong>Nations</strong>
+
+        <span>
+            Explore the nations of Rivaran and the wider world.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

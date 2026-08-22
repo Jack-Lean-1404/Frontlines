@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>
+        {% block title %}Frontlines Wiki{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='wiki.css') }}"
+    >
+
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="/static/images/Logo-Blue.png"
+    >
+</head>
+
+{% include 'components/navbar.html' %}
+
+<body>
+
+    <main class="wiki-layout">
+
+        <!-- Sidebar -->
+
+        <aside class="wiki-sidebar">
+
+            <div class="wiki-sidebar-header">
+
+                <span>FRONTLINES</span>
+
+                <strong>WIKI</strong>
+
+            </div>
+
+
+            <nav class="wiki-navigation">
+
+
+                <!-- Main -->
+
+                <div class="wiki-nav-section">
+
+                    <span class="wiki-nav-title">
+                        WIKI
+                    </span>
+
+                    <a href="/wiki" class="wiki-nav-link">
+                        Wiki Home
+                    </a>
+
+                </div>
+
+
+                <!-- Getting Started -->
+
+                <div class="wiki-nav-section">
+
+                    <span class="wiki-nav-title">
+                        GETTING STARTED
+                    </span>
+
+                    <a href="/wiki/overview" class="wiki-nav-link">
+                        Overview
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        How to Play
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Game Concepts
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Victory Conditions
+                    </a>
+
+                </div>
+
+
+                <!-- World -->
+
+                <div class="wiki-nav-section">
+
+                    <span class="wiki-nav-title">
+                        WORLD
+                    </span>
+
+                    <a href="/wiki/world/alterra" class="wiki-nav-link">
+                        Alterra
+                    </a>
+
+                    <a href="/wiki/world/continents" class="wiki-nav-link">
+                        Continents
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Nations
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Cities
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Alliances
+                    </a>
+
+                </div>
+
+
+                <!-- Economy -->
+
+                <div class="wiki-nav-section">
+
+                    <span class="wiki-nav-title">
+                        ECONOMY &amp; INDUSTRY
+                    </span>
+
+                    <a href="#" class="wiki-nav-link">
+                        Economy
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Resources
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Production
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Construction
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Firms
+                    </a>
+
+                </div>
+
+
+                <!-- Military -->
+
+                <div class="wiki-nav-section">
+
+                    <span class="wiki-nav-title">
+                        MILITARY
+                    </span>
+
+                    <a href="#" class="wiki-nav-link">
+                        Military Overview
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Army
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Navy
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Air Force
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Combat
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Logistics
+                    </a>
+
+                </div>
+
+
+                <!-- Technology -->
+
+                <div class="wiki-nav-section">
+
+                    <span class="wiki-nav-title">
+                        TECHNOLOGY
+                    </span>
+
+                    <a href="#" class="wiki-nav-link">
+                        Research
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Technology Tree
+                    </a>
+
+                </div>
+
+
+                <!-- Diplomacy -->
+
+                <div class="wiki-nav-section">
+
+                    <span class="wiki-nav-title">
+                        DIPLOMACY
+                    </span>
+
+                    <a href="#" class="wiki-nav-link">
+                        Diplomacy
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Alliances
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Trade
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        War &amp; Peace
+                    </a>
+
+                </div>
+
+
+                <!-- Reference -->
+
+                <div class="wiki-nav-section">
+
+                    <span class="wiki-nav-title">
+                        REFERENCE
+                    </span>
+
+                    <a href="#" class="wiki-nav-link">
+                        Glossary
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Units
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Buildings
+                    </a>
+
+                    <a href="#" class="wiki-nav-link">
+                        Resources
+                    </a>
+
+                </div>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- Article -->
+
+        <section class="wiki-article">
+
+            <div class="wiki-breadcrumbs">
+
+                <a href="/wiki">
+                    Wiki
+                </a>
+
+                <span>/</span>
+
+                <span>
+                    {% block breadcrumb %}{% endblock %}
+                </span>
+
+            </div>
+
+
+            {% block wiki_content %}
+
+            {% endblock %}
+
+        </section>
+
+    </main>
+
+</body>
+
+{% include 'partials/footer.html' %}
+
+</html>
