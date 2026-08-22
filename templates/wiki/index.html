@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Wiki Index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='wiki.css') }}">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/images/Logo-Blue.png">
+</head>
+
+{% include 'components/navbar.html' %}
+
+<body>
+
+    <main class="wiki-page">
+
+        <!-- Wiki Header -->
+
+        <section class="wiki-hero">
+
+            <div class="wiki-hero-content">
+
+                <span class="wiki-label">
+                    FRONTLINES
+                </span>
+
+                <h1>WIKI</h1>
+
+                <p>
+                    The official knowledge base for the world, mechanics,
+                    nations, and systems of Frontlines.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Search -->
+
+        <section class="wiki-search-section">
+
+            <div class="wiki-search-container">
+
+                <span class="wiki-section-label">
+                    SEARCH THE WIKI
+                </span>
+
+                <div class="wiki-search">
+
+                    <input
+                        type="text"
+                        placeholder="Search Frontlines..."
+                        aria-label="Search Frontlines Wiki"
+                    >
+
+                    <button type="button">
+                        SEARCH
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Explore -->
+
+        <section class="wiki-section">
+
+            <div class="wiki-section-header">
+
+                <span class="wiki-section-label">
+                    EXPLORE FRONTLINES
+                </span>
+
+                <h2>Knowledge Base</h2>
+
+                <p>
+                    Explore the systems, world, and mechanics that make up
+                    Frontlines.
+                </p>
+
+            </div>
+
+
+            <div class="wiki-category-grid">
+
+
+                <!-- Getting Started -->
+
+                <a href="#" class="wiki-category-card">
+
+                    <div class="wiki-card-number">
+                        01
+                    </div>
+
+                    <div class="wiki-card-content">
+
+                        <h3>Getting Started</h3>
+
+                        <p>
+                            Learn the fundamentals of Frontlines,
+                            from the basic rules to managing your nation.
+                        </p>
+
+                        <span class="wiki-card-link">
+                            EXPLORE →
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- World -->
+
+                <a href="#" class="wiki-category-card">
+
+                    <div class="wiki-card-number">
+                        02
+                    </div>
+
+                    <div class="wiki-card-content">
+
+                        <h3>The World</h3>
+
+                        <p>
+                            Discover Alterra, its continents, nations,
+                            cities, and the world in which Frontlines takes place.
+                        </p>
+
+                        <span class="wiki-card-link">
+                            EXPLORE →
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Economy -->
+
+                <a href="#" class="wiki-category-card">
+
+                    <div class="wiki-card-number">
+                        03
+                    </div>
+
+                    <div class="wiki-card-content">
+
+                        <h3>Economy &amp; Industry</h3>
+
+                        <p>
+                            Learn how resources, production, construction,
+                            firms, and national economies work.
+                        </p>
+
+                        <span class="wiki-card-link">
+                            EXPLORE →
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Military -->
+
+                <a href="#" class="wiki-category-card">
+
+                    <div class="wiki-card-number">
+                        04
+                    </div>
+
+                    <div class="wiki-card-content">
+
+                        <h3>Military</h3>
+
+                        <p>
+                            Explore land, naval, and air forces,
+                            military units, combat, and logistics.
+                        </p>
+
+                        <span class="wiki-card-link">
+                            EXPLORE →
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Technology -->
+
+                <a href="#" class="wiki-category-card">
+
+                    <div class="wiki-card-number">
+                        05
+                    </div>
+
+                    <div class="wiki-card-content">
+
+                        <h3>Technology &amp; Research</h3>
+
+                        <p>
+                            Discover the technologies available to nations
+                            and how research shapes your capabilities.
+                        </p>
+
+                        <span class="wiki-card-link">
+                            EXPLORE →
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Diplomacy -->
+
+                <a href="#" class="wiki-category-card">
+
+                    <div class="wiki-card-number">
+                        06
+                    </div>
+
+                    <div class="wiki-card-content">
+
+                        <h3>Diplomacy</h3>
+
+                        <p>
+                            Learn about alliances, relations, treaties,
+                            trade, conflict, and international politics.
+                        </p>
+
+                        <span class="wiki-card-link">
+                            EXPLORE →
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- Featured -->
+
+        <section class="wiki-featured">
+
+            <div class="wiki-featured-content">
+
+                <span class="wiki-section-label">
+                    FEATURED
+                </span>
+
+                <h2>Explore Alterra</h2>
+
+                <p>
+                    Frontlines takes place on Alterra, a world shaped by
+                    millions of years of geological change. Explore its
+                    continents, nations, and strategic landscape.
+                </p>
+
+                <a href="#" class="wiki-button">
+                    EXPLORE THE WORLD
+                </a>
+
+            </div>
+
+            <div class="wiki-featured-image">
+
+                <img
+                    src="{{ url_for('static', filename='images/alterra-map.png') }}"
+                    alt="Map of Alterra"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- Reference -->
+
+        <section class="wiki-reference">
+
+            <div class="wiki-section-header">
+
+                <span class="wiki-section-label">
+                    REFERENCE
+                </span>
+
+                <h2>Quick Reference</h2>
+
+            </div>
+
+
+            <div class="wiki-reference-grid">
+
+                <a href="#" class="wiki-reference-item">
+                    <span>01</span>
+                    <strong>Glossary</strong>
+                    <small>Key terms and definitions</small>
+                </a>
+
+                <a href="#" class="wiki-reference-item">
+                    <span>02</span>
+                    <strong>Units</strong>
+                    <small>Military unit reference</small>
+                </a>
+
+                <a href="#" class="wiki-reference-item">
+                    <span>03</span>
+                    <strong>Buildings</strong>
+                    <small>Construction and industry reference</small>
+                </a>
+
+                <a href="#" class="wiki-reference-item">
+                    <span>04</span>
+                    <strong>Resources</strong>
+                    <small>Resource and production reference</small>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+{% include 'partials/footer.html' %}
+
+</html>

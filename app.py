@@ -5398,5 +5398,9 @@ def under_construction():
         current_page=None
     )
 
+@app.route("/wiki")
+def wiki():
+    return render_template("wiki/index.html")
+
 if __name__ == "__main__": 
     app.run()
