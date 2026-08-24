@@ -5398,153 +5398,546 @@ def under_construction():
         current_page=None
     )
 
+# ============================================================
+# FRONTLINES WIKI ROUTES
+# ============================================================
+
+
+# ============================================================
+# WIKI HOME
+# ============================================================
+
 @app.route("/wiki")
-def wiki():
+def wiki_home():
     return render_template("wiki/index.html")
+
 
 @app.route("/wiki/overview")
 def wiki_overview():
     return render_template("wiki/overview.html")
 
+
+# ============================================================
+# GETTING STARTED
+# ============================================================
+
+@app.route("/wiki/how-to-play")
+def wiki_how_to_play():
+    return render_template("wiki/getting_started/how_to_play.html")
+
+
+@app.route("/wiki/game-concepts")
+def wiki_game_concepts():
+    return render_template("wiki/getting_started/game_concepts.html")
+
+
+@app.route("/wiki/victory-conditions")
+def wiki_victory_conditions():
+    return render_template("wiki/getting_started/victory_conditions.html")
+
+
+# ============================================================
+# WORLD
+# ============================================================
+
 @app.route("/wiki/world/alterra")
 def wiki_alterra():
     return render_template("wiki/world/alterra.html")
+
 
 @app.route("/wiki/world/continents")
 def wiki_continents():
     return render_template("wiki/world/continents.html")
 
+
 @app.route("/wiki/world/continents/rivaran")
 def wiki_rivaran():
     return render_template("wiki/world/continents/rivaran.html")
 
-# =========================
-# MILITARY WIKI
-# =========================
 
-@app.route("/wiki/military")
+@app.route("/wiki/world/nations")
+def wiki_nations():
+    return render_template("wiki/world/nations.html")
+
+
+@app.route("/wiki/world/cities")
+def wiki_cities():
+    return render_template("wiki/world/cities.html")
+
+
+@app.route("/wiki/world/alliances")
+def wiki_world_alliances():
+    return render_template("wiki/world/alliances.html")
+
+
+# ============================================================
+# ECONOMY & INDUSTRY
+# ============================================================
+
+@app.route("/wiki/economy")
+def wiki_economy():
+    return render_template("wiki/economy/economy.html")
+
+
+@app.route("/wiki/economy/resources")
+def wiki_resources():
+    return render_template("wiki/economy/resources.html")
+
+
+@app.route("/wiki/economy/production")
+def wiki_production():
+    return render_template("wiki/economy/production.html")
+
+
+@app.route("/wiki/economy/construction")
+def wiki_construction():
+    return render_template("wiki/economy/construction.html")
+
+
+@app.route("/wiki/economy/firms")
+def wiki_firms():
+    return render_template("wiki/economy/firms.html")
+
+
+# ============================================================
+# MILITARY — OVERVIEW
+# ============================================================
+
+@app.route("/wiki/military/military")
 def wiki_military():
-    return render_template("wiki/military/military.html")
+    return render_template(
+        "wiki/military/military_overview.html"
+    )
 
 
-@app.route("/wiki/military/terrain")
-def wiki_terrain():
-    return render_template("wiki/military/terrain.html")
-
-
-# =========================
-# UNITS
-# =========================
+# ============================================================
+# MILITARY — ARMY
+# ============================================================
 
 @app.route("/wiki/military/army")
 def wiki_army():
-    return render_template("wiki/military/army.html")
+    return render_template(
+        "wiki/military/army/army.html"
+    )
 
+
+@app.route("/wiki/military/army/combat-units")
+def wiki_army_combat_units():
+    return render_template(
+        "wiki/military/army/combat_units.html"
+    )
+
+
+@app.route("/wiki/military/army/support-units")
+def wiki_army_support_units():
+    return render_template(
+        "wiki/military/army/support_units.html"
+    )
+
+
+# Army units
+
+@app.route("/wiki/military/army/motorised-infantry")
+def wiki_motorised_infantry():
+    return render_template(
+        "wiki/military/army/motorised_infantry.html"
+    )
+
+
+@app.route("/wiki/military/army/mechanised-infantry")
+def wiki_mechanised_infantry():
+    return render_template(
+        "wiki/military/army/mechanised_infantry.html"
+    )
+
+
+@app.route("/wiki/military/army/armoured")
+def wiki_armoured():
+    return render_template(
+        "wiki/military/army/armoured.html"
+    )
+
+
+@app.route("/wiki/military/army/national-guard")
+def wiki_national_guard():
+    return render_template(
+        "wiki/military/army/national_guard.html"
+    )
+
+
+@app.route("/wiki/military/army/engineer")
+def wiki_engineer():
+    return render_template(
+        "wiki/military/army/engineer.html"
+    )
+
+
+@app.route("/wiki/military/army/headquarters")
+def wiki_headquarters():
+    return render_template(
+        "wiki/military/army/headquarters.html"
+    )
+
+
+# ============================================================
+# MILITARY — NAVY
+# ============================================================
 
 @app.route("/wiki/military/navy")
 def wiki_navy():
-    return render_template("wiki/military/navy.html")
+    return render_template(
+        "wiki/military/navy/navy.html"
+    )
 
+
+@app.route("/wiki/military/navy/surface-fleet")
+def wiki_surface_fleet():
+    return render_template(
+        "wiki/military/navy/surface_fleet.html"
+    )
+
+
+@app.route("/wiki/military/navy/submarines")
+def wiki_submarines():
+    return render_template(
+        "wiki/military/navy/submarines.html"
+    )
+
+
+@app.route("/wiki/military/navy/operations")
+def wiki_naval_operations():
+    return render_template(
+        "wiki/military/navy/operations.html"
+    )
+
+
+# Navy units
+
+@app.route("/wiki/military/navy/corvette")
+def wiki_corvette():
+    return render_template(
+        "wiki/military/navy/corvette.html"
+    )
+
+
+@app.route("/wiki/military/navy/frigate")
+def wiki_frigate():
+    return render_template(
+        "wiki/military/navy/frigate.html"
+    )
+
+
+@app.route("/wiki/military/navy/destroyer")
+def wiki_destroyer():
+    return render_template(
+        "wiki/military/navy/destroyer.html"
+    )
+
+
+@app.route("/wiki/military/navy/cruiser")
+def wiki_cruiser():
+    return render_template(
+        "wiki/military/navy/cruiser.html"
+    )
+
+
+
+
+
+@app.route("/wiki/military/navy/minesweeper")
+def wiki_minesweeper():
+    return render_template(
+        "wiki/military/navy/minesweeper.html"
+    )
+
+
+@app.route("/wiki/military/navy/minelayer")
+def wiki_minelayer():
+    return render_template(
+        "wiki/military/navy/minelayer.html"
+    )
+
+
+@app.route("/wiki/military/navy/transport")
+def wiki_naval_transport():
+    return render_template(
+        "wiki/military/navy/transport.html"
+    )
+
+
+@app.route("/wiki/military/navy/supply-ship")
+def wiki_supply_ship():
+    return render_template(
+        "wiki/military/navy/supply_ship.html"
+    )
+
+
+# ============================================================
+# MILITARY — AIR FORCE
+# ============================================================
 
 @app.route("/wiki/military/airforce")
 def wiki_air_force():
-    return render_template("wiki/military/air_force.html")
+    return render_template(
+        "wiki/military/air_force/air_force.html"
+    )
 
 
-@app.route("/wiki/military/special-units")
+@app.route("/wiki/military/airforce/aircraft")
+def wiki_aircraft():
+    return render_template(
+        "wiki/military/air_force/aircraft.html"
+    )
+
+
+@app.route("/wiki/military/airforce/operations")
+def wiki_air_operations():
+    return render_template(
+        "wiki/military/air_force/operations.html"
+    )
+
+
+@app.route("/wiki/military/airforce/combat")
+def wiki_airforce_combat():
+    return render_template(
+        "wiki/military/air_force/combat.html"
+    )
+
+
+@app.route("/wiki/military/airforce/air-defence")
+def wiki_airforce_air_defence():
+    return render_template(
+        "wiki/military/air_force/air_defence.html"
+    )
+
+
+@app.route("/wiki/military/airforce/strategic-airlift")
+def wiki_strategic_airlift():
+    return render_template(
+        "wiki/military/air_force/strategic_airlift.html"
+    )
+
+@app.route("/wiki/military/airforce/stealth")
+def wiki_stealth():
+    return render_template(
+        "wiki/military/air_force/stealth.html"
+    )
+
+
+# Air units
+
+@app.route("/wiki/military/airforce/multirole-fighter")
+def wiki_multirole_fighter():
+    return render_template(
+        "wiki/military/air_force/multirole_fighter.html"
+    )
+
+
+@app.route("/wiki/military/airforce/bomber")
+def wiki_bomber():
+    return render_template(
+        "wiki/military/air_force/bomber.html"
+    )
+
+
+@app.route("/wiki/military/airforce/strategic-airlift-aircraft")
+def wiki_strategic_airlift_aircraft():
+    return render_template(
+        "wiki/military/air_force/strategic_airlift_aircraft.html"
+    )
+
+
+@app.route("/wiki/military/airforce/tanker")
+def wiki_tanker():
+    return render_template(
+        "wiki/military/air_force/tanker.html"
+    )
+
+
+@app.route("/wiki/military/airforce/awacs")
+def wiki_awacs():
+    return render_template(
+        "wiki/military/air_force/awacs.html"
+    )
+
+
+# ============================================================
+# MILITARY — SPECIAL UNITS
+# ============================================================
+
+@app.route("/wiki/military/special")
 def wiki_special_units():
-    return render_template("wiki/military/special_units.html")
+    return render_template(
+        "wiki/military/special/special.html"
+    )
 
 
-# =========================
-# COMBAT
-# =========================
+@app.route("/wiki/military/special/rotary-warfare")
+def wiki_rotary_warfare():
+    return render_template(
+        "wiki/military/special/rotary_warfare.html"
+    )
+
+
+@app.route("/wiki/military/special/artillery")
+def wiki_special_artillery():
+    return render_template(
+        "wiki/military/special/artillery.html"
+    )
+
+
+@app.route("/wiki/military/special/air-defence")
+def wiki_special_air_defence():
+    return render_template(
+        "wiki/military/special/air_defence.html"
+    )
+
+
+@app.route("/wiki/military/special/coastal-defence")
+def wiki_coastal_defence():
+    return render_template(
+        "wiki/military/special/coastal_defence.html"
+    )
+
+
+@app.route("/wiki/military/navy/submarine")
+def wiki_submarine():
+    return render_template(
+        "wiki/military/navy/submarine.html"
+    )
+
+
+# ============================================================
+# MILITARY — COMBAT
+# ============================================================
 
 @app.route("/wiki/military/combat")
 def wiki_combat():
-    return render_template("wiki/military/combat.html")
+    return render_template(
+        "wiki/military/combat/combat.html"
+    )
 
 
 @app.route("/wiki/military/combat/land")
 def wiki_land_combat():
-    return render_template("wiki/military/combat/land.html")
-
-
-@app.route("/wiki/military/combat/air")
-def wiki_air_combat():
-    return render_template("wiki/military/combat/air.html")
-
-
-@app.route("/wiki/military/combat/naval")
-def wiki_naval_combat():
-    return render_template("wiki/military/combat/naval.html")
+    return render_template(
+        "wiki/military/combat/land.html"
+    )
 
 
 @app.route("/wiki/military/combat/artillery")
 def wiki_artillery():
-    return render_template("wiki/military/combat/artillery.html")
+    return render_template(
+        "wiki/military/combat/artillery.html"
+    )
+
+
+@app.route("/wiki/military/combat/air")
+def wiki_air_combat():
+    return render_template(
+        "wiki/military/combat/air.html"
+    )
 
 
 @app.route("/wiki/military/combat/air-defence")
-def wiki_air_defence():
-    return render_template("wiki/military/combat/air_defence.html")
+def wiki_combat_air_defence():
+    return render_template(
+        "wiki/military/combat/air_defence.html"
+    )
 
 
-# =========================
-# OPERATIONS
-# =========================
+@app.route("/wiki/military/combat/naval")
+def wiki_naval_combat():
+    return render_template(
+        "wiki/military/combat/naval.html"
+    )
+
+@app.route("/wiki/military/combat/rotary")
+def wiki_rotary_combat():
+    return render_template(
+        "wiki/military/combat/rotary.html"
+    )
+
+
+# ============================================================
+# MILITARY — MOVEMENT
+# ============================================================
 
 @app.route("/wiki/military/movement")
 def wiki_movement():
-    return render_template("wiki/military/movement.html")
+    return render_template(
+        "wiki/military/movement/movement.html"
+    )
 
 
-@app.route("/wiki/military/operations")
-def wiki_operations():
-    return render_template("wiki/military/operations/operations.html")
+@app.route("/wiki/military/movement/terrain")
+def wiki_terrain():
+    return render_template(
+        "wiki/military/movement/terrain.html"
+    )
 
 
-@app.route("/wiki/military/operations/sealift")
-def wiki_sealift():
-    return render_template("wiki/military/operations/sealift.html")
+# ============================================================
+# MILITARY — LOGISTICS
+# ============================================================
 
-
-@app.route("/wiki/military/operations/amphibious")
-def wiki_amphibious():
-    return render_template("wiki/military/operations/amphibious.html")
-
-
-@app.route("/wiki/military/operations/airlift")
-def wiki_airlift():
-    return render_template("wiki/military/operations/airlift.html")
-
-
-@app.route("/wiki/military/operations/carrier")
-def wiki_carrier():
-    return render_template("wiki/military/operations/carrier.html")
-
-
-# =========================
-# LOGISTICS & COMMAND
-# =========================
-
+# Main logistics system
 @app.route("/wiki/military/logistics")
 def wiki_logistics():
-    return render_template("wiki/military/logistics.html")
+    return render_template(
+        "wiki/military/support/logistics.html"
+    )
 
+
+# Logistics Hub
+@app.route("/wiki/military/logistics/hub")
+def wiki_logistics_hub():
+    return render_template(
+        "wiki/military/support/logistics_hub.html"
+    )
+
+
+# ============================================================
+# MILITARY — COMMAND & CONTROL
+# ============================================================
 
 @app.route("/wiki/military/command")
 def wiki_command():
-    return render_template("wiki/military/command.html")
+    return render_template(
+        "wiki/military/support/command.html"
+    )
 
 
-# =========================
-# UNITS
-# =========================
+# ============================================================
+# REFERENCE
+# ============================================================
 
-@app.route("/wiki/military/units/engineer")
-def wiki_engineer():
-    return render_template("wiki/military/engineer.html")
+@app.route("/wiki/reference/glossary")
+def wiki_glossary():
+    return render_template(
+        "wiki/reference/glossary.html"
+    )
+
+
+@app.route("/wiki/reference/units")
+def wiki_reference_units():
+    return render_template(
+        "wiki/reference/units.html"
+    )
+
+
+@app.route("/wiki/reference/buildings")
+def wiki_reference_buildings():
+    return render_template(
+        "wiki/reference/buildings.html"
+    )
+
+
+@app.route("/wiki/reference/resources")
+def wiki_reference_resources():
+    return render_template(
+        "wiki/reference/resources.html"
+    )
 
 if __name__ == "__main__": 
     app.run()

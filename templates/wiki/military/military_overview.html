@@ -1,0 +1,355 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Military | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY
+</span>
+
+<h1>Military</h1>
+
+<p class="article-intro">
+    The military system in Frontlines represents the armed forces
+    of Alterra's nations and alliances across land, sea, and air.
+    Players command military forces, manoeuvre units across the
+    map, conduct combat operations, and maintain the logistics
+    and command networks required to sustain their forces.
+</p>
+
+<h2>Military Forces</h2>
+
+<p>
+    Military forces are divided into four primary categories:
+    Army, Navy, Air Force, and Special Units. Each category
+    contains different units designed to perform specific roles
+    during military operations.
+</p>
+
+<p>
+    Successful military operations require players to combine
+    different types of forces. Combat units provide offensive and
+    defensive capabilities, while specialised and support units
+    provide additional capabilities required to conduct
+    sustained operations.
+</p>
+
+<div class="wiki-info-grid">
+
+    <a href="{{ url_for('wiki_army') }}" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Army</h3>
+
+        <p>
+            Ground forces responsible for capturing, defending,
+            and controlling territory.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_navy') }}" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Navy</h3>
+
+        <p>
+            Naval forces responsible for controlling sea areas,
+            protecting maritime operations, and projecting power.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_force') }}" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            03
+        </span>
+
+        <h3>Air Force</h3>
+
+        <p>
+            Fixed-wing aerial forces responsible for air combat,
+            strike operations, strategic mobility, and air
+            superiority.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_special_units') }}" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            04
+        </span>
+
+        <h3>Special Units</h3>
+
+        <p>
+            Specialised military capabilities that operate
+            outside the primary Army, Navy, and Air Force
+            structures.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Combat</h2>
+
+<p>
+    Combat occurs when opposing forces engage during military
+    operations. Different forms of combat use different rules
+    depending on the units and domains involved.
+</p>
+
+<p>
+    Land, air, naval, and specialised combat each have their own
+    mechanics and considerations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_combat') }}">
+
+        <strong>Combat</strong>
+
+        <span>
+            Explore the combat systems used across land, sea,
+            and air operations.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Movement</h2>
+
+<p>
+    Military units move between sectors during the Action Phase.
+    Movement is affected by unit capabilities, available Movement
+    Points, terrain, and other movement restrictions.
+</p>
+
+<p>
+    Units must complete their movement before initiating combat,
+    and movement cannot be resumed after combat has been initiated.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_movement') }}">
+
+        <strong>Movement</strong>
+
+        <span>
+            Learn how units move between sectors and how movement
+            restrictions affect military operations.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_terrain') }}">
+
+        <strong>Terrain</strong>
+
+        <span>
+            Learn how terrain types affect movement and unit access.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Logistics</h2>
+
+<p>
+    Military forces require logistical support to maintain
+    sustained operations. Supply allows units to continue
+    operating effectively across the battlefield.
+</p>
+
+<p>
+    Logistics infrastructure and dedicated logistics units allow
+    nations to maintain forces away from major population centres
+    and production areas.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how military forces are supplied and how
+            logistics support operations.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Command &amp; Control</h2>
+
+<p>
+    Command and control allows military forces to operate as
+    coordinated formations. Headquarters provide command
+    capabilities to friendly forces within their effective range.
+</p>
+
+<p>
+    Units operating outside appropriate command support can
+    become Disorganised and suffer reduced effectiveness.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_command') }}">
+
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn how Headquarters coordinate friendly forces
+            and how Disorganisation affects units.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Military Operations</h2>
+
+<p>
+    Military operations combine movement, combat, logistics,
+    command, and specialised capabilities to achieve strategic
+    objectives.
+</p>
+
+<p>
+    Successful operations require more than simply fielding
+    powerful units. Players must consider the terrain, supply
+    network, command structure, available reinforcements, and
+    capabilities of both friendly and enemy forces.
+</p>
+
+<h2>Explore the Military</h2>
+
+<p>
+    Use the sections below to explore the military systems of
+    Frontlines.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_army') }}">
+
+        <strong>Army</strong>
+
+        <span>
+            Explore ground forces and land warfare.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_navy') }}">
+
+        <strong>Navy</strong>
+
+        <span>
+            Explore naval forces and maritime warfare.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_force') }}">
+
+        <strong>Air Force</strong>
+
+        <span>
+            Explore aircraft and aerial warfare.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_special_units') }}">
+
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised military capabilities.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_combat') }}">
+
+        <strong>Combat</strong>
+
+        <span>
+            Learn how military engagements are resolved.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_movement') }}">
+
+        <strong>Movement</strong>
+
+        <span>
+            Learn how units move across the battlefield.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_logistics') }}">
+
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how military forces are supplied.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_command') }}">
+
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn how military forces are coordinated.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

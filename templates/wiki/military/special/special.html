@@ -1,0 +1,429 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Special Units | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<span>Special Units</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / SPECIAL UNITS
+</span>
+
+<h1>Special Units</h1>
+
+<p class="article-intro">
+    Special Units provide specialised military capabilities that
+    operate outside the standard roles of conventional Army and
+    Air Force formations. These units are designed to perform
+    specific tactical, operational, or defensive functions.
+</p>
+
+<p>
+    Special Units can provide capabilities such as long-range
+    fire support, air defence, rotary-wing operations, underwater
+    warfare, and coastal defence. Their effectiveness often
+    depends on how they are integrated with conventional forces
+    and the wider military system.
+</p>
+
+
+<h2>Specialised Forces</h2>
+
+<p>
+    Special Units are organised around specific battlefield
+    capabilities rather than serving as general-purpose formations.
+    Each unit type fulfils a distinct role and can provide
+    capabilities that conventional forces cannot easily replicate.
+</p>
+
+<div class="wiki-info-grid">
+
+
+    <a href="{{ url_for('wiki_special_artillery') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Artillery</h3>
+
+        <p>
+            Long-range fire support units capable of engaging
+            enemy ground forces from a distance.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_special_air_defence') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Air Defence</h3>
+
+        <p>
+            Specialised units responsible for protecting
+            friendly forces and territory from hostile aircraft.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_rotary_warfare') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            03
+        </span>
+
+        <h3>Rotary Warfare</h3>
+
+        <p>
+            Helicopter forces capable of providing mobility,
+            fire support, and specialised aerial operations.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_submarines') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            04
+        </span>
+
+        <h3>Submarines</h3>
+
+        <p>
+            Specialised naval units designed to operate beneath
+            the surface and conduct underwater warfare.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_coastal_defence') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            05
+        </span>
+
+        <h3>Coastal Defence</h3>
+
+        <p>
+            Specialised defensive units designed to protect
+            coastal areas and deny enemy naval operations.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+</div>
+
+
+<h2>Artillery</h2>
+
+<p>
+    Artillery provides long-range fire support for friendly
+    ground forces. Artillery units can engage enemy ground
+    formations without requiring direct contact with the target.
+</p>
+
+<p>
+    Their ability to attack from a distance makes artillery
+    particularly valuable for supporting frontline formations,
+    disrupting enemy positions, and influencing the battlefield
+    beyond the immediate frontline.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_special_artillery') }}">
+
+        <strong>Artillery</strong>
+
+        <span>
+            Learn about artillery range, attacks, suppression,
+            destruction, and counter-battery fire.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Air Defence</h2>
+
+<p>
+    Air Defence units protect friendly forces and territory from
+    hostile aircraft. They establish defensive coverage around
+    their position and automatically engage enemy aircraft that
+    enter their effective range.
+</p>
+
+<p>
+    Air Defence plays an important role in protecting strategic
+    locations, military formations, and other high-value assets
+    from enemy air operations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_special_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Explore Anti-Air systems, Air Defence Zones, and
+            their interaction with aircraft.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Rotary Warfare</h2>
+
+<p>
+    Rotary-wing forces provide specialised aerial capabilities
+    that complement conventional ground and fixed-wing forces.
+</p>
+
+<p>
+    Helicopters can perform a variety of battlefield missions,
+    including direct support of ground forces, rapid movement,
+    and specialised combat operations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_rotary_warfare') }}">
+
+        <strong>Rotary Warfare</strong>
+
+        <span>
+            Learn about helicopter operations and the specialised
+            capabilities of rotary-wing forces.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Submarines</h2>
+
+<p>
+    Submarines are specialised naval units capable of operating
+    beneath the ocean surface. Their ability to operate underwater
+    provides a distinct capability compared with conventional
+    surface vessels.
+</p>
+
+<p>
+    Submarines can operate within maritime areas while remaining
+    beneath the surface, allowing them to perform specialised
+    naval missions and engage enemy forces from an underwater
+    position.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_submarines') }}">
+
+        <strong>Submarines</strong>
+
+        <span>
+            Explore submarine operations and underwater warfare.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Coastal Defence</h2>
+
+<p>
+    Coastal Defence units provide specialised protection for
+    coastal areas and important maritime approaches. They are
+    designed to help defend territory against hostile naval
+    operations.
+</p>
+
+<p>
+    Coastal Defence provides nations with the ability to protect
+    important coastal sectors without requiring the deployment
+    of a conventional naval fleet to every threatened area.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_coastal_defence') }}">
+
+        <strong>Coastal Defence</strong>
+
+        <span>
+            Explore coastal defence units and their role in
+            protecting maritime approaches.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Role in Combined Arms</h2>
+
+<p>
+    Special Units are most effective when integrated with
+    conventional military forces.
+</p>
+
+<p>
+    Artillery can provide long-range fire support for frontline
+    formations, Air Defence can protect forces from hostile
+    aircraft, and rotary-wing forces can provide additional
+    mobility and battlefield support.
+</p>
+
+<p>
+    Submarines and Coastal Defence units provide specialised
+    maritime capabilities that complement conventional naval
+    forces and allow commanders to defend important sea areas
+    and coastal approaches.
+</p>
+
+<p>
+    Coordinating these specialised capabilities with conventional
+    forces allows commanders to create more effective combined
+    arms formations.
+</p>
+
+
+<h2>Specialised Capabilities</h2>
+
+<p>
+    Special Units generally provide capabilities that cannot be
+    replicated by standard combat formations.
+</p>
+
+<p>
+    Because of this, their value often comes from how and where
+    they are deployed rather than simply from their individual
+    combat strength.
+</p>
+
+<p>
+    Commanders should consider the operational environment,
+    supporting forces, and objectives of an operation when
+    deploying Special Units.
+</p>
+
+
+<h2>Explore Special Units</h2>
+
+<p>
+    Explore the sections below to learn more about the specialised
+    forces available to military commanders.
+</p>
+
+<div class="wiki-link-list">
+
+
+    <a href="{{ url_for('wiki_special_artillery') }}">
+
+        <strong>Artillery</strong>
+
+        <span>
+            Explore long-range fire support and artillery combat.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_special_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Explore Anti-Air units and air defence operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_rotary_warfare') }}">
+
+        <strong>Rotary Warfare</strong>
+
+        <span>
+            Explore helicopter forces and rotary-wing operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_submarines') }}">
+
+        <strong>Submarines</strong>
+
+        <span>
+            Explore submarine forces and underwater warfare.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_coastal_defence') }}">
+
+        <strong>Coastal Defence</strong>
+
+        <span>
+            Explore coastal defence and maritime denial.
+        </span>
+
+    </a>
+
+
+</div>
+
+{% endblock %}

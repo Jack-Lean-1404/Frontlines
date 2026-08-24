@@ -1,0 +1,528 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Air Combat | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat') }}">Combat</a>
+
+<span>/</span>
+
+<span>Air Combat</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / COMBAT / AIR
+</span>
+
+<h1>Air Combat</h1>
+
+<p class="article-intro">
+    Air Combat governs engagements between aircraft and the
+    specialised systems that support aerial warfare. Aircraft
+    operate across large areas of the battlefield and must manage
+    operational range, contested airspace, enemy aircraft, and
+    ground-based air defences.
+</p>
+
+<p>
+    Successful air operations depend on more than aircraft strength.
+    Commanders must consider operational anchors, aircraft range,
+    air defence coverage, formation size, and supporting assets
+    when planning aerial operations.
+</p>
+
+
+<h2>Air Operations</h2>
+
+<p>
+    Aircraft operate from friendly airports or suitable aerial
+    anchor points. Each aircraft has a defined movement range that
+    determines how far it may operate from its anchor point.
+</p>
+
+<p>
+    Airports provide the primary fixed bases for aircraft operations.
+    Tankers can also function as mobile anchor points, extending
+    the operational area available to friendly aircraft.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_operations') }}">
+
+        <strong>Air Operations</strong>
+
+        <span>
+            Learn about aircraft range, airports, tankers,
+            and operational anchor points.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Operational Range</h2>
+
+<p>
+    Aircraft may only operate within their defined movement range
+    from a friendly airport or other valid aerial anchor point.
+</p>
+
+<p>
+    Different aircraft have different operational limits. For
+    example, Multi-Role Fighters have a range of 4 sectors from
+    an anchor point, while Bombers have a range of 10 sectors.
+    Helicopters follow their own defined range limits.
+</p>
+
+<p>
+    Strategic Airlift Aircraft have an operational range of
+    10 sectors from an airport or tanker.
+</p>
+
+<p>
+    Aircraft cannot operate beyond their maximum range from a
+    valid anchor point.
+</p>
+
+
+<h2>Tankers</h2>
+
+<p>
+    Tankers function as mobile aerial anchor points. They allow
+    friendly aircraft to operate farther from fixed airports
+    while remaining within their operational limits.
+</p>
+
+<p>
+    Tankers themselves must operate from an airport and cannot
+    use another tanker as their operational anchor. Helicopters
+    are subject to the same restriction and must use an airport
+    as their base of operations.
+</p>
+
+<p>
+    This prevents chains of mobile anchor points from extending
+    aircraft operations indefinitely.
+</p>
+
+
+<h2>Loss of an Anchor Point</h2>
+
+<p>
+    Airports and tankers are critical to maintaining aerial
+    operations. If a friendly airport or tanker is destroyed,
+    aircraft relying on that anchor point must determine whether
+    another valid anchor point remains within range.
+</p>
+
+<p>
+    Aircraft that cannot reach another friendly airport or tanker
+    after the destruction of their operational anchor point are
+    lost and removed from play.
+</p>
+
+<p>
+    Protecting airports and tankers is therefore an important part
+    of maintaining long-range air operations.
+</p>
+
+
+<h2>Contested Airspace</h2>
+
+<p>
+    Aircraft may encounter enemy air units when entering sectors
+    containing hostile aircraft.
+</p>
+
+<p>
+    When entering a contested sector, an air unit may either engage
+    the enemy or bypass the sector.
+</p>
+
+<p>
+    Bypassing a contested sector costs 2 Movement Points. Engaging
+    the enemy costs 1 Movement Point and represents direct combat
+    with hostile air units occupying the sector.
+</p>
+
+<p>
+    The choice between engagement and bypassing allows commanders
+    to decide whether to commit aircraft to aerial combat or
+    continue toward their operational objective.
+</p>
+
+
+<h2>Aircraft Damage</h2>
+
+<p>
+    Aircraft use formation size to represent the overall strength
+    of an aerial formation.
+</p>
+
+<p>
+    When an air unit is hit, its formation size is immediately
+    reduced by one level.
+</p>
+
+<p>
+    For example, a formation may be reduced from Wing to Squadron,
+    or from Squadron to Flight. Reducing the formation represents
+    aircraft losses and a corresponding reduction in the unit's
+    combat effectiveness.
+</p>
+
+
+<h2>Aircraft Destruction</h2>
+
+<p>
+    If an air unit is already at its smallest formation size and
+    is hit again, the unit is permanently destroyed and removed
+    from play.
+</p>
+
+<p>
+    This destruction rule applies regardless of the source of the
+    damage.
+</p>
+
+
+<h2>Anti-Air Defence</h2>
+
+<p>
+    Anti-Air units provide ground-based protection against hostile
+    aircraft. They establish Air Defence Zones around their
+    position and automatically engage enemy aircraft that enter
+    or operate within their coverage.
+</p>
+
+<p>
+    An Anti-Air unit controls a one-sector radius around itself.
+    Any enemy air unit entering or operating within this area is
+    automatically engaged by the Anti-Air unit.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_combat_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn the complete rules for Anti-Air units,
+            Air Defence Zones, and air defence engagements.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Anti-Air Combat</h2>
+
+<p>
+    When an Anti-Air unit engages an aircraft, the aircraft must
+    resolve an evasion check based on its classification.
+</p>
+
+<p>
+    Non-stealth aircraft have an 80% chance of being hit by
+    Anti-Air fire.
+</p>
+
+<p>
+    Stealth aircraft have a 20% chance of being hit, reflecting
+    their reduced detectability and advanced countermeasures.
+</p>
+
+<p>
+    If the Anti-Air attack succeeds, the targeted aircraft loses
+    one formation size. If the attack fails, no damage is dealt.
+</p>
+
+
+<h2>Suppression of Enemy Air Defences</h2>
+
+<p>
+    SEAD, or Suppression of Enemy Air Defences, is a specialised
+    aerial operation used to neutralise enemy Anti-Air units and
+    reduce the effectiveness of their Air Defence Zones.
+</p>
+
+<p>
+    When an aircraft conducts a SEAD mission against an Anti-Air
+    unit, the Anti-Air unit fires first and attempts to destroy
+    the attacking aircraft.
+</p>
+
+<p>
+    If the attacking aircraft survives, it has a flat 60% chance
+    of destroying the targeted Anti-Air unit.
+</p>
+
+<p>
+    The SEAD destruction chance is not affected by the strength
+    or defence value of either the attacking aircraft or the
+    targeted Anti-Air unit.
+</p>
+
+<p>
+    Stealth aircraft are particularly effective at conducting SEAD
+    missions because they have only a 20% chance of being hit by
+    Anti-Air fire.
+</p>
+
+
+<h2>AWACS</h2>
+
+<p>
+    AWACS aircraft provide airborne warning and control capabilities
+    that enhance the effectiveness of friendly aerial operations.
+</p>
+
+<p>
+    An AWACS unit supports all friendly air units within a
+    two-sector radius.
+</p>
+
+<p>
+    Friendly aircraft within this coverage receive a 50% increase
+    to both Strength and Defence.
+</p>
+
+<p>
+    AWACS bonuses do not stack. If multiple AWACS units cover the
+    same aircraft, only one AWACS bonus is applied.
+</p>
+
+<p>
+    AWACS aircraft are high-value assets and should be protected
+    from enemy attacks. Their loss can significantly reduce the
+    effectiveness of friendly air operations.
+</p>
+
+
+<h2>Stealth Aircraft</h2>
+
+<p>
+    Stealth aircraft are specialised aerial assets designed to
+    operate with a reduced probability of detection and engagement
+    by enemy air defence systems.
+</p>
+
+<p>
+    Stealth aircraft are twice as effective as non-stealth aircraft
+    in terms of both Strength and Defence.
+</p>
+
+<p>
+    Their reduced detectability also makes them significantly more
+    resistant to Anti-Air systems.
+</p>
+
+<p>
+    Anti-Air attacks against stealth aircraft have only a 20%
+    chance of successfully hitting the aircraft, compared with
+    an 80% chance against non-stealth aircraft.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_stealth') }}">
+
+        <strong>Stealth</strong>
+
+        <span>
+            Explore the complete rules governing stealth aircraft,
+            their advantages, and Anti-Air evasion.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Strategic Airlift</h2>
+
+<p>
+    Strategic Airlift Aircraft provide rapid deployment of ground
+    forces across long distances.
+</p>
+
+<p>
+    A single Strategic Airlift Aircraft can transport any eligible
+    ground unit or Attack Helicopter up to its own formation size,
+    except Armoured units.
+</p>
+
+<p>
+    For example, a Size 3 Strategic Airlift Aircraft can transport
+    a Size 3, Size 2, or Size 1 eligible ground unit.
+</p>
+
+<p>
+    Strategic Airlift Aircraft have an operational range of
+    10 sectors from an airport or tanker and can use a tanker
+    as an operational anchor.
+</p>
+
+
+<h2>Standard Airlift</h2>
+
+<p>
+    Moving ground units between friendly airbases using Strategic
+    Airlift Aircraft is a safe operation.
+</p>
+
+<p>
+    Units transported using standard airlift are not subject to
+    suppression, formation-size reduction, or destruction during
+    the transport.
+</p>
+
+
+<h2>Airdropping</h2>
+
+<p>
+    Strategic Airlift Aircraft can conduct airdrop missions to
+    deploy eligible ground units directly into friendly, contested,
+    or enemy-controlled sectors.
+</p>
+
+<p>
+    Airdrop operations carry additional risks compared with
+    conventional airlift.
+</p>
+
+
+<h2>Airdrop Mishaps</h2>
+
+<p>
+    There is a 20% chance that a unit deployed by airdrop is
+    reduced to its next smaller formation size.
+</p>
+
+<p>
+    This represents operational errors, difficult landing
+    conditions, and other logistical mishaps associated with
+    deploying forces directly into an operational area.
+</p>
+
+<p>
+    The Strategic Airlift Aircraft itself is not destroyed by
+    the airdrop, even if the transported unit is damaged or
+    eliminated.
+</p>
+
+
+<h2>Anti-Air and Strategic Airlift</h2>
+
+<p>
+    Strategic Airlift Aircraft remain vulnerable to enemy air
+    defence while conducting operations.
+</p>
+
+<p>
+    If the target sector of an airdrop is located within an
+    enemy Air Defence Zone, standard Anti-Air rules apply if
+    the Strategic Airlift Aircraft is engaged.
+</p>
+
+
+<h2>Air Superiority</h2>
+
+<p>
+    Air superiority depends on more than the number of aircraft
+    available to a nation.
+</p>
+
+<p>
+    Commanders must coordinate aircraft with airports, tankers,
+    AWACS, Anti-Air systems, and other supporting forces while
+    managing operational range and enemy airspace.
+</p>
+
+<p>
+    Fighters can engage hostile aircraft, specialised aircraft
+    can support friendly operations, and stealth aircraft can
+    penetrate defended areas with reduced exposure to enemy
+    air defences.
+</p>
+
+<p>
+    Maintaining effective aerial operations therefore requires
+    careful planning of both combat forces and the infrastructure
+    that supports them.
+</p>
+
+
+<h2>Explore Air Combat</h2>
+
+<p>
+    Explore the specialised systems that make up aerial warfare
+    in Frontlines.
+</p>
+
+<div class="wiki-link-list">
+
+
+    <a href="{{ url_for('wiki_air_operations') }}">
+
+        <strong>Air Operations</strong>
+
+        <span>
+            Learn about aircraft range, airports, tankers,
+            and operational anchors.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_combat_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn about Anti-Air systems and Air Defence Zones.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_stealth') }}">
+
+        <strong>Stealth</strong>
+
+        <span>
+            Learn about stealth aircraft and their advantages
+            against enemy air defences.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_strategic_airlift') }}">
+
+        <strong>Strategic Airlift</strong>
+
+        <span>
+            Learn how Strategic Airlift Aircraft transport
+            and deploy ground forces.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}
