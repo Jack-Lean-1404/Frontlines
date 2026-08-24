@@ -955,3 +955,129 @@
     }
 
 }
+
+/* =========================================
+   TERRAIN COLOURS
+   ========================================= */
+
+.terrain-colour {
+    display: block;
+    width: 100%;
+    min-height: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+
+/* Tundra */
+
+.terrain-tundra {
+    background-color: #F9DFC4;
+}
+
+
+/* Polar */
+
+.terrain-polar {
+    background-color: #FFFFFF;
+}
+
+
+/* Deep Water */
+
+.terrain-deep-water {
+    background-color: #229FDF;
+}
+
+
+/* Shallow Water */
+
+.terrain-shallow-water {
+    background-color: #51B6D3;
+}
+
+
+/* Mountain */
+
+.terrain-mountain {
+    background-color: #A47D5B;
+}
+
+
+/* Jungle */
+
+.terrain-jungle {
+    background-color: #3F6645;
+}
+
+
+/* Plain */
+
+.terrain-plain {
+    background-color: #8FA94F;
+}
+
+
+/* Forest */
+
+.terrain-forest {
+    background-color: #687A3A;
+}
+
+
+/* Savanna */
+
+.terrain-savanna {
+    background-color: #F8B23A;
+}
+
+
+/* Desert */
+
+.terrain-desert {
+    background-color: #FFD200;
+}
+
+/* =========================================
+   WIKI TABLES
+   ========================================= */
+
+.wiki-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 40px;
+    font-size: 15px;
+}
+
+.wiki-table th {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid #d8dce0;
+    font-weight: 600;
+}
+
+.wiki-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e1e4e7;
+    vertical-align: middle;
+}
+
+.wiki-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Terrain colour column */
+
+.terrain-classification-table th:last-child,
+.terrain-classification-table td:last-child {
+    width: 35%;
+}
+
+.terrain-classification-table td:last-child {
+    padding: 0;
+}
+
+.terrain-classification-table .terrain-colour {
+    min-height: 42px;
+}
