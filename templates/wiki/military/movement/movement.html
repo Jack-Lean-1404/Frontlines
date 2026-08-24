@@ -1,0 +1,233 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Movement | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Movement
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / MOVEMENT
+</span>
+
+<h1>Movement</h1>
+
+<p class="article-intro">
+    Movement determines how military units manoeuvre across the
+    battlefield. Units move between sectors 
+    using Movement Points to travel across connected territory.
+    Terrain, rivers, and certain operational conditions can affect
+    how far a unit can move.
+</p>
+
+<h2>Sector Movement</h2>
+
+<p>
+    The Frontlines map is divided into sectors. Military
+    units move from one sector to an adjacent sector during a turn.
+</p>
+
+<p>
+    A unit's available Movement Points determine how many sectors
+    it can traverse during a turn. Moving into a sector consumes
+    Movement Points according to the movement cost of that sector.
+</p>
+
+<h2>Movement Points</h2>
+
+<p>
+    Each unit has a Movement value that determines the number of
+    Movement Points available to it during its turn.
+</p>
+
+<p>
+    Movement Points are spent when a unit moves between sectors.
+    Different terrain types have different movement costs, meaning
+    that the same unit may be able to travel different distances
+    depending on the terrain it crosses.
+</p>
+
+<h2>Terrain Movement Costs</h2>
+
+<p>
+    Terrain affects the cost of moving between sectors. Difficult
+    terrain requires more Movement Points and can therefore slow
+    the advance of military formations.
+</p>
+
+<p>
+    Players must account for terrain when planning advances,
+    retreats, and the movement of reinforcements toward the
+    frontline.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_terrain') }}">
+        <strong>Terrain</strong>
+
+        <span>
+            Learn how different terrain types affect military
+            movement and combat.
+        </span>
+    </a>
+
+</div>
+
+<h2>River Crossings</h2>
+
+<p>
+    Rivers impose additional movement requirements on military
+    forces attempting to cross them.
+</p>
+
+<p>
+    Engineers can assist friendly forces with river crossings,
+    reducing the difficulty associated with crossing rivers.
+</p>
+
+<p>
+    River crossings can therefore become important tactical
+    considerations when planning an advance or establishing a
+    defensive position.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_engineer') }}">
+        <strong>Engineers</strong>
+
+        <span>
+            Learn about the engineering capabilities provided by
+            Engineer units.
+        </span>
+    </a>
+
+</div>
+
+<h2>Sector Capacity</h2>
+
+<p>
+    Sectors have a limit on the number of military units that can
+    occupy them. A maximum of <strong>two units per domain</strong>
+    may occupy a sector.
+</p>
+
+<p>
+    This limit applies separately to each military domain, allowing
+    ground, naval, and aerial forces to operate within their
+    respective sectors without sharing a single universal capacity.
+</p>
+
+<h2>Enemy Sectors</h2>
+
+<p>
+    Military units cannot simply move into sectors occupied by
+    enemy forces. Entering enemy-held territory requires the
+    appropriate combat or operational action rather than normal
+    movement.
+</p>
+
+<p>
+    This distinction separates normal manoeuvre from offensive
+    operations and prevents units from bypassing hostile forces
+    through ordinary movement.
+</p>
+
+<h2>Zones of Control</h2>
+
+<p>
+    Frontlines does not use traditional Zones of Control.
+</p>
+
+<p>
+    Units therefore do not automatically restrict the movement of
+    neighbouring enemy units simply by occupying a sector.
+    Movement is instead governed by sector connections, Movement
+    Points, terrain, enemy occupation, and the other applicable
+    movement rules.
+</p>
+
+<h2>Movement Restrictions</h2>
+
+<p>
+    A unit's effective movement can be reduced by other military
+    mechanics. For example, units suffering Supply Shortage or
+    Disorganisation are restricted to moving only one sector per
+    turn.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how Supply Shortage affects military movement
+            and operations.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_command') }}">
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn how Disorganisation affects the movement and
+            effectiveness of military units.
+        </span>
+    </a>
+
+</div>
+
+<h2>Movement and Operations</h2>
+
+<p>
+    Movement is a fundamental part of military operations.
+    Successful manoeuvre requires players to consider available
+    Movement Points, terrain, river crossings, sector capacity,
+    supply, and command coverage.
+</p>
+
+<p>
+    Careful movement planning allows forces to concentrate at
+    important positions, reinforce threatened sectors, and
+    maintain the logistical and command networks required to
+    support advancing formations.
+</p>
+
+<h2>Related Military Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_army') }}">
+        <strong>Army</strong>
+
+        <span>
+            Explore the ground forces that conduct land operations.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_combat') }}">
+        <strong>Combat</strong>
+
+        <span>
+            Learn how military engagements are initiated and
+            resolved.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_logistics') }}">
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how supply supports military operations.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}

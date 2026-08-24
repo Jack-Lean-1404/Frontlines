@@ -1,0 +1,336 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Terrain | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Movement / Terrain
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / MOVEMENT / TERRAIN
+</span>
+
+<h1>Terrain</h1>
+
+<p class="article-intro">
+    Terrain represents the physical environment of each sector on
+    the map and governs how units move and where they may operate.
+    Each sector is assigned a Terrain Type, which determines its
+    movement cost and any restrictions placed on military units.
+</p>
+
+<h2>Terrain Types</h2>
+
+<p>
+    All terrain on the map is classified into one of five
+    Terrain Types:
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+        <span class="wiki-info-number">01</span>
+
+        <h3>Open</h3>
+
+        <p>
+            Standard terrain with a movement cost of 1.
+        </p>
+    </div>
+
+    <div class="wiki-info-card">
+        <span class="wiki-info-number">02</span>
+
+        <h3>Rough</h3>
+
+        <p>
+            Difficult terrain with a movement cost of 2.
+        </p>
+    </div>
+
+    <div class="wiki-info-card">
+        <span class="wiki-info-number">03</span>
+
+        <h3>Severe</h3>
+
+        <p>
+            Difficult terrain with a movement cost of 2 and
+            restrictions on several unit types.
+        </p>
+    </div>
+
+    <div class="wiki-info-card">
+        <span class="wiki-info-number">04</span>
+
+        <h3>Shallow Water</h3>
+
+        <p>
+            Shallow maritime terrain with a movement cost of 2.
+        </p>
+    </div>
+
+    <div class="wiki-info-card">
+        <span class="wiki-info-number">05</span>
+
+        <h3>Deep Water</h3>
+
+        <p>
+            Deep maritime terrain with a movement cost of 1 and
+            restrictions on certain naval units.
+        </p>
+    </div>
+
+</div>
+
+<h2>Movement and Restrictions</h2>
+
+<p>
+    The cost to move into a sector is determined by its Terrain
+    Type. A unit must spend the required number of Movement Points
+    to enter the sector.
+</p>
+
+<p>
+    A unit may not enter a sector if it is restricted by that
+    sector's Terrain Type.
+</p>
+
+<table class="wiki-table">
+
+    <thead>
+        <tr>
+            <th>Terrain</th>
+            <th>Movement Cost</th>
+            <th>Restricted Units</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+            <td>Open</td>
+            <td>1</td>
+            <td>None</td>
+        </tr>
+
+        <tr>
+            <td>Rough</td>
+            <td>2</td>
+            <td>None</td>
+        </tr>
+
+        <tr>
+            <td>Severe</td>
+            <td>2</td>
+            <td>
+                Mechanised Units, Armoured Units,
+                Special Units
+            </td>
+        </tr>
+
+        <tr>
+            <td>Shallow Water</td>
+            <td>2</td>
+            <td>Submarines</td>
+        </tr>
+
+        <tr>
+            <td>Deep Water</td>
+            <td>1</td>
+            <td>Carriers and Cruisers</td>
+        </tr>
+
+    </tbody>
+
+</table>
+
+<h2>Terrain Classification</h2>
+
+<p>
+    Each named terrain on the map corresponds to one of the five
+    Terrain Types. Terrain names provide thematic flavour, while
+    the underlying Terrain Type determines the actual gameplay
+    effects.
+</p>
+
+<table class="wiki-table terrain-classification-table">
+
+    <thead>
+        <tr>
+            <th>Terrain</th>
+            <th>Terrain Type</th>
+            <th>Map Colour</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+            <td>Tundra</td>
+            <td>Rough</td>
+            <td>
+                <span class="terrain-colour terrain-tundra"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Polar</td>
+            <td>Severe</td>
+            <td>
+                <span class="terrain-colour terrain-polar"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Deep Water</td>
+            <td>Deep Water</td>
+            <td>
+                <span class="terrain-colour terrain-deep-water"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Shallow Water</td>
+            <td>Shallow Water</td>
+            <td>
+                <span class="terrain-colour terrain-shallow-water"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Mountain</td>
+            <td>Severe</td>
+            <td>
+                <span class="terrain-colour terrain-mountain"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Jungle</td>
+            <td>Severe</td>
+            <td>
+                <span class="terrain-colour terrain-jungle"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Plain</td>
+            <td>Open</td>
+            <td>
+                <span class="terrain-colour terrain-plain"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Forest</td>
+            <td>Rough</td>
+            <td>
+                <span class="terrain-colour terrain-forest"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Savanna</td>
+            <td>Rough</td>
+            <td>
+                <span class="terrain-colour terrain-savanna"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Desert</td>
+            <td>Open</td>
+            <td>
+                <span class="terrain-colour terrain-desert"></span>
+            </td>
+        </tr>
+
+    </tbody>
+
+</table>
+
+<h2>River Crossing</h2>
+
+<p>
+    Units may cross rivers when moving between sectors, but doing
+    so increases the cost of movement.
+</p>
+
+<p>
+    Crossing a river requires <strong>1 additional Movement
+    Point</strong>.
+</p>
+
+<p>
+    If an Engineer unit is present in the same sector as the
+    moving unit, this penalty may be ignored, representing the
+    construction of a temporary bridge.
+</p>
+
+<h2>Terrain Names</h2>
+
+<p>
+    Terrain names provide thematic flavour for the world of
+    Alterra. The named terrain itself does not determine its
+    gameplay behaviour.
+</p>
+
+<p>
+    Instead, every named terrain corresponds to a Terrain Type,
+    and the Terrain Type determines its movement cost and unit
+    restrictions.
+</p>
+
+<p>
+    For example, Mountain and Jungle are both classified as
+    <strong>Severe</strong> terrain and therefore share the same
+    movement cost and unit restrictions.
+</p>
+
+<h2>General Rule</h2>
+
+<p>
+    Terrain affects movement and access only.
+</p>
+
+<p>
+    Terrain does not modify combat unless specified in another
+    rule.
+</p>
+
+<h2>Related Military Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_movement') }}">
+        <strong>Movement</strong>
+
+        <span>
+            Learn the rules governing movement between sectors.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_army') }}">
+        <strong>Army</strong>
+
+        <span>
+            Explore the ground forces operating across Alterra.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_land_combat') }}">
+        <strong>Land Combat</strong>
+
+        <span>
+            Learn how engagements between opposing ground forces
+            are resolved.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}

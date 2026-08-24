@@ -1,0 +1,454 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Artillery | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Combat / Artillery
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / COMBAT / ARTILLERY
+</span>
+
+<h1>Artillery</h1>
+
+<p class="article-intro">
+    Artillery is a key component of modern warfare, delivering
+    powerful and sustained fire over long distances. It enhances
+    combined arms operations and provides crucial support to
+    frontline units.
+</p>
+
+<h2>Artillery Combat</h2>
+
+<p>
+    Artillery provides indirect fire against enemy ground forces,
+    allowing artillery units to engage targets without directly
+    entering the sector occupied by the enemy.
+</p>
+
+<p>
+    Artillery attacks are resolved using a specialised artillery
+    combat system. Unlike standard land combat, artillery attacks
+    determine whether the defending unit is suppressed, destroyed,
+    or unaffected.
+</p>
+
+<h2>Movement and Range</h2>
+
+<p>
+    Regular artillery must spend <strong>1 Movement Point</strong>
+    to conduct an artillery attack.
+</p>
+
+<p>
+    Mechanised Artillery may conduct an artillery attack without
+    spending Movement Points.
+</p>
+
+<p>
+    Artillery units can attack any enemy ground unit within
+    <strong>2 sectors</strong> of the firing artillery unit.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Regular Artillery</h3>
+
+        <p>
+            Must spend 1 Movement Point to conduct an artillery
+            attack.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Mechanised Artillery</h3>
+
+        <p>
+            May conduct an artillery attack without spending
+            Movement Points.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            03
+        </span>
+
+        <h3>Range</h3>
+
+        <p>
+            Artillery can attack enemy ground units within
+            2 sectors.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Artillery Attack Resolution</h2>
+
+<p>
+    When an artillery attack is successful, the defending unit's
+    outcome is determined using a <strong>50/25/25 roll</strong>.
+</p>
+
+<p>
+    The three possible outcomes are Suppressed, Destroyed, and
+    No Effect.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            50%
+        </span>
+
+        <h3>Suppressed</h3>
+
+        <p>
+            The defending unit cannot move during its next turn.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            25%
+        </span>
+
+        <h3>Destroyed</h3>
+
+        <p>
+            The defending unit is removed from play.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            25%
+        </span>
+
+        <h3>No Effect</h3>
+
+        <p>
+            The artillery attack misses and nothing happens to
+            the defending unit.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Suppression</h2>
+
+<p>
+    A suppressed unit cannot move during its next turn.
+</p>
+
+<p>
+    Suppression temporarily prevents the affected unit from
+    repositioning, allowing artillery to disrupt enemy
+    manoeuvres and restrict the movement of opposing forces.
+</p>
+
+<h2>Destruction</h2>
+
+<p>
+    If the artillery attack results in destruction, the defending
+    unit is removed from play.
+</p>
+
+<p>
+    Artillery can therefore eliminate an enemy unit directly
+    without requiring a conventional ground assault against
+    its sector.
+</p>
+
+<h2>No Effect</h2>
+
+<p>
+    A No Effect result means that the artillery attack missed.
+    Nothing happens to the defending unit.
+</p>
+
+<p>
+    If an artillery attack is unsuccessful, the defender remains
+    unaffected.
+</p>
+
+<p>
+    The attacking artillery unit is never affected by its own
+    artillery attack.
+</p>
+
+<h2>Counter-Battery Fire</h2>
+
+<p>
+    Counter-battery fire allows artillery units to automatically
+    respond whenever an enemy artillery unit fires.
+</p>
+
+<p>
+    Whenever a friendly artillery unit fires, any enemy artillery
+    units within <strong>2 sectors</strong> of the firing artillery
+    may automatically perform a counter-battery attack against it.
+</p>
+
+<p>
+    Counter-battery fire occurs <strong>regardless of the outcome
+    of the original artillery attack</strong>. It is not dependent
+    on whether the original attack hits, misses, suppresses, or
+    destroys its target.
+</p>
+
+<p>
+    An artillery unit may also perform counter-battery fire
+    <strong>regardless of whether it has already conducted its own
+    artillery attack during the turn</strong>. Counter-battery fire
+    is a separate automatic response and does not require the
+    responding artillery unit to have unused movement or an unused
+    attack.
+</p>
+
+<p>
+    In other words, whenever eligible enemy artillery is within
+    range of a firing artillery unit, the counter-battery attack
+    occurs regardless of what that artillery unit has already done
+    during the turn.
+</p>
+
+<h2>Counter-Battery Rules</h2>
+
+<p>
+    Counter-battery attacks do not require Movement Points.
+</p>
+
+<p>
+    Counter-battery fire uses the normal artillery combat rules.
+    The responding artillery unit therefore has the same possible
+    outcomes:
+</p>
+
+<ul>
+    <li>Suppressed</li>
+    <li>Destroyed</li>
+    <li>No Effect</li>
+</ul>
+
+<p>
+    Multiple enemy artillery units may perform counter-battery
+    attacks simultaneously if they are within 2 sectors of the
+    firing artillery unit.
+</p>
+
+<h2>Counter-Battery Example</h2>
+
+<p>
+    A Size 3 artillery unit fires at an enemy Infantry unit.
+    An enemy Size 2 artillery unit is located within 2 sectors
+    of the firing artillery.
+</p>
+
+<p>
+    The enemy Size 2 artillery unit automatically performs a
+    counter-battery attack against the Size 3 artillery unit.
+</p>
+
+<p>
+    This counter-battery attack occurs <strong>regardless of
+    whether the original artillery attack was successful or
+    unsuccessful</strong>.
+</p>
+
+<p>
+    The enemy Size 2 artillery unit can perform this
+    counter-battery attack even if it has already conducted its
+    own artillery attack during the same turn. The counter-battery
+    attack is automatic and is not prevented by the unit having
+    already attacked.
+</p>
+
+<p>
+    If multiple enemy artillery units are within 2 sectors of the
+    firing artillery unit, each eligible artillery unit may
+    perform its own counter-battery attack.
+</p>
+
+<h2>Artillery and Combined Arms</h2>
+
+<p>
+    Artillery enhances combined arms operations by providing
+    long-range fire support to frontline forces.
+</p>
+
+<p>
+    Artillery can suppress enemy formations, destroy units, and
+    disrupt opposing operations before or during a wider military
+    engagement.
+</p>
+
+<p>
+    The ability to attack from a distance allows artillery to
+    support frontline formations without directly entering the
+    enemy's sector.
+</p>
+
+<h2>Artillery Positioning</h2>
+
+<p>
+    Artillery positioning is an important consideration during
+    military operations. Firing positions must be close enough
+    to enemy forces to remain within the 2-sector artillery
+    range.
+</p>
+
+<p>
+    At the same time, artillery units must account for enemy
+    artillery positions and the possibility of automatic
+    counter-battery fire.
+</p>
+
+<p>
+    Mechanised Artillery provides additional flexibility because
+    it can attack without spending Movement Points, allowing it
+    to retain its movement capability while conducting fire.
+</p>
+
+<h2>Artillery and Movement</h2>
+
+<p>
+    Artillery follows the standard movement rules unless a
+    unit-specific rule states otherwise.
+</p>
+
+<p>
+    Regular artillery must spend 1 Movement Point when conducting
+    an attack, while Mechanised Artillery can attack without
+    spending Movement Points.
+</p>
+
+<p>
+    Other movement restrictions, including Supply Shortage and
+    Disorganisation, may still affect artillery units.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_movement') }}">
+        <strong>Movement</strong>
+
+        <span>
+            Learn how military units move across sectors and how
+            movement interacts with combat.
+        </span>
+    </a>
+
+</div>
+
+<h2>Artillery and Logistics</h2>
+
+<p>
+    Artillery units require logistical support to remain effective
+    during military operations.
+</p>
+
+<p>
+    Supply is particularly important for artillery operating
+    away from established cities and logistical infrastructure.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how military forces receive supplies and how
+            Supply Shortage affects operations.
+        </span>
+    </a>
+
+</div>
+
+<h2>Artillery and Command</h2>
+
+<p>
+    Artillery units are also subject to the command system.
+    Operating outside the command range of a suitable Headquarters
+    can cause a unit to become Disorganised.
+</p>
+
+<p>
+    Disorganisation reduces a unit's combat effectiveness and
+    restricts its movement.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_command') }}">
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn how Headquarters command friendly forces and
+            how Disorganisation affects military operations.
+        </span>
+    </a>
+
+</div>
+
+<h2>Related Combat Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_land_combat') }}">
+        <strong>Land Combat</strong>
+
+        <span>
+            Learn how direct engagements between opposing ground
+            forces are resolved.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_combat') }}">
+        <strong>Combat</strong>
+
+        <span>
+            Return to the overall Frontlines combat system.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_army') }}">
+        <strong>Army</strong>
+
+        <span>
+            Explore the ground forces that conduct land operations.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}

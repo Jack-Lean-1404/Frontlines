@@ -1,0 +1,256 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Logistics | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Logistics
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / LOGISTICS
+</span>
+
+<h1>Logistics</h1>
+
+<p class="article-intro">
+    Logistics represents the systems required to supply and sustain
+    military forces during operations. Units require access to
+    supplies in order to remain operational and participate
+    effectively in combat.
+</p>
+
+<h2>Supply</h2>
+
+<p>
+    Combat-capable units of a nation's armed forces require supplies
+    to operate effectively. Modern military formations consume food,
+    fuel, ammunition, and repair equipment while conducting
+    operations.
+</p>
+
+<p>
+    Ground units can receive supplies through Logistics units or
+    Cities. Naval units use a separate supply system and receive
+    supplies from Supply Ships.
+</p>
+
+<h2>Logistics Units</h2>
+
+<p>
+    Logistics units provide mobile supply support to friendly
+    combat units operating away from established cities and supply
+    networks.
+</p>
+
+<p>
+    A Logistics unit can supply any friendly combat unit that is the
+    same size or smaller within a 2-sector radius.
+</p>
+
+<p>
+    For example, a Size 3 Logistics unit can supply friendly combat
+    units of Size 1, Size 2, or Size 3 within its supply range.
+    A Size 2 Logistics unit cannot supply a Size 3 combat unit.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="#">
+        <strong>Logistics Units</strong>
+
+        <span>
+            Learn about Logistics formations and their role in
+            maintaining ground forces in the field.
+        </span>
+    </a>
+
+</div>
+
+<h2>City Supply</h2>
+
+<p>
+    Cities provide another source of supply for ground forces.
+    A city can supply any unit stationed within its sector,
+    regardless of the unit's size.
+</p>
+
+<p>
+    For a city to provide supply, a road must connect the city to
+    the capital. The connecting road must also remain under friendly
+    control.
+</p>
+
+<p>
+    This makes control of roads and territory an important part of
+    maintaining military supply networks. Capturing or interrupting
+    a key road can isolate forces from their source of supply.
+</p>
+
+<h2>Logistics Hub</h2>
+
+<p>
+    The Logistics Hub is a specialised infrastructure facility
+    designed to support military operations by providing a
+    centralised distribution point for supplies, fuel, and equipment.
+</p>
+
+<p>
+    A Logistics Hub functions as a <strong>Level 5 Logistics Unit</strong>,
+    automatically providing logistical support to friendly military
+    forces within its operational range. This allows large formations
+    to remain supplied without requiring dedicated mobile Logistics
+    units to provide support.
+</p>
+
+<h3>Special Capability</h3>
+
+<p>
+    The Logistics Hub automatically provides the same logistical
+    support as a Level 5 Logistics Unit.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="#">
+        <strong>Logistics Hub</strong>
+
+        <span>
+            View the Logistics Hub page, including its capabilities,
+            requirements, and specifications.
+        </span>
+    </a>
+
+</div>
+
+<h2>Supply Shortage</h2>
+
+<p>
+    If a combat-capable unit does not receive the required supply,
+    it enters a <strong>Supply Shortage</strong>.
+</p>
+
+<p>
+    Supply Shortage significantly restricts a unit's ability to
+    conduct military operations.
+</p>
+
+<ul>
+    <li>Cannot attack.</li>
+    <li>Cannot defend.</li>
+    <li>Can move only 1 sector per turn.</li>
+</ul>
+
+<p>
+    Supply Shortage therefore makes maintaining supply lines
+    essential during offensive operations, particularly when
+    forces advance away from established cities and logistical
+    infrastructure.
+</p>
+
+<h2>Naval Supply</h2>
+
+<p>
+    Naval forces use a separate supply system from ground forces.
+    All combat-capable naval units require supply to remain
+    operational.
+</p>
+
+<p>
+    Unlike land forces, naval units can only receive supplies from
+    Supply Ships.
+</p>
+
+<h2>Supply Ships</h2>
+
+<p>
+    A Supply Ship can provide supplies to friendly naval units
+    within a 2-sector radius, provided the Supply Ship is the same
+    size or larger than the naval unit receiving supply.
+</p>
+
+<p>
+    For example, a Size 3 Supply Ship can supply Size 1, Size 2,
+    and Size 3 naval units within its supply range. A Size 2 Supply
+    Ship cannot supply a Size 3 naval unit.
+</p>
+
+<h2>Naval Supply Shortage</h2>
+
+<p>
+    Naval units that do not receive supply enter a Supply Shortage
+    and suffer the same basic operational restrictions as
+    unsupplied ground forces.
+</p>
+
+<ul>
+    <li>Cannot attack.</li>
+    <li>Cannot defend.</li>
+    <li>Can move only 1 sector per turn.</li>
+</ul>
+
+<p>
+    Maintaining naval supply is therefore essential for fleets
+    operating away from their normal bases and support networks.
+</p>
+
+<h2>Logistical Warfare</h2>
+
+<p>
+    Supply is an important part of military operations in
+    Frontlines. A force may possess significant combat strength
+    while still becoming ineffective if its supply network is
+    disrupted.
+</p>
+
+<p>
+    Players must therefore consider the position of Logistics
+    units, the security of roads connecting cities to their
+    capitals, and the location of Supply Ships when conducting
+    operations far from home territory.
+</p>
+
+<p>
+    Protecting supply routes can be just as important as protecting
+    combat formations. Disrupting an opponent's logistical network
+    can restrict their movement and prevent their forces from
+    attacking or defending.
+</p>
+
+<h2>Related Military Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_command') }}">
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn how Headquarters command friendly forces and
+            how Disorganisation affects units.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_movement') }}">
+        <strong>Movement</strong>
+
+        <span>
+            Learn how units move across sectors and how movement
+            restrictions affect military operations.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_combat') }}">
+        <strong>Combat</strong>
+
+        <span>
+            Learn how combat is resolved and how supply affects
+            combat effectiveness.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}

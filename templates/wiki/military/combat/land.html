@@ -1,0 +1,328 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Land Combat | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Combat / Land Combat
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / COMBAT / LAND
+</span>
+
+<h1>Land Combat</h1>
+
+<p class="article-intro">
+    Land Combat governs engagements between opposing ground forces.
+    Combat is resolved using the attacking force's Attack Strength
+    and the defending force's Defence Value, with applicable
+    modifiers determined before the engagement is resolved.
+</p>
+
+<h2>Initiating Combat</h2>
+
+<p>
+    A ground unit may initiate combat against an enemy unit in an
+    adjacent sector.
+</p>
+
+<p>
+    Units may not enter sectors occupied by enemy forces. Instead,
+    the attacking unit must stop in an adjacent sector and initiate
+    combat against the opposing force.
+</p>
+
+<p>
+    A unit may move before attacking, but all movement must be
+    completed before combat begins. Once combat has been initiated,
+    the unit cannot resume movement during that turn.
+</p>
+
+<h2>Attack Strength</h2>
+
+<p>
+    The attacking force uses its final <strong>Attack Strength</strong>
+    when resolving a land combat engagement.
+</p>
+
+<p>
+    Attack Strength represents the offensive capability of the
+    attacking formation after all applicable modifiers have been
+    applied.
+</p>
+
+<h2>Defence Value</h2>
+
+<p>
+    The defending force uses its final <strong>Defence Value</strong>
+    when resolving the engagement.
+</p>
+
+<p>
+    Defence Value represents the defensive capability of the
+    defending formation after all applicable modifiers have been
+    applied.
+</p>
+
+<h2>Combat Resolution</h2>
+
+<p>
+    Land combat uses an opposed roll system.
+</p>
+
+<p>
+    The attacking force makes a random roll between zero and its
+    final Attack Strength. The defending force makes a random roll
+    between zero and its final Defence Value.
+</p>
+
+<p>
+    The two results are compared to determine the outcome of the
+    engagement.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Attacker</h3>
+
+        <p>
+            Rolls a random value between 0 and the final
+            Attack Strength.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Defender</h3>
+
+        <p>
+            Rolls a random value between 0 and the final
+            Defence Value.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Combat Outcome</h2>
+
+<p>
+    The side with the higher combat roll wins the engagement.
+    The losing formation suffers a reduction in formation size.
+</p>
+
+<p>
+    If the attacker rolls higher than the defender, the defending
+    formation loses one size.
+</p>
+
+<p>
+    If the defender rolls higher than the attacker, the attacking
+    formation loses one size.
+</p>
+
+<p>
+    If both sides roll the same result, both formations lose one
+    size.
+</p>
+
+<h2>Formation Size Loss</h2>
+
+<p>
+    Combat damage is represented through reductions in formation
+    size rather than a separate hit-point system.
+</p>
+
+<p>
+    When a formation loses one size, it moves to the next smaller
+    formation level.
+</p>
+
+<p>
+    If a formation at its smallest available size suffers another
+    size loss, the formation is destroyed.
+</p>
+
+<h2>Multiple Attacks</h2>
+
+<p>
+    Multiple friendly units may participate in an attack against
+    an enemy force occupying an adjacent sector.
+</p>
+
+<p>
+    Coordinating multiple formations allows a player to concentrate
+    combat power against a single opposing formation.
+</p>
+
+<p>
+    The exact resolution of multiple-unit attacks depends on the
+    applicable combat rules and participating unit types.
+</p>
+
+<h2>Terrain and Combat</h2>
+
+<p>
+    Terrain can affect the effectiveness of ground forces during
+    combat. Units may receive different advantages or penalties
+    depending on the terrain in which an engagement occurs.
+</p>
+
+<p>
+    Terrain can therefore influence both the movement of forces
+    toward an engagement and the outcome of the engagement itself.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_movement') }}">
+        <strong>Terrain</strong>
+
+        <span>
+            Learn how different terrain types affect military
+            movement and combat.
+        </span>
+    </a>
+
+</div>
+
+<h2>Supply and Land Combat</h2>
+
+<p>
+    Supply is essential for ground forces participating in combat.
+    A unit suffering from Supply Shortage cannot attack or defend.
+</p>
+
+<p>
+    Supply Shortage also restricts the affected unit to moving
+    only one sector per turn.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how ground forces receive supplies and how
+            Supply Shortage affects combat operations.
+        </span>
+    </a>
+
+</div>
+
+<h2>Command and Land Combat</h2>
+
+<p>
+    Command status affects the combat effectiveness of ground
+    formations.
+</p>
+
+<p>
+    A combat unit operating outside the command range of a suitable
+    Headquarters becomes Disorganised. A Disorganised unit deals
+    half damage and has half defence, with fractions rounded down.
+</p>
+
+<p>
+    Disorganised units are also restricted to moving only one
+    sector per turn.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_command') }}">
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn about Headquarters, command range, and
+            Disorganisation.
+        </span>
+    </a>
+
+</div>
+
+<h2>Armoured and Mechanised Forces</h2>
+
+<p>
+    Armoured and Mechanised formations provide specialised
+    capabilities during land combat.
+</p>
+
+<p>
+    These formations can play an important role in offensive
+    operations and may have specialised rules that affect their
+    movement or combat capabilities.
+</p>
+
+<p>
+    Refer to the individual unit descriptions for unit-specific
+    combat rules and exceptions.
+</p>
+
+<h2>Combat Destruction</h2>
+
+<p>
+    A formation is destroyed when it suffers a size reduction while
+    already at its smallest available formation size.
+</p>
+
+<p>
+    Destroyed formations are removed from the battlefield and can
+    no longer participate in subsequent combat or movement.
+</p>
+
+<h2>Related Combat Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_combat') }}">
+        <strong>Combat</strong>
+
+        <span>
+            Return to the overall Frontlines combat system.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_artillery') }}">
+        <strong>Artillery</strong>
+
+        <span>
+            Learn about indirect fire and artillery combat.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_movement') }}">
+        <strong>Movement</strong>
+
+        <span>
+            Learn how ground forces manoeuvre before combat.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_army') }}">
+        <strong>Army</strong>
+
+        <span>
+            Explore the ground forces that conduct land combat.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Command & Control | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Command &amp; Control
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / COMMAND &amp; CONTROL
+</span>
+
+<h1>Command &amp; Control</h1>
+
+<p class="article-intro">
+    Command and Control (C2) represents the ability of military
+    headquarters to coordinate and direct friendly forces. Maintaining
+    an effective command structure allows combat units to operate at
+    full effectiveness across the battlefield.
+</p>
+
+<h2>Headquarters</h2>
+
+<p>
+    Headquarters (HQ) units serve as the nerve centre of military
+    operations, providing leadership, coordination, and command to
+    friendly forces.
+</p>
+
+<p>
+    An HQ can command friendly combat units within its command range,
+    provided the unit is within the HQ's size limit.
+</p>
+
+<h2>Command Range</h2>
+
+<p>
+    A Headquarters commands friendly combat units within a
+    <strong>2-sector radius</strong>.
+</p>
+
+<p>
+    A unit is considered in command when it is within this radius and
+    its size is equal to or smaller than the HQ's size.
+</p>
+
+<p>
+    There is no limit to the number of units an HQ can command,
+    provided those units meet the range and size requirements.
+</p>
+
+<h2>HQ Size</h2>
+
+<p>
+    The size of an HQ determines the maximum size of combat unit it
+    can command.
+</p>
+
+<p>
+    An HQ can command units that are the same size or smaller than
+    itself.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="#">
+        <strong>Example</strong>
+
+        <span>
+            A Size 3 HQ can command Size 1, Size 2, and Size 3
+            combat units within 2 sectors.
+        </span>
+    </a>
+
+</div>
+
+<p>
+    A Size 4 combat unit therefore requires a Size 4 HQ within
+    command range to remain in command.
+</p>
+
+<h2>Out of Command</h2>
+
+<p>
+    If a combat unit is not within the command range of a suitable
+    Headquarters, it becomes <strong>Disorganised</strong>.
+</p>
+
+<p>
+    This can occur when a unit moves beyond the range of its HQ or
+    when the available HQ is too small to command the unit.
+</p>
+
+<h2>Disorganisation</h2>
+
+<p>
+    Disorganisation reduces a unit's ability to conduct military
+    operations effectively.
+</p>
+
+<p>
+    A Disorganised combat unit suffers the following penalties:
+</p>
+
+<ul>
+    <li>Can only move 1 sector per turn.</li>
+    <li>Deals half damage, with fractions rounded down.</li>
+    <li>Has half defence, with fractions rounded down.</li>
+</ul>
+
+<p>
+    These penalties remain relevant until the unit is once again
+    within the command range of a suitable Headquarters.
+</p>
+
+<h2>Command and Military Operations</h2>
+
+<p>
+    Maintaining command coverage is particularly important when
+    conducting offensive operations. As forces advance across the
+    battlefield, HQ units may need to move forward or be positioned
+    appropriately to maintain command over advancing formations.
+</p>
+
+<p>
+    Large formations also require appropriately sized Headquarters.
+    A force may therefore need to maintain multiple HQ units or
+    carefully coordinate its formation sizes when operating across
+    a wide front.
+</p>
+
+<h2>Command and Combat</h2>
+
+<p>
+    Command status directly affects combat effectiveness. A unit that
+    becomes Disorganised suffers reduced damage and defence, making it
+    significantly less effective in combat.
+</p>
+
+<p>
+    Command is therefore an important consideration when positioning
+    forces before an engagement. Maintaining HQ coverage can be just
+    as important as maintaining the combat strength of the frontline
+    units themselves.
+</p>
+
+<h2>Related Military Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how military forces receive supplies and the
+            effects of Supply Shortage.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_combat') }}">
+        <strong>Combat</strong>
+
+        <span>
+            Learn how combat is resolved and how unit modifiers
+            affect battlefield outcomes.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_movement') }}">
+        <strong>Movement</strong>
+
+        <span>
+            Learn how units move across sectors and how
+            Disorganisation and other effects can restrict movement.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}

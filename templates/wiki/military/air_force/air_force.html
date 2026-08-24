@@ -1,0 +1,381 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Air Force | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Air Force
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / AIR FORCE
+</span>
+
+<h1>Air Force</h1>
+
+<p class="article-intro">
+    The Air Force provides fixed-wing aerial capabilities for
+    nations across Alterra. Aircraft can conduct air combat,
+    strike enemy forces, provide reconnaissance, and support
+    military operations across the battlefield.
+</p>
+
+<h2>Air Power</h2>
+
+<p>
+    Air forces provide military commanders with the ability to
+    project combat power across large distances and respond
+    rapidly to developments on the battlefield.
+</p>
+
+<p>
+    Aircraft can operate independently of ground formations and
+    can reach targets that may otherwise be difficult to engage
+    using conventional ground forces.
+</p>
+
+<p>
+    Effective air operations require careful management of
+    aircraft range, bases, airspace, and supporting forces.
+</p>
+
+<h2>Aircraft Categories</h2>
+
+<p>
+    Fixed-wing aircraft are divided into several categories based
+    on their primary role.
+</p>
+
+<div class="wiki-info-grid">
+
+    <a href="#" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Fighters</h3>
+
+        <p>
+            Aircraft designed primarily to engage and destroy
+            opposing aircraft and establish air superiority.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="#" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Attack Aircraft</h3>
+
+        <p>
+            Aircraft designed to conduct attacks against
+            ground and other tactical targets.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="#" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            03
+        </span>
+
+        <h3>Bombers</h3>
+
+        <p>
+            Aircraft designed to deliver large-scale attacks
+            against strategic and military targets.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="#" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            04
+        </span>
+
+        <h3>Multirole Aircraft</h3>
+
+        <p>
+            Flexible aircraft capable of performing multiple
+            combat roles.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Air Superiority</h2>
+
+<p>
+    Air superiority represents the ability of a nation's air
+    forces to operate effectively while limiting the enemy's
+    ability to do the same.
+</p>
+
+<p>
+    Fighter aircraft play the primary role in establishing and
+    maintaining air superiority by engaging hostile aircraft.
+</p>
+
+<p>
+    Control of the air can significantly improve the effectiveness
+    of other military operations by allowing friendly aircraft to
+    operate with reduced opposition.
+</p>
+
+<h2>Air Combat</h2>
+
+<p>
+    Aircraft can engage opposing aircraft during aerial combat.
+    Air combat is governed by aircraft capabilities, applicable
+    combat rules, and the conditions under which the engagement
+    takes place.
+</p>
+
+<p>
+    Fighter aircraft are primarily intended for air-to-air combat,
+    while other aircraft may have limited or specialised
+    capabilities for defending themselves against hostile aircraft.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+        <strong>Air Combat</strong>
+
+        <span>
+            Learn how aerial engagements are initiated and
+            resolved.
+        </span>
+    </a>
+
+</div>
+
+<h2>Ground Attack</h2>
+
+<p>
+    Aircraft can also support ground operations by attacking
+    enemy land forces and other military targets.
+</p>
+
+<p>
+    Ground-attack missions allow air forces to contribute to
+    land operations without requiring aircraft to operate from
+    the same sectors as friendly ground formations.
+</p>
+
+<p>
+    Different aircraft types have different capabilities and
+    effectiveness when conducting attacks against ground targets.
+</p>
+
+<h2>Strategic Bombing</h2>
+
+<p>
+    Bombers provide long-range strike capability against
+    strategic targets.
+</p>
+
+<p>
+    Strategic bombing can be used to attack important enemy
+    infrastructure and military assets, weakening an opponent's
+    ability to sustain its war effort.
+</p>
+
+<h2>Aircraft Range</h2>
+
+<p>
+    Aircraft have a defined operational range that determines
+    which sectors they can reach from their operating base.
+</p>
+
+<p>
+    Aircraft range must be considered when planning missions.
+    A target outside an aircraft's operational range cannot be
+    reached by that aircraft.
+</p>
+
+<h2>Air Bases</h2>
+
+<p>
+    Aircraft require suitable infrastructure from which to
+    operate.
+</p>
+
+<p>
+    Air bases provide the operational infrastructure required
+    to deploy and maintain aircraft during military operations.
+</p>
+
+<p>
+    The location of air bases is strategically important because
+    it determines the areas in which aircraft can effectively
+    operate.
+</p>
+
+<h2>Air Defence</h2>
+
+<p>
+    Air forces must also contend with enemy air-defence systems.
+    Anti-Air units can protect sectors from hostile aircraft and
+    create areas in which aircraft operations become more
+    dangerous.
+</p>
+
+<p>
+    Aircraft may require specialised capabilities to operate
+    effectively against defended targets.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air units and Air Defence Zones
+            protect against hostile aircraft.
+        </span>
+    </a>
+
+</div>
+
+<h2>Aircraft Operations</h2>
+
+<p>
+    Air forces can conduct a variety of missions depending on the
+    aircraft available and the strategic situation.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+        <strong>Air Combat</strong>
+
+        <span>
+            Conduct aerial engagements against enemy aircraft.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Ground Attack</strong>
+
+        <span>
+            Use aircraft to attack enemy ground formations and
+            military targets.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Strategic Bombing</strong>
+
+        <span>
+            Conduct long-range attacks against strategic targets.
+        </span>
+    </a>
+
+</div>
+
+<h2>Air Force and Logistics</h2>
+
+<p>
+    Air operations depend on appropriate logistical support and
+    infrastructure. Aircraft operating from distant bases must
+    be supported by the resources required to maintain sustained
+    operations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how military forces receive supplies and
+            maintain their operations.
+        </span>
+    </a>
+
+</div>
+
+<h2>Air Force and Command</h2>
+
+<p>
+    Air operations are also affected by the wider command and
+    control system. Maintaining effective coordination between
+    aircraft and supporting forces is an important part of
+    military operations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_command') }}">
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn how Headquarters coordinate friendly
+            military forces.
+        </span>
+    </a>
+
+</div>
+
+<h2>Related Military Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_combat') }}">
+        <strong>Combat</strong>
+
+        <span>
+            Explore the wider combat system used throughout
+            Frontlines.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_movement') }}">
+        <strong>Movement</strong>
+
+        <span>
+            Learn how military units move and operate across
+            sectors.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_special_units') }}">
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised military capabilities,
+            including Rotary Warfare.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,360 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Combat | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Combat
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / COMBAT
+</span>
+
+<h1>Combat</h1>
+
+<p class="article-intro">
+    Combat represents military engagements between opposing forces
+    in Frontlines. Battles are resolved using the capabilities of
+    the participating units, applicable modifiers, and the rules
+    governing the type of engagement.
+</p>
+
+<h2>Combat Overview</h2>
+
+<p>
+    Combat occurs when a unit initiates an attack against an
+    opposing force. Different military domains use different
+    combat systems, with separate rules governing land, air, and
+    naval engagements.
+</p>
+
+<p>
+    Before combat is resolved, applicable modifiers are determined.
+    These can include terrain, supply, command status, and
+    specialised unit abilities.
+</p>
+
+<h2>Combat and Movement</h2>
+
+<p>
+    Movement must be completed before combat can begin.
+</p>
+
+<p>
+    A unit may move during a turn and then initiate
+    combat against an eligible enemy unit. Once combat begins,
+    the unit cannot resume movement during that turn.
+</p>
+
+<p>
+    Units cannot enter sectors occupied by enemy forces. Instead,
+    they must stop in an adjacent sector and initiate combat from
+    there.
+</p>
+
+<h2>Land Combat</h2>
+
+<p>
+    Ground combat is resolved using an opposed roll between the
+    attacking and defending forces.
+</p>
+
+<p>
+    The attacking force uses its final Attack Strength, while the
+    defending force uses its final Defence Value. Each side then
+    makes a random roll between zero and its applicable value.
+</p>
+
+<p>
+    The higher result determines the outcome of the engagement.
+    The losing side suffers a reduction in formation size.
+</p>
+
+<p>
+    If both sides roll the same result, both forces lose one
+    formation size.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_land_combat') }}">
+        <strong>Land Combat</strong>
+
+        <span>
+            Learn the detailed rules for ground engagements,
+            attacks, defence, and formation losses.
+        </span>
+    </a>
+
+</div>
+
+<h2>Formation Losses</h2>
+
+<p>
+    Combat can reduce the size of the participating formations.
+    A unit that loses a size moves to the next smaller formation
+    level.
+</p>
+
+<p>
+    If a unit is already at its smallest available formation and
+    suffers another size loss, the unit is destroyed.
+</p>
+
+<p>
+    Multiple units may participate in attacks against the same
+    sector, allowing forces to concentrate their combat power
+    against an opposing formation.
+</p>
+
+<h2>Armoured Breakthrough</h2>
+
+<p>
+    Armoured and Mechanised formations have specialised
+    breakthrough capabilities that allow them to exploit
+    successful attacks and create openings in enemy lines.
+</p>
+
+<p>
+    Breakthrough mechanics are dependent on the applicable unit
+    types and combat conditions and are described in the detailed
+    land combat rules.
+</p>
+
+<h2>Artillery</h2>
+
+<p>
+    Artillery provides indirect fire capability, allowing attacks
+    against enemy ground forces without requiring the artillery
+    unit to occupy the same sector as its target.
+</p>
+
+<p>
+    Artillery can engage targets at a range of two sectors.
+    Towed artillery must spend its available movement to conduct
+    fire, while Mechanised Artillery can fire without spending
+    movement.
+</p>
+
+<p>
+    Artillery fire can suppress or damage enemy formations and may
+    also result in destruction depending on the outcome of the
+    attack.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_artillery') }}">
+        <strong>Artillery</strong>
+
+        <span>
+            Learn about indirect fire, suppression, artillery
+            range, and counter-battery fire.
+        </span>
+    </a>
+
+</div>
+
+<h2>Air Combat</h2>
+
+<p>
+    Air combat governs engagements between opposing aerial forces.
+    Aircraft operate from airports or other applicable operational
+    anchors and are affected by aircraft range and contested
+    airspace.
+</p>
+
+<p>
+    Air operations can include air superiority, interception,
+    strike missions, strategic bombing, and specialised support
+    operations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+        <strong>Air Combat</strong>
+
+        <span>
+            Learn about aerial engagements, air superiority,
+            aircraft range, and air operations.
+        </span>
+    </a>
+
+</div>
+
+<h2>Air Defence</h2>
+
+<p>
+    Air Defence units protect sectors against hostile aircraft.
+    Anti-Air units establish Air Defence Zones that can engage
+    enemy aircraft operating within their coverage.
+</p>
+
+<p>
+    Air defence interacts with aircraft capabilities such as
+    stealth and specialised suppression of enemy air defences.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air units, Air Defence Zones, stealth,
+            and SEAD interact.
+        </span>
+    </a>
+
+</div>
+
+<h2>Naval Combat</h2>
+
+<p>
+    Naval combat governs engagements between opposing naval forces.
+    Surface combatants, submarines, and specialised naval units
+    each have different roles within maritime warfare.
+</p>
+
+<p>
+    Naval operations also depend on supply, detection, and
+    specialised capabilities such as Anti-Submarine Warfare.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_naval_combat') }}">
+        <strong>Naval Combat</strong>
+
+        <span>
+            Learn about surface warfare, submarines, detection,
+            and Anti-Submarine Warfare.
+        </span>
+    </a>
+
+</div>
+
+<h2>Supply and Combat</h2>
+
+<p>
+    Supply is essential to maintaining combat effectiveness.
+    Units suffering from Supply Shortage cannot attack or defend
+    and are restricted to moving only one sector per turn.
+</p>
+
+<p>
+    Maintaining supply lines is therefore essential when
+    conducting prolonged operations or advancing into enemy
+    territory.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how military forces receive supplies and how
+            Supply Shortage affects operations.
+        </span>
+    </a>
+
+</div>
+
+<h2>Command and Combat</h2>
+
+<p>
+    Command status also affects combat effectiveness. Units that
+    operate outside the command range of a suitable Headquarters
+    become Disorganised.
+</p>
+
+<p>
+    Disorganised units deal half damage and have half defence,
+    with fractions rounded down. They are also restricted to
+    moving only one sector per turn.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_command') }}">
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn how Headquarters command military forces and
+            how Disorganisation affects combat effectiveness.
+        </span>
+    </a>
+
+</div>
+
+<h2>Combined Arms</h2>
+
+<p>
+    Frontlines encourages the use of combined arms rather than
+    relying on a single unit type. Infantry, armoured formations,
+    artillery, aircraft, naval forces, and support units can
+    perform complementary roles during military operations.
+</p>
+
+<p>
+    Effective coordination of combat forces, logistics, movement,
+    and command can determine the outcome of an engagement.
+</p>
+
+<h2>Explore Combat</h2>
+
+<p>
+    Explore the detailed combat systems below.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_land_combat') }}">
+        <strong>Land Combat</strong>
+
+        <span>
+            Ground engagements and formation losses.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+        <strong>Air Combat</strong>
+
+        <span>
+            Aerial engagements and air operations.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_naval_combat') }}">
+        <strong>Naval Combat</strong>
+
+        <span>
+            Surface warfare, submarines, and naval engagements.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_artillery') }}">
+        <strong>Artillery</strong>
+
+        <span>
+            Indirect fire, suppression, and counter-battery fire.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+        <strong>Air Defence</strong>
+
+        <span>
+            Anti-Air, Air Defence Zones, stealth, and SEAD.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}

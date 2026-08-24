@@ -1,0 +1,352 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Army | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+Military / Army
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / ARMY
+</span>
+
+<h1>Army</h1>
+
+<p class="article-intro">
+    The Army is the primary land warfare force in Frontlines.
+    Ground units are responsible for capturing, defending, and
+    controlling sectors while conducting offensive and defensive
+    operations across the battlefield.
+</p>
+
+<h2>Ground Forces</h2>
+
+<p>
+    Army forces are organised into combat and support formations.
+    Combat units provide the primary fighting capability of a
+    ground force, while support units provide logistics,
+    engineering, and command capabilities.
+</p>
+
+<p>
+    Effective land operations require the coordination of multiple
+    unit types. Infantry can secure territory, armoured formations
+    provide offensive power, and specialised support formations
+    allow forces to operate effectively over extended distances.
+</p>
+
+<div class="wiki-info-grid">
+
+    <a href="#" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Combat Units</h3>
+
+        <p>
+            Ground formations responsible for attacking,
+            defending, and controlling territory.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="#" class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Support Units</h3>
+
+        <p>
+            Specialised formations providing logistics,
+            engineering, and command capabilities.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Combat Units</h2>
+
+<p>
+    Combat units form the core of the Army's fighting strength.
+    They directly participate in ground combat and are responsible
+    for taking and holding sectors.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="#">
+        <strong>Motorised Infantry</strong>
+
+        <span>
+            Mobile infantry designed to rapidly move across
+            the battlefield.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Mechanised Infantry</strong>
+
+        <span>
+            Armoured infantry formations combining mobility,
+            protection, and combat capability.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Armoured</strong>
+
+        <span>
+            Heavy armoured formations designed to provide
+            significant offensive and breakthrough capability.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>National Guard</strong>
+
+        <span>
+            Defensive formations used to protect territory
+            and important positions.
+        </span>
+    </a>
+
+</div>
+
+<h2>Support Units</h2>
+
+<p>
+    Support units provide capabilities that allow combat forces
+    to operate effectively. They generally support combat
+    formations rather than serving as the primary offensive force.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="#">
+        <strong>Engineer</strong>
+
+        <span>
+            Provides engineering capabilities and assists
+            friendly forces with river crossings.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Logistics</strong>
+
+        <span>
+            Provides supply to friendly combat formations
+            operating away from established supply sources.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_command') }}">
+        <strong>HQ</strong>
+
+        <span>
+            Provides command and coordination to friendly
+            combat formations.
+        </span>
+    </a>
+
+</div>
+
+<h2>Unit Size</h2>
+
+<p>
+    Army formations operate at different size levels. Unit size
+    represents the scale of a formation and affects several
+    military mechanics, including supply, command, and transport.
+</p>
+
+<p>
+    Larger formations generally require larger support capabilities.
+    Logistics units must be sufficiently large to supply the
+    formations they support, while Headquarters must be large
+    enough to command the units operating within their command
+    range.
+</p>
+
+<h2>Movement</h2>
+
+<p>
+    Army units move between adjacent sectors during the Action
+    Phase. Each unit has a Movement value that determines how far
+    it can normally travel during its turn.
+</p>
+
+<p>
+    Terrain can affect the movement cost of a unit. Rivers and
+    other geographical features may also impose additional
+    movement requirements or require specialised assistance.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_movement') }}">
+        <strong>Movement</strong>
+
+        <span>
+            Learn how Army units move between sectors and how
+            terrain affects movement.
+        </span>
+    </a>
+
+</div>
+
+<h2>Ground Combat</h2>
+
+<p>
+    Army units engage enemy ground forces through land combat.
+    Combat is resolved using the attacking unit's final Attack
+    Strength against the defending unit's final Defence Value.
+</p>
+
+<p>
+    Combat outcomes can result in formation size reductions,
+    destruction, or other effects depending on the type of
+    engagement.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_land_combat') }}">
+        <strong>Land Combat</strong>
+
+        <span>
+            Learn how ground battles are initiated and resolved.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_combat') }}">
+        <strong>Combat System</strong>
+
+        <span>
+            Explore the wider combat mechanics used throughout
+            Frontlines.
+        </span>
+    </a>
+
+</div>
+
+<h2>Army Operations</h2>
+
+<p>
+    Army operations depend on more than combat strength. Forces
+    must maintain supply, remain within command range, and
+    coordinate movement across the battlefield.
+</p>
+
+<p>
+    Engineers, Logistics units, and Headquarters provide important
+    support that allows combat formations to continue operating
+    effectively as they advance.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how Army units receive supplies and the effects
+            of Supply Shortage.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_command') }}">
+        <strong>Command &amp; Control</strong>
+
+        <span>
+            Learn how Headquarters command Army formations and
+            how Disorganisation affects units.
+        </span>
+    </a>
+
+</div>
+
+<h2>Army Units</h2>
+
+<p>
+    Explore the individual Army units below to learn about their
+    roles, capabilities, and special rules.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="#">
+        <strong>Motorised Infantry</strong>
+
+        <span>
+            Mobile infantry formation.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Mechanised Infantry</strong>
+
+        <span>
+            Armoured infantry formation.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Armoured</strong>
+
+        <span>
+            Heavy armoured combat formation.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>National Guard</strong>
+
+        <span>
+            Defensive territorial formation.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Engineer</strong>
+
+        <span>
+            Engineering and river-crossing support.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>Logistics</strong>
+
+        <span>
+            Mobile military supply formation.
+        </span>
+    </a>
+
+    <a href="#">
+        <strong>HQ</strong>
+
+        <span>
+            Military command and control formation.
+        </span>
+    </a>
+
+</div>
+
+{% endblock %}
