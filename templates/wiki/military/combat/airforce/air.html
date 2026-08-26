@@ -1,0 +1,495 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Air Combat | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat') }}">Combat</a>
+
+<span>/</span>
+
+<span>Air Combat</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<span class="wiki-section-label">
+    MILITARY / COMBAT / AIR
+</span>
+
+<h1>Air Combat</h1>
+
+<p class="article-intro">
+    Air Combat governs engagements between aircraft and the
+    specialised systems that support aerial warfare. Aircraft
+    operate across large areas of the battlefield and must manage
+    operational range, contested airspace, enemy aircraft, and
+    ground-based air defences.
+</p>
+
+<p>
+    Successful air operations depend on more than aircraft strength.
+    Commanders must consider operational anchors, aircraft range,
+    air defence coverage, formation size, and supporting assets
+    when planning aerial operations.
+</p>
+
+
+<h2>Airports and Operational Range</h2>
+
+<p>
+    Airports serve as the primary bases and anchor points for
+    aircraft operations. Each aircraft may only operate within
+    its defined movement range, measured in sectors from a
+    friendly airport or tanker acting as an anchor point.
+</p>
+
+<p>
+    Aircraft cannot operate beyond their maximum range from a
+    valid friendly anchor point. Strategically positioned
+    airports and tankers are therefore critical to extending
+    and maintaining air operations.
+</p>
+
+<h3>Example Operational Limits</h3>
+
+<table class="wiki-table">
+
+    <thead>
+        <tr>
+            <th>Aircraft</th>
+            <th>Maximum Range</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+            <td>Multi-Role Fighter (MRF)</td>
+            <td>4 sectors</td>
+        </tr>
+
+        <tr>
+            <td>Bomber</td>
+            <td>10 sectors</td>
+        </tr>
+
+        <tr>
+            <td>Helicopter</td>
+            <td>3 sectors</td>
+        </tr>
+
+    </tbody>
+
+</table>
+
+
+
+<h3>Tankers as Anchor Points</h3>
+
+<p>
+    Aerial refuelling aircraft (Tankers) function as mobile
+    anchor points for friendly aircraft. Aircraft may operate
+    up to their movement range from a tanker in the same way
+    they operate from an airport.
+</p>
+
+<p>
+    Tankers allow aircraft to remain within operational limits
+    while conducting missions far from fixed airbases.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_tanker') }}">
+
+        <strong>Tanker Aircraft</strong>
+
+        <span>
+            Learn about Tanker aircraft and their role as
+            mobile aerial anchor points.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h3>Tankers and Helicopters</h3>
+
+<p>
+    Tankers and helicopters cannot operate from another tanker.
+    Both must use an airport as their base of operations.
+</p>
+
+<p>
+    This prevents chains of mobile anchor points and ensures
+    operational ranges remain limited to valid bases.
+</p>
+
+
+<h3>Loss of an Airport or Tanker</h3>
+
+<p>
+    If a friendly airport or tanker acting as an anchor point
+    is destroyed, aircraft relying on that anchor point must
+    determine whether another friendly airport or tanker is
+    within their operational range.
+</p>
+
+<p>
+    If an aircraft is not within range of another valid anchor
+    point, it is lost and considered destroyed.
+</p>
+
+
+<h2>Contested Airspace</h2>
+
+<p>
+    Aircraft may encounter enemy air units when entering sectors
+    containing hostile aircraft.
+</p>
+
+<p>
+    When entering a contested sector, an air unit may either engage
+    the enemy or bypass the sector.
+</p>
+
+<p>
+    Bypassing a contested sector costs 2 Movement Points. Engaging
+    the enemy costs 1 Movement Point and represents direct combat
+    with hostile air units occupying the sector.
+</p>
+
+<p>
+    The choice between engagement and bypassing allows commanders
+    to decide whether to commit aircraft to aerial combat or
+    continue toward their operational objective.
+</p>
+
+
+<h2>Aircraft Damage</h2>
+
+<p>
+    Aircraft use formation size to represent the overall strength
+    of an aerial formation.
+</p>
+
+<p>
+    When an air unit is hit, its formation size is immediately
+    reduced by one level.
+</p>
+
+<p>
+    For example, a formation may be reduced from Wing to Squadron,
+    or from Squadron to Flight. Reducing the formation represents
+    aircraft losses and a corresponding reduction in the unit's
+    combat effectiveness.
+</p>
+
+
+<h2>Aircraft Destruction</h2>
+
+<p>
+    If an air unit is already at its smallest formation size and
+    is hit again, the unit is permanently destroyed and removed
+    from play.
+</p>
+
+<p>
+    This destruction rule applies regardless of the source of the
+    damage.
+</p>
+
+
+<h2>Anti-Air Defence</h2>
+
+<p>
+    Anti-Air units provide ground-based protection against hostile
+    aircraft. They establish Air Defence Zones around their
+    position and automatically engage enemy aircraft that enter
+    or operate within their coverage.
+</p>
+
+<p>
+    An Anti-Air unit controls a one-sector radius around itself.
+    Any enemy air unit entering or operating within this area is
+    automatically engaged by the Anti-Air unit.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_combat_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn the complete rules for Anti-Air units,
+            Air Defence Zones, and air defence engagements.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Rotary Warfare</h2>
+
+<p>
+    Rotary-wing aircraft provide specialised battlefield support,
+    primarily through direct close air support and anti-armour
+    operations against enemy ground forces.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_rotary_combat') }}">
+
+        <strong>Rotary Warfare</strong>
+
+        <span>
+            Learn about Attack Helicopter range, combat,
+            survivability, and specialised operations.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>AWACS</h2>
+
+<p>
+    AWACS (Airborne Warning and Control System) units provide
+    airborne command and control, enhancing the effectiveness of
+    friendly air operations across a wide area.
+</p>
+
+<h3>AWACS Coverage</h3>
+
+<p>
+    An AWACS unit supports all friendly air units within a
+    <strong>2-sector radius</strong>.
+</p>
+
+<p>
+    Friendly air units within this coverage receive a
+    <strong>+50% bonus to Strength and Defence</strong>, representing
+    improved situational awareness, coordination, and targeting.
+</p>
+
+<p>
+    AWACS bonuses do not stack. If multiple AWACS units cover the
+    same air unit, only one <strong>+50% bonus</strong> is applied.
+</p>
+
+<h3>Protection of AWACS</h3>
+
+<p>
+    AWACS units are high-value assets and should be protected from
+    enemy attack. Their loss can significantly reduce the
+    effectiveness of friendly air operations and control of
+    contested airspace.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_awacs') }}">
+
+        <strong>AWACS</strong>
+
+        <span>
+            Learn about AWACS units and their role in
+            supporting friendly air forces.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Stealth Aircraft</h2>
+
+<p>
+    Stealth aircraft are specialised aerial assets designed to
+    operate with a reduced probability of detection and engagement
+    by enemy air defence systems.
+</p>
+
+<p>
+    Stealth aircraft are twice as effective as non-stealth aircraft
+    in terms of both Strength and Defence.
+</p>
+
+<p>
+    Their reduced detectability also makes them significantly more
+    resistant to Anti-Air systems.
+</p>
+
+<p>
+    Anti-Air attacks against stealth aircraft have only a 20%
+    chance of successfully hitting the aircraft, compared with
+    an 80% chance against non-stealth aircraft.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_stealth') }}">
+
+        <strong>Stealth</strong>
+
+        <span>
+            Explore the complete rules governing stealth aircraft,
+            their advantages, and Anti-Air evasion.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Strategic Airlift</h2>
+
+<p>
+    Strategic Airlift Aircraft provide rapid deployment of
+    eligible ground forces across long distances. They can
+    transport ground units between friendly airbases or conduct
+    airdrop operations into operational areas.
+</p>
+
+<p>
+    Strategic Airlift Aircraft have an operational range of
+    <strong>10 sectors</strong> from an airport or tanker and
+    can use a tanker as an operational anchor.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_strategic_airlift') }}">
+
+        <strong>Strategic Airlift</strong>
+
+        <span>
+            Learn about aircraft transport, airdrops, transport
+            limitations, mishaps, and Anti-Air interactions.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Air Superiority</h2>
+
+<p>
+    Air superiority depends on more than the number of aircraft
+    available to a nation.
+</p>
+
+<p>
+    Commanders must coordinate aircraft with airports, tankers,
+    AWACS, Anti-Air systems, and other supporting forces while
+    managing operational range and enemy airspace.
+</p>
+
+<p>
+    Fighters can engage hostile aircraft, specialised aircraft
+    can support friendly operations, and stealth aircraft can
+    penetrate defended areas with reduced exposure to enemy
+    air defences.
+</p>
+
+<p>
+    Maintaining effective aerial operations therefore requires
+    careful planning of both combat forces and the infrastructure
+    that supports them.
+</p>
+
+
+<h2>Explore Air Combat</h2>
+
+<p>
+    Explore the specialised systems that make up aerial warfare
+    in Frontlines.
+</p>
+
+<div class="wiki-link-list">
+
+
+    <a href="{{ url_for('wiki_tanker') }}">
+
+        <strong>Tanker Aircraft</strong>
+
+        <span>
+            Learn about Tanker aircraft and their role as
+            mobile aerial anchor points.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_combat_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn about Anti-Air systems and Air Defence Zones.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_rotary_combat') }}">
+
+        <strong>Rotary Warfare</strong>
+
+        <span>
+            Learn about Attack Helicopter range, combat,
+            survivability, and specialised operations.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_awacs') }}">
+
+        <strong>AWACS</strong>
+
+        <span>
+            Learn about AWACS units and their role in
+            supporting friendly air forces.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_stealth') }}">
+
+        <strong>Stealth</strong>
+
+        <span>
+            Learn about stealth aircraft and their advantages
+            against enemy air defences.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_strategic_airlift') }}">
+
+        <strong>Strategic Airlift</strong>
+
+        <span>
+            Learn how Strategic Airlift Aircraft transport
+            and deploy ground forces.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

@@ -43,7 +43,7 @@ Military
 
 <div class="wiki-info-grid">
 
-    <a href="{{ url_for('wiki_army') }}" class="wiki-info-card">
+    <a href="{{ url_for('wiki_army_overview') }}" class="wiki-info-card">
 
         <span class="wiki-info-number">
             01
@@ -62,7 +62,7 @@ Military
 
     </a>
 
-    <a href="{{ url_for('wiki_navy') }}" class="wiki-info-card">
+    <a href="{{ url_for('wiki_military_navy') }}" class="wiki-info-card">
 
         <span class="wiki-info-number">
             02
@@ -81,7 +81,7 @@ Military
 
     </a>
 
-    <a href="{{ url_for('wiki_air_force') }}" class="wiki-info-card">
+    <a href="{{ url_for('wiki_military_air_force') }}" class="wiki-info-card">
 
         <span class="wiki-info-number">
             03
@@ -101,7 +101,7 @@ Military
 
     </a>
 
-    <a href="{{ url_for('wiki_special_units') }}" class="wiki-info-card">
+    <a href="{{ url_for('wiki_military_special_units') }}" class="wiki-info-card">
 
         <span class="wiki-info-number">
             04
@@ -136,20 +136,26 @@ Military
     mechanics and considerations.
 </p>
 
-<div class="wiki-link-list">
+<div class="wiki-info-grid">
 
-    <a href="{{ url_for('wiki_combat') }}">
+    <a href="{{ url_for('wiki_military_combat') }}" class="wiki-info-card">
 
-        <strong>Combat</strong>
 
-        <span>
+        <h3>Combat</h3>
+
+        <p>
             Explore the combat systems used across land, sea,
             and air operations.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
         </span>
 
     </a>
 
 </div>
+
 
 <h2>Movement</h2>
 
@@ -164,87 +170,26 @@ Military
     and movement cannot be resumed after combat has been initiated.
 </p>
 
-<div class="wiki-link-list">
+<div class="wiki-info-grid">
 
-    <a href="{{ url_for('wiki_movement') }}">
+    <a href="{{ url_for('wiki_military_movement') }}" class="wiki-info-card">
 
-        <strong>Movement</strong>
 
-        <span>
+        <h3>Movement</h3>
+
+        <p>
             Learn how units move between sectors and how movement
             restrictions affect military operations.
-        </span>
+        </p>
 
-    </a>
-
-    <a href="{{ url_for('wiki_terrain') }}">
-
-        <strong>Terrain</strong>
-
-        <span>
-            Learn how terrain types affect movement and unit access.
+        <span class="wiki-card-link">
+            EXPLORE →
         </span>
 
     </a>
 
 </div>
 
-<h2>Logistics</h2>
-
-<p>
-    Military forces require logistical support to maintain
-    sustained operations. Supply allows units to continue
-    operating effectively across the battlefield.
-</p>
-
-<p>
-    Logistics infrastructure and dedicated logistics units allow
-    nations to maintain forces away from major population centres
-    and production areas.
-</p>
-
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_logistics') }}">
-
-        <strong>Logistics</strong>
-
-        <span>
-            Learn how military forces are supplied and how
-            logistics support operations.
-        </span>
-
-    </a>
-
-</div>
-
-<h2>Command &amp; Control</h2>
-
-<p>
-    Command and control allows military forces to operate as
-    coordinated formations. Headquarters provide command
-    capabilities to friendly forces within their effective range.
-</p>
-
-<p>
-    Units operating outside appropriate command support can
-    become Disorganised and suffer reduced effectiveness.
-</p>
-
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_command') }}">
-
-        <strong>Command &amp; Control</strong>
-
-        <span>
-            Learn how Headquarters coordinate friendly forces
-            and how Disorganisation affects units.
-        </span>
-
-    </a>
-
-</div>
 
 <h2>Military Operations</h2>
 
@@ -270,7 +215,7 @@ Military
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_army') }}">
+    <a href="{{ url_for('wiki_military_army') }}">
 
         <strong>Army</strong>
 
@@ -280,7 +225,7 @@ Military
 
     </a>
 
-    <a href="{{ url_for('wiki_navy') }}">
+    <a href="{{ url_for('wiki_military_navy') }}">
 
         <strong>Navy</strong>
 
@@ -290,7 +235,7 @@ Military
 
     </a>
 
-    <a href="{{ url_for('wiki_air_force') }}">
+    <a href="{{ url_for('wiki_military_air_force') }}">
 
         <strong>Air Force</strong>
 
@@ -300,7 +245,7 @@ Military
 
     </a>
 
-    <a href="{{ url_for('wiki_special_units') }}">
+    <a href="{{ url_for('wiki_military_special') }}">
 
         <strong>Special Units</strong>
 
@@ -310,7 +255,7 @@ Military
 
     </a>
 
-    <a href="{{ url_for('wiki_combat') }}">
+    <a href="{{ url_for('wiki_military_combat') }}">
 
         <strong>Combat</strong>
 
@@ -320,32 +265,12 @@ Military
 
     </a>
 
-    <a href="{{ url_for('wiki_movement') }}">
+    <a href="{{ url_for('wiki_military_movement') }}">
 
         <strong>Movement</strong>
 
         <span>
             Learn how units move across the battlefield.
-        </span>
-
-    </a>
-
-    <a href="{{ url_for('wiki_logistics') }}">
-
-        <strong>Logistics</strong>
-
-        <span>
-            Learn how military forces are supplied.
-        </span>
-
-    </a>
-
-    <a href="{{ url_for('wiki_command') }}">
-
-        <strong>Command &amp; Control</strong>
-
-        <span>
-            Learn how military forces are coordinated.
         </span>
 
     </a>

@@ -158,6 +158,18 @@ Military / Combat / Land Combat
     size loss, the formation is destroyed.
 </p>
 
+<h2>Combat Destruction</h2>
+
+<p>
+    A formation is destroyed when it suffers a size reduction while
+    already at its smallest available formation size.
+</p>
+
+<p>
+    Destroyed formations are removed from the battlefield and can
+    no longer participate in subsequent combat or movement.
+</p>
+
 <h2>Multiple Attacks</h2>
 
 <p>
@@ -190,68 +202,12 @@ Military / Combat / Land Combat
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_movement') }}">
+    <a href="{{ url_for('wiki_terrain') }}">
         <strong>Terrain</strong>
 
         <span>
             Learn how different terrain types affect military
             movement and combat.
-        </span>
-    </a>
-
-</div>
-
-<h2>Supply and Land Combat</h2>
-
-<p>
-    Supply is essential for ground forces participating in combat.
-    A unit suffering from Supply Shortage cannot attack or defend.
-</p>
-
-<p>
-    Supply Shortage also restricts the affected unit to moving
-    only one sector per turn.
-</p>
-
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_logistics') }}">
-        <strong>Logistics</strong>
-
-        <span>
-            Learn how ground forces receive supplies and how
-            Supply Shortage affects combat operations.
-        </span>
-    </a>
-
-</div>
-
-<h2>Command and Land Combat</h2>
-
-<p>
-    Command status affects the combat effectiveness of ground
-    formations.
-</p>
-
-<p>
-    A combat unit operating outside the command range of a suitable
-    Headquarters becomes Disorganised. A Disorganised unit deals
-    half damage and has half defence, with fractions rounded down.
-</p>
-
-<p>
-    Disorganised units are also restricted to moving only one
-    sector per turn.
-</p>
-
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_command') }}">
-        <strong>Command &amp; Control</strong>
-
-        <span>
-            Learn about Headquarters, command range, and
-            Disorganisation.
         </span>
     </a>
 
@@ -265,27 +221,53 @@ Military / Combat / Land Combat
 </p>
 
 <p>
-    These formations can play an important role in offensive
-    operations and may have specialised rules that affect their
-    movement or combat capabilities.
+    When an Armoured unit is in the same sector as a Mechanised Infantry unit, the Armoured unit gains a +1 bonus to the Strength roll per unit level during combat.
 </p>
 
 <p>
-    Refer to the individual unit descriptions for unit-specific
-    combat rules and exceptions.
+    When a Mechanised Infantry unit is in the same sector as an Armoured unit, the Mechanised Infantry unit gains a +1 bonus to the Damage roll per unit level during combat.
 </p>
 
-<h2>Combat Destruction</h2>
+<h2>Breakthrough</h2>
 
 <p>
-    A formation is destroyed when it suffers a size reduction while
-    already at its smallest available formation size.
+    If an Armoured or Mechanised unit attacks a sector and, as a result of that combat, all defending units in the sector are destroyed, that unit may immediately move into the now-empty sector. This is known as a Breakthrough.
 </p>
 
 <p>
-    Destroyed formations are removed from the battlefield and can
-    no longer participate in subsequent combat or movement.
+    A Breakthrough may only occur as a direct result of that unit’s own attack and only into the sector it just cleared. No further combat is conducted as part of this movement and does not cost Movement Points.
 </p>
+
+<h2>Artillery</h2>
+
+<p>
+    Artillery provides long-range fire support for friendly
+    ground forces. Artillery units can engage enemy ground
+    formations without requiring direct contact with the target.
+</p>
+
+<p>
+    Their ability to attack from a distance makes artillery
+    particularly valuable for supporting frontline formations,
+    disrupting enemy positions, and influencing the battlefield
+    beyond the immediate frontline.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_combat_artillery') }}">
+
+        <strong>Artillery</strong>
+
+        <span>
+            Learn about artillery range, attacks, suppression,
+            destruction, and counter-battery fire.
+        </span>
+
+    </a>
+
+</div>
+
 
 <h2>Related Combat Systems</h2>
 
