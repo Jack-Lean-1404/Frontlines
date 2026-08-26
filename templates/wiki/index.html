@@ -91,7 +91,7 @@
 
                 <!-- Getting Started -->
 
-                <a href="wiki/overview" class="wiki-category-card">
+                <a href="{{ url_for('wiki_how_to_play') }}" class="wiki-category-card">
 
                     <div class="wiki-card-number">
                         01
@@ -117,7 +117,7 @@
 
                 <!-- World -->
 
-                <a href="wiki/world/alterra" class="wiki-category-card">
+                <a href="{{ url_for('wiki_alterra') }}" class="wiki-category-card">
 
                     <div class="wiki-card-number">
                         02
@@ -143,7 +143,7 @@
 
                 <!-- Economy -->
 
-                <a href="#" class="wiki-category-card">
+                <a href="{{ url_for('wiki_economy') }}" class="wiki-category-card">
 
                     <div class="wiki-card-number">
                         03
@@ -169,7 +169,7 @@
 
                 <!-- Military -->
 
-                <a href="/wiki/military/military" class="wiki-category-card">
+                <a href="{{ url_for('wiki_military') }}" class="wiki-category-card">
 
                     <div class="wiki-card-number">
                         04
@@ -267,7 +267,7 @@
                     continents, nations, and strategic landscape.
                 </p>
 
-                <a href="#" class="wiki-button">
+                <a href="{{ url_for('wiki_alterra') }}" class="wiki-button">
                     EXPLORE THE WORLD
                 </a>
 
