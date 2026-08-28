@@ -16,10 +16,6 @@ Alterra - Special Units | Frontlines Wiki
 
 {% block wiki_content %}
 
-<span class="wiki-section-label">
-    MILITARY / SPECIAL UNITS
-</span>
-
 <h1>Special Units</h1>
 
 <p class="article-intro">
@@ -50,18 +46,38 @@ Alterra - Special Units | Frontlines Wiki
 <div class="wiki-info-grid">
 
 
-    <a href="{{ url_for('wiki_special_artillery') }}"
+    <a href="{{ url_for('wiki_artillery_towed') }}"
        class="wiki-info-card">
 
         <span class="wiki-info-number">
             01
         </span>
 
-        <h3>Artillery</h3>
+        <h3>Towed Artillery</h3>
 
         <p>
-            Long-range fire support units capable of engaging
-            enemy ground forces from a distance.
+            Learn about towed Artillery units, their range, attacks,
+            and counter-battery capabilities.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_artillery_mech') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Mechanised Artillery</h3>
+
+        <p>
+           Learn about Mechanised Artillery units and their
+            specialised mobility and combat capabilities.
         </p>
 
         <span class="wiki-card-link">
@@ -71,11 +87,11 @@ Alterra - Special Units | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_special_air_defence') }}"
+    <a href="{{ url_for('wiki_air_defence') }}"
        class="wiki-info-card">
 
         <span class="wiki-info-number">
-            02
+            03
         </span>
 
         <h3>Air Defence</h3>
@@ -92,11 +108,11 @@ Alterra - Special Units | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_rotary_warfare') }}"
+    <a href="{{ url_for('wiki_rotary') }}"
        class="wiki-info-card">
 
         <span class="wiki-info-number">
-            03
+            04
         </span>
 
         <h3>Rotary Warfare</h3>
@@ -113,11 +129,11 @@ Alterra - Special Units | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_submarines') }}"
+    <a href="{{ url_for('wiki_submarine') }}"
        class="wiki-info-card">
 
         <span class="wiki-info-number">
-            04
+            05
         </span>
 
         <h3>Submarines</h3>
@@ -138,7 +154,7 @@ Alterra - Special Units | Frontlines Wiki
        class="wiki-info-card">
 
         <span class="wiki-info-number">
-            05
+            06
         </span>
 
         <h3>Coastal Defence</h3>
@@ -175,7 +191,7 @@ Alterra - Special Units | Frontlines Wiki
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_special_artillery') }}">
+    <a href="{{ url_for('wiki_artillery') }}">
 
         <strong>Artillery</strong>
 
@@ -206,7 +222,7 @@ Alterra - Special Units | Frontlines Wiki
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_special_air_defence') }}">
+    <a href="{{ url_for('wiki_air_defence') }}">
 
         <strong>Air Defence</strong>
 
@@ -235,7 +251,7 @@ Alterra - Special Units | Frontlines Wiki
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_rotary_warfare') }}">
+    <a href="{{ url_for('wiki_rotary') }}">
 
         <strong>Rotary Warfare</strong>
 
@@ -267,12 +283,13 @@ Alterra - Special Units | Frontlines Wiki
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_submarines') }}">
+    <a href="{{ url_for('wiki_submarine_warfare') }}">
 
-        <strong>Submarines</strong>
+        <strong>Submarine Warfare</strong>
 
         <span>
-            Explore submarine operations and underwater warfare.
+            Learn about submarine attacks, defensive evasion,
+            and Anti-Submarine Warfare.
         </span>
 
     </a>
@@ -297,7 +314,7 @@ Alterra - Special Units | Frontlines Wiki
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_coastal_defence') }}">
+    <a href="{{ url_for('wiki_coastal_defence_operations') }}">
 
         <strong>Coastal Defence</strong>
 
@@ -369,7 +386,7 @@ Alterra - Special Units | Frontlines Wiki
 <div class="wiki-link-list">
 
 
-    <a href="{{ url_for('wiki_special_artillery') }}">
+    <a href="{{ url_for('wiki_artillery') }}">
 
         <strong>Artillery</strong>
 
@@ -380,7 +397,7 @@ Alterra - Special Units | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_special_air_defence') }}">
+    <a href="{{ url_for('wiki_air_defence') }}">
 
         <strong>Air Defence</strong>
 
@@ -391,7 +408,7 @@ Alterra - Special Units | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_rotary_warfare') }}">
+    <a href="{{ url_for('wiki_rotary') }}">
 
         <strong>Rotary Warfare</strong>
 
@@ -402,7 +419,7 @@ Alterra - Special Units | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_submarines') }}">
+    <a href="{{ url_for('wiki_submarine_warfare') }}">
 
         <strong>Submarines</strong>
 
@@ -413,7 +430,7 @@ Alterra - Special Units | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_coastal_defence') }}">
+    <a href="{{ url_for('wiki_coastal_defence_operations') }}">
 
         <strong>Coastal Defence</strong>
 

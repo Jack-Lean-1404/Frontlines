@@ -1,0 +1,226 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Coastal Defence | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_sea_combat') }}">Naval Combat</a>
+
+<span>/</span>
+
+<span>Coastal Defence</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Coastal Defence</h1>
+
+<p class="article-intro">
+    Coastal Defence provides long-range protection for coastlines
+    against hostile naval forces. Coastal Defence units create
+    defensive zones that automatically engage enemy naval units
+    operating near defended territory.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_coastal_defence') }}">
+
+        <strong>Coastal Defence</strong>
+
+        <span>
+            Learn about Coastal Defence capabilities,
+            statistics, and unit-specific rules.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Coastal Defence Zone</h2>
+
+<p>
+    Each Coastal Defence unit establishes a
+    <strong>Coastal Defence Zone</strong> extending
+    <strong>2 sectors</strong> around its position.
+</p>
+
+<p>
+    The Coastal Defence Zone remains at 2 sectors regardless
+    of the formation level of the Coastal Defence unit.
+</p>
+
+<h2>Automatic Engagement</h2>
+
+<p>
+    Enemy naval units that interact with a Coastal Defence Zone
+    are automatically engaged by the Coastal Defence unit.
+</p>
+
+<p>
+    Any interaction with the zone is sufficient to trigger an
+    engagement. Coastal Defence therefore acts as a form of
+    long-range coastal area denial.
+</p>
+
+<h2>Coastal Defence Attack</h2>
+
+<p>
+    Coastal Defence does not use the standard
+    <strong>Strength vs Defence</strong> combat system.
+</p>
+
+<p>
+    Instead, each engagement uses a fixed
+    <strong>60% chance</strong> of successfully hitting the
+    targeted naval unit.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Sector Radius</h3>
+
+        <p>
+            Coastal Defence protects an area extending
+            2 sectors from its position.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            60%
+        </span>
+
+        <h3>Hit Chance</h3>
+
+        <p>
+            Each Coastal Defence engagement has a 60%
+            chance of successfully hitting its target.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Successful Engagement</h2>
+
+<p>
+    If the Coastal Defence attack is successful, the targeted
+    naval formation suffers <strong>one formation size loss</strong>.
+</p>
+
+<p>
+    If the naval formation is already at its smallest available
+    formation level, another formation size loss destroys the
+    formation.
+</p>
+
+<h2>Failed Engagement</h2>
+
+<p>
+    If the 60% attack chance fails, the engagement has
+    <strong>no effect</strong> on the targeted naval unit.
+</p>
+
+<h2>Layered Coastal Defence</h2>
+
+<p>
+    Multiple Coastal Defence units can protect the same area,
+    allowing players to establish layered coastal defences.
+</p>
+
+<p>
+    Each applicable Coastal Defence unit engages the naval unit
+    independently.
+</p>
+
+<p>
+    This allows multiple Coastal Defence units to threaten naval
+    forces operating within overlapping Coastal Defence Zones.
+</p>
+
+<h2>Formation Level</h2>
+
+<p>
+    The formation level of a Coastal Defence unit does not change
+    the size of its Coastal Defence Zone or its 60% hit chance.
+</p>
+
+<p>
+    Formation size only represents the remaining effective
+    strength of the Coastal Defence formation.
+</p>
+
+<h2>Strategic Role</h2>
+
+<p>
+    Coastal Defence provides long-range coastal area denial,
+    making naval operations near defended coastlines more
+    dangerous.
+</p>
+
+<p>
+    Its fixed hit chance makes Coastal Defence less reliable
+    than standard Air Defence against non-stealth aircraft,
+    but its extended range allows it to threaten naval forces
+    across a larger area.
+</p>
+
+<h2>Related Naval Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_sea_combat') }}">
+
+        <strong>Naval Combat</strong>
+
+        <span>
+            Learn how naval engagements are resolved and how
+            naval forces operate.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_special_overview') }}">
+
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised military units and their
+            unique capabilities.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how defensive systems engage hostile aircraft.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

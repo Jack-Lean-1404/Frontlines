@@ -1,0 +1,325 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Submarine Warfare | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_sea_combat') }}">Naval Combat</a>
+
+<span>/</span>
+
+<span>Submarine Warfare</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Submarine Warfare</h1>
+
+<p class="article-intro">
+    Submarine Warfare encompasses both submarine operations and
+    Anti-Submarine Warfare (ASW). Submarines use stealth and
+    surprise to threaten enemy naval forces, while specialised
+    units are required to detect, engage, and destroy them.
+</p>
+
+<p>
+    Submarines are high-risk, high-reward naval units. Their ability
+    to potentially destroy enemy naval formations in a single
+    successful attack makes them extremely dangerous, but their
+    specialised combat rules and limited targets make their
+    effective use dependent on careful positioning and timing.
+</p>
+
+<h2>Submarine Operations</h2>
+
+<p>
+    Submarines can operate independently of conventional naval
+    formations and conduct attacks against enemy naval units.
+</p>
+
+<p>
+    A submarine may perform only <strong>one action per turn</strong>.
+    A submarine cannot attack and defend during the same turn.
+</p>
+
+<p>
+    Submarines do not require Supply Ships to operate and are not
+    affected by the standard naval supply rules.
+</p>
+
+<h2>Submarine Combat</h2>
+
+<p>
+    Submarine attacks use a specialised resolution system rather
+    than the standard naval opposed-roll system.
+</p>
+
+<p>
+    When a submarine attacks an enemy naval unit, there is a
+    <strong>25% chance</strong> that the attack fails.
+</p>
+
+<p>
+    If the attack fails, the target takes no damage.
+</p>
+
+<p>
+    If the attack succeeds, the targeted naval unit is
+    <strong>immediately destroyed</strong>.
+</p>
+
+<p>
+    This makes submarines a glass-cannon unit capable of
+    dramatically changing a naval engagement when used
+    effectively.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            25%
+        </span>
+
+        <h3>Attack Failure</h3>
+
+        <p>
+            The submarine attack fails and the target
+            takes no damage.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            75%
+        </span>
+
+        <h3>Successful Attack</h3>
+
+        <p>
+            The targeted naval unit is immediately destroyed.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Anti-Submarine Warfare</h2>
+
+<p>
+    Submarines can only be engaged and destroyed by specialised
+    Anti-Submarine Warfare (ASW) units.
+</p>
+
+<p>
+    The following units are capable of engaging submarines:
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_destroyer') }}">
+
+        <strong>Destroyer</strong>
+
+        <span>
+            Surface combatants specialised for detecting and
+            engaging enemy submarines.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_submarine') }}">
+
+        <strong>Submarine</strong>
+
+        <span>
+            Submarines can engage enemy submarines during
+            underwater combat.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_mpa') }}">
+
+        <strong>Marine Patrol Aircraft</strong>
+
+        <span>
+            Aircraft specialised for detecting and attacking
+            enemy submarines.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Submarine Evasion</h2>
+
+<p>
+    Whenever a submarine is attacked, it has a
+    <strong>50% chance</strong> to evade the attack completely,
+    regardless of the attacking unit's strength or combat roll.
+</p>
+
+<p>
+    If the submarine successfully evades, the attack has no effect.
+    If the submarine fails to evade, the attack proceeds normally.
+</p>
+
+<p>
+    Marine Patrol Aircraft can attack submarines but cannot be
+    attacked by submarines in return, as they are aircraft.
+</p>
+
+
+<h2>Destroyers</h2>
+
+<p>
+    Destroyers are specialised surface combatants capable of
+    detecting and engaging enemy submarines.
+</p>
+
+<p>
+    Destroyers provide an important defensive capability against
+    submarine threats and are particularly valuable when operating
+    alongside vulnerable surface formations.
+</p>
+
+<h2>Submarine vs Submarine</h2>
+
+<p>
+    Submarines can engage other enemy submarines.
+</p>
+
+<p>
+    When a submarine attacks another submarine, the defending
+    submarine first receives its normal <strong>50% evasion
+    chance</strong>.
+</p>
+
+<p>
+    If the defending submarine fails to evade, the attacking
+    submarine's normal attack rules are then applied.
+</p>
+
+<h2>Marine Patrol Aircraft</h2>
+
+<p>
+    Marine Patrol Aircraft (MPA) provide an aerial
+    Anti-Submarine Warfare capability.
+</p>
+
+<p>
+    MPA can detect and attack enemy submarines but cannot be
+    attacked by submarines in return, as they are aircraft rather
+    than naval units.
+</p>
+
+<p>
+    Submarines therefore cannot directly engage MPA using their
+    specialised submarine attack.
+</p>
+
+<h2>Submarine Supply</h2>
+
+<p>
+    Submarines do not require Supply Ships and are not affected
+    by the standard naval supply shortage rules.
+</p>
+
+<p>
+    This allows submarines to operate independently of surface
+    fleets and supply ships, supporting their role as stealth
+    assets capable of operating away from the main fleet.
+</p>
+
+<h2>Strategic Role</h2>
+
+<p>
+    Submarines are designed to threaten valuable enemy naval
+    assets and force opponents to dedicate resources to
+    Anti-Submarine Warfare.
+</p>
+
+<p>
+    Their ability to instantly destroy a target on a successful
+    attack makes them particularly dangerous against expensive
+    naval formations.
+</p>
+
+<p>
+    However, their effectiveness depends on avoiding specialised
+    ASW units. Once detected and engaged, their 50% evasion chance
+    provides protection, but does not guarantee survival.
+</p>
+
+<p>
+    Effective submarine warfare therefore requires careful
+    positioning, timing, and selection of targets.
+</p>
+
+<h2>Related Naval Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_sea_combat') }}">
+
+        <strong>Naval Combat</strong>
+
+        <span>
+            Return to the main Naval Combat system and
+            conventional naval engagements.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_navy_overview') }}">
+
+        <strong>Navy</strong>
+
+        <span>
+            Explore the naval forces and vessels available
+            in Frontlines.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_movement') }}">
+
+        <strong>Movement</strong>
+
+        <span>
+            Learn the general rules governing unit movement.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_logistics') }}">
+
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how military forces receive and maintain
+            logistical support.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

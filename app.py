@@ -1,12 +1,17 @@
 from importlib import resources
 
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+
 from werkzeug.security import generate_password_hash, check_password_hash
+
 from dotenv import load_dotenv
+
 from datetime import datetime
-from flask import redirect, url_for
+
 import mysql.connector
 import os
+
+app = Flask(__name__)
 
 from economy import (
     get_money_income,
@@ -5495,6 +5500,15 @@ def wiki_construction():
 
 
 # ============================================================
+# Infrastructure — Buildings
+# ============================================================
+
+@app.route("/wiki/economy/construction/port")
+def wiki_port():
+    return render_template("wiki/economy/construction/port.html")
+
+
+# ============================================================
 # MILITARY — OVERVIEW
 # ============================================================
 
@@ -5529,6 +5543,12 @@ def wiki_artillery():
         "wiki/military/combat/army/artillery.html"
     )
 
+@app.route("/wiki/military/combat/navy/coastal-defence")
+def wiki_coastal_defence_operations():
+    return render_template(
+        "wiki/military/combat/navy/coastal_defence_operations.html"
+    )
+
 
 @app.route("/wiki/military/combat/airforce/air")
 def wiki_air_combat():
@@ -5543,11 +5563,17 @@ def wiki_air_defence():
         "wiki/military/combat/airforce/air_defence.html"
     )
 
-
-@app.route("/wiki/military/combat/navy")
-def wiki_sea_combat():
+@app.route("/wiki/military/combat/airforce/awacs-operations")
+def wiki_awacs_operations():
     return render_template(
-        "wiki/military/combat/navy/sea.html"
+        "wiki/military/combat/airforce/awacs_operations.html"
+    )
+
+
+@app.route("/wiki/military/combat/airforce/air-to-ground")
+def wiki_air_to_ground():
+    return render_template(
+        "wiki/military/combat/airforce/air_to_ground.html"
     )
 
 
@@ -5561,15 +5587,54 @@ def wiki_rotary():
 @app.route("/wiki/military/combat/airforce/strategic-airlift")
 def wiki_strategic_airlift():
     return render_template(
-        "wiki/military/combat/air_force/strategic_airlift.html"
+        "wiki/military/combat/airforce/strategic_airlift.html"
     )
 
 
 @app.route("/wiki/military/combat/airforce/stealth")
 def wiki_stealth():
     return render_template(
-        "wiki/military/combat/air_force/stealth.html"
+        "wiki/military/combat/airforce/stealth.html"
     )
+
+@app.route("/wiki/military/combat/airforce/strategic-bombing")
+def wiki_strategic_bombing():
+    return render_template(
+        "wiki/military/combat/airforce/strategic_bombing.html"
+    )
+
+@app.route("/wiki/military/combat/navy")
+def wiki_sea_combat():
+    return render_template(
+        "wiki/military/combat/navy/sea.html"
+    )
+
+@app.route("/wiki/military/combat/navy/sealift")
+def wiki_sealift():
+    return render_template(
+        "wiki/military/combat/navy/sealift.html"
+    )
+
+@app.route("/wiki/military/combat/navy/amphibious")
+def wiki_amphibious():
+    return render_template(
+        "wiki/military/combat/navy/amphibious.html"
+    )
+
+@app.route("/wiki/military/combat/navy/carrier")
+def wiki_carrier_warfare():
+    return render_template(
+        "wiki/military/combat/navy/carrier.html"
+    )
+
+@app.route("/wiki/military/combat/navy/submarine-warfare")
+def wiki_submarine_warfare():
+    return render_template(
+        "wiki/military/combat/navy/submarine_warfare.html"
+    )
+
+
+
 
 
 # ============================================================
@@ -5624,6 +5689,12 @@ def wiki_engineer():
 def wiki_headquarters():
     return render_template(
         "wiki/military/army/units/headquarters.html"
+    )
+
+@app.route("/wiki/military/army/units/logistics")
+def wiki_logistics_unit():
+    return render_template(
+        "wiki/military/army/units/logistics.html"
     )
 
 
@@ -5681,6 +5752,18 @@ def wiki_supply_ship():
         "wiki/military/navy/units/supply_ship.html"
     )
 
+@app.route("/wiki/military/navy/units/aas")
+def wiki_aas():
+    return render_template(
+        "wiki/military/navy/units/aas.html"
+    )
+
+@app.route("/wiki/military/navy/units/carrier")
+def wiki_carrier():
+    return render_template(
+        "wiki/military/navy/units/carrier.html"
+    )
+
 
 # ============================================================
 # MILITARY — AIR FORCE
@@ -5701,32 +5784,74 @@ def wiki_multirole_fighter():
         "wiki/military/air_force/units/multirole_fighter.html"
     )
 
+@app.route("/wiki/military/airforce/units/attack-fighter")
+def wiki_attack_fighter():
+    return render_template(
+        "wiki/military/airforce/units/attack_fighter.html"
+    )
+
+@app.route("/wiki/military/airforce/units/air-superiority-fighter")
+def wiki_air_superiority_fighter():
+    return render_template(
+        "wiki/military/airforce/units/air_superiority_fighter.html"
+    )
+
+@app.route("/wiki/military/airforce/units/stealth-air-superiority-fighter")
+def wiki_stealth_air_superiority_fighter():
+    return render_template(
+        "wiki/military/airforce/units/stealth_air_superiority_fighter.html"
+    )
+
+@app.route("/wiki/military/airforce/units/stealth-air-superiority-fighter")
+def wiki_stealth_multirole_fighter():
+    return render_template(
+        "wiki/military/airforce/units/stealth_multirole_fighter.html"
+    )
+
 
 @app.route("/wiki/military/airforce/units/bomber")
 def wiki_bomber():
     return render_template(
-        "wiki/military/air_force/units/bomber.html"
+        "wiki/military/airforce/units/bomber.html"
+    )
+
+@app.route("/wiki/military/airforce/units/stealth-bomber")
+def wiki_stealth_bomber():
+    return render_template(
+        "wiki/military/airforce/units/stealth_bomber.html"
     )
 
 
 @app.route("/wiki/military/airforce/units/strategic-airlift-aircraft")
 def wiki_strategic_airlift_aircraft():
     return render_template(
-        "wiki/military/air_force/units/strategic_airlift_aircraft.html"
+        "wiki/military/airforce/units/strategic_airlift_aircraft.html"
     )
 
 
 @app.route("/wiki/military/airforce/units/tanker")
 def wiki_tanker():
     return render_template(
-        "wiki/military/air_force/units/tanker.html"
+        "wiki/military/airforce/units/tanker.html"
     )
 
 
 @app.route("/wiki/military/airforce/units/awacs")
 def wiki_awacs():
     return render_template(
-        "wiki/military/air_force/units/awacs.html"
+        "wiki/military/airforce/units/awacs.html"
+    )
+
+@app.route("/wiki/military/airforce/units/mpa")
+def wiki_mpa():
+    return render_template(
+        "wiki/military/airforce/units/mpa.html"
+    )
+
+@app.route("/wiki/military/airforce/units/nmrf")
+def wiki_nmrf():
+    return render_template(
+        "wiki/military/airforce/units/nmrf.html"
     )
 
 
@@ -5748,17 +5873,23 @@ def wiki_helicopter():
     )
 
 
-@app.route("/wiki/military/special/units/artillery")
-def wiki_special_artillery():
+@app.route("/wiki/military/special/units/artillery-towed")
+def wiki_artillery_towed():
     return render_template(
-        "wiki/military/special/units/artillery.html"
+        "wiki/military/special/units/artillery_towed.html"
+    )
+
+@app.route("/wiki/military/special/units/artillery-mech")
+def wiki_artillery_mech():
+    return render_template(
+        "wiki/military/special/units/artillery_mech.html"
     )
 
 
-@app.route("/wiki/military/special/units/air-defence")
-def wiki_special_air_defence():
+@app.route("/wiki/military/special/units/anti-air")
+def wiki_anti_air():
     return render_template(
-        "wiki/military/special/units/air_defence.html"
+        "wiki/military/special/units/anti_air.html"
     )
 
 
@@ -5857,5 +5988,5 @@ def wiki_reference_resources():
         "wiki/reference/resources.html"
     )
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     app.run()

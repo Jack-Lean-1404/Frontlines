@@ -1,0 +1,231 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Stealth | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_air_combat') }}">Air Combat</a>
+
+<span>/</span>
+
+<span>Stealth</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Stealth</h1>
+
+<p class="article-intro">
+    Stealth aircraft are specialised aerial assets designed to
+    reduce their detectability and increase their survivability
+    during contested air operations. Stealth technology provides
+    significant combat advantages, but stealth-capable aircraft
+    are rare and strategically valuable.
+</p>
+
+<h2>Combat Effectiveness</h2>
+
+<p>
+    Stealth aircraft are <strong>twice as effective</strong> as
+    non-stealth aircraft in terms of both
+    <strong>Strength</strong> and <strong>Defence</strong>.
+</p>
+
+<p>
+    This increased effectiveness represents the advanced sensors,
+    materials, electronic systems, and combat capabilities
+    associated with stealth aircraft.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            2×
+        </span>
+
+        <h3>Strength</h3>
+
+        <p>
+            Stealth aircraft have twice the Strength of
+            equivalent non-stealth aircraft.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            2×
+        </span>
+
+        <h3>Defence</h3>
+
+        <p>
+            Stealth aircraft have twice the Defence of
+            equivalent non-stealth aircraft.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Anti-Air Evasion</h2>
+
+<p>
+    Stealth aircraft are significantly more difficult for
+    Anti-Air systems to detect and engage.
+</p>
+
+<p>
+    When a stealth aircraft is engaged by an
+    <strong>Anti-Air</strong> unit, the attack has only a
+    <strong>20% chance</strong> of successfully hitting the
+    aircraft.
+</p>
+
+<p>
+    By comparison, non-stealth aircraft have an
+    <strong>80% chance</strong> of being hit by Anti-Air fire.
+</p>
+
+<p>
+    The reduced hit chance reflects the difficulty of detecting
+    and targeting stealth aircraft and their advanced
+    countermeasures.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            20%
+        </span>
+
+        <h3>Stealth</h3>
+
+        <p>
+            Chance of being hit by Anti-Air fire.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            80%
+        </span>
+
+        <h3>Non-Stealth</h3>
+
+        <p>
+            Chance of being hit by Anti-Air fire.
+        </p>
+
+    </div>
+
+</div>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air systems detect and engage
+            hostile aircraft.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Strategic Role</h2>
+
+<p>
+    Stealth aircraft are high-value assets intended for missions
+    where reduced detectability and increased combat effectiveness
+    provide a decisive advantage.
+</p>
+
+<p>
+    Their combination of superior combat effectiveness and
+    resistance to Anti-Air fire makes them particularly valuable
+    when operating in heavily defended airspace.
+</p>
+
+<h2>Related Air Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Return to the overall Air Combat system.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air systems engage hostile aircraft.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_stealth_air_superiority_fighter') }}">
+
+        <strong>Stealth Air Superiority Fighter</strong>
+
+        <span>
+            Learn about the stealth air superiority fighter and its
+            specialised combat capabilities.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_stealth_multirole_fighter') }}">
+
+        <strong>Stealth Multi-Role Fighter</strong>
+
+        <span>
+            Learn about the stealth multi-role fighter and its
+            specialised combat capabilities.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_stealth_bomber') }}">
+
+        <strong>Stealth Bomber</strong>
+
+        <span>
+            Learn about the stealth bomber and its
+            specialised combat capabilities.
+        </span>
+
+    </a>
+
+</div>
+
+
+{% endblock %}

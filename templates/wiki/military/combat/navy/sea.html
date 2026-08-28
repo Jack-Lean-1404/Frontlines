@@ -1,392 +1,397 @@
 {% extends 'wiki/wiki_base.html' %}
 
 {% block title %}
-Alterra - Navy | Frontlines Wiki
+Alterra - Naval Combat | Frontlines Wiki
 {% endblock %}
 
 {% block breadcrumb %}
 
-<a href="{{ url_for('wiki_military_overview') }}">Military</a>
+<a href="{{ url_for('wiki_military') }}">Military</a>
 
 <span>/</span>
 
-<span>Navy</span>
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<span>Naval Combat</span>
 
 {% endblock %}
 
 {% block wiki_content %}
 
-<span class="wiki-section-label">
-    MILITARY / NAVY
-</span>
-
-<h1>Navy</h1>
+<h1>Naval Combat</h1>
 
 <p class="article-intro">
-    The Navy provides the primary surface maritime forces of the
-    nations of Alterra. Naval forces are responsible for controlling
-    sea areas, protecting maritime routes, supporting coastal
-    operations, and projecting military power across the world's
-    oceans.
+    Naval Combat governs engagements between opposing naval forces.
+    Naval warfare allows nations to contest sea sectors, protect
+    maritime routes, project military power, and support operations
+    across coastal and overseas regions.
 </p>
 
 <p>
-    Because Alterra is dominated by ocean, naval power plays an
-    important role in military strategy. Control of important sea
-    routes, coastal areas, ports, and maritime approaches can
-    directly influence the outcome of military campaigns.
+    Naval combat uses the same general combat resolution system as
+    other conventional combat. Naval formations rely on their
+    Attack Strength and Defence Value to determine the outcome of
+    engagements.
 </p>
 
-
-<h2>Naval Forces</h2>
+<h2>Initiating Combat</h2>
 
 <p>
-    The Navy is primarily composed of surface vessels and
-    specialised maritime support vessels. These forces provide
-    the conventional fleet capabilities required to control
-    maritime areas and conduct naval operations.
+    A naval unit may initiate combat against an enemy naval unit
+    in an adjacent sector.
+</p>
+
+<p>
+    Naval units may not enter sectors occupied by enemy naval
+    forces. Instead, the attacking force must stop in an adjacent
+    sector and initiate combat against the opposing force.
+</p>
+
+<p>
+    A naval unit may move before attacking, but all movement must
+    be completed before combat begins. Once combat has been
+    initiated, the unit cannot resume movement during that turn.
+</p>
+
+<h2>Attack Strength</h2>
+
+<p>
+    The attacking naval force uses its final
+    <strong>Attack Strength</strong> when resolving combat.
+</p>
+
+<p>
+    Attack Strength represents the offensive capability of the
+    attacking formation after all applicable modifiers have
+    been applied.
+</p>
+
+<h2>Defence Value</h2>
+
+<p>
+    The defending naval force uses its final
+    <strong>Defence Value</strong> when resolving combat.
+</p>
+
+<p>
+    Defence Value represents the defensive capability of the
+    defending formation after all applicable modifiers have
+    been applied.
+</p>
+
+<h2>Combat Resolution</h2>
+
+<p>
+    Naval combat uses an opposed roll system.
+</p>
+
+<p>
+    The attacking force makes a random roll between zero and its
+    final Attack Strength. The defending force makes a random roll
+    between zero and its final Defence Value.
+</p>
+
+<p>
+    The two results are compared to determine the outcome of the
+    engagement.
 </p>
 
 <div class="wiki-info-grid">
 
-    <a href="{{ url_for('wiki_surface_fleet') }}"
-       class="wiki-info-card">
+    <div class="wiki-info-card">
 
         <span class="wiki-info-number">
             01
         </span>
 
-        <h3>Surface Fleet</h3>
+        <h3>Attacker</h3>
 
         <p>
-            Surface combatants responsible for fleet warfare,
-            maritime security, and power projection.
+            Rolls a random value between 0 and the final
+            Attack Strength.
         </p>
 
-        <span class="wiki-card-link">
-            EXPLORE →
-        </span>
+    </div>
 
-    </a>
-
-
-    <a href="{{ url_for('wiki_naval_operations') }}"
-       class="wiki-info-card">
+    <div class="wiki-info-card">
 
         <span class="wiki-info-number">
             02
         </span>
 
-        <h3>Naval Operations</h3>
+        <h3>Defender</h3>
 
         <p>
-            Explore the specialised operations conducted by
-            naval forces across Alterra's oceans.
+            Rolls a random value between 0 and the final
+            Defence Value.
         </p>
 
-        <span class="wiki-card-link">
-            EXPLORE →
-        </span>
-
-    </a>
-
-
-    <a href="{{ url_for('wiki_sea_combat') }}"
-       class="wiki-info-card">
-
-        <span class="wiki-info-number">
-            03
-        </span>
-
-        <h3>Naval Combat</h3>
-
-        <p>
-            Learn how engagements between opposing naval forces
-            are resolved.
-        </p>
-
-        <span class="wiki-card-link">
-            EXPLORE →
-        </span>
-
-    </a>
+    </div>
 
 </div>
 
-
-<h2>Surface Fleet</h2>
+<h2>Combat Outcome</h2>
 
 <p>
-    Surface combatants form the backbone of conventional naval
-    forces. These vessels provide offensive firepower, fleet
-    protection, and the ability to project military power across
-    large areas of ocean.
+    The side with the higher combat roll wins the engagement.
+    The losing naval formation suffers a reduction in formation
+    size.
 </p>
 
 <p>
-    Surface vessels range from smaller combatants such as
-    Corvettes and Frigates to larger vessels such as Destroyers
-    and Cruisers. Each class provides different capabilities
-    and operational roles.
+    If the attacker rolls higher than the defender, the defending
+    formation loses one size.
+</p>
+
+<p>
+    If the defender rolls higher than the attacker, the attacking
+    formation loses one size.
+</p>
+
+<p>
+    If both sides roll the same result, both formations lose one
+    size.
+</p>
+
+<h2>Naval Formation Size</h2>
+
+<p>
+    Naval formation size represents the number of ships operating
+    together as a single naval force.
+</p>
+
+<p>
+    When a naval formation loses one size, the number of ships in
+    that formation is reduced by one level.
+</p>
+
+<p>
+    If a formation at its smallest available size suffers another
+    size reduction, the formation is destroyed.
+</p>
+
+<h2>Naval Supply</h2>
+
+<p>
+    Combat-capable naval units require supply to remain operational.
+    Naval forces depend on Supply Ships to maintain their ability
+    to conduct sustained operations at sea.
+</p>
+
+<p>
+    Units that fall into supply shortage suffer significant
+    operational penalties, including restrictions on combat and
+    movement.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_surface_fleet') }}">
+    <a href="{{ url_for('wiki_logistics') }}">
 
-        <strong>Surface Fleet</strong>
+        <strong>Logistics</strong>
 
         <span>
-            Explore surface combatants and their roles in
-            maritime warfare.
+            Learn the complete rules for naval supply and
+            Supply Ships.
         </span>
 
     </a>
 
 </div>
 
-
-<h2>Naval Operations</h2>
+<h2>Submarine Warfare</h2>
 
 <p>
-    Naval forces can perform a variety of specialised operations
-    beyond direct fleet combat.
+    Submarine warfare encompasses both submarine operations and
+    Anti-Submarine Warfare (ASW). Submarines provide a powerful
+    stealth-based threat against enemy naval forces, while
+    specialised units are required to detect, engage, and destroy
+    them.
 </p>
 
 <p>
-    These operations can include transporting forces and supplies,
-    supporting amphibious operations, protecting maritime routes,
-    and maintaining naval forces away from their home ports.
+    Submarines can conduct high-risk attacks against enemy naval
+    units, while Destroyers, other Submarines, and Marine Patrol
+    Aircraft (MPA) provide the primary means of countering them.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_naval_operations') }}">
+    <a href="{{ url_for('wiki_submarine_warfare') }}">
 
-        <strong>Naval Operations</strong>
+        <strong>Submarine Warfare</strong>
 
         <span>
-            Explore specialised maritime operations and
-            naval support capabilities.
+            Learn about submarine attacks, defensive evasion,
+            and Anti-Submarine Warfare.
         </span>
 
     </a>
 
 </div>
 
-
-<h2>Maritime Warfare</h2>
+<h2>Sealift Operations</h2>
 
 <p>
-    Naval warfare is primarily concerned with controlling
-    maritime areas and defeating opposing surface forces.
+    Sealift allows naval forces to transport ground units across
+    bodies of water. Transport Ships allow nations to reinforce
+    distant territories and support overseas military operations.
 </p>
 
 <p>
-    The positioning of naval forces is particularly important
-    because the vast oceans of Alterra create large operational
-    areas between major landmasses.
-</p>
-
-<p>
-    Naval forces can be used to protect friendly shipping,
-    threaten enemy maritime routes, support coastal operations,
-    and project military power far from national territory.
+    Transport capacity, loading, unloading, and the consequences
+    of losing a transport are governed by specialised sealift rules.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_naval_combat') }}">
+    <a href="{{ url_for('wiki_sealift') }}">
 
-        <strong>Naval Combat</strong>
+        <strong>Sealift Operations</strong>
 
         <span>
-            Learn how engagements between opposing naval forces
-            are resolved.
+            Learn about Transport Ships, transport capacity,
+            loading, unloading, and transport losses.
         </span>
 
     </a>
 
 </div>
-
 
 <h2>Amphibious Operations</h2>
 
 <p>
-    Naval forces can support operations that move military forces
-    between maritime and land environments.
+    Amphibious operations allow ground forces to be deployed from
+    the sea onto coastal sectors. They provide a means of opening
+    new fronts and establishing beachheads in enemy territory.
 </p>
 
 <p>
-    These operations require coordination between naval forces
-    and ground formations and can provide commanders with
-    additional options for attacking or reinforcing coastal
-    areas.
+    Amphibious assaults use specialised rules to determine whether
+    a landing is successful and how contested landings affect
+    transported ground forces.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_naval_operations') }}">
+    <a href="{{ url_for('wiki_amphibious') }}">
 
-        <strong>Naval Operations</strong>
+        <strong>Amphibious Operations</strong>
 
         <span>
-            Explore amphibious operations and other specialised
-            maritime missions.
+            Learn about Amphibious Assault Ships, beachheads,
+            transport capacity, and contested landings.
         </span>
 
     </a>
 
 </div>
 
-
-<h2>Naval Logistics</h2>
+<h2>Carrier Operations</h2>
 
 <p>
-    Naval forces require appropriate infrastructure and logistical
-    support to sustain prolonged operations.
+    Aircraft Carriers provide mobile air bases that allow Naval
+    Multi-Role Fighters to operate far from land-based airports.
 </p>
 
 <p>
-    Ports and specialised naval support vessels can allow fleets
-    to operate farther from their home territory and maintain
-    their operational capabilities during extended campaigns.
+    Carriers can also provide Anti-Air defence and support naval
+    operations by extending the operational reach of friendly
+    aircraft.
+</p>
+
+<p>
+    Carriers cannot directly attack enemy naval or ground units.
+    Their offensive capability is provided by their embarked
+    Naval Multi-Role Fighters.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_logistics') }}">
+    <a href="{{ url_for('wiki_carrier_warfare') }}">
 
-        <strong>Logistics</strong>
+        <strong>Carrier Operations</strong>
 
         <span>
-            Learn how military forces are supplied and
-            sustained during operations.
+            Learn about carrier aircraft capacity, Naval
+            Multi-Role Fighters, and carrier-based operations.
         </span>
 
     </a>
 
 </div>
 
-
-<h2>Special Naval Capabilities</h2>
+<h2>Naval Warfare</h2>
 
 <p>
-    Not all naval warfare capabilities are part of the conventional
-    Navy. Some specialised maritime forces are classified as
-    Special Units and operate under their own rules.
+    Naval warfare is not limited to direct engagements between
+    surface fleets. Successful naval operations require the
+    effective use of combat forces, logistics, specialised units,
+    and naval aviation.
 </p>
 
 <p>
-    Submarines are classified as Special Units rather than
-    conventional Navy forces. Their ability to operate beneath
-    the ocean surface provides a specialised capability distinct
-    from the surface fleet.
+    Surface forces provide the primary means of direct naval
+    combat, while Submarines, Carriers, Transport Ships, Supply
+    Ships, and Amphibious Assault Ships provide specialised
+    capabilities that extend the strategic flexibility of a fleet.
 </p>
 
-<p>
-    Coastal Defence units are also classified as Special Units.
-    These forces provide specialised protection for coastal areas
-    and maritime approaches.
-</p>
+<h2>Related Combat Systems</h2>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_special') }}">
+    <a href="{{ url_for('wiki_combat_overview') }}">
 
-        <strong>Special Units</strong>
+        <strong>Combat</strong>
 
         <span>
-            Explore specialised military capabilities including
-            Submarines and Coastal Defence.
+            Return to the overall Frontlines combat system.
         </span>
 
     </a>
 
-</div>
+    <a href="{{ url_for('wiki_land_combat') }}">
 
-
-<h2>Strategic Importance of Naval Power</h2>
-
-<p>
-    The geography of Alterra makes naval power strategically
-    important to almost every major nation.
-</p>
-
-<p>
-    Oceans separate the world's continents and create important
-    maritime routes connecting nations, ports, and economic
-    centres. A nation capable of controlling these routes can
-    influence both military operations and international trade.
-</p>
-
-<p>
-    Naval forces can therefore serve both offensive and defensive
-    purposes, from protecting national coastlines to projecting
-    military power across distant oceans.
-</p>
-
-
-<h2>Explore the Navy</h2>
-
-<p>
-    Explore the sections below to learn more about naval forces
-    and maritime warfare.
-</p>
-
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_surface_fleet') }}">
-
-        <strong>Surface Fleet</strong>
+        <strong>Land Combat</strong>
 
         <span>
-            Explore surface combatants and fleet warfare.
+            Learn how engagements between opposing ground
+            forces are resolved.
         </span>
 
     </a>
 
+    <a href="{{ url_for('wiki_air_combat') }}">
 
-    <a href="{{ url_for('wiki_naval_operations') }}">
-
-        <strong>Naval Operations</strong>
+        <strong>Air Combat</strong>
 
         <span>
-            Explore specialised naval operations and missions.
+            Learn about aerial combat, aircraft operations,
+            and air defence.
         </span>
 
     </a>
 
+    <a href="{{ url_for('wiki_movement') }}">
 
-    <a href="{{ url_for('wiki_naval_combat') }}">
-
-        <strong>Naval Combat</strong>
+        <strong>Movement</strong>
 
         <span>
-            Learn how naval engagements are resolved.
+            Learn how naval forces manoeuvre before combat.
         </span>
 
     </a>
 
+    <a href="{{ url_for('wiki_navy_overview') }}">
 
-    <a href="{{ url_for('wiki_special_units') }}">
-
-        <strong>Special Units</strong>
-
-        <span>
-            Explore specialised maritime forces including
-            Submarines and Coastal Defence.
-        </span>
-
-    </a>
-
-
-    <a href="{{ url_for('wiki_logistics') }}">
-
-        <strong>Logistics</strong>
+        <strong>Navy</strong>
 
         <span>
-            Learn how naval forces are supplied and sustained.
+            Explore the naval forces that conduct maritime
+            operations.
         </span>
 
     </a>

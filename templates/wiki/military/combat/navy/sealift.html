@@ -1,0 +1,271 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Sealift Operations | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_sea_combat') }}">Naval Combat</a>
+
+<span>/</span>
+
+<span>Sealift Operations</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Sealift Operations</h1>
+
+<p class="article-intro">
+    Sealift Operations allow nations to transport ground forces
+    across bodies of water using Transport Ships. Sealift provides
+    the ability to reinforce distant territories, reposition
+    military formations, and support overseas operations.
+</p>
+
+<p>
+    Transport Ships are specialised naval units designed to move
+    ground forces by sea. Their ability to carry military
+    formations makes them essential for projecting ground forces
+    beyond their home territory.
+</p>
+
+<h2>Transport Capacity</h2>
+
+<p>
+    A Transport Ship may carry <strong>one ground unit</strong>
+    that is the same size or smaller than the Transport Ship.
+</p>
+
+<p>
+    Only one ground unit may be carried by a Transport Ship at
+    any given time.
+</p>
+
+<p>
+    Transport capacity is determined by the size of the Transport
+    Ship.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Size 1</h3>
+
+        <p>
+            Can carry one Size 1 ground unit.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Size 2</h3>
+
+        <p>
+            Can carry one Size 2, Size 1, or smaller ground unit.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            03
+        </span>
+
+        <h3>Size 3</h3>
+
+        <p>
+            Can carry one Size 3, Size 2, or Size 1 ground unit.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Loading</h2>
+
+<p>
+    A ground unit may be loaded onto a Transport Ship when the
+    Transport Ship is able to carry that unit.
+</p>
+
+<p>
+    Loading may only be performed in a sector containing a
+    <strong>City</strong>, as the required city infrastructure is
+    necessary to support the transfer of military forces between
+    land and sea.
+</p>
+
+<p>
+    Loading a ground unit normally consumes the
+    <strong>Transport Ship's action</strong>.
+</p>
+
+<p>
+    A <strong>Port</strong> removes this movement or action cost,
+    allowing units to embark onto Transport Ships without the
+    normal movement penalty.
+</p>
+
+<h2>Unloading</h2>
+
+<p>
+    A Transport Ship may unload its transported ground unit when
+    conducting a sealift operation.
+</p>
+
+<p>
+    Unloading may only be performed in a sector containing a
+    <strong>City</strong>.
+</p>
+
+<p>
+    Unloading a ground unit normally consumes the
+    <strong>Transport Ship's action</strong>.
+</p>
+
+<p>
+    A <strong>Port</strong> removes this movement or action cost,
+    allowing transported units to disembark without the normal
+    movement penalty.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_port') }}">
+
+        <strong>Port</strong>
+
+        <span>
+            Learn how Ports improve naval logistics, sealift,
+            and amphibious operations.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Transport Ship Loss</h2>
+
+<p>
+    Transport Ships are vulnerable while carrying ground forces.
+    The loss of a Transport Ship can therefore result in the loss
+    of the formation it is transporting.
+</p>
+
+<p>
+    If a Transport Ship is <strong>destroyed</strong> while
+    carrying a ground unit, the transported ground unit is
+    immediately destroyed as well.
+</p>
+
+<h2>Transport Damage</h2>
+
+<p>
+    If a Transport Ship is reduced in formation size while
+    carrying a ground unit, the transported unit is reduced by
+    the same number of formation-size levels.
+</p>
+
+<p>
+    For example, if a Transport Ship is reduced from
+    <strong>Size 3 to Size 2</strong>, the transported ground unit
+    is also reduced by one size level.
+</p>
+
+<p>
+    If the transported ground unit is already at its smallest
+    size and would be reduced further, the transported unit is
+    destroyed.
+</p>
+
+<h2>Strategic Use</h2>
+
+<p>
+    Sealift allows nations to move ground forces across large
+    bodies of water without requiring a continuous land route.
+</p>
+
+<p>
+    Transport Ships can therefore be used to reinforce isolated
+    territories, establish overseas military presence, and
+    support amphibious and wider naval operations.
+</p>
+
+<p>
+    Because transported forces are vulnerable if their Transport
+    Ship is destroyed, protecting sealift routes and transport
+    vessels is an important part of overseas military operations.
+</p>
+
+<h2>Related Naval Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_sea_combat') }}">
+
+        <strong>Naval Combat</strong>
+
+        <span>
+            Learn how naval engagements are resolved and how
+            naval forces operate in combat.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_amphibious') }}">
+
+        <strong>Amphibious Operations</strong>
+
+        <span>
+            Learn how ground forces are deployed from the sea
+            onto coastal sectors.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_navy_overview') }}">
+
+        <strong>Navy</strong>
+
+        <span>
+            Explore the naval forces and vessels available
+            in Frontlines.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_movement') }}">
+
+        <strong>Movement</strong>
+
+        <span>
+            Learn the general rules governing unit movement.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

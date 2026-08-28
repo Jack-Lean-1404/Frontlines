@@ -20,10 +20,6 @@ Alterra - Air Combat | Frontlines Wiki
 
 {% block wiki_content %}
 
-<span class="wiki-section-label">
-    MILITARY / COMBAT / AIR
-</span>
-
 <h1>Air Combat</h1>
 
 <p class="article-intro">
@@ -218,12 +214,6 @@ Alterra - Air Combat | Frontlines Wiki
     or operate within their coverage.
 </p>
 
-<p>
-    An Anti-Air unit controls a one-sector radius around itself.
-    Any enemy air unit entering or operating within this area is
-    automatically engaged by the Anti-Air unit.
-</p>
-
 <div class="wiki-link-list">
 
     <a href="{{ url_for('wiki_air_defence') }}">
@@ -238,6 +228,7 @@ Alterra - Air Combat | Frontlines Wiki
     </a>
 
 </div>
+
 
 <h2>Rotary Warfare</h2>
 
@@ -263,50 +254,47 @@ Alterra - Air Combat | Frontlines Wiki
 </div>
 
 
-<h2>AWACS</h2>
+<h2>Air-to-Ground Combat</h2>
 
 <p>
-    AWACS (Airborne Warning and Control System) units provide
-    airborne command and control, enhancing the effectiveness of
-    friendly air operations across a wide area.
-</p>
-
-<h3>AWACS Coverage</h3>
-
-<p>
-    An AWACS unit supports all friendly air units within a
-    <strong>2-sector radius</strong>.
-</p>
-
-<p>
-    Friendly air units within this coverage receive a
-    <strong>+50% bonus to Strength and Defence</strong>, representing
-    improved situational awareness, coordination, and targeting.
-</p>
-
-<p>
-    AWACS bonuses do not stack. If multiple AWACS units cover the
-    same air unit, only one <strong>+50% bonus</strong> is applied.
-</p>
-
-<h3>Protection of AWACS</h3>
-
-<p>
-    AWACS units are high-value assets and should be protected from
-    enemy attack. Their loss can significantly reduce the
-    effectiveness of friendly air operations and control of
-    contested airspace.
+    Air-to-Ground Combat allows aircraft to engage eligible enemy
+    ground forces from the air. These attacks allow air forces to
+    directly support ground operations and strike enemy formations
+    within their operational range.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_awacs') }}">
+    <a href="{{ url_for('wiki_air_to_ground') }}">
+
+        <strong>Air-to-Ground Combat</strong>
+
+        <span>
+            Learn how air-to-ground attacks are resolved,
+            including air defence, combat rolls, and damage.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>AWACS</h2>
+
+<p>
+    AWACS (Airborne Warning and Control System) units provide
+    airborne command and control, supporting friendly air
+    operations and improving coordination across the battlefield.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_awacs_operations') }}">
 
         <strong>AWACS</strong>
 
         <span>
-            Learn about AWACS units and their role in
-            supporting friendly air forces.
+            Learn more about AWACS and its role in air operations.
         </span>
 
     </a>
@@ -318,24 +306,8 @@ Alterra - Air Combat | Frontlines Wiki
 
 <p>
     Stealth aircraft are specialised aerial assets designed to
-    operate with a reduced probability of detection and engagement
-    by enemy air defence systems.
-</p>
-
-<p>
-    Stealth aircraft are twice as effective as non-stealth aircraft
-    in terms of both Strength and Defence.
-</p>
-
-<p>
-    Their reduced detectability also makes them significantly more
-    resistant to Anti-Air systems.
-</p>
-
-<p>
-    Anti-Air attacks against stealth aircraft have only a 20%
-    chance of successfully hitting the aircraft, compared with
-    an 80% chance against non-stealth aircraft.
+    operate with reduced detectability and provide advantages
+    during contested air operations.
 </p>
 
 <div class="wiki-link-list">
@@ -345,8 +317,8 @@ Alterra - Air Combat | Frontlines Wiki
         <strong>Stealth</strong>
 
         <span>
-            Explore the complete rules governing stealth aircraft,
-            their advantages, and Anti-Air evasion.
+            Learn more about stealth aircraft and their
+            specialised capabilities.
         </span>
 
     </a>
@@ -411,6 +383,28 @@ Alterra - Air Combat | Frontlines Wiki
     that supports them.
 </p>
 
+<h2>Strategic Bombing</h2>
+
+<p>
+    Strategic Bombing allows Bomber and Stealth Bomber aircraft to attack
+    eligible enemy buildings from the air.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_strategic_bombing') }}">
+
+        <strong>Strategic Bombing</strong>
+
+        <span>
+            Learn how bombers attack enemy buildings and how
+            bombing attacks are resolved.
+        </span>
+
+    </a>
+
+</div>
+
 
 <h2>Explore Air Combat</h2>
 
@@ -455,7 +449,7 @@ Alterra - Air Combat | Frontlines Wiki
 
     </a>
 
-    <a href="{{ url_for('wiki_awacs') }}">
+    <a href="{{ url_for('wiki_awacs_operations') }}">
 
         <strong>AWACS</strong>
 

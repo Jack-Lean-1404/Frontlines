@@ -1,0 +1,247 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Rotary Warfare | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_air_combat') }}">Air Combat</a>
+
+<span>/</span>
+
+<span>Rotary Warfare</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Rotary Warfare</h1>
+
+<p class="article-intro">
+    Rotary Warfare governs the combat and battlefield operations
+    of Attack Helicopters. Attack Helicopters provide direct
+    close air support to ground forces and conduct specialised
+    anti-armour operations against enemy formations.
+</p>
+
+<h2>Attack Helicopters</h2>
+
+<p>
+    Attack Helicopters are specialised rotary-wing aircraft
+    designed to operate directly in support of ground forces.
+</p>
+
+<p>
+    Their primary roles are providing close air support and
+    conducting attacks against concentrated enemy ground forces,
+    particularly armoured formations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_helicopter') }}">
+
+        <strong>Attack Helicopter</strong>
+
+        <span>
+            Learn about Attack Helicopter capabilities,
+            statistics, and unit-specific rules.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Operational Range</h2>
+
+<p>
+    Attack Helicopters may attack enemy ground units within
+    <strong>3 sectors</strong> of a friendly Airfield or Airport.
+</p>
+
+<p>
+    Their operational range is measured from the friendly
+    airfield or airport serving as their operational anchor.
+</p>
+
+<h2>Low-Altitude Operations</h2>
+
+<p>
+    Attack Helicopters can operate at low altitude using
+    nap-of-the-earth (NOE) flight.
+</p>
+
+<p>
+    Because of this operating profile, Attack Helicopters
+    cannot be directly targeted by ground-based
+    Anti-Air-capable units.
+</p>
+
+<h2>Ground Attack</h2>
+
+<p>
+    When attacking enemy ground units, Attack Helicopters use
+    the same general combat resolution rules as land units.
+</p>
+
+<p>
+    The helicopter's attack is resolved against the defending
+    ground unit using the applicable combat values.
+</p>
+
+<h2>Attack Risk</h2>
+
+<p>
+    Attack Helicopters remain vulnerable while conducting
+    attacks against ground forces.
+</p>
+
+<p>
+    Each time an Attack Helicopter conducts an attack, there is
+    a <strong>25% chance</strong> that the helicopter is
+    destroyed, regardless of the outcome of its attack.
+</p>
+
+<p>
+    This represents the risks associated with operating close
+    to enemy forces and ground-based threats.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            03
+        </span>
+
+        <h3>Attack Range</h3>
+
+        <p>
+            Attack Helicopters can attack ground units within
+            3 sectors of a friendly Airfield or Airport.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            25%
+        </span>
+
+        <h3>Attack Risk</h3>
+
+        <p>
+            Each ground attack has a 25% chance of destroying
+            the Attack Helicopter.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Air-to-Air Combat</h2>
+
+<p>
+    Attack Helicopters can still be targeted and attacked by
+    enemy aircraft.
+</p>
+
+<p>
+    When engaged by enemy aircraft, Attack Helicopters follow
+    the normal air-to-air combat rules.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Learn about aircraft engagements and air-to-air
+            combat.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Strategic Role</h2>
+
+<p>
+    Attack Helicopters provide a mobile form of battlefield air
+    support capable of operating close to friendly ground forces.
+</p>
+
+<p>
+    Their ability to attack ground formations while remaining
+    protected from direct ground-based Anti-Air engagement makes
+    them particularly useful for supporting frontline operations.
+</p>
+
+<p>
+    However, their vulnerability to enemy aircraft and the risk
+    associated with every ground attack means they must be used
+    carefully.
+</p>
+
+<h2>Related Combat Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Return to the overall Air Combat system.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_land_combat') }}">
+
+        <strong>Land Combat</strong>
+
+        <span>
+            Learn how engagements between opposing ground
+            forces are resolved.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air systems engage hostile aircraft.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_helicopter') }}">
+
+        <strong>Attack Helicopter</strong>
+
+        <span>
+            Explore the Attack Helicopter unit and its
+            capabilities.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

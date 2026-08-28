@@ -1,0 +1,249 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Strategic Airlift & Airdropping | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_air_combat') }}">Air Combat</a>
+
+<span>/</span>
+
+<span>Strategic Airlift & Airdropping</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Strategic Airlift & Airdropping</h1>
+
+<p class="article-intro">
+    Strategic Airlift Aircraft (SAA) provide rapid deployment of
+    ground forces across long distances. They allow eligible
+    ground formations to be transported between friendly airbases
+    or deployed directly into operational areas through airdrops.
+</p>
+
+<h2>Strategic Airlift Aircraft</h2>
+
+<p>
+    Strategic Airlift Aircraft are specialised transport aircraft
+    designed to rapidly move ground forces over long distances.
+</p>
+
+<p>
+    An SAA can transport eligible ground units and
+    <strong>Attack Helicopters</strong> up to its own formation
+    size. <strong>Armoured units cannot be transported</strong>.
+</p>
+
+<p>
+    For example, a <strong>Size 3 SAA</strong> can transport a
+    Size 3, Size 2, or Size 1 eligible unit, excluding Armoured
+    units.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_strategic_airlift_aircraft') }}">
+
+        <strong>Strategic Airlift Aircraft</strong>
+
+        <span>
+            Learn about SAA capabilities, statistics, and
+            unit-specific rules.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_helicopter') }}">
+
+        <strong>Attack Helicopter</strong>
+
+        <span>
+            Learn about the rotary-wing unit that can be
+            transported by Strategic Airlift Aircraft.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Operational Range</h2>
+
+<p>
+    Strategic Airlift Aircraft have an operational range of
+    <strong>10 sectors</strong> from an Airport or Tanker.
+</p>
+
+<p>
+    Tankers may therefore be used as operational anchor points
+    for SAA operations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Learn about aircraft operational range, airports,
+            and tankers.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Standard Airlift</h2>
+
+<p>
+    Standard Airlift allows ground units to be transported
+    between friendly airbases using Strategic Airlift Aircraft.
+</p>
+
+<p>
+    Units transported using Standard Airlift are not subject to
+    suppression, formation-size reduction, or destruction during
+    the transport.
+</p>
+
+<h2>Airdropping</h2>
+
+<p>
+    Strategic Airlift Aircraft can conduct airdrop operations
+    to deploy eligible ground units directly into friendly,
+    contested, or enemy-controlled sectors.
+</p>
+
+<p>
+    Airdropping allows ground forces to be deployed directly
+    into an operational area without requiring a conventional
+    airbase at the destination.
+</p>
+
+<h2>Airdrop Mishaps</h2>
+
+<p>
+    Airdrop operations carry a risk of logistical and operational
+    mishaps.
+</p>
+
+<p>
+    There is a <strong>20% chance</strong> that a unit deployed
+    by airdrop is reduced to its next smaller formation size.
+</p>
+
+<p>
+    The Strategic Airlift Aircraft itself is not destroyed by
+    an airdrop mishap, even if the transported unit is damaged
+    or eliminated.
+</p>
+
+<h2>Anti-Air Interaction</h2>
+
+<p>
+    Strategic Airlift Aircraft remain vulnerable to enemy
+    Air Defence while conducting airdrop operations.
+</p>
+
+<p>
+    If the target sector is within an enemy Air Defence Zone,
+    the SAA is subject to the standard Anti-Air rules if it
+    is engaged.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air systems engage aircraft
+            operating within their Air Defence Zones.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Strategic Role</h2>
+
+<p>
+    Strategic Airlift provides commanders with a rapid method
+    of repositioning ground forces and deploying formations
+    across long distances.
+</p>
+
+<p>
+    Standard airlift provides safe strategic redeployment,
+    while airdropping allows forces to be inserted directly
+    into areas where conventional deployment may not be possible.
+</p>
+
+<p>
+    The vulnerability of SAA operations to enemy Air Defence
+    makes route planning and airspace control important when
+    conducting airdrop operations.
+</p>
+
+<h2>Related Air Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Return to the overall Air Combat system.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air systems engage hostile aircraft.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_rotary') }}">
+
+        <strong>Rotary Warfare</strong>
+
+        <span>
+            Learn about Attack Helicopters and rotary-wing
+            battlefield operations.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_army_overview') }}">
+
+        <strong>Army</strong>
+
+        <span>
+            Explore the ground forces that can be transported
+            by Strategic Airlift Aircraft.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

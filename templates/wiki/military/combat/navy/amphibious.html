@@ -1,0 +1,262 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Amphibious Warfare | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_sea_combat') }}">Naval Combat</a>
+
+<span>/</span>
+
+<span>Amphibious Warfare</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Amphibious Warfare</h1>
+
+<p class="article-intro">
+    Amphibious Warfare allows nations to project ground forces
+    from the sea onto coastal sectors. These operations allow
+    commanders to establish beachheads, open new fronts, and
+    bypass existing land defences.
+</p>
+
+<p>
+    Amphibious assaults are inherently difficult operations.
+    Moving forces from ships onto a defended coastline exposes
+    troops to significant risk, making preparation and naval
+    control important to a successful landing.
+</p>
+
+<h2>Amphibious Assault Ship</h2>
+
+<p>
+    Amphibious operations require an
+    <strong>Amphibious Assault Ship (AAS)</strong>.
+</p>
+
+<p>
+    The AAS must be located in a
+    <strong>Shallow Water</strong> sector that is adjacent to
+    a land sector.
+</p>
+
+<p>
+    The AAS must also have at least
+    <strong>1 Movement Point</strong> remaining to conduct an
+    amphibious assault.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_aas') }}">
+
+        <strong>Amphibious Assault Ship</strong>
+
+        <span>
+            Learn about the naval unit used to transport and
+            deploy ground forces during amphibious operations.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Transport Capacity</h2>
+
+<p>
+    An Amphibious Assault Ship can carry ground units up to its
+    own size.
+</p>
+
+<p>
+    The number of ground units an AAS can transport is also
+    determined by its size.
+</p>
+
+<p>
+    For example, a <strong>Size 3 AAS</strong> can carry up to
+    <strong>3 ground units</strong>, provided each unit is
+    Size 3 or smaller.
+</p>
+
+<p>
+    An AAS cannot carry more units than its own size.
+</p>
+
+<h2>Landing Requirements</h2>
+
+<p>
+    To conduct an amphibious assault, the AAS must be positioned
+    in shallow water directly adjacent to land.
+</p>
+
+<p>
+    The AAS must have at least <strong>1 Movement Point</strong>
+    remaining to perform the assault.
+</p>
+
+<p>
+    The transported ground forces are then deployed from the
+    AAS onto the adjacent land sector.
+</p>
+
+<h2>Uncontested Landing</h2>
+
+<p>
+    If there are no enemy units in any sector adjacent to the AAS,
+    the amphibious operation is automatically successful.
+</p>
+
+<p>
+    All transported ground units land without casualties.
+</p>
+
+<h2>Contested Landing</h2>
+
+<p>
+    If enemy units are present in any sector adjacent to the AAS,
+    the amphibious landing is considered contested.
+</p>
+
+<p>
+    Each friendly ground unit participating in the amphibious
+    operation has a <strong>50% chance of being destroyed</strong>
+    when landing.
+</p>
+
+<p>
+    Each transported unit resolves its destruction chance
+    independently.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            50%
+        </span>
+
+        <h3>Destroyed</h3>
+
+        <p>
+            A transported ground unit is destroyed during
+            a contested landing.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            50%
+        </span>
+
+        <h3>Successful Landing</h3>
+
+        <p>
+            The transported ground unit successfully reaches
+            the land sector.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Beachheads</h2>
+
+<p>
+    Establishing a beachhead is an important objective of an
+    amphibious operation. Successfully landing forces allows
+    ground formations to establish a presence on the coastline
+    and begin subsequent land operations.
+</p>
+
+<p>
+    Amphibious operations therefore provide a method of opening
+    new fronts and bypassing conventional land approaches.
+</p>
+
+<h2>Strategic Considerations</h2>
+
+<p>
+    Amphibious assaults are high-risk operations, particularly
+    when enemy forces are positioned near the landing area.
+</p>
+
+<p>
+    Securing surrounding sea sectors, protecting the Amphibious
+    Assault Ship, and reducing nearby enemy forces can improve
+    the strategic conditions for a landing.
+</p>
+
+<p>
+    Because each transported unit independently faces a
+    <strong>50% destruction chance</strong> during a contested
+    landing, committing large formations to a defended coastline
+    carries significant risk.
+</p>
+
+<h2>Related Naval Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_sea_combat') }}">
+
+        <strong>Naval Combat</strong>
+
+        <span>
+            Learn how naval engagements are resolved and how
+            naval forces operate.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_sealift') }}">
+
+        <strong>Sealift Operations</strong>
+
+        <span>
+            Learn how Transport Ships move ground forces
+            across the sea.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_aas') }}">
+
+        <strong>Amphibious Assault Ship</strong>
+
+        <span>
+            Learn about the vessel used to conduct
+            amphibious operations.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_movement') }}">
+
+        <strong>Movement</strong>
+
+        <span>
+            Learn the general rules governing unit movement.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

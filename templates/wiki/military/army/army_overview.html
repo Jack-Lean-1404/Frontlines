@@ -1,9 +1,7 @@
 {% extends 'wiki/wiki_base.html' %}
 
 {% block title %}
-
 Alterra - Army | Frontlines Wiki
-
 {% endblock %}
 
 {% block breadcrumb %}
@@ -18,10 +16,6 @@ Alterra - Army | Frontlines Wiki
 
 {% block wiki_content %}
 
-<span class="wiki-section-label">
-    MILITARY / ARMY
-</span>
-
 <h1>Army</h1>
 
 <p class="article-intro">
@@ -32,36 +26,45 @@ Alterra - Army | Frontlines Wiki
 </p>
 
 <p>
-    Ground operations require the coordination of combat formations,
-    support units, logistics, command, and movement. Different
-    Army units are designed to perform specific roles within a
-    combined-arms force.
+    Army forces combine different unit types to conduct ground
+    operations. Each unit provides different capabilities, allowing
+    commanders to build formations suited to different operational
+    requirements.
 </p>
 
-<h2>Army Forces</h2>
+
+<h2>Army Units</h2>
 
 <p>
-    Army forces are divided into two primary categories:
-    Combat Units and Support Units. Combat units provide the
-    primary fighting capability of ground forces, while support
-    units provide specialised capabilities that allow formations
-    to operate effectively.
+    The Army consists of a range of units designed to conduct
+    ground operations across the battlefield. Units can be used
+    to capture and defend territory, engage enemy forces,
+    manoeuvre across the battlefield, and support wider military
+    operations.
+</p>
+
+<p>
+    Different units provide different combinations of mobility,
+    protection, firepower, and specialised capabilities. Effective
+    Army operations depend on using these capabilities together.
 </p>
 
 <div class="wiki-info-grid">
 
-    <a href="{{ url_for('wiki_army_combat_units') }}"
+    
+
+    <a href="{{ url_for('wiki_motorised_infantry') }}"
        class="wiki-info-card">
 
         <span class="wiki-info-number">
             01
         </span>
 
-        <h3>Combat Units</h3>
+        <h3>Motorised Infantry</h3>
 
         <p>
-            Frontline ground formations responsible for engaging
-            enemy forces and securing territory.
+            Mobile infantry formations designed for conventional
+            ground operations and rapid movement.
         </p>
 
         <span class="wiki-card-link">
@@ -71,18 +74,18 @@ Alterra - Army | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_army_support_units') }}"
+    <a href="{{ url_for('wiki_mechanised_infantry') }}"
        class="wiki-info-card">
 
         <span class="wiki-info-number">
             02
         </span>
 
-        <h3>Support Units</h3>
+        <h3>Mechanised Infantry</h3>
 
         <p>
-            Specialised units providing logistics, engineering,
-            command, and other battlefield support.
+            Protected infantry formations designed for mobile
+            combined-arms operations.
         </p>
 
         <span class="wiki-card-link">
@@ -91,64 +94,111 @@ Alterra - Army | Frontlines Wiki
 
     </a>
 
-</div>
 
+    <a href="{{ url_for('wiki_armoured') }}"
+       class="wiki-info-card">
 
-<h2>Combat Units</h2>
+        <span class="wiki-info-number">
+            03
+        </span>
 
-<p>
-    Combat units form the core of Army formations. They provide
-    the primary offensive and defensive capabilities required
-    to engage enemy forces and control territory.
-</p>
+        <h3>Armoured</h3>
 
-<p>
-    Different combat formations have different capabilities,
-    allowing commanders to build forces suited to the terrain
-    and operational situation.
-</p>
+        <p>
+            Heavily protected formations designed to provide
+            significant ground combat power.
+        </p>
 
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_army_combat_units') }}">
-
-        <strong>Army Combat Units</strong>
-
-        <span>
-            Explore the different ground combat formations
-            available to nations.
+        <span class="wiki-card-link">
+            EXPLORE →
         </span>
 
     </a>
 
-</div>
 
+    <a href="{{ url_for('wiki_national_guard') }}"
+       class="wiki-info-card">
 
-<h2>Support Units</h2>
+        <span class="wiki-info-number">
+            04
+        </span>
 
-<p>
-    Support units provide specialised capabilities that allow
-    Army formations to operate effectively and sustain military
-    operations.
-</p>
+        <h3>National Guard</h3>
 
-<p>
-    Engineers, logistics units, and Headquarters provide
-    capabilities that complement frontline combat formations.
-</p>
+        <p>
+            Territorial formations used to defend friendly
+            territory and support military operations.
+        </p>
 
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_army_support_units') }}">
-
-        <strong>Army Support Units</strong>
-
-        <span>
-            Explore the specialised units that support
-            ground formations.
+        <span class="wiki-card-link">
+            EXPLORE →
         </span>
 
     </a>
+
+
+    <a href="{{ url_for('wiki_engineer') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            05
+        </span>
+
+        <h3>Engineer</h3>
+
+        <p>
+            Specialised units providing engineering capabilities
+            to support ground operations.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_logistics_unit') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            06
+        </span>
+
+        <h3>Logistics</h3>
+
+        <p>
+            Units responsible for providing supply and sustaining
+            military formations in the field.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_headquarters') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            07
+        </span>
+
+        <h3>Headquarters</h3>
+
+        <p>
+            Command units responsible for coordinating friendly
+            forces and maintaining command support.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
 
 </div>
 
@@ -161,9 +211,9 @@ Alterra - Army | Frontlines Wiki
 </p>
 
 <p>
-    Ground formations must manoeuvre across sectors while
+    Ground formations manoeuvre between sectors while
     accounting for terrain, movement costs, enemy positions,
-    supply, and command.
+    supply, and command support.
 </p>
 
 <p>
@@ -197,6 +247,12 @@ Alterra - Army | Frontlines Wiki
 </p>
 
 <p>
+    Movement is an important part of ground operations, allowing
+    commanders to position formations, reinforce threatened
+    sectors, and manoeuvre around enemy forces.
+</p>
+
+<p>
     Movement must be completed before combat. Once a unit has
     initiated combat, it cannot resume movement during the
     same phase.
@@ -214,6 +270,7 @@ Alterra - Army | Frontlines Wiki
         </span>
 
     </a>
+
 
     <a href="{{ url_for('wiki_terrain') }}">
 
@@ -240,6 +297,11 @@ Alterra - Army | Frontlines Wiki
     Logistics units and infrastructure provide supply to
     eligible forces, allowing military formations to operate
     away from established infrastructure.
+</p>
+
+<p>
+    Maintaining an effective supply system is essential for
+    prolonged offensive and defensive operations.
 </p>
 
 <div class="wiki-link-list">
@@ -297,10 +359,53 @@ Alterra - Army | Frontlines Wiki
 
 <p>
     Infantry, mechanised formations, armoured forces, and
-    support units each provide different capabilities.
+    specialised units each provide different capabilities.
     Coordinating these forces allows commanders to exploit
     the strengths of individual units while reducing their
     weaknesses.
+</p>
+
+<p>
+    Special Units can also complement Army formations by
+    providing capabilities such as long-range fire support,
+    air defence, and other specialised battlefield functions.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_special_overview') }}">
+
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised military capabilities that
+            complement conventional Army formations.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Army Operations</h2>
+
+<p>
+    Successful Army operations require more than simply
+    concentrating military units. Commanders must consider
+    movement, terrain, supply, command support, and the
+    composition of their formations.
+</p>
+
+<p>
+    Offensive operations can be used to capture enemy territory
+    and destroy opposing formations, while defensive operations
+    seek to hold important sectors and prevent enemy advances.
+</p>
+
+<p>
+    The effectiveness of an Army formation therefore depends
+    on both the capabilities of its units and how those units
+    are organised and supported.
 </p>
 
 
@@ -312,28 +417,6 @@ Alterra - Army | Frontlines Wiki
 </p>
 
 <div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_army_combat_units') }}">
-
-        <strong>Combat Units</strong>
-
-        <span>
-            Explore the primary fighting formations of the Army.
-        </span>
-
-    </a>
-
-
-    <a href="{{ url_for('wiki_army_support_units') }}">
-
-        <strong>Support Units</strong>
-
-        <span>
-            Explore engineering, logistics, and command units.
-        </span>
-
-    </a>
-
 
     <a href="{{ url_for('wiki_land_combat') }}">
 
@@ -388,6 +471,19 @@ Alterra - Army | Frontlines Wiki
         </span>
 
     </a>
+
+
+    <a href="{{ url_for('wiki_special_overview') }}">
+
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised units and their battlefield
+            capabilities.
+        </span>
+
+    </a>
+
 
 </div>
 

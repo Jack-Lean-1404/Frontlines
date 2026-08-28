@@ -1,0 +1,283 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Carrier Operations | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_sea_combat') }}">Naval Combat</a>
+
+<span>/</span>
+
+<span>Carrier Operations</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Carrier Operations</h1>
+
+<p class="article-intro">
+    Aircraft Carriers provide mobile air bases that allow nations
+    to project air power far beyond the range of land-based
+    airports. Carriers combine naval mobility with the ability
+    to operate Naval Multi-Role Fighters at sea.
+</p>
+
+<p>
+    Carriers are specialised naval units that support fleet
+    operations by providing an operational base for embarked
+    aircraft while also providing Anti-Air defence against
+    hostile aircraft.
+</p>
+
+<h2>Carrier Aircraft</h2>
+
+<p>
+    Carriers can only operate
+    <strong>Naval Multi-Role Fighters</strong> as embarked
+    aircraft.
+</p>
+
+<p>
+    Naval Multi-Role Fighters may launch from and return to
+    their Carrier, allowing the Carrier to function as an
+    operational airport at sea.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_carrier') }}">
+
+        <strong>Carrier</strong>
+
+        <span>
+            Learn about Carrier capabilities, statistics,
+            and unit-specific rules.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_nmrf') }}">
+
+        <strong>Naval Multi-Role Fighter</strong>
+
+        <span>
+            Learn about the aircraft used for carrier-based
+            air operations.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Carrier Capacity</h2>
+
+<p>
+    A Carrier can carry a number of air units equal to its own
+    formation size. Each embarked air unit can be the same size
+    or smaller than the Carrier.
+</p>
+
+<table class="wiki-table">
+
+    <thead>
+        <tr>
+            <th>Carrier Size</th>
+            <th>Air Units</th>
+            <th>Maximum Air Unit Size</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+            <td>Size 1</td>
+            <td>1</td>
+            <td>Size 1</td>
+        </tr>
+
+        <tr>
+            <td>Size 2</td>
+            <td>2</td>
+            <td>Size 2</td>
+        </tr>
+
+        <tr>
+            <td>Size 3</td>
+            <td>3</td>
+            <td>Size 3</td>
+        </tr>
+
+    </tbody>
+
+</table>
+
+<p>
+    For example, a <strong>Size 3 Carrier</strong> can carry up to
+    <strong>3 air units</strong>, and each of those air units may
+    be Size 3 or smaller.
+</p>
+
+<h2>Carrier-Based Air Operations</h2>
+
+<p>
+    A Carrier acts as an airport for its embarked Naval
+    Multi-Role Fighters.
+</p>
+
+<p>
+    Aircraft operating from a Carrier follow the normal
+    aircraft operational rules, including their defined
+    operational range.
+</p>
+
+<p>
+    The Carrier therefore allows Naval Multi-Role Fighters to
+    conduct air operations far from friendly land-based airports.
+</p>
+
+<h2>Carrier Air Defence</h2>
+
+<p>
+    Carriers function as Anti-Air units and provide an
+    <strong>Air Defence Zone</strong> around themselves.
+</p>
+
+<p>
+    Enemy aircraft entering the Carrier's Air Defence Zone are
+    automatically engaged according to the normal Anti-Air
+    combat rules.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn about Anti-Air units, Air Defence Zones,
+            and aircraft interception.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Carrier Combat Restrictions</h2>
+
+<p>
+    Carriers cannot directly attack enemy naval units or
+    ground units.
+</p>
+
+<p>
+    Their offensive capability comes from their embarked
+    Naval Multi-Role Fighters, while their own defensive
+    capability comes from their Anti-Air systems.
+</p>
+
+<p>
+    Carriers therefore rely on escorts, supporting naval forces,
+    and embarked aircraft when operating in hostile waters.
+</p>
+
+<h2>Carrier Destruction</h2>
+
+<p>
+    If a Carrier is destroyed while carrying aircraft, the
+    embarked aircraft are subject to the normal aircraft
+    anchor-point rules.
+</p>
+
+<p>
+    Any aircraft that cannot reach another friendly Carrier
+    or Airport within its operational range is destroyed.
+</p>
+
+<p>
+    Aircraft that remain within range of another valid Carrier
+    or Airport are not destroyed and may continue operating
+    from that anchor point.
+</p>
+
+<h2>Strategic Role</h2>
+
+<p>
+    Carriers allow nations to project air power across the
+    oceans without relying entirely on land-based airports.
+</p>
+
+<p>
+    Their combination of mobile aircraft operations and
+    Anti-Air defence makes them valuable assets for fleet
+    protection, maritime operations, and power projection.
+</p>
+
+<p>
+    Because Carriers cannot directly attack enemy ships or
+    ground forces, they depend on their embarked aircraft and
+    accompanying naval forces to provide offensive capability.
+</p>
+
+<h2>Related Naval Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_sea_combat') }}">
+
+        <strong>Naval Combat</strong>
+
+        <span>
+            Learn how naval engagements are resolved and how
+            naval forces operate.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Learn about aircraft operations, range,
+            air combat, and air defence.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air systems defend against
+            hostile aircraft.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_navy_overview') }}">
+
+        <strong>Navy</strong>
+
+        <span>
+            Explore the naval forces and vessels available
+            in Frontlines.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

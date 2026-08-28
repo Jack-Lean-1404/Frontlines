@@ -1,0 +1,178 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - AWACS | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_air_combat') }}">Air Combat</a>
+
+<span>/</span>
+
+<span>AWACS</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>AWACS</h1>
+
+<p class="article-intro">
+    AWACS (Airborne Warning and Control System) units provide
+    airborne command and control, enhancing the effectiveness
+    of friendly air operations across a wide area.
+</p>
+
+<h2>AWACS Coverage</h2>
+
+<p>
+    An AWACS unit supports friendly air units within a
+    <strong>2-sector radius</strong>.
+</p>
+
+<p>
+    Friendly air units within this coverage receive a
+    <strong>50% increase to Strength and Defence</strong>,
+    representing improved situational awareness, coordination,
+    and targeting.
+</p>
+
+<p>
+    AWACS effects do not stack. If multiple AWACS units cover
+    the same friendly air unit, only one AWACS bonus is applied.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Sector Radius</h3>
+
+        <p>
+            AWACS provides coverage to friendly air units
+            within 2 sectors.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            50%
+        </span>
+
+        <h3>Combat Bonus</h3>
+
+        <p>
+            Friendly air units receive a 50% increase to
+            Strength and Defence.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Non-Stacking</h2>
+
+<p>
+    AWACS bonuses do not stack.
+</p>
+
+<p>
+    If a friendly air unit is within the coverage of multiple
+    AWACS units, it receives the bonus from only one AWACS unit.
+</p>
+
+<h2>Protection of AWACS</h2>
+
+<p>
+    AWACS units are high-value assets and are particularly
+    vulnerable if left unprotected.
+</p>
+
+<p>
+    Protecting AWACS units is important because their destruction
+    can significantly reduce the effectiveness of friendly air
+    operations and coordination.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_awacs') }}">
+
+        <strong>AWACS</strong>
+
+        <span>
+            Learn about the AWACS unit, its capabilities,
+            statistics, and unit-specific rules.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Strategic Role</h2>
+
+<p>
+    AWACS provides a force multiplier for friendly air operations,
+    allowing aircraft operating within its coverage to benefit
+    from improved coordination and battlefield awareness.
+</p>
+
+<p>
+    AWACS is therefore most valuable when positioned where it can
+    support multiple friendly aircraft while remaining protected
+    from enemy attack.
+</p>
+
+<h2>Related Air Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Return to the overall Air Combat system.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_stealth') }}">
+
+        <strong>Stealth</strong>
+
+        <span>
+            Learn how stealth affects aircraft survivability
+            and Air Defence.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air systems engage hostile aircraft.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

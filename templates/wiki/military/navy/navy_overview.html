@@ -1,0 +1,691 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Navy | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<span>Navy</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Navy</h1>
+
+<p class="article-intro">
+    The Navy provides the primary maritime forces of the nations
+    of Alterra. Naval units are responsible for controlling
+    maritime territory, protecting sea lanes, supporting
+    amphibious operations, and conducting offensive and
+    defensive operations at sea.
+</p>
+
+<p>
+    Naval operations allow commanders to project military power
+    across maritime sectors and influence coastal and oceanic
+    areas. Different naval units provide different combinations
+    of firepower, protection, mobility, and specialised
+    capabilities.
+</p>
+
+
+<h2>Navy Units</h2>
+
+<p>
+    The Navy consists of a range of vessels designed to perform
+    different roles across the maritime battlefield. Each unit
+    provides specialised capabilities that can be used
+    independently or as part of a wider naval formation.
+</p>
+
+<p>
+    Effective naval operations depend on selecting appropriate
+    vessels for the mission and coordinating them with friendly
+    Army, Air Force, and Special Units.
+</p>
+
+<div class="wiki-info-grid">
+
+    
+
+    <a href="{{ url_for('wiki_corvette') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Corvette</h3>
+
+        <p>
+            Small naval vessels designed for coastal operations,
+            patrol, and light combat duties.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_frigate') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Frigate</h3>
+
+        <p>
+            Versatile surface combatants designed for fleet
+            operations, escort duties, and maritime combat.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_destroyer') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            03
+        </span>
+
+        <h3>Destroyer</h3>
+
+        <p>
+            Powerful surface combatants designed to engage
+            hostile naval forces and protect friendly fleets.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_cruiser') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            04
+        </span>
+
+        <h3>Cruiser</h3>
+
+        <p>
+            Large surface combatants providing significant
+            firepower and long-range naval capabilities.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_aas') }}"
+        class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            05
+        </span>
+
+        <h3>Amphibious Assault Ship</h3>
+
+        <p>
+            Naval vessels designed to support amphibious operations
+            and deploy ground forces from the sea.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_carrier') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            06
+        </span>
+
+        <h3>Aircraft Carrier</h3>
+
+        <p>
+            Large naval vessels capable of operating aircraft
+            at sea and projecting air power across maritime areas.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_transport') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            07
+        </span>
+
+        <h3>Transport</h3>
+
+        <p>
+            Naval vessels designed to transport military
+            forces and equipment across maritime areas.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_supply_ship') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            08
+        </span>
+
+        <h3>Supply Ship</h3>
+
+        <p>
+            Support vessels designed to provide supplies
+            and sustain naval forces during operations.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+</div>
+
+
+<h2>Naval Warfare</h2>
+
+<p>
+    Naval operations are centred around controlling maritime
+    territory, engaging opposing naval forces, protecting
+    friendly vessels, and supporting operations ashore.
+</p>
+
+<p>
+    Naval formations manoeuvre between maritime sectors while
+    accounting for enemy positions, movement, range, and the
+    specialised capabilities of individual vessels.
+</p>
+
+<p>
+    When opposing naval forces engage, the engagement is
+    resolved using the naval combat system.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_sea_combat') }}">
+
+        <strong>Sea Combat</strong>
+
+        <span>
+            Learn how engagements between opposing naval
+            forces are resolved.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Movement</h2>
+
+<p>
+    Naval units move between maritime sectors a turn. A unit's Movement value determines how
+    far it can normally travel, while other restrictions
+    can affect where and how it moves.
+</p>
+
+<p>
+    Naval movement allows commanders to reposition fleets,
+    reinforce threatened areas, intercept enemy forces,
+    and establish control over important maritime sectors.
+</p>
+
+<p>
+    Movement must be completed before combat. Once a unit has
+    initiated combat, it cannot resume movement during the
+    same turn.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_movement') }}">
+
+        <strong>Movement</strong>
+
+        <span>
+            Learn how military units move between sectors and
+            how movement interacts with combat.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Submarine Warfare</h2>
+
+<p>
+    Submarines provide a specialised naval capability by
+    operating beneath the ocean surface.
+</p>
+
+<p>
+    Their ability to operate underwater allows them to conduct
+    specialised attacks and operate differently from
+    conventional surface vessels.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_submarine_warfare') }}">
+
+        <strong>Submarine Warfare</strong>
+
+        <span>
+            Learn about submarine operations, attacks,
+            defensive evasion, and Anti-Submarine Warfare.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Sealift</h2>
+
+<p>
+    Sealift allows military forces and equipment to be
+    transported across maritime areas.
+</p>
+
+<p>
+    Transport vessels provide commanders with the ability
+    to move forces over water and support operations across
+    distant coastal areas.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_sealift') }}">
+
+        <strong>Sealift</strong>
+
+        <span>
+            Learn how military forces and equipment are
+            transported by sea.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Amphibious Operations</h2>
+
+<p>
+    Amphibious operations allow naval forces to support the
+    movement of military forces from sea onto coastal
+    territory.
+</p>
+
+<p>
+    These operations allow commanders to establish a presence
+    on enemy or contested coastlines and provide additional
+    options for deploying ground forces.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_amphibious') }}">
+
+        <strong>Amphibious Operations</strong>
+
+        <span>
+            Learn how naval forces support amphibious
+            operations and coastal assaults.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Carrier Warfare</h2>
+
+<p>
+    Aircraft carriers allow naval forces to project air power
+    beyond the immediate reach of land-based aircraft.
+</p>
+
+<p>
+    Carrier operations combine naval and air power, allowing
+    aircraft to operate from maritime positions and support
+    wider fleet operations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_carrier_warfare') }}">
+
+        <strong>Carrier Warfare</strong>
+
+        <span>
+            Learn how aircraft carriers support naval
+            operations and project air power at sea.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Naval Logistics</h2>
+
+<p>
+    Naval formations require logistical support to maintain
+    sustained operations away from established bases.
+</p>
+
+<p>
+    Supply Ships provide logistical support to naval forces,
+    allowing fleets to remain operational for longer periods
+    and operate further from friendly infrastructure.
+</p>
+
+<p>
+    Maintaining naval logistics is particularly important
+    during prolonged maritime operations.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_logistics') }}">
+
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how military forces are supplied and
+            sustained during operations.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Fleet Operations</h2>
+
+<p>
+    Naval units are most effective when operated as part of
+    coordinated formations.
+</p>
+
+<p>
+    Surface combatants can provide offensive and defensive
+    firepower, submarines can provide specialised underwater
+    capabilities, and support vessels can sustain fleets
+    during extended operations.
+</p>
+
+<p>
+    Aircraft carriers can further extend the capabilities
+    of a fleet by providing a mobile platform for naval
+    aviation.
+</p>
+
+
+<h2>Combined Operations</h2>
+
+<p>
+    Naval operations are most effective when coordinated
+    with other branches of the military.
+</p>
+
+<p>
+    Naval forces can support Army operations along coastal
+    areas, while Air Force aircraft can provide additional
+    surveillance, combat power, and maritime capabilities.
+</p>
+
+<p>
+    Special Units can also complement naval forces through
+    specialised capabilities such as submarines and
+    Coastal Defence.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_army_overview') }}">
+
+        <strong>Army</strong>
+
+        <span>
+            Explore Army units and ground operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_airforce_overview') }}">
+
+        <strong>Air Force</strong>
+
+        <span>
+            Explore Air Force units and air operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_special_overview') }}">
+
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised military capabilities that
+            complement Naval operations.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Naval Operations</h2>
+
+<p>
+    Successful naval operations require commanders to
+    consider vessel capabilities, movement, range, logistics,
+    and the wider maritime environment.
+</p>
+
+<p>
+    Surface combatants can be used to engage enemy fleets
+    and establish maritime control, while submarines provide
+    specialised underwater capabilities.
+</p>
+
+<p>
+    Transport and Supply Ships allow naval forces to support
+    military operations over greater distances and maintain
+    sustained operations at sea.
+</p>
+
+<p>
+    Aircraft carriers provide an additional means of
+    projecting air power from maritime positions and can
+    support fleet operations across distant areas.
+</p>
+
+<p>
+    The effectiveness of a naval operation therefore depends
+    not only on individual vessels, but also on how naval
+    forces are organised and coordinated across the
+    battlefield.
+</p>
+
+
+<h2>Explore the Navy</h2>
+
+<p>
+    Explore the sections below to learn more about the Navy
+    and its role in military operations.
+</p>
+
+<div class="wiki-link-list">
+
+
+    <a href="{{ url_for('wiki_sea_combat') }}">
+
+        <strong>Sea Combat</strong>
+
+        <span>
+            Learn how engagements between opposing naval
+            forces are resolved.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_sealift') }}">
+
+        <strong>Sealift</strong>
+
+        <span>
+            Learn how military forces and equipment are
+            transported by sea.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_amphibious') }}">
+
+        <strong>Amphibious Operations</strong>
+
+        <span>
+            Learn how naval forces support amphibious
+            operations and coastal assaults.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_carrier_warfare') }}">
+
+        <strong>Carrier Warfare</strong>
+
+        <span>
+            Learn how aircraft carriers support naval
+            operations and project air power at sea.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_submarine_warfare') }}">
+
+        <strong>Submarine Warfare</strong>
+
+        <span>
+            Learn about submarine operations and
+            underwater warfare.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_movement') }}">
+
+        <strong>Movement</strong>
+
+        <span>
+            Learn how Naval formations move across
+            maritime sectors.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_logistics') }}">
+
+        <strong>Logistics</strong>
+
+        <span>
+            Learn how Naval forces are supplied and
+            sustained.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_army_overview') }}">
+
+        <strong>Army</strong>
+
+        <span>
+            Explore Army units and ground operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_airforce_overview') }}">
+
+        <strong>Air Force</strong>
+
+        <span>
+            Explore Air Force units and air operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_special_overview') }}">
+
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised military units and their
+            battlefield capabilities.
+        </span>
+
+    </a>
+
+
+</div>
+
+{% endblock %}

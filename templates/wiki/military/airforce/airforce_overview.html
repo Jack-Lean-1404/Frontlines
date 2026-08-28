@@ -16,48 +16,54 @@ Alterra - Air Force | Frontlines Wiki
 
 {% block wiki_content %}
 
-<span class="wiki-section-label">
-    MILITARY / AIR FORCE
-</span>
-
 <h1>Air Force</h1>
 
 <p class="article-intro">
-    The Air Force provides the primary aerial forces of the nations
-    of Alterra. Aircraft allow nations to project military power
-    across large distances, conduct air combat, support ground
-    operations, and rapidly deploy forces across the battlefield.
+    The Air Force provides the primary fixed-wing aviation
+    forces of the nations of Alterra. Air Force units are
+    responsible for conducting air operations, supporting
+    ground and naval forces, and projecting military power
+    across the battlefield.
 </p>
 
 <p>
-    Air operations are highly dependent on range, positioning,
-    operational anchors, and air defence. Effective use of aircraft
-    requires careful planning and coordination with friendly
-    airports, tankers, and other supporting assets.
+    Air operations allow commanders to influence areas beyond
+    the immediate frontline. Different aircraft provide
+    different capabilities, including air superiority, ground
+    attack, strategic bombing, transport, maritime patrol,
+    and naval operations.
 </p>
 
 
-<h2>Air Forces</h2>
+<h2>Air Force Units</h2>
 
 <p>
-    Air forces are organised around several different aircraft
-    roles. Each aircraft type is designed to perform specific
-    missions and contributes differently to military operations.
+    The Air Force consists of a range of aircraft designed
+    to perform different roles across the battlefield. Each
+    aircraft provides specialised capabilities that can be
+    used independently or as part of a wider military operation.
+</p>
+
+<p>
+    Effective air operations depend on selecting appropriate
+    aircraft for the mission and coordinating them with
+    friendly Army, Naval, and Special Units.
 </p>
 
 <div class="wiki-info-grid">
 
-    <a href="{{ url_for('wiki_aircraft') }}" class="wiki-info-card">
+    <a href="{{ url_for('wiki_multirole_fighter') }}"
+       class="wiki-info-card">
 
         <span class="wiki-info-number">
             01
         </span>
 
-        <h3>Aircraft</h3>
+        <h3>Multirole Fighter</h3>
 
         <p>
-            Explore the different aircraft types and their roles
-            in aerial operations.
+            Flexible combat aircraft capable of conducting
+            multiple air-to-air and air-to-ground missions.
         </p>
 
         <span class="wiki-card-link">
@@ -67,17 +73,18 @@ Alterra - Air Force | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_air_operations') }}" class="wiki-info-card">
+    <a href="{{ url_for('wiki_attack_fighter') }}"
+       class="wiki-info-card">
 
         <span class="wiki-info-number">
             02
         </span>
 
-        <h3>Air Operations</h3>
+        <h3>Attack Fighter</h3>
 
         <p>
-            Learn how aircraft operate from airports and mobile
-            aerial anchor points.
+            Aircraft specialised for attacking enemy ground
+            forces and supporting Army operations.
         </p>
 
         <span class="wiki-card-link">
@@ -87,17 +94,18 @@ Alterra - Air Force | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_air_combat') }}" class="wiki-info-card">
+    <a href="{{ url_for('wiki_air_superiority_fighter') }}"
+       class="wiki-info-card">
 
         <span class="wiki-info-number">
             03
         </span>
 
-        <h3>Air Combat</h3>
+        <h3>Air Superiority Fighter</h3>
 
         <p>
-            Explore aerial engagements, contested airspace,
-            and aircraft damage.
+            Fighter aircraft designed primarily to engage
+            and defeat enemy aircraft.
         </p>
 
         <span class="wiki-card-link">
@@ -107,17 +115,19 @@ Alterra - Air Force | Frontlines Wiki
     </a>
 
 
-    <a href="{{ url_for('wiki_airforce_air_defence') }}" class="wiki-info-card">
+    <a href="{{ url_for('wiki_stealth_air_superiority_fighter') }}"
+       class="wiki-info-card">
 
         <span class="wiki-info-number">
             04
         </span>
 
-        <h3>Air Defence</h3>
+        <h3>Stealth Air Superiority Fighter</h3>
 
         <p>
-            Learn how Anti-Air units protect territory and
-            engage hostile aircraft.
+            Stealth-equipped fighter aircraft designed to
+            conduct air-to-air operations while reducing
+            detection by enemy forces.
         </p>
 
         <span class="wiki-card-link">
@@ -126,17 +136,166 @@ Alterra - Air Force | Frontlines Wiki
 
     </a>
 
-    <a href="{{ url_for('wiki_stealth') }}" class="wiki-info-card">
+
+    <a href="{{ url_for('wiki_stealth_multirole_fighter') }}"
+       class="wiki-info-card">
 
         <span class="wiki-info-number">
             05
         </span>
 
-        <h3>Stealth</h3>
+        <h3>Stealth Multirole Fighter</h3>
 
         <p>
-            Explore stealth aircraft, their combat advantages,
-            and their reduced vulnerability to Anti-Air systems.
+            Stealth-equipped multirole aircraft capable of
+            conducting a range of air combat missions.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_bomber') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            06
+        </span>
+
+        <h3>Bomber</h3>
+
+        <p>
+            Aircraft designed to deliver attacks against
+            enemy positions and strategic targets.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_stealth_bomber') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            07
+        </span>
+
+        <h3>Stealth Bomber</h3>
+
+        <p>
+            Stealth-equipped bomber aircraft designed to
+            conduct attacks while reducing enemy detection.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_strategic_airlift_aircraft') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            08
+        </span>
+
+        <h3>Strategic Airlift Aircraft</h3>
+
+        <p>
+            Large transport aircraft designed to move military
+            forces and equipment across long distances.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_tanker') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            09
+        </span>
+
+        <h3>Tanker</h3>
+
+        <p>
+            Support aircraft designed to extend the operational
+            range and endurance of friendly aircraft.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_awacs') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            10
+        </span>
+
+        <h3>AWACS</h3>
+
+        <p>
+            Airborne early warning and control aircraft providing
+            surveillance and command support for air operations.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_mpa') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            11
+        </span>
+
+        <h3>Marine Patrol Aircraft</h3>
+
+        <p>
+            Aircraft designed to conduct maritime patrol,
+            surveillance, and specialised naval operations.
+        </p>
+
+        <span class="wiki-card-link">
+            EXPLORE →
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_nmrf') }}"
+       class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            12
+        </span>
+
+        <h3>Naval Multirole Fighter</h3>
+
+        <p>
+            Multirole fighter aircraft designed to support
+            naval operations and operate in maritime environments.
         </p>
 
         <span class="wiki-card-link">
@@ -148,66 +307,47 @@ Alterra - Air Force | Frontlines Wiki
 </div>
 
 
-<h2>Aircraft Operations</h2>
+<h2>Air Warfare</h2>
 
 <p>
-    Aircraft operate from friendly airports or suitable mobile
-    aerial anchor points. An aircraft's operational range determines
-    how far it may operate from its anchor point.
+    Air operations are centred around controlling the airspace,
+    attacking enemy forces, and supporting friendly military
+    operations.
 </p>
 
 <p>
-    Airports provide the primary fixed bases for aerial operations.
-    Tankers can function as mobile anchor points, allowing aircraft
-    to operate farther from fixed infrastructure.
+    Aircraft can operate across multiple sectors and engage
+    targets according to their capabilities, mission, and
+    effective range.
 </p>
 
 <p>
-    The destruction of an airport or tanker can have serious
-    consequences for aircraft relying on that asset. Aircraft that
-    cannot reach another suitable anchor point may be lost.
-</p>
-
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_air_operations') }}">
-
-        <strong>Air Operations</strong>
-
-        <span>
-            Learn about operational range, airports, tankers,
-            and aerial anchor points.
-        </span>
-
-    </a>
-
-</div>
-
-
-<h2>Air Combat</h2>
-
-<p>
-    Air combat occurs when opposing aircraft engage during
-    aerial operations. Aircraft may encounter hostile forces
-    while entering or operating within contested airspace.
-</p>
-
-<p>
-    Aircraft can either engage enemy forces or bypass contested
-    sectors. Different aircraft characteristics and special
-    capabilities can significantly affect the outcome of aerial
-    engagements.
+    Air combat allows aircraft to engage hostile aircraft,
+    while air-to-ground operations allow suitable aircraft
+    to attack enemy ground forces and positions.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_airforce_combat') }}">
+    <a href="{{ url_for('wiki_air_combat') }}">
 
         <strong>Air Combat</strong>
 
         <span>
-            Learn how aerial engagements, contested airspace,
-            and aircraft damage are resolved.
+            Learn how engagements between opposing aircraft
+            are resolved.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_air_to_ground') }}">
+
+        <strong>Air-to-Ground Attacks</strong>
+
+        <span>
+            Learn how aircraft engage enemy ground forces
+            and positions.
         </span>
 
     </a>
@@ -215,58 +355,74 @@ Alterra - Air Force | Frontlines Wiki
 </div>
 
 
-<h2>Air Defence</h2>
+<h2>Air Missions</h2>
 
 <p>
-    Air Defence protects friendly territory and military forces
-    from hostile aircraft. Anti-Air units establish Air Defence
-    Zones around their positions and automatically engage enemy
-    aircraft that enter their coverage.
+    Different aircraft are designed to perform different
+    missions. Selecting the appropriate aircraft for an
+    operation allows commanders to make better use of
+    available air power.
 </p>
 
 <p>
-    Aircraft classification also affects their ability to survive
-    air defence engagements. Stealth aircraft are significantly
-    harder for Anti-Air systems to detect and engage.
+    Fighter aircraft can contest the airspace and engage
+    hostile aircraft, while attack aircraft can support
+    ground operations. Bombers can conduct attacks against
+    larger or strategic targets, while strategic airlift
+    aircraft provide long-distance military transport.
+</p>
+
+<p>
+    Tankers and AWACS provide specialised support to other
+    aircraft, while Marine Patrol Aircraft and Naval
+    Multirole Fighters extend Air Force capabilities into
+    maritime operations.
+</p>
+
+
+<h2>Air Superiority</h2>
+
+<p>
+    Control of the airspace can provide a significant
+    advantage during military operations.
+</p>
+
+<p>
+    Fighter aircraft can be used to intercept and destroy
+    hostile aircraft, reducing the enemy's ability to conduct
+    air operations.
+</p>
+
+<p>
+    Maintaining air superiority can also protect friendly
+    aircraft conducting ground attack, bombing, transport,
+    and maritime missions.
+</p>
+
+
+<h2>Air-to-Ground Operations</h2>
+
+<p>
+    Aircraft capable of attacking ground targets can provide
+    direct support to friendly ground forces and conduct
+    attacks against enemy positions.
+</p>
+
+<p>
+    Air-to-ground operations allow commanders to apply
+    air power against enemy forces without requiring a
+    conventional ground engagement.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_airforce_air_defence') }}">
+    <a href="{{ url_for('wiki_air_to_ground') }}">
 
-        <strong>Air Defence</strong>
-
-        <span>
-            Learn about Anti-Air, Air Defence Zones, stealth
-            aircraft, and SEAD operations.
-        </span>
-
-    </a>
-
-</div>
-
-
-<h2>Specialised Air Operations</h2>
-
-<p>
-    Some aircraft perform specialised missions that provide
-    capabilities beyond conventional air combat.
-</p>
-
-<p>
-    These include airborne command and control, aerial refuelling,
-    strategic airlift, and airdrop operations.
-</p>
-
-<div class="wiki-link-list">
-
-    <a href="{{ url_for('wiki_strategic_airlift') }}">
-
-        <strong>Strategic Airlift</strong>
+        <strong>Air-to-Ground Attacks</strong>
 
         <span>
-            Learn how Strategic Airlift Aircraft transport
-            ground forces and conduct airdrop operations.
+            Learn how aircraft conduct attacks against
+            enemy ground forces.
         </span>
 
     </a>
@@ -277,17 +433,14 @@ Alterra - Air Force | Frontlines Wiki
 <h2>Strategic Airlift</h2>
 
 <p>
-    Strategic Airlift Aircraft provide rapid deployment of
-    ground forces across long distances. They allow eligible
-    ground units to be transported between friendly airbases
-    or deployed directly into operational areas.
+    Strategic Airlift aircraft provide the ability to move
+    military forces and equipment over long distances.
 </p>
 
 <p>
-    Strategic airlift can significantly reduce the time required
-    to move forces between distant theatres and can provide
-    commanders with additional flexibility during military
-    operations.
+    Airlift allows commanders to rapidly reposition forces,
+    reinforce distant areas, and conduct strategic movements
+    that would otherwise require significant time.
 </p>
 
 <div class="wiki-link-list">
@@ -297,8 +450,8 @@ Alterra - Air Force | Frontlines Wiki
         <strong>Strategic Airlift</strong>
 
         <span>
-            Explore airlift, airdrop operations, operational
-            limits, and Anti-Air interaction.
+            Learn how strategic airlift operations move
+            military forces and equipment.
         </span>
 
     </a>
@@ -306,88 +459,137 @@ Alterra - Air Force | Frontlines Wiki
 </div>
 
 
-<h2>Air Superiority</h2>
+<h2>Maritime Operations</h2>
 
 <p>
-    Control of the airspace surrounding military operations can
-    provide a significant strategic advantage.
+    The Air Force can also contribute directly to maritime
+    operations. Marine Patrol Aircraft provide specialised
+    aerial capabilities for operating over naval areas,
+    while Naval Multirole Fighters provide flexible combat
+    capabilities in support of naval operations.
 </p>
 
 <p>
-    Fighters can challenge enemy aircraft, while specialised
-    aircraft such as AWACS provide enhanced situational awareness
-    and coordination. Tankers extend the operational reach of
-    friendly aircraft, while stealth aircraft can operate with
-    reduced exposure to enemy air defences.
+    These aircraft complement conventional naval forces by
+    extending surveillance, combat power, and other
+    specialised capabilities into maritime areas.
+</p>
+
+
+<h2>Air Support</h2>
+
+<p>
+    Air operations can provide important support to other
+    military forces. Attack aircraft can support Army
+    formations, while fighters can protect friendly aircraft
+    and contest enemy air operations.
 </p>
 
 <p>
-    Maintaining air superiority therefore depends on more than
-    simply fielding large numbers of aircraft. Range, support
-    assets, air defence, and aircraft capabilities must all be
-    considered when planning aerial operations.
+    Tankers extend aircraft endurance, while AWACS aircraft
+    provide airborne surveillance and command support.
+    Strategic airlift aircraft can also rapidly move forces
+    and equipment between distant areas.
 </p>
 
-<h2>Stealth</h2>
+
+<h2>Combined Operations</h2>
 
 <p>
-    Stealth aircraft are specialised aerial assets designed to
-    operate with a reduced probability of detection and engagement
-    by enemy air defence systems.
+    Air Force operations are most effective when coordinated
+    with other branches of the military.
 </p>
 
 <p>
-    Stealth provides significant advantages in both combat
-    effectiveness and survivability. These aircraft are especially
-    valuable when operating in areas protected by enemy Anti-Air
-    systems.
+    Aircraft can support Army formations through air-to-ground
+    attacks, protect friendly forces through air superiority,
+    and support Naval operations through maritime patrol and
+    naval aviation.
+</p>
+
+<p>
+    Coordinating air power with ground and naval forces allows
+    commanders to combine the strengths of different military
+    capabilities and conduct more effective operations.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_stealth') }}">
+    <a href="{{ url_for('wiki_army_overview') }}">
 
-        <strong>Stealth</strong>
+        <strong>Army</strong>
 
         <span>
-            Learn about stealth aircraft, their combat advantages,
-            Anti-Air evasion, and their role in aerial operations.
+            Explore Army units and ground operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_navy_overview') }}">
+
+        <strong>Navy</strong>
+
+        <span>
+            Explore Naval units and maritime operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_special_overview') }}">
+
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised military capabilities that
+            complement Air Force operations.
         </span>
 
     </a>
 
 </div>
+
+
+<h2>Air Force Operations</h2>
+
+<p>
+    Successful Air Force operations require commanders to
+    consider aircraft capabilities, range, targets, and
+    coordination with other military forces.
+</p>
+
+<p>
+    Aircraft should be selected according to the objectives
+    of the operation. Fighters can be used to contest enemy
+    aircraft, attack aircraft can support ground operations,
+    bombers can strike strategic targets, and transport
+    aircraft can provide strategic mobility.
+</p>
+
+<p>
+    Support aircraft such as Tankers and AWACS can enhance
+    the effectiveness of other aircraft, while Marine Patrol
+    Aircraft and Naval Multirole Fighters provide specialised
+    capabilities for maritime operations.
+</p>
+
+<p>
+    The effectiveness of an air operation therefore depends
+    not only on individual aircraft, but also on how air power
+    is organised and coordinated across the battlefield.
+</p>
 
 
 <h2>Explore the Air Force</h2>
 
 <p>
-    Explore the sections below to learn more about the Air Force
-    and its role in military operations.
+    Explore the sections below to learn more about the Air
+    Force and its role in military operations.
 </p>
 
 <div class="wiki-link-list">
 
-    <a href="{{ url_for('wiki_aircraft') }}">
-
-        <strong>Aircraft</strong>
-
-        <span>
-            Explore aircraft types and their roles.
-        </span>
-
-    </a>
-
-
-    <a href="{{ url_for('wiki_air_operations') }}">
-
-        <strong>Air Operations</strong>
-
-        <span>
-            Learn how aircraft operate from airports and tankers.
-        </span>
-
-    </a>
 
 
     <a href="{{ url_for('wiki_air_combat') }}">
@@ -395,18 +597,19 @@ Alterra - Air Force | Frontlines Wiki
         <strong>Air Combat</strong>
 
         <span>
-            Learn how aerial engagements are resolved.
+            Learn how engagements between opposing aircraft
+            are resolved.
         </span>
 
     </a>
 
 
-    <a href="{{ url_for('wiki_airforce_air_defence') }}">
+    <a href="{{ url_for('wiki_air_to_ground') }}">
 
-        <strong>Air Defence</strong>
+        <strong>Air-to-Ground Attacks</strong>
 
         <span>
-            Learn how Anti-Air systems defend against aircraft.
+            Learn how aircraft engage enemy ground forces.
         </span>
 
     </a>
@@ -417,20 +620,46 @@ Alterra - Air Force | Frontlines Wiki
         <strong>Strategic Airlift</strong>
 
         <span>
-            Learn how forces are transported by air.
+            Learn how military forces and equipment are
+            transported by air.
         </span>
 
     </a>
 
-    <a href="{{ url_for('wiki_stealth') }}">
 
-        <strong>Stealth</strong>
+    <a href="{{ url_for('wiki_army_overview') }}">
+
+        <strong>Army</strong>
 
         <span>
-            Learn how stealth affects aircraft combat and survivability.
+            Explore Army units and ground operations.
         </span>
 
     </a>
+
+
+    <a href="{{ url_for('wiki_navy_overview') }}">
+
+        <strong>Navy</strong>
+
+        <span>
+            Explore Naval units and maritime operations.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_special_overview') }}">
+
+        <strong>Special Units</strong>
+
+        <span>
+            Explore specialised military units and their
+            battlefield capabilities.
+        </span>
+
+    </a>
+
 
 </div>
 

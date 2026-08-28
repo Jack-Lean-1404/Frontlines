@@ -1,0 +1,365 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Air-to-Ground Combat | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_air_combat') }}">Air Combat</a>
+
+<span>/</span>
+
+<span>Air-to-Ground Combat</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Air-to-Ground Combat</h1>
+
+<p class="article-intro">
+    Air-to-Ground Combat governs attacks conducted by aircraft
+    against eligible enemy ground forces. Aircraft must first
+    survive any applicable air defence or interception before
+    resolving their attack against the target.
+</p>
+
+<h2>Eligible Targets</h2>
+
+<p>
+    Aircraft may conduct air-to-ground attacks against eligible
+    enemy ground units within their operational range.
+</p>
+
+<h2>Air-to-Ground Capable Units</h2>
+
+<p>
+    The following aircraft are capable of conducting
+    Air-to-Ground attacks:
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_multirole_fighter') }}">
+        <strong>Multi-Role Fighter</strong>
+
+        <span>
+            Capable of conducting Air-to-Ground attacks.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_attack_fighter') }}">
+        <strong>Attack Fighter</strong>
+
+        <span>
+            Capable of conducting Air-to-Ground attacks.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_bomber') }}">
+        <strong>Bomber</strong>
+
+        <span>
+            Capable of conducting Air-to-Ground attacks.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_stealth_bomber') }}">
+        <strong>Strategic Bomber</strong>
+
+        <span>
+            Capable of conducting Air-to-Ground attacks.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_stealth_multirole_fighter') }}">
+        <strong>Stealth Multi-Role Fighter</strong>
+
+        <span>
+            Capable of conducting Air-to-Ground attacks.
+        </span>
+    </a>
+
+    <a href="{{ url_for('wiki_nmrf') }}">
+        <strong>Naval Multi-Role Fighter</strong>
+
+        <span>
+            Capable of conducting Air-to-Ground attacks.
+        </span>
+    </a>
+
+</div>
+
+<h2>Air Defence and Interception</h2>
+
+<p>
+    Enemy air defence and interception are resolved before the
+    air-to-ground attack takes place.
+</p>
+
+<p>
+    The aircraft must survive these defensive engagements in order
+    to conduct its attack against the ground target.
+</p>
+
+<h2>Aircraft Damage</h2>
+
+<p>
+    If an aircraft is hit by enemy air defence or interception,
+    it immediately suffers <strong>one formation size loss</strong>.
+</p>
+
+<p>
+    Aircraft formation damage is caused by effects such as
+    air defence and interception, rather than simply losing an
+    air-to-ground combat roll.
+</p>
+
+<h2>Destroyed Aircraft</h2>
+
+<p>
+    If an aircraft is destroyed during air defence or
+    interception, its air-to-ground attack does not occur.
+</p>
+
+<p>
+    Only aircraft that survive the defensive engagement may
+    continue to resolve their air-to-ground attack.
+</p>
+
+<h2>Air-to-Ground Combat Roll</h2>
+
+<p>
+    A surviving aircraft resolves its attack against the target's
+    <strong>Defence</strong> using the aircraft's
+    <strong>Strength</strong>.
+</p>
+
+<p>
+    Both the attacking aircraft and defending ground unit make
+    their respective combat rolls using their current combat
+    values.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Aircraft</h3>
+
+        <p>
+            Rolls using its current Strength.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Ground Unit</h3>
+
+        <p>
+            Rolls using its current Defence.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Attack Outcome</h2>
+
+<p>
+    If the aircraft's attack roll is higher than the target's
+    Defence roll, the attack is successful and the target suffers
+    <strong>one formation size loss</strong>.
+</p>
+
+<p>
+    If the target's Defence roll is higher than the aircraft's
+    attack roll, the attack has no effect.
+</p>
+
+<p>
+    If both rolls are equal, the attack has no effect.
+</p>
+
+<h2>Formation Size Loss</h2>
+
+<p>
+    A formation size loss moves the affected unit to its
+    <strong>next smaller formation level</strong>.
+</p>
+
+<p>
+    Formation size reductions represent losses to the formation
+    and reduce its combat effectiveness according to the
+    applicable formation rules.
+</p>
+
+<h2>Destruction</h2>
+
+<p>
+    If a formation at its smallest available formation level
+    suffers another formation size loss, the formation is
+    <strong>destroyed</strong>.
+</p>
+
+<p>
+    Destroyed formations are removed from play.
+</p>
+
+<h2>Aircraft Combat Damage</h2>
+
+<p>
+    Aircraft do not suffer formation size loss simply because
+    they lose an air-to-ground combat roll.
+</p>
+
+<p>
+    Aircraft formation damage is caused by effects such as
+    <strong>air defence and interception</strong>.
+</p>
+
+<h2>Combat Effectiveness</h2>
+
+<p>
+    Reducing a formation's size reduces its combat effectiveness
+    according to the applicable formation rules.
+</p>
+
+<h2>Attack Sequence</h2>
+
+<p>
+    Air-to-ground attacks follow a defined sequence to determine
+    whether the aircraft successfully strikes its target.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Defensive Engagement</h3>
+
+        <p>
+            Enemy air defence and interception are resolved.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Aircraft Survival</h3>
+
+        <p>
+            The aircraft suffers damage or is destroyed if
+            affected by the defensive engagement.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            03
+        </span>
+
+        <h3>Attack Roll</h3>
+
+        <p>
+            A surviving aircraft rolls against the target's
+            Defence.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            04
+        </span>
+
+        <h3>Resolution</h3>
+
+        <p>
+            A successful attack reduces the target's
+            formation size.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Related Combat Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Return to the overall Air Combat system.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Anti-Air systems engage and damage
+            hostile aircraft.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_land_combat') }}">
+
+        <strong>Land Combat</strong>
+
+        <span>
+            Learn how engagements between opposing ground
+            forces are resolved.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_army_overview') }}">
+
+        <strong>Army</strong>
+
+        <span>
+            Explore the ground forces targeted by
+            air-to-ground attacks.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

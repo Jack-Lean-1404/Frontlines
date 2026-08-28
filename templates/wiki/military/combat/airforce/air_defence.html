@@ -1,0 +1,386 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Air Defence | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<span>Air Defence</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Air Defence</h1>
+
+<p class="article-intro">
+    Air Defence protects military forces and strategic areas from
+    hostile aircraft. Anti-Air units and aircraft carriers establish
+    Air Defence Zones that automatically engage enemy aircraft that
+    interact with the protected area.
+</p>
+
+<p>
+    Air Defence is designed to deny enemy air operations and force
+    aircraft to consider the risks of operating within defended
+    areas.
+</p>
+
+<h2>Air Defence Units</h2>
+
+<p>
+    Air Defence is provided by dedicated
+    <strong>Anti-Air</strong> units and
+    <strong>Aircraft Carriers</strong>.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_anti_air') }}">
+
+        <strong>Anti-Air</strong>
+
+        <span>
+            Learn about Anti-Air units and their role in
+            protecting against hostile aircraft.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_carrier') }}">
+
+        <strong>Carrier</strong>
+
+        <span>
+            Learn about Carriers and their naval Air Defence
+            capabilities.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Air Defence Zone</h2>
+
+<p>
+    Each Anti-Air unit and Carrier establishes an
+    <strong>Air Defence Zone</strong> extending
+    <strong>1 sector</strong> around its position.
+</p>
+
+<p>
+    The Air Defence Zone remains the same regardless of the
+    formation size of the Air Defence unit.
+</p>
+
+<p>
+    An aircraft does not need to end its movement inside the zone
+    to be engaged. Any interaction with an Air Defence Zone can
+    trigger an engagement.
+</p>
+
+<h2>Air Defence Engagement</h2>
+
+<p>
+    When an Anti-Air unit engages an enemy air unit within its
+    Air Defence Zone, the aircraft must resolve an
+    <strong>evasion check</strong> based on its classification.
+</p>
+
+<p>
+    <strong>Non-stealth air units</strong> have an
+    <strong>80% chance</strong> of being hit by Anti-Air fire.
+</p>
+
+<p>
+    <strong>Stealth air units</strong> have a
+    <strong>20% chance</strong> of being hit by Anti-Air fire,
+    reflecting their reduced detectability and advanced
+    countermeasures.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            80%
+        </span>
+
+        <h3>Non-Stealth</h3>
+
+        <p>
+            Chance of being hit by Anti-Air fire.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            20%
+        </span>
+
+        <h3>Stealth</h3>
+
+        <p>
+            Chance of being hit by Anti-Air fire.
+        </p>
+
+    </div>
+
+</div>
+
+<p>
+    If the Anti-Air attack is successful, the targeted aircraft
+    loses <strong>one formation size</strong>.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_stealth') }}">
+
+        <strong>Stealth</strong>
+
+        <span>
+            Learn about stealth aircraft and their reduced
+            vulnerability to Air Defence.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Aircraft Damage</h2>
+
+<p>
+    When an Air Defence attack successfully hits an aircraft,
+    the aircraft suffers <strong>one formation size loss</strong>.
+</p>
+
+<p>
+    If an aircraft is already at its smallest available formation
+    size and suffers another size loss, the aircraft is destroyed.
+</p>
+
+<p>
+    Air Defence damage therefore directly reduces the effective
+    strength of an aircraft formation.
+</p>
+
+<h2>Air Defence Formation Size</h2>
+
+<p>
+    The formation size of an Anti-Air unit does not change its
+    Air Defence Zone or its chance to hit aircraft.
+</p>
+
+<p>
+    The only effect of losing formation size is a reduction in
+    the unit's effective <strong>Hit Points</strong>.
+</p>
+
+<h2>Layered Air Defence</h2>
+
+<p>
+    Multiple Air Defence units can protect the same area, allowing
+    players to establish layered Air Defence networks.
+</p>
+
+<p>
+    If an aircraft enters an area covered by multiple enemy Air
+    Defence Zones, each applicable Air Defence unit engages the
+    aircraft independently.
+</p>
+
+<p>
+    Layered Air Defence can therefore create significantly greater
+    protection around important military positions and strategic
+    areas.
+</p>
+
+
+<h2>Helicopters</h2>
+
+<p>
+    Attack Helicopters cannot be directly targeted by
+    ground-based Anti-Air units.
+</p>
+
+<p>
+    Their low-altitude nap-of-the-earth flight allows them to
+    operate below the engagement capability of ground-based
+    Air Defence systems.
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_rotary') }}">
+
+        <strong>Rotary Warfare</strong>
+
+        <span>
+            Learn about Attack Helicopters and their specialised
+            battlefield operations.
+        </span>
+
+    </a>
+
+</div>
+
+<h2>Suppression of Enemy Air Defences (SEAD)</h2>
+
+<p>
+    SEAD (Suppression of Enemy Air Defences) is a specialised
+    air operation used to attack and destroy enemy Anti-Air units.
+</p>
+
+<p>
+    When an aircraft conducts a SEAD mission against an enemy
+    Anti-Air unit, the Anti-Air unit fires first and attempts to
+    destroy the attacking aircraft.
+</p>
+
+<p>
+    If the attacking aircraft survives, it has a
+    <strong>60% chance</strong> to destroy the targeted Anti-Air
+    unit.
+</p>
+
+<p>
+    The SEAD destruction chance is fixed at <strong>60%</strong>
+    and is not affected by the Strength or Defence of either the
+    attacking aircraft or the Anti-Air unit.
+</p>
+
+<p>
+    Stealth aircraft are particularly effective at conducting
+    SEAD missions because they are significantly harder for
+    Anti-Air systems to hit.
+</p>
+
+<div class="wiki-info-grid">
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            01
+        </span>
+
+        <h3>Air Defence Fires</h3>
+
+        <p>
+            The targeted Anti-Air unit engages the attacking
+            aircraft first.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            02
+        </span>
+
+        <h3>Aircraft Survives</h3>
+
+        <p>
+            If the aircraft survives, the SEAD attack proceeds.
+        </p>
+
+    </div>
+
+    <div class="wiki-info-card">
+
+        <span class="wiki-info-number">
+            60%
+        </span>
+
+        <h3>SEAD Success</h3>
+
+        <p>
+            The surviving aircraft has a 60% chance to destroy
+            the targeted Anti-Air unit.
+        </p>
+
+    </div>
+
+</div>
+
+<h2>Strategic Role</h2>
+
+<p>
+    Air Defence is essential for protecting important military
+    positions, infrastructure, and forces from enemy air power.
+</p>
+
+<p>
+    Effective Air Defence networks can restrict enemy aircraft
+    movement and make certain areas significantly more difficult
+    to operate within.
+</p>
+
+<p>
+    However, Air Defence must be positioned carefully and
+    protected from ground attacks and SEAD operations.
+</p>
+
+<h2>Related Combat Systems</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_combat_overview') }}">
+
+        <strong>Combat</strong>
+
+        <span>
+            Return to the overall Frontlines combat system.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Learn about aircraft operations and aerial combat.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_anti_air') }}">
+
+        <strong>Anti-Air</strong>
+
+        <span>
+            Learn about Anti-Air units and their role in
+            protecting against hostile aircraft.
+        </span>
+
+    </a>
+
+    <a href="{{ url_for('wiki_stealth') }}">
+
+        <strong>Stealth</strong>
+
+        <span>
+            Learn how stealth affects aircraft survivability
+            against Air Defence.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}

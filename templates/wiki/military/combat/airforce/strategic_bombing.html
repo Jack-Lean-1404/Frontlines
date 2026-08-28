@@ -1,0 +1,353 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Strategic Bombing | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_combat_overview') }}">Combat</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_air_combat') }}">Air Combat</a>
+
+<span>/</span>
+
+<span>Strategic Bombing</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<h1>Strategic Bombing</h1>
+
+<p class="article-intro">
+    Strategic Bombing allows bomber aircraft to conduct attacks
+    against enemy buildings. Successful bombing attacks
+    destroy the targeted building.
+</p>
+
+<p>
+    Strategic Bombing provides the Air Force with the ability
+    to directly attack enemy infrastructure and strategic
+    buildings from the air. Bombing attacks are resolved
+    separately from conventional air-to-air combat.
+</p>
+
+
+<h2>Eligible Aircraft</h2>
+
+<p>
+    Only aircraft with the appropriate bombing capability can
+    conduct Strategic Bombing attacks.
+</p>
+
+<p>
+    The following aircraft can conduct bombing attacks:
+</p>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_bomber') }}">
+
+        <strong>Bomber</strong>
+
+        <span>
+            Conventional bomber aircraft capable of conducting
+            strategic bombing attacks.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_stealth_bomber') }}">
+
+        <strong>Stealth Bomber</strong>
+
+        <span>
+            Stealth bomber aircraft capable of conducting
+            strategic bombing attacks.
+        </span>
+
+    </a>
+
+</div>
+
+
+<h2>Targeting</h2>
+
+<p>
+    Strategic Bombing attacks are conducted against
+    enemy buildings.
+</p>
+
+<p>
+    The bomber must be within its operational range of the
+    targeted building before an attack can be conducted.
+</p>
+
+<p>
+    Buildings do not use formation size or a separate damage
+    or hit-point system for Strategic Bombing.
+</p>
+
+
+<h2>Air Defence</h2>
+
+<p>
+    Air Defence is resolved before the bombing attack.
+</p>
+
+<p>
+    The bomber must survive the Air Defence engagement before
+    it can attempt to bomb the targeted building.
+</p>
+
+<p>
+    If the bomber is destroyed by Air Defence, the bombing
+    attack does not occur.
+</p>
+
+
+<div class="wiki-link-list">
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+            <strong>Air Defence</strong>
+
+            <span>
+                Learn about Anti-Air systems and Air Defence Zones.
+            </span>
+    </a>
+</div>
+
+
+<h2>Bombing Resolution</h2>
+
+<p>
+    If the bomber survives Air Defence, the bombing attack
+    is resolved using a 60% success chance.
+</p>
+
+<p>
+    A successful bombing attack destroys the targeted building.
+</p>
+
+<p>
+    A failed bombing attack has no effect and the targeted
+    building remains intact.
+</p>
+
+
+<h2>Strategic Bombing Sequence</h2>
+
+<p>
+    A Strategic Bombing attack follows a fixed sequence of
+    events.
+</p>
+
+<div class="wiki-info-box">
+
+    <strong>Bombing Attack Resolution</strong>
+
+    <ol>
+        <li>
+            The bomber selects an eligible enemy building
+            within operational range.
+        </li>
+
+        <li>
+            Air Defence is resolved against the bomber.
+        </li>
+
+        <li>
+            If the bomber is destroyed, the attack ends.
+        </li>
+
+        <li>
+            If the bomber survives, the bombing attack is
+            resolved.
+        </li>
+
+        <li>
+            The bomber has a <strong>60%</strong> chance of
+            successfully bombing the target.
+        </li>
+
+        <li>
+            If successful, the targeted building is destroyed.
+        </li>
+
+        <li>
+            If unsuccessful, the targeted building is
+            unaffected.
+        </li>
+    </ol>
+
+</div>
+
+
+<h2>Building Destruction</h2>
+
+<p>
+    Strategic Bombing uses a binary building destruction
+    system rather than a conventional damage system.
+</p>
+
+<p>
+    Buildings do not have a separate bombing HP or damage
+    value, and formation size does not affect the bombing
+    result.
+</p>
+
+<p>
+    A successful bombing attack destroys the targeted building
+    completely. A failed attack causes no damage and leaves
+    the building intact.
+</p>
+
+
+<h2>Example</h2>
+
+<p>
+    A BOMB aircraft targets an eligible enemy building that
+    is within its operational range.
+</p>
+
+<p>
+    Air Defence is resolved first. The bomber survives and
+    proceeds with the bombing attack.
+</p>
+
+<p>
+    The bombing attack is then given its 60% chance of success.
+    If successful, the targeted building is destroyed. If the
+    attack fails, the building remains intact.
+</p>
+
+
+<h2>Strategic Bombing Rules</h2>
+
+<div class="wiki-info-box">
+
+    <ul>
+
+        <li>
+            <strong>Aircraft:</strong>
+            BOMB and SBOMB can conduct Strategic Bombing.
+        </li>
+
+        <li>
+            <strong>Target:</strong>
+            Eligible enemy buildings.
+        </li>
+
+        <li>
+            <strong>Range:</strong>
+            The bomber must be within operational range of
+            the target.
+        </li>
+
+        <li>
+            <strong>Air Defence:</strong>
+            Resolved before the bombing attack.
+        </li>
+
+        <li>
+            <strong>Success Chance:</strong>
+            60% if the bomber survives Air Defence.
+        </li>
+
+        <li>
+            <strong>Success:</strong>
+            The targeted building is destroyed.
+        </li>
+
+        <li>
+            <strong>Failure:</strong>
+            No effect.
+        </li>
+
+        <li>
+            <strong>Building HP:</strong>
+            Buildings do not use a separate damage or
+            hit-point system.
+        </li>
+
+        <li>
+            <strong>Formation Size:</strong>
+            Formation size does not affect building
+            destruction.
+        </li>
+
+    </ul>
+
+</div>
+
+
+<h2>Related Mechanics</h2>
+
+<div class="wiki-link-list">
+
+    <a href="{{ url_for('wiki_air_combat') }}">
+
+        <strong>Air Combat</strong>
+
+        <span>
+            Learn about combat between opposing aircraft.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_air_to_ground') }}">
+
+        <strong>Air-to-Ground Attacks</strong>
+
+        <span>
+            Learn how aircraft attack enemy ground forces.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_air_defence') }}">
+
+        <strong>Air Defence</strong>
+
+        <span>
+            Learn how Air Defence engages hostile aircraft.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_bomber') }}">
+
+        <strong>Bomber</strong>
+
+        <span>
+            Learn about Bomber aircraft and their capabilities.
+        </span>
+
+    </a>
+
+
+    <a href="{{ url_for('wiki_stealth_bomber') }}">
+
+        <strong>Stealth Bomber</strong>
+
+        <span>
+            Learn about Stealth Bomber aircraft and their
+            capabilities.
+        </span>
+
+    </a>
+
+</div>
+
+{% endblock %}
