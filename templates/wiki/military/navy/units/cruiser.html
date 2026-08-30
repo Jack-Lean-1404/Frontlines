@@ -1,0 +1,576 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Cruiser | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_navy_overview') }}">Navy</a>
+
+<span>/</span>
+
+<span>Cruiser</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<div class="unit-page">
+
+    <!-- Unit Header -->
+
+    <div class="unit-page-header">
+
+        <div>
+
+            <h1>Cruiser</h1>
+
+            <span class="unit-classification">
+                SEA
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Unit Layout -->
+
+    <div class="unit-layout">
+
+
+        <!-- Left Column -->
+
+        <div class="unit-description">
+
+
+            <h2>Overview</h2>
+
+            <p>
+                Cruisers are powerful surface combatants designed
+                to destroy enemy naval forces and establish
+                superiority at sea. Their heavy armament and
+                substantial combat capability make them the
+                most effective conventional surface combatants
+                available.
+            </p>
+
+
+            <h2>Role</h2>
+
+            <p>
+                The primary role of the Cruiser is to destroy enemy
+                naval formations. Cruisers are intended to serve as
+                major offensive assets within a fleet, using their
+                high combat power to overwhelm enemy surface forces.
+            </p>
+
+
+            <h2>Strengths</h2>
+
+            <ul>
+
+                <li>
+                    Highly effective against enemy naval forces.
+                </li>
+
+                <li>
+                    Strong offensive capability.
+                </li>
+
+                <li>
+                    Large formation size provides substantial
+                    combat capacity.
+                </li>
+
+                <li>
+                    Excellent choice for major fleet engagements.
+                </li>
+
+            </ul>
+
+
+            <h2>Weaknesses</h2>
+
+            <ul>
+
+                <li>
+                    Very expensive to construct.
+                </li>
+
+                <li>
+                    High resource and upkeep requirements.
+                </li>
+
+                <li>
+                    Losses can be costly due to the value of each
+                    formation.
+                </li>
+
+                <li>
+                    Less efficient for routine patrol and escort
+                    duties than smaller surface combatants.
+                </li>
+
+            </ul>
+
+
+            <h2>Recommended Employment</h2>
+
+            <p>
+                Use Cruisers when the primary objective is to
+                destroy enemy naval forces. They are particularly
+                effective in major fleet engagements where their
+                high combat power can be used to overwhelm enemy
+                surface formations.
+            </p>
+
+            <p>
+                Due to their high cost, Cruisers should be deployed
+                deliberately and supported by other naval units
+                rather than exposed unnecessarily to enemy attacks.
+            </p>
+
+
+        </div>
+
+
+        <!-- Right Unit Information Panel -->
+
+        <div class="unit-panel">
+
+
+            <!-- Formation -->
+
+            <div class="unit-panel-formation">
+
+                <label for="formation-level">
+                    Formation
+                </label>
+
+                <select id="formation-level">
+
+                    <option value="1">
+                        Ship
+                    </option>
+
+                    <option value="2">
+                        Division
+                    </option>
+
+                    <option value="3">
+                        Squadron
+                    </option>
+
+                    <option value="4">
+                        Flotilla
+                    </option>
+
+                    <option value="5">
+                        Fleet
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Unit Icon -->
+
+            <div class="unit-panel-icon">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/unit_icons/CC.png'
+                    ) }}"
+                    alt="Cruiser icon"
+                >
+
+            </div>
+
+
+            <!-- Resource Cost -->
+
+            <div class="unit-panel-section">
+
+                <h2>Resource Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money</span>
+
+                    <strong id="money-cost">
+                        $400,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Common Metal</span>
+
+                    <strong id="cm-cost">
+                        4,000 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Rare Metal</span>
+
+                    <strong id="rm-cost">
+                        0 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Build Time</span>
+
+                    <strong id="build-time">
+                        5 Turns
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upkeep -->
+
+            <div class="unit-panel-section">
+
+                <h2>Upkeep Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money Upkeep</span>
+
+                    <strong id="money-upkeep">
+                        $6,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Oil Upkeep</span>
+
+                    <strong id="oil-upkeep">
+                        25,000 bbl
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Combat Statistics -->
+
+            <div class="unit-panel-section unit-combat-stats">
+
+                <h2>Combat Stats</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Strength</span>
+
+                    <strong id="strength-stat">
+                        10
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Defence</span>
+
+                    <strong id="defence-stat">
+                        4
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Movement</span>
+
+                    <strong id="movement-stat">
+                        3
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Size</span>
+
+                    <strong id="size-stat">
+                        4
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Related Mechanics -->
+
+    <h2>Related Mechanics</h2>
+
+    <div class="wiki-link-list">
+
+        <a href="{{ url_for('wiki_sea_combat') }}">
+
+            <strong>Naval Combat</strong>
+
+            <span>
+                Learn how engagements between opposing naval
+                forces are resolved.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_terrain') }}">
+
+            <strong>Terrain</strong>
+
+            <span>
+                Learn how different terrain types affect naval
+                movement and operations.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_movement') }}">
+
+            <strong>Movement</strong>
+
+            <span>
+                Learn how military units move between sectors
+                and how movement interacts with combat.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_logistics') }}">
+
+            <strong>Logistics</strong>
+
+            <span>
+                Learn how military forces are supplied and
+                sustained during operations.
+            </span>
+
+        </a>
+
+    </div>
+
+
+    {% include 'partials/all_units.html' %}
+
+
+<script>
+
+const baseStats = {
+
+    strength: 10,
+
+    defence: 4,
+
+    movement: 3,
+
+    size: 4,
+
+    moneyCost: 400000000,
+
+    cmCost: 4000,
+
+    rmCost: 0,
+
+    buildTime: 5,
+
+    oilUpkeep: 25000,
+
+    moneyUpkeep: 6000000
+
+};
+
+
+const formationSelector =
+    document.getElementById("formation-level");
+
+
+function formatMoney(value) {
+
+    return "$" + value.toLocaleString("en-US");
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-US");
+
+}
+
+
+function updateFormation() {
+
+    const level =
+        Number(formationSelector.value);
+
+
+    /*
+     * Combat statistics
+     *
+     * Strength, Defence and Size scale
+     * with formation level.
+     *
+     * Movement remains fixed.
+     */
+
+    const strength =
+        baseStats.strength * level;
+
+    const defence =
+        baseStats.defence * level;
+
+    const movement =
+        baseStats.movement;
+
+    const size =
+        baseStats.size * level;
+
+
+    /*
+     * Economics
+     *
+     * All economic values scale
+     * with formation level.
+     */
+
+    const moneyCost =
+        baseStats.moneyCost * level;
+
+    const cmCost =
+        baseStats.cmCost * level;
+
+    const rmCost =
+        baseStats.rmCost * level;
+
+    const buildTime =
+        baseStats.buildTime * level;
+
+    const oilUpkeep =
+        baseStats.oilUpkeep * level;
+
+    const moneyUpkeep =
+        baseStats.moneyUpkeep * level;
+
+
+    /*
+     * Update combat statistics
+     */
+
+    document.getElementById(
+        "strength-stat"
+    ).textContent =
+        formatNumber(strength);
+
+
+    document.getElementById(
+        "defence-stat"
+    ).textContent =
+        formatNumber(defence);
+
+
+    document.getElementById(
+        "movement-stat"
+    ).textContent =
+        formatNumber(movement);
+
+
+    document.getElementById(
+        "size-stat"
+    ).textContent =
+        formatNumber(size);
+
+
+    /*
+     * Update economics
+     */
+
+    document.getElementById(
+        "money-cost"
+    ).textContent =
+        formatMoney(moneyCost);
+
+
+    document.getElementById(
+        "cm-cost"
+    ).textContent =
+        formatNumber(cmCost) + " tons";
+
+
+    document.getElementById(
+        "rm-cost"
+    ).textContent =
+        formatNumber(rmCost) + " tons";
+
+
+    document.getElementById(
+        "build-time"
+    ).textContent =
+        formatNumber(buildTime) +
+        (buildTime === 1 ? " Turn" : " Turns");
+
+
+    document.getElementById(
+        "oil-upkeep"
+    ).textContent =
+        formatNumber(oilUpkeep) + " bbl";
+
+
+    document.getElementById(
+        "money-upkeep"
+    ).textContent =
+        formatMoney(moneyUpkeep);
+
+}
+
+
+formationSelector.addEventListener(
+    "change",
+    updateFormation
+);
+
+
+updateFormation();
+
+</script>
+
+{% endblock %}

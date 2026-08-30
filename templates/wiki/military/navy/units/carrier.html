@@ -1,0 +1,668 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Aircraft Carrier | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_navy_overview') }}">Navy</a>
+
+<span>/</span>
+
+<span>Aircraft Carrier</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<div class="unit-page">
+
+    <!-- Unit Header -->
+
+    <div class="unit-page-header">
+
+        <div>
+
+            <h1>Aircraft Carrier</h1>
+
+            <span class="unit-classification">
+                SEA
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Unit Layout -->
+
+    <div class="unit-layout">
+
+
+        <!-- Left Column -->
+
+        <div class="unit-description">
+
+
+            <h2>Overview</h2>
+
+            <p>
+                Aircraft Carriers are large naval vessels that
+                function as mobile air bases, allowing nations
+                to project air power far beyond the range of
+                land-based airports. Their ability to operate
+                aircraft at sea makes them the centrepiece of
+                carrier-based naval operations.
+            </p>
+
+
+            <h2>Role</h2>
+
+            <p>
+                The primary role of the Aircraft Carrier is to
+                provide an operational base for embarked
+                <strong>Naval Multi-Role Fighters</strong>.
+                Carriers allow NMRFs to conduct air operations
+                from sea while also providing Anti-Air defence
+                for the carrier group.
+            </p>
+
+
+            <h2>Strengths</h2>
+
+            <ul>
+
+                <li>
+                    Provides a mobile airbase at sea.
+                </li>
+
+                <li>
+                    Allows NMRFs to operate far from land-based
+                    airports.
+                </li>
+
+                <li>
+                    Provides Anti-Air defence against hostile
+                    aircraft.
+                </li>
+
+                <li>
+                    Enables sustained air operations across
+                    large areas.
+                </li>
+
+            </ul>
+
+
+            <h2>Weaknesses</h2>
+
+            <ul>
+
+                <li>
+                    Extremely expensive to construct.
+                </li>
+
+                <li>
+                    Very high resource and upkeep requirements.
+                </li>
+
+                <li>
+                    High-value target for enemy forces.
+                </li>
+
+                <li>
+                    Requires protection from enemy naval,
+                    submarine, and air threats.
+                </li>
+
+                <li>
+                    Limited direct combat capability compared
+                    with dedicated surface combatants.
+                </li>
+
+            </ul>
+
+
+            <h2>Carrier Operations</h2>
+
+            <p>
+                Aircraft Carriers provide mobile operational bases
+                for <strong>Naval Multi-Role Fighters</strong>.
+                Embarked NMRFs can use the carrier as an
+                operational anchor in the same way aircraft use
+                a friendly airport.
+            </p>
+
+            <p>
+                This allows carrier-based aircraft to conduct
+                operations far from friendly territory and
+                project air power across contested areas.
+            </p>
+
+            <div class="wiki-link-list">
+
+                <a href="{{ url_for('wiki_carrier_operations') }}">
+
+                    <strong>Carrier Operations</strong>
+
+                    <span>
+                        Learn how Aircraft Carriers operate
+                        aircraft and project air power at sea.
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <h2>Anti-Air Defence</h2>
+
+            <p>
+                Aircraft Carriers provide
+                <strong>Anti-Air defence</strong> against
+                hostile aircraft operating against the carrier
+                and its surrounding naval forces.
+            </p>
+
+            <p>
+                This defensive capability helps protect the
+                carrier and its embarked aircraft from enemy
+                air operations.
+            </p>
+
+
+            <h2>Recommended Employment</h2>
+
+            <p>
+                Use Aircraft Carriers as the centrepiece of
+                carrier battle groups and major naval operations.
+                They are particularly valuable when air power
+                needs to be projected far from friendly airports.
+            </p>
+
+            <p>
+                Due to their enormous cost and strategic
+                importance, Carriers should operate alongside
+                surface combatants and other supporting naval
+                forces rather than operating independently.
+            </p>
+
+
+        </div>
+
+
+        <!-- Right Unit Information Panel -->
+
+        <div class="unit-panel">
+
+
+            <!-- Formation -->
+
+            <div class="unit-panel-formation">
+
+                <label for="formation-level">
+                    Formation
+                </label>
+
+                <select id="formation-level">
+
+                    <option value="1">
+                        Ship
+                    </option>
+
+                    <option value="2">
+                        Division
+                    </option>
+
+                    <option value="3">
+                        Squadron
+                    </option>
+
+                    <option value="4">
+                        Flotilla
+                    </option>
+
+                    <option value="5">
+                        Fleet
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Unit Icon -->
+
+            <div class="unit-panel-icon">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/unit_icons/CV.png'
+                    ) }}"
+                    alt="Aircraft Carrier icon"
+                >
+
+            </div>
+
+
+            <!-- Resource Cost -->
+
+            <div class="unit-panel-section">
+
+                <h2>Resource Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money</span>
+
+                    <strong id="money-cost">
+                        $2,000,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Common Metal</span>
+
+                    <strong id="cm-cost">
+                        14,000 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Rare Metal</span>
+
+                    <strong id="rm-cost">
+                        1,000 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Build Time</span>
+
+                    <strong id="build-time">
+                        8 Turns
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upkeep -->
+
+            <div class="unit-panel-section">
+
+                <h2>Upkeep Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money Upkeep</span>
+
+                    <strong id="money-upkeep">
+                        $30,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Oil Upkeep</span>
+
+                    <strong id="oil-upkeep">
+                        40,000 bbl
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Combat Statistics -->
+
+            <div class="unit-panel-section unit-combat-stats">
+
+                <h2>Combat Stats</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Strength</span>
+
+                    <strong id="strength-stat">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Defence</span>
+
+                    <strong id="defence-stat">
+                        2
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Movement</span>
+
+                    <strong id="movement-stat">
+                        5
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Size</span>
+
+                    <strong id="size-stat">
+                        7
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Related Mechanics -->
+
+    <h2>Related Mechanics</h2>
+
+    <div class="wiki-link-list">
+
+        <a href="{{ url_for('wiki_carrier_operations') }}">
+
+            <strong>Carrier Operations</strong>
+
+            <span>
+                Learn how Aircraft Carriers operate embarked
+                aircraft at sea.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_air_combat') }}">
+
+            <strong>Air Combat</strong>
+
+            <span>
+                Learn how aircraft conduct combat operations
+                from carrier-based positions.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_sea_combat') }}">
+
+            <strong>Naval Combat</strong>
+
+            <span>
+                Learn how engagements between opposing naval
+                forces are resolved.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_air_defence') }}">
+
+            <strong>Air Defence</strong>
+
+            <span>
+                Learn how Anti-Air systems engage hostile
+                aircraft.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_terrain') }}">
+
+            <strong>Terrain</strong>
+
+            <span>
+                Learn how different terrain types affect naval
+                movement and operations.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_movement') }}">
+
+            <strong>Movement</strong>
+
+            <span>
+                Learn how military units move between sectors
+                and how movement interacts with combat.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_logistics') }}">
+
+            <strong>Logistics</strong>
+
+            <span>
+                Learn how military forces are supplied and
+                sustained during operations.
+            </span>
+
+        </a>
+
+    </div>
+
+
+    {% include 'partials/all_units.html' %}
+
+
+<script>
+
+const baseStats = {
+
+    strength: 1,
+
+    defence: 2,
+
+    movement: 5,
+
+    size: 7,
+
+    moneyCost: 2000000000,
+
+    cmCost: 14000,
+
+    rmCost: 1000,
+
+    buildTime: 8,
+
+    oilUpkeep: 40000,
+
+    moneyUpkeep: 30000000
+
+};
+
+
+const formationSelector =
+    document.getElementById("formation-level");
+
+
+function formatMoney(value) {
+
+    return "$" + value.toLocaleString("en-US");
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-US");
+
+}
+
+
+function updateFormation() {
+
+    const level =
+        Number(formationSelector.value);
+
+
+    /*
+     * Combat statistics
+     *
+     * Strength, Defence and Size scale
+     * with formation level.
+     *
+     * Movement remains fixed.
+     */
+
+    const strength =
+        baseStats.strength * level;
+
+    const defence =
+        baseStats.defence * level;
+
+    const movement =
+        baseStats.movement;
+
+    const size =
+        baseStats.size * level;
+
+
+    /*
+     * Economics
+     *
+     * All economic values scale
+     * with formation level.
+     */
+
+    const moneyCost =
+        baseStats.moneyCost * level;
+
+    const cmCost =
+        baseStats.cmCost * level;
+
+    const rmCost =
+        baseStats.rmCost * level;
+
+    const buildTime =
+        baseStats.buildTime * level;
+
+    const oilUpkeep =
+        baseStats.oilUpkeep * level;
+
+    const moneyUpkeep =
+        baseStats.moneyUpkeep * level;
+
+
+    /*
+     * Update combat statistics
+     */
+
+    document.getElementById(
+        "strength-stat"
+    ).textContent =
+        formatNumber(strength);
+
+
+    document.getElementById(
+        "defence-stat"
+    ).textContent =
+        formatNumber(defence);
+
+
+    document.getElementById(
+        "movement-stat"
+    ).textContent =
+        formatNumber(movement);
+
+
+    document.getElementById(
+        "size-stat"
+    ).textContent =
+        formatNumber(size);
+
+
+    /*
+     * Update economics
+     */
+
+    document.getElementById(
+        "money-cost"
+    ).textContent =
+        formatMoney(moneyCost);
+
+
+    document.getElementById(
+        "cm-cost"
+    ).textContent =
+        formatNumber(cmCost) + " tons";
+
+
+    document.getElementById(
+        "rm-cost"
+    ).textContent =
+        formatNumber(rmCost) + " tons";
+
+
+    document.getElementById(
+        "build-time"
+    ).textContent =
+        formatNumber(buildTime) +
+        (buildTime === 1 ? " Turn" : " Turns");
+
+
+    document.getElementById(
+        "oil-upkeep"
+    ).textContent =
+        formatNumber(oilUpkeep) + " bbl";
+
+
+    document.getElementById(
+        "money-upkeep"
+    ).textContent =
+        formatMoney(moneyUpkeep);
+
+}
+
+
+formationSelector.addEventListener(
+    "change",
+    updateFormation
+);
+
+
+updateFormation();
+
+</script>
+
+{% endblock %}

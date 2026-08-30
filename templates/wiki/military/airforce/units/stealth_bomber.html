@@ -1,0 +1,611 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Stealth Bomber | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_airforce_overview') }}">Air Force</a>
+
+<span>/</span>
+
+<span>Stealth Bomber</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<div class="unit-page">
+
+    <!-- Unit Header -->
+
+    <div class="unit-page-header">
+
+        <div>
+
+            <h1>Stealth Bomber</h1>
+
+            <span class="unit-classification">
+                AIR
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Unit Layout -->
+
+    <div class="unit-layout">
+
+
+        <!-- Left Column -->
+
+        <div class="unit-description">
+
+
+            <h2>Overview</h2>
+
+            <p>
+                Stealth Bombers are advanced long-range aircraft
+                designed to penetrate heavily defended airspace
+                and deliver powerful attacks against enemy ground
+                targets and buildings. Their stealth capabilities
+                provide increased survivability when operating
+                against defended targets.
+            </p>
+
+
+            <h2>Role</h2>
+
+            <p>
+                The primary role of the Stealth Bomber is to conduct
+                strategic bombing operations against high-value
+                enemy ground targets and buildings. Stealth Bombers
+                are specialised for deep-strike missions and
+                cannot engage enemy air or naval units.
+            </p>
+
+
+            <h2>Combat Restrictions</h2>
+
+            <p>
+                Stealth Bombers can only attack
+                <strong>ground units and buildings</strong>.
+                They cannot attack enemy <strong>air or naval
+                units</strong>.
+            </p>
+
+            <p>
+                Their advanced stealth capabilities make them
+                particularly suited to striking defended targets
+                deep within enemy territory.
+            </p>
+
+
+            <h2>Strengths</h2>
+
+            <ul>
+
+                <li>
+                    Extremely high offensive capability.
+                </li>
+
+                <li>
+                    High defensive capability compared with
+                    conventional Bombers.
+                </li>
+
+                <li>
+                    Very long operational range.
+                </li>
+
+                <li>
+                    Highly effective against important ground
+                    targets and buildings.
+                </li>
+
+            </ul>
+
+
+            <h2>Weaknesses</h2>
+
+            <ul>
+
+                <li>
+                    Extremely expensive to build and maintain.
+                </li>
+
+                <li>
+                    High resource and fuel requirements.
+                </li>
+
+                <li>
+                    Cannot attack enemy air or naval units.
+                </li>
+
+                <li>
+                    Requires careful employment against heavily
+                    defended targets.
+                </li>
+
+            </ul>
+
+
+            <h2>Recommended Employment</h2>
+
+            <p>
+                Use Stealth Bombers to conduct deep-strike and
+                strategic bombing operations against high-value
+                enemy buildings and ground targets. Their advanced
+                capabilities make them particularly valuable for
+                attacking important targets in heavily defended
+                areas.
+            </p>
+
+
+        </div>
+
+
+        <!-- Right Unit Information Panel -->
+
+        <div class="unit-panel">
+
+
+            <!-- Formation -->
+
+            <div class="unit-panel-formation">
+
+                <label for="formation-level">
+                    Formation
+                </label>
+
+                <select id="formation-level">
+
+                    <option value="1">
+                        Pair
+                    </option>
+
+                    <option value="2">
+                        Flight
+                    </option>
+
+                    <option value="3">
+                        Squadron
+                    </option>
+
+                    <option value="4">
+                        Wing
+                    </option>
+
+                    <option value="5">
+                        Air Command
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Unit Icon -->
+
+            <div class="unit-panel-icon">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/unit_icons/SBOMB.png'
+                    ) }}"
+                    alt="Stealth Bomber icon"
+                >
+
+            </div>
+
+
+            <!-- Resource Cost -->
+
+            <div class="unit-panel-section">
+
+                <h2>Resource Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money</span>
+
+                    <strong id="money-cost">
+                        $1,500,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Common Metal</span>
+
+                    <strong id="cm-cost">
+                        5,000 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Rare Metal</span>
+
+                    <strong id="rm-cost">
+                        700 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Build Time</span>
+
+                    <strong id="build-time">
+                        8 Turns
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upkeep -->
+
+            <div class="unit-panel-section">
+
+                <h2>Upkeep Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money Upkeep</span>
+
+                    <strong id="money-upkeep">
+                        $15,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Oil Upkeep</span>
+
+                    <strong id="oil-upkeep">
+                        3,000 bbl
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Combat Statistics -->
+
+            <div class="unit-panel-section unit-combat-stats">
+
+                <h2>Combat Stats</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Strength</span>
+
+                    <strong id="strength-stat">
+                        25
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Defence</span>
+
+                    <strong id="defence-stat">
+                        10
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Movement</span>
+
+                    <strong id="movement-stat">
+                        10
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Size</span>
+
+                    <strong id="size-stat">
+                        3
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Related Mechanics -->
+
+    <h2>Related Mechanics</h2>
+
+    <div class="wiki-link-list">
+
+        <a href="{{ url_for('wiki_air_combat') }}">
+
+            <strong>Air Combat</strong>
+
+            <span>
+                Learn how engagements between opposing aircraft
+                are resolved.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_strategic_bombing') }}">
+
+            <strong>Strategic Bombing</strong>
+
+            <span>
+                Learn how bombers conduct attacks against
+                eligible enemy buildings.
+            </span>
+
+        </a>
+
+        <a href="{{ url_for('wiki_stealth') }}">
+
+            <strong>Stealth</strong>
+
+            <span>
+                Learn about stealth aircraft and their advantages
+                against enemy air defences.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_air_to_ground') }}">
+
+            <strong>Air-to-Ground Attacks</strong>
+
+            <span>
+                Learn how aircraft conduct attacks against
+                ground targets.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_movement') }}">
+
+            <strong>Movement</strong>
+
+            <span>
+                Learn how military units move between sectors
+                and how movement interacts with combat.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_logistics') }}">
+
+            <strong>Logistics</strong>
+
+            <span>
+                Learn how military forces are supplied and
+                sustained during operations.
+            </span>
+
+        </a>
+
+    </div>
+
+
+    {% include 'partials/all_units.html' %}
+
+
+<script>
+
+const baseStats = {
+
+    strength: 25,
+
+    defence: 10,
+
+    movement: 10,
+
+    size: 3,
+
+    moneyCost: 1500000000,
+
+    cmCost: 5000,
+
+    rmCost: 700,
+
+    buildTime: 8,
+
+    oilUpkeep: 3000,
+
+    moneyUpkeep: 15000000
+
+};
+
+
+const formationSelector =
+    document.getElementById("formation-level");
+
+
+function formatMoney(value) {
+
+    return "$" + value.toLocaleString("en-US");
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-US");
+
+}
+
+
+function updateFormation() {
+
+    const level =
+        Number(formationSelector.value);
+
+
+    /*
+     * Combat statistics
+     *
+     * Strength, Defence and Size scale
+     * with formation level.
+     *
+     * Movement remains fixed.
+     */
+
+    const strength =
+        baseStats.strength * level;
+
+    const defence =
+        baseStats.defence * level;
+
+    const movement =
+        baseStats.movement;
+
+    const size =
+        baseStats.size * level;
+
+
+    /*
+     * Economics
+     *
+     * All economic values scale
+     * with formation level.
+     */
+
+    const moneyCost =
+        baseStats.moneyCost * level;
+
+    const cmCost =
+        baseStats.cmCost * level;
+
+    const rmCost =
+        baseStats.rmCost * level;
+
+    const buildTime =
+        baseStats.buildTime * level;
+
+    const oilUpkeep =
+        baseStats.oilUpkeep * level;
+
+    const moneyUpkeep =
+        baseStats.moneyUpkeep * level;
+
+
+    /*
+     * Update combat statistics
+     */
+
+    document.getElementById(
+        "strength-stat"
+    ).textContent =
+        formatNumber(strength);
+
+
+    document.getElementById(
+        "defence-stat"
+    ).textContent =
+        formatNumber(defence);
+
+
+    document.getElementById(
+        "movement-stat"
+    ).textContent =
+        formatNumber(movement);
+
+
+    document.getElementById(
+        "size-stat"
+    ).textContent =
+        formatNumber(size);
+
+
+    /*
+     * Update economics
+     */
+
+    document.getElementById(
+        "money-cost"
+    ).textContent =
+        formatMoney(moneyCost);
+
+
+    document.getElementById(
+        "cm-cost"
+    ).textContent =
+        formatNumber(cmCost) + " tons";
+
+
+    document.getElementById(
+        "rm-cost"
+    ).textContent =
+        formatNumber(rmCost) + " tons";
+
+
+    document.getElementById(
+        "build-time"
+    ).textContent =
+        formatNumber(buildTime) +
+        (buildTime === 1 ? " Turn" : " Turns");
+
+
+    document.getElementById(
+        "oil-upkeep"
+    ).textContent =
+        formatNumber(oilUpkeep) + " bbl";
+
+
+    document.getElementById(
+        "money-upkeep"
+    ).textContent =
+        formatMoney(moneyUpkeep);
+
+}
+
+
+formationSelector.addEventListener(
+    "change",
+    updateFormation
+);
+
+
+updateFormation();
+
+</script>
+
+{% endblock %}

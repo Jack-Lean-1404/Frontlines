@@ -1,0 +1,593 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Engineer | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_army_overview') }}">Army</a>
+
+<span>/</span>
+
+<span>Engineer</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<div class="unit-page">
+
+    <!-- Unit Header -->
+
+    <div class="unit-page-header">
+
+        <div>
+
+            <h1>Engineer</h1>
+
+            <span class="unit-classification">
+                LAND
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Unit Layout -->
+
+    <div class="unit-layout">
+
+
+        <!-- Left Column -->
+
+        <div class="unit-description">
+
+
+            <h2>Overview</h2>
+
+            <p>
+                Engineer units provide essential engineering
+                support to military operations. Their
+                responsibilities include constructing and
+                repairing infrastructure, improving mobility,
+                and overcoming natural or man-made obstacles.
+                Engineers play a crucial role in ensuring that
+                combat units can maintain momentum during
+                operations.
+            </p>
+
+
+            <h2>Special Capabilities</h2>
+
+            <p>
+                Engineer units negate all river-crossing movement
+                penalties for units in the same sector.
+            </p>
+
+            <div class="wiki-link-list">
+
+                <a href="{{ url_for('wiki_movement') }}">
+
+                    <strong>Movement</strong>
+
+                    <span>
+                        Learn how military units move between
+                        sectors and how movement interacts
+                        with combat.
+                    </span>
+
+                </a>
+
+                <a href="{{ url_for('wiki_terrain') }}">
+
+                    <strong>Terrain</strong>
+
+                    <span>
+                        Learn how terrain affects movement
+                        costs and unit access.
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <h2>Strengths</h2>
+
+            <ul>
+
+                <li>
+                    Improves force mobility.
+                </li>
+
+                <li>
+                    Enables faster movement through difficult
+                    terrain.
+                </li>
+
+                <li>
+                    Valuable support asset during offensive
+                    operations.
+                </li>
+
+            </ul>
+
+
+            <h2>Weaknesses</h2>
+
+            <ul>
+
+                <li>
+                    Limited combat capability.
+                </li>
+
+                <li>
+                    Most effective when supporting other units.
+                </li>
+
+            </ul>
+
+
+            <h2>Recommended Employment</h2>
+
+            <p>
+                Use Engineers to support advancing forces and
+                help units cross rivers without losing movement.
+            </p>
+
+
+        </div>
+
+
+        <!-- Right Unit Information Panel -->
+
+        <div class="unit-panel">
+
+
+            <!-- Formation -->
+
+            <div class="unit-panel-formation">
+
+                <label for="formation-level">
+                    Formation
+                </label>
+
+                <select id="formation-level">
+
+                    <option value="1">
+                        Company
+                    </option>
+
+                    <option value="2">
+                        Battalion
+                    </option>
+
+                    <option value="3">
+                        Regiment
+                    </option>
+
+                    <option value="4">
+                        Division
+                    </option>
+
+                    <option value="5">
+                        Corps
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Unit Icon -->
+
+            <div class="unit-panel-icon">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/unit_icons/Engineer.png'
+                    ) }}"
+                    alt="Engineer icon"
+                >
+
+            </div>
+
+
+            <!-- Resource Cost -->
+
+            <div class="unit-panel-section">
+
+                <h2>Resource Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money</span>
+
+                    <strong id="money-cost">
+                        $70,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Common Metal</span>
+
+                    <strong id="cm-cost">
+                        800 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Rare Metal</span>
+
+                    <strong id="rm-cost">
+                        300 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Build Time</span>
+
+                    <strong id="build-time">
+                        2 Turns
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upkeep -->
+
+            <div class="unit-panel-section">
+
+                <h2>Upkeep Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money Upkeep</span>
+
+                    <strong id="money-upkeep">
+                        $1,400,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Oil Upkeep</span>
+
+                    <strong id="oil-upkeep">
+                        800 bbl
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Combat Statistics -->
+
+            <div class="unit-panel-section unit-combat-stats">
+
+                <h2>Combat Stats</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Attack</span>
+
+                    <strong id="attack-stat">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Defence</span>
+
+                    <strong id="defence-stat">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Movement</span>
+
+                    <strong id="movement-stat">
+                        2
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Size</span>
+
+                    <strong id="size-stat">
+                        2
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Related Mechanics -->
+
+    <h2>Related Mechanics</h2>
+
+    <div class="wiki-link-list">
+
+        <a href="{{ url_for('wiki_movement') }}">
+
+            <strong>Movement</strong>
+
+            <span>
+                Learn how military units move between sectors
+                and how movement interacts with combat.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_terrain') }}">
+
+            <strong>Terrain</strong>
+
+            <span>
+                Learn how terrain affects movement costs and
+                unit access.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_land_combat') }}">
+
+            <strong>Land Combat</strong>
+
+            <span>
+                Learn how engagements between opposing ground
+                forces are resolved.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_logistics') }}">
+
+            <strong>Logistics</strong>
+
+            <span>
+                Learn how military forces are supplied and
+                sustained during operations.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_command') }}">
+
+            <strong>Command &amp; Control</strong>
+
+            <span>
+                Learn how Headquarters coordinate friendly
+                forces and how Disorganisation affects units.
+            </span>
+
+        </a>
+
+    </div>
+
+
+    {% include 'partials/all_units.html' %}
+
+
+<script>
+
+const baseStats = {
+
+    attack: 0,
+
+    defence: 0,
+
+    movement: 2,
+
+    size: 2,
+
+    moneyCost: 70000000,
+
+    cmCost: 800,
+
+    rmCost: 300,
+
+    buildTime: 2,
+
+    oilUpkeep: 800,
+
+    moneyUpkeep: 1400000
+
+};
+
+
+const formationSelector =
+    document.getElementById("formation-level");
+
+
+function formatMoney(value) {
+
+    return "$" + value.toLocaleString("en-US");
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-US");
+
+}
+
+
+function updateFormation() {
+
+    const level =
+        Number(formationSelector.value);
+
+
+    /*
+     * Combat statistics
+     *
+     * Attack, Defence and Size scale
+     * with formation level.
+     *
+     * Movement remains fixed.
+     */
+
+    const attack =
+        baseStats.attack * level;
+
+    const defence =
+        baseStats.defence * level;
+
+    const movement =
+        baseStats.movement;
+
+    const size =
+        baseStats.size * level;
+
+
+    /*
+     * Economics
+     *
+     * All economic values scale
+     * with formation level.
+     */
+
+    const moneyCost =
+        baseStats.moneyCost * level;
+
+    const cmCost =
+        baseStats.cmCost * level;
+
+    const rmCost =
+        baseStats.rmCost * level;
+
+    const buildTime =
+        baseStats.buildTime * level;
+
+    const oilUpkeep =
+        baseStats.oilUpkeep * level;
+
+    const moneyUpkeep =
+        baseStats.moneyUpkeep * level;
+
+
+    /*
+     * Update combat statistics
+     */
+
+    document.getElementById(
+        "attack-stat"
+    ).textContent =
+        formatNumber(attack);
+
+
+    document.getElementById(
+        "defence-stat"
+    ).textContent =
+        formatNumber(defence);
+
+
+    document.getElementById(
+        "movement-stat"
+    ).textContent =
+        formatNumber(movement);
+
+
+    document.getElementById(
+        "size-stat"
+    ).textContent =
+        formatNumber(size);
+
+
+    /*
+     * Update economics
+     */
+
+    document.getElementById(
+        "money-cost"
+    ).textContent =
+        formatMoney(moneyCost);
+
+
+    document.getElementById(
+        "cm-cost"
+    ).textContent =
+        formatNumber(cmCost) + " tons";
+
+
+    document.getElementById(
+        "rm-cost"
+    ).textContent =
+        formatNumber(rmCost) + " tons";
+
+
+    document.getElementById(
+        "build-time"
+    ).textContent =
+        formatNumber(buildTime) +
+        (buildTime === 1 ? " Turn" : " Turns");
+
+
+    document.getElementById(
+        "oil-upkeep"
+    ).textContent =
+        formatNumber(oilUpkeep) + " bbl";
+
+
+    document.getElementById(
+        "money-upkeep"
+    ).textContent =
+        formatMoney(moneyUpkeep);
+
+}
+
+
+formationSelector.addEventListener(
+    "change",
+    updateFormation
+);
+
+
+updateFormation();
+
+</script>
+
+{% endblock %}

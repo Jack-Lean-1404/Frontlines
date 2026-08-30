@@ -1,0 +1,664 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Sealift | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_navy_overview') }}">Navy</a>
+
+<span>/</span>
+
+<span>Sealift</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<div class="unit-page">
+
+    <!-- Unit Header -->
+
+    <div class="unit-page-header">
+
+        <div>
+
+            <h1>Sealift</h1>
+
+            <span class="unit-classification">
+                SEA
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Unit Layout -->
+
+    <div class="unit-layout">
+
+
+        <!-- Left Column -->
+
+        <div class="unit-description">
+
+
+            <h2>Overview</h2>
+
+            <p>
+                Sealift units are specialised transport vessels
+                designed to move ground forces across the sea.
+                They provide a reliable method of transporting
+                military units between friendly coastal sectors
+                and supporting large-scale ground operations.
+            </p>
+
+
+            <h2>Role</h2>
+
+            <p>
+                The primary role of Sealift is to transport
+                ground units across the sea. Sealift Ships
+                allow ground forces to be repositioned between
+                coastal areas without requiring amphibious
+                assault operations.
+            </p>
+
+
+            <h2>Strengths</h2>
+
+            <ul>
+
+                <li>
+                    Provides strategic ground-force transport
+                    across the sea.
+                </li>
+
+                <li>
+                    High movement capability.
+                </li>
+
+                <li>
+                    Can transport large ground formations when
+                    operating at higher sizes.
+                </li>
+
+                <li>
+                    Useful for repositioning forces between
+                    distant coastal sectors.
+                </li>
+
+            </ul>
+
+
+            <h2>Weaknesses</h2>
+
+            <ul>
+                <li>
+                    Can only transport one ground unit at a time.
+                </li>
+
+                <li>
+                    Vulnerable to enemy naval and air attacks.
+                </li>
+
+                <li>
+                    Requires protection when operating in
+                    contested waters.
+                </li>
+
+            </ul>
+
+
+            <h2>Transport Capacity</h2>
+
+            <p>
+                A Sealift Ship may carry
+                <strong>one ground unit</strong> that is the
+                same size or smaller than the Sealift Ship.
+            </p>
+
+            <p>
+                Only one ground unit may be carried by a
+                Sealift Ship at any given time.
+            </p>
+
+            <p>
+                Transport capacity is determined by the size
+                of the Sealift Ship.
+            </p>
+
+            <div class="wiki-info-grid">
+
+                <div class="wiki-info-card">
+
+                    <span class="wiki-info-number">
+                        01
+                    </span>
+
+                    <h3>Size 1</h3>
+
+                    <p>
+                        Can carry one Size 1 ground unit.
+                    </p>
+
+                </div>
+
+
+                <div class="wiki-info-card">
+
+                    <span class="wiki-info-number">
+                        02
+                    </span>
+
+                    <h3>Size 2</h3>
+
+                    <p>
+                        Can carry one Size 2, Size 1, or
+                        smaller ground unit.
+                    </p>
+
+                </div>
+
+
+                <div class="wiki-info-card">
+
+                    <span class="wiki-info-number">
+                        03
+                    </span>
+
+                    <h3>Size 3</h3>
+
+                    <p>
+                        Can carry one Size 3, Size 2, or
+                        Size 1 ground unit.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>Recommended Employment</h2>
+
+            <p>
+                Use Sealift units to move ground forces between
+                coastal sectors and establish or reinforce
+                positions across the sea. Sealift Ships should
+                generally operate alongside naval forces when
+                travelling through contested waters.
+            </p>
+
+            <p>
+                Their limited combat capability makes protecting
+                Sealift Ships important, particularly when
+                transporting valuable ground formations.
+            </p>
+
+
+        </div>
+
+
+        <!-- Right Unit Information Panel -->
+
+        <div class="unit-panel">
+
+
+            <!-- Formation -->
+
+            <div class="unit-panel-formation">
+
+                <label for="formation-level">
+                    Formation
+                </label>
+
+                <select id="formation-level">
+
+                    <option value="1">
+                        Ship
+                    </option>
+
+                    <option value="2">
+                        Division
+                    </option>
+
+                    <option value="3">
+                        Squadron
+                    </option>
+
+                    <option value="4">
+                        Flotilla
+                    </option>
+
+                    <option value="5">
+                        Fleet
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Unit Icon -->
+
+            <div class="unit-panel-icon">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/unit_icons/SL.png'
+                    ) }}"
+                    alt="Sealift icon"
+                >
+
+            </div>
+
+
+            <!-- Resource Cost -->
+
+            <div class="unit-panel-section">
+
+                <h2>Resource Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money</span>
+
+                    <strong id="money-cost">
+                        $150,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Common Metal</span>
+
+                    <strong id="cm-cost">
+                        5,000 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Rare Metal</span>
+
+                    <strong id="rm-cost">
+                        0 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Build Time</span>
+
+                    <strong id="build-time">
+                        3 Turns
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upkeep -->
+
+            <div class="unit-panel-section">
+
+                <h2>Upkeep Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money Upkeep</span>
+
+                    <strong id="money-upkeep">
+                        $2,500,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Oil Upkeep</span>
+
+                    <strong id="oil-upkeep">
+                        8,000 bbl
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Combat Statistics -->
+
+            <div class="unit-panel-section unit-combat-stats">
+
+                <h2>Combat Stats</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Strength</span>
+
+                    <strong id="strength-stat">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Defence</span>
+
+                    <strong id="defence-stat">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Movement</span>
+
+                    <strong id="movement-stat">
+                        4
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Size</span>
+
+                    <strong id="size-stat">
+                        4
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Related Mechanics -->
+
+    <h2>Related Mechanics</h2>
+
+    <div class="wiki-link-list">
+
+        <a href="{{ url_for('wiki_sea_combat') }}">
+
+            <strong>Naval Combat</strong>
+
+            <span>
+                Learn how engagements between opposing naval
+                forces are resolved.
+            </span>
+
+        </a>
+
+        <a href="{{ url_for('wiki_sealift') }}">
+
+            <strong>Sealift Operations</strong>
+
+            <span>
+                Learn about Transport Ships, transport capacity,
+                loading, unloading, and transport losses.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_amphibious') }}">
+
+            <strong>Amphibious Operations</strong>
+
+            <span>
+                Learn how ground forces are transported and
+                deployed during amphibious operations.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_terrain') }}">
+
+            <strong>Terrain</strong>
+
+            <span>
+                Learn how different terrain types affect naval
+                movement and operations.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_movement') }}">
+
+            <strong>Movement</strong>
+
+            <span>
+                Learn how military units move between sectors
+                and how movement interacts with combat.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_logistics') }}">
+
+            <strong>Logistics</strong>
+
+            <span>
+                Learn how military forces are supplied and
+                sustained during operations.
+            </span>
+
+        </a>
+
+    </div>
+
+
+    {% include 'partials/all_units.html' %}
+
+
+<script>
+
+const baseStats = {
+
+    strength: 1,
+
+    defence: 1,
+
+    movement: 4,
+
+    size: 4,
+
+    moneyCost: 150000000,
+
+    cmCost: 5000,
+
+    rmCost: 0,
+
+    buildTime: 3,
+
+    oilUpkeep: 8000,
+
+    moneyUpkeep: 2500000
+
+};
+
+
+const formationSelector =
+    document.getElementById("formation-level");
+
+
+function formatMoney(value) {
+
+    return "$" + value.toLocaleString("en-US");
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-US");
+
+}
+
+
+function updateFormation() {
+
+    const level =
+        Number(formationSelector.value);
+
+
+    /*
+     * Combat statistics
+     *
+     * Strength, Defence and Size scale
+     * with formation level.
+     *
+     * Movement remains fixed.
+     */
+
+    const strength =
+        baseStats.strength * level;
+
+    const defence =
+        baseStats.defence * level;
+
+    const movement =
+        baseStats.movement;
+
+    const size =
+        baseStats.size * level;
+
+
+    /*
+     * Economics
+     *
+     * All economic values scale
+     * with formation level.
+     */
+
+    const moneyCost =
+        baseStats.moneyCost * level;
+
+    const cmCost =
+        baseStats.cmCost * level;
+
+    const rmCost =
+        baseStats.rmCost * level;
+
+    const buildTime =
+        baseStats.buildTime * level;
+
+    const oilUpkeep =
+        baseStats.oilUpkeep * level;
+
+    const moneyUpkeep =
+        baseStats.moneyUpkeep * level;
+
+
+    /*
+     * Update combat statistics
+     */
+
+    document.getElementById(
+        "strength-stat"
+    ).textContent =
+        formatNumber(strength);
+
+
+    document.getElementById(
+        "defence-stat"
+    ).textContent =
+        formatNumber(defence);
+
+
+    document.getElementById(
+        "movement-stat"
+    ).textContent =
+        formatNumber(movement);
+
+
+    document.getElementById(
+        "size-stat"
+    ).textContent =
+        formatNumber(size);
+
+
+    /*
+     * Update economics
+     */
+
+    document.getElementById(
+        "money-cost"
+    ).textContent =
+        formatMoney(moneyCost);
+
+
+    document.getElementById(
+        "cm-cost"
+    ).textContent =
+        formatNumber(cmCost) + " tons";
+
+
+    document.getElementById(
+        "rm-cost"
+    ).textContent =
+        formatNumber(rmCost) + " tons";
+
+
+    document.getElementById(
+        "build-time"
+    ).textContent =
+        formatNumber(buildTime) +
+        (buildTime === 1 ? " Turn" : " Turns");
+
+
+    document.getElementById(
+        "oil-upkeep"
+    ).textContent =
+        formatNumber(oilUpkeep) + " bbl";
+
+
+    document.getElementById(
+        "money-upkeep"
+    ).textContent =
+        formatMoney(moneyUpkeep);
+
+}
+
+
+formationSelector.addEventListener(
+    "change",
+    updateFormation
+);
+
+
+updateFormation();
+
+</script>
+
+{% endblock %}

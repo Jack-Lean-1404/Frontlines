@@ -1,0 +1,610 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Marine Patrol Aircraft | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_airforce_overview') }}">Air Force</a>
+
+<span>/</span>
+
+<span>Marine Patrol Aircraft</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<div class="unit-page">
+
+    <!-- Unit Header -->
+
+    <div class="unit-page-header">
+
+        <div>
+
+            <h1>Marine Patrol Aircraft</h1>
+
+            <span class="unit-classification">
+                AIR
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Unit Layout -->
+
+    <div class="unit-layout">
+
+
+        <!-- Left Column -->
+
+        <div class="unit-description">
+
+
+            <h2>Overview</h2>
+
+            <p>
+                Marine Patrol Aircraft (MPA) are specialised aircraft
+                designed to conduct maritime patrol and
+                Anti-Submarine Warfare (ASW) operations. They provide
+                an aerial capability for detecting and engaging enemy
+                submarines while supporting friendly naval forces.
+            </p>
+
+
+            <h2>Role</h2>
+
+            <p>
+                The primary role of the Marine Patrol Aircraft is to
+                conduct Anti-Submarine Warfare operations. MPA can
+                detect and attack enemy submarines, providing an
+                important counter to submarine threats operating
+                against friendly naval forces.
+            </p>
+
+
+            <h2>Strengths</h2>
+
+            <ul>
+
+                <li>
+                    Specialised Anti-Submarine Warfare capability.
+                </li>
+
+                <li>
+                    Can detect and attack enemy submarines.
+                </li>
+
+                <li>
+                    Cannot be attacked by submarines in return.
+                </li>
+
+                <li>
+                    Can operate independently of surface naval forces.
+                </li>
+
+            </ul>
+
+
+            <h2>Weaknesses</h2>
+
+            <ul>
+
+                <li>
+                    Limited defensive capability.
+                </li>
+
+                <li>
+                    Lower combat capability than dedicated combat
+                    aircraft.
+                </li>
+
+                <li>
+                    Primarily specialised for maritime and
+                    Anti-Submarine Warfare operations.
+                </li>
+
+                <li>
+                    Vulnerable to enemy aircraft.
+                </li>
+
+            </ul>
+
+
+            <h2>Special Capability</h2>
+
+            <p>
+                Marine Patrol Aircraft are specialised
+                <strong>Anti-Submarine Warfare (ASW)</strong> aircraft.
+                They can detect and attack enemy submarines.
+            </p>
+
+            <p>
+                MPA cannot be attacked by submarines in return because
+                they are aircraft rather than naval units. Submarines
+                therefore cannot use their specialised submarine attack
+                against MPA.
+            </p>
+
+
+            <h2>Recommended Employment</h2>
+
+            <p>
+                Use Marine Patrol Aircraft to locate and attack enemy
+                submarines and protect friendly naval forces from
+                underwater threats. MPA are particularly valuable when
+                operating alongside surface fleets where they can provide
+                dedicated Anti-Submarine Warfare coverage.
+            </p>
+
+
+
+
+        </div>
+
+
+        <!-- Right Unit Information Panel -->
+
+        <div class="unit-panel">
+
+
+            <!-- Formation -->
+
+            <div class="unit-panel-formation">
+
+                <label for="formation-level">
+                    Formation
+                </label>
+
+                <select id="formation-level">
+
+                    <option value="1">
+                        Pair
+                    </option>
+
+                    <option value="2">
+                        Flight
+                    </option>
+
+                    <option value="3">
+                        Squadron
+                    </option>
+
+                    <option value="4">
+                        Wing
+                    </option>
+
+                    <option value="5">
+                        Air Command
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Unit Icon -->
+
+            <div class="unit-panel-icon">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/unit_icons/MPA.png'
+                    ) }}"
+                    alt="Marine Patrol Aircraft icon"
+                >
+
+            </div>
+
+
+            <!-- Resource Cost -->
+
+            <div class="unit-panel-section">
+
+                <h2>Resource Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money</span>
+
+                    <strong id="money-cost">
+                        $150,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Common Metal</span>
+
+                    <strong id="cm-cost">
+                        1,000 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Rare Metal</span>
+
+                    <strong id="rm-cost">
+                        300 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Build Time</span>
+
+                    <strong id="build-time">
+                        3 Turns
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upkeep -->
+
+            <div class="unit-panel-section">
+
+                <h2>Upkeep Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money Upkeep</span>
+
+                    <strong id="money-upkeep">
+                        $1,500,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Oil Upkeep</span>
+
+                    <strong id="oil-upkeep">
+                        1,500 bbl
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Combat Statistics -->
+
+            <div class="unit-panel-section unit-combat-stats">
+
+                <h2>Combat Stats</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Strength</span>
+
+                    <strong id="strength-stat">
+                        3
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Defence</span>
+
+                    <strong id="defence-stat">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Movement</span>
+
+                    <strong id="movement-stat">
+                        4
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Size</span>
+
+                    <strong id="size-stat">
+                        2
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Related Mechanics -->
+
+    <h2>Related Mechanics</h2>
+
+    <div class="wiki-link-list">
+
+        <a href="{{ url_for('wiki_air_combat') }}">
+
+            <strong>Air Combat</strong>
+
+            <span>
+                Learn how engagements between opposing aircraft
+                are resolved.
+            </span>
+
+        </a>
+
+        <a href="{{ url_for('wiki_submarine_warfare') }}">
+
+            <strong>Submarine Warfare</strong>
+
+            <span>
+                Learn how submarines operate and how Marine Patrol
+                Aircraft conduct Anti-Submarine Warfare.
+            </span>
+
+        </a>
+
+        <a href="{{ url_for('wiki_air_to_sea') }}">
+
+            <strong>Air-to-Sea Combat</strong>
+
+            <span>
+                Learn how MPA conduct Anti-Ship attacks, including
+                defensive engagements, combat rolls, and formation
+                damage.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_sea_combat') }}">
+
+            <strong>Naval Combat</strong>
+
+            <span>
+                Learn how engagements between opposing naval
+                forces are resolved.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_movement') }}">
+
+            <strong>Movement</strong>
+
+            <span>
+                Learn how military units move between sectors
+                and how movement interacts with combat.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_logistics') }}">
+
+            <strong>Logistics</strong>
+
+            <span>
+                Learn how military forces are supplied and
+                sustained during operations.
+            </span>
+
+        </a>
+
+    </div>
+
+
+    {% include 'partials/all_units.html' %}
+
+
+<script>
+
+const baseStats = {
+
+    strength: 3,
+
+    defence: 1,
+
+    movement: 4,
+
+    size: 2,
+
+    moneyCost: 150000000,
+
+    cmCost: 1000,
+
+    rmCost: 300,
+
+    buildTime: 3,
+
+    oilUpkeep: 1500,
+
+    moneyUpkeep: 1500000
+
+};
+
+
+const formationSelector =
+    document.getElementById("formation-level");
+
+
+function formatMoney(value) {
+
+    return "$" + value.toLocaleString("en-US");
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-US");
+
+}
+
+
+function updateFormation() {
+
+    const level =
+        Number(formationSelector.value);
+
+
+    /*
+     * Combat statistics
+     *
+     * Strength, Defence and Size scale
+     * with formation level.
+     *
+     * Movement remains fixed.
+     */
+
+    const strength =
+        baseStats.strength * level;
+
+    const defence =
+        baseStats.defence * level;
+
+    const movement =
+        baseStats.movement;
+
+    const size =
+        baseStats.size * level;
+
+
+    /*
+     * Economics
+     *
+     * All economic values scale
+     * with formation level.
+     */
+
+    const moneyCost =
+        baseStats.moneyCost * level;
+
+    const cmCost =
+        baseStats.cmCost * level;
+
+    const rmCost =
+        baseStats.rmCost * level;
+
+    const buildTime =
+        baseStats.buildTime * level;
+
+    const oilUpkeep =
+        baseStats.oilUpkeep * level;
+
+    const moneyUpkeep =
+        baseStats.moneyUpkeep * level;
+
+
+    /*
+     * Update combat statistics
+     */
+
+    document.getElementById(
+        "strength-stat"
+    ).textContent =
+        formatNumber(strength);
+
+
+    document.getElementById(
+        "defence-stat"
+    ).textContent =
+        formatNumber(defence);
+
+
+    document.getElementById(
+        "movement-stat"
+    ).textContent =
+        formatNumber(movement);
+
+
+    document.getElementById(
+        "size-stat"
+    ).textContent =
+        formatNumber(size);
+
+
+    /*
+     * Update economics
+     */
+
+    document.getElementById(
+        "money-cost"
+    ).textContent =
+        formatMoney(moneyCost);
+
+
+    document.getElementById(
+        "cm-cost"
+    ).textContent =
+        formatNumber(cmCost) + " tons";
+
+
+    document.getElementById(
+        "rm-cost"
+    ).textContent =
+        formatNumber(rmCost) + " tons";
+
+
+    document.getElementById(
+        "build-time"
+    ).textContent =
+        formatNumber(buildTime) +
+        (buildTime === 1 ? " Turn" : " Turns");
+
+
+    document.getElementById(
+        "oil-upkeep"
+    ).textContent =
+        formatNumber(oilUpkeep) + " bbl";
+
+
+    document.getElementById(
+        "money-upkeep"
+    ).textContent =
+        formatMoney(moneyUpkeep);
+
+}
+
+
+formationSelector.addEventListener(
+    "change",
+    updateFormation
+);
+
+
+updateFormation();
+
+</script>
+
+{% endblock %}

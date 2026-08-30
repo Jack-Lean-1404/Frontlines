@@ -5633,6 +5633,12 @@ def wiki_submarine_warfare():
         "wiki/military/combat/navy/submarine_warfare.html"
     )
 
+@app.route("/wiki/military/combat/airforce/air-to-sea")
+def wiki_air_to_sea():
+    return render_template(
+        "wiki/military/combat/airforce/air_to_sea.html"
+    )
+
 
 
 
@@ -5711,10 +5717,10 @@ def wiki_navy_overview():
 
 # Navy units
 
-@app.route("/wiki/military/navy/units/corvette")
+@app.route("/wiki/military/navy/units/littoral-combat-ship")
 def wiki_corvette():
     return render_template(
-        "wiki/military/navy/units/corvette.html"
+        "wiki/military/navy/units/lcs.html"
     )
 
 
@@ -5739,10 +5745,10 @@ def wiki_cruiser():
     )
 
 
-@app.route("/wiki/military/navy/units/transport")
+@app.route("/wiki/military/navy/units/sealift")
 def wiki_transport():
     return render_template(
-        "wiki/military/navy/units/transport.html"
+        "wiki/military/navy/units/sealift.html"
     )
 
 
@@ -5781,7 +5787,7 @@ def wiki_airforce_overview():
 @app.route("/wiki/military/airforce/units/multirole-fighter")
 def wiki_multirole_fighter():
     return render_template(
-        "wiki/military/air_force/units/multirole_fighter.html"
+        "wiki/military/airforce/units/multirole_fighter.html"
     )
 
 @app.route("/wiki/military/airforce/units/attack-fighter")
@@ -5802,7 +5808,7 @@ def wiki_stealth_air_superiority_fighter():
         "wiki/military/airforce/units/stealth_air_superiority_fighter.html"
     )
 
-@app.route("/wiki/military/airforce/units/stealth-air-superiority-fighter")
+@app.route("/wiki/military/airforce/units/stealth-multi-role-fighter")
 def wiki_stealth_multirole_fighter():
     return render_template(
         "wiki/military/airforce/units/stealth_multirole_fighter.html"

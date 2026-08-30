@@ -1,0 +1,601 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Stealth Multirole Fighter | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_airforce_overview') }}">Air Force</a>
+
+<span>/</span>
+
+<span>Stealth Multirole Fighter</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<div class="unit-page">
+
+    <!-- Unit Header -->
+
+    <div class="unit-page-header">
+
+        <div>
+
+            <h1>Stealth Multirole Fighter</h1>
+
+            <span class="unit-classification">
+                AIR
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Unit Layout -->
+
+    <div class="unit-layout">
+
+
+        <!-- Left Column -->
+
+        <div class="unit-description">
+
+
+            <h2>Overview</h2>
+
+            <p>
+                Stealth Multirole Fighters are advanced combat
+                aircraft designed to perform a wide range of
+                missions while operating with a reduced presence
+                on enemy detection systems. They combine
+                multirole combat capabilities with advanced
+                stealth technology, allowing them to operate
+                effectively in contested airspace.
+            </p>
+
+
+            <h2>Role</h2>
+
+            <p>
+                The primary role of the Stealth Multirole Fighter
+                is to provide a flexible combat aircraft capable
+                of conducting both air-to-air and air-to-ground
+                operations. Their stealth capabilities allow
+                them to perform missions in areas where conventional
+                aircraft may face increased detection and threat.
+            </p>
+
+            <h2>Special Capability</h2>
+
+            <p>
+                Stealth Multirole Fighters are exceptionally effective
+                at <strong>Suppression of Enemy Air Defences (SEAD)</strong>
+                operations. Their stealth capabilities allow them to
+                approach and attack enemy air defence systems while
+                reducing their exposure to hostile detection and
+                interception.
+            </p>
+
+
+            <h2>Strengths</h2>
+
+            <ul>
+
+                <li>
+                    Highly versatile combat aircraft.
+                </li>
+
+                <li>
+                    Advanced stealth capabilities.
+                </li>
+
+                <li>
+                    Capable of performing multiple mission types.
+                </li>
+
+                <li>
+                    Effective in contested airspace.
+                </li>
+
+            </ul>
+
+
+            <h2>Weaknesses</h2>
+
+            <ul>
+
+                <li>
+                    Expensive to build and maintain.
+                </li>
+
+                <li>
+                    High rare metal requirements.
+                </li>
+
+                <li>
+                    Less specialised than dedicated air
+                    superiority aircraft.
+                </li>
+
+            </ul>
+
+
+            <h2>Recommended Employment</h2>
+
+            <p>
+                Use Stealth Multirole Fighters to conduct high-risk
+                operations in contested airspace, particularly
+                Suppression of Enemy Air Defences (SEAD) missions.
+                Their combination of stealth, mobility, and multirole
+                capability makes them highly effective at targeting
+                enemy air defence systems while remaining capable of
+                engaging other targets when required.
+            </p>
+
+
+        </div>
+
+
+        <!-- Right Unit Information Panel -->
+
+        <div class="unit-panel">
+
+
+            <!-- Formation -->
+
+            <div class="unit-panel-formation">
+
+                <label for="formation-level">
+                    Formation
+                </label>
+
+                <select id="formation-level">
+
+                    <option value="1">
+                        Pair
+                    </option>
+
+                    <option value="2">
+                        Flight
+                    </option>
+
+                    <option value="3">
+                        Squadron
+                    </option>
+
+                    <option value="4">
+                        Wing
+                    </option>
+
+                    <option value="5">
+                        Air Command
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Unit Icon -->
+
+            <div class="unit-panel-icon">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/unit_icons/SMRF.png'
+                    ) }}"
+                    alt="Stealth Multirole Fighter icon"
+                >
+
+            </div>
+
+
+            <!-- Resource Cost -->
+
+            <div class="unit-panel-section">
+
+                <h2>Resource Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money</span>
+
+                    <strong id="money-cost">
+                        $175,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Common Metal</span>
+
+                    <strong id="cm-cost">
+                        800 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Rare Metal</span>
+
+                    <strong id="rm-cost">
+                        400 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Build Time</span>
+
+                    <strong id="build-time">
+                        6 Turns
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upkeep -->
+
+            <div class="unit-panel-section">
+
+                <h2>Upkeep Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money Upkeep</span>
+
+                    <strong id="money-upkeep">
+                        $1,750,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Oil Upkeep</span>
+
+                    <strong id="oil-upkeep">
+                        900 bbl
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Combat Statistics -->
+
+            <div class="unit-panel-section unit-combat-stats">
+
+                <h2>Combat Stats</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Strength</span>
+
+                    <strong id="strength-stat">
+                        6
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Defence</span>
+
+                    <strong id="defence-stat">
+                        3
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Movement</span>
+
+                    <strong id="movement-stat">
+                        4
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Size</span>
+
+                    <strong id="size-stat">
+                        1
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Related Mechanics -->
+
+    <h2>Related Mechanics</h2>
+
+    <div class="wiki-link-list">
+
+        <a href="{{ url_for('wiki_air_combat') }}">
+
+            <strong>Air Combat</strong>
+
+            <span>
+                Learn how engagements between opposing aircraft
+                are resolved.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_air_to_ground') }}">
+
+            <strong>Air-to-Ground Attacks</strong>
+
+            <span>
+                Learn how aircraft conduct attacks against
+                ground targets.
+            </span>
+
+        </a>
+
+        <a href="{{ url_for('wiki_stealth') }}">
+
+            <strong>Stealth</strong>
+
+            <span>
+                Learn more about stealth aircraft and their
+                specialised capabilities.
+            </span>
+
+        </a>
+
+        <a href="{{ url_for('wiki_air_defence') }}">
+
+            <strong>Air Defence</strong>
+
+            <span>
+                Learn about Anti-Air systems and Air Defence Zones.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_movement') }}">
+
+            <strong>Movement</strong>
+
+            <span>
+                Learn how military units move between sectors
+                and how movement interacts with combat.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_logistics') }}">
+
+            <strong>Logistics</strong>
+
+            <span>
+                Learn how military forces are supplied and
+                sustained during operations.
+            </span>
+
+        </a>
+
+    </div>
+
+
+    {% include 'partials/all_units.html' %}
+
+
+<script>
+
+const baseStats = {
+
+    strength: 6,
+
+    defence: 3,
+
+    movement: 4,
+
+    size: 1,
+
+    moneyCost: 175000000,
+
+    cmCost: 800,
+
+    rmCost: 400,
+
+    buildTime: 6,
+
+    oilUpkeep: 900,
+
+    moneyUpkeep: 1750000
+
+};
+
+
+const formationSelector =
+    document.getElementById("formation-level");
+
+
+function formatMoney(value) {
+
+    return "$" + value.toLocaleString("en-US");
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-US");
+
+}
+
+
+function updateFormation() {
+
+    const level =
+        Number(formationSelector.value);
+
+
+    /*
+     * Combat statistics
+     *
+     * Strength, Defence and Size scale
+     * with formation level.
+     *
+     * Movement remains fixed.
+     */
+
+    const strength =
+        baseStats.strength * level;
+
+    const defence =
+        baseStats.defence * level;
+
+    const movement =
+        baseStats.movement;
+
+    const size =
+        baseStats.size * level;
+
+
+    /*
+     * Economics
+     *
+     * All economic values scale
+     * with formation level.
+     */
+
+    const moneyCost =
+        baseStats.moneyCost * level;
+
+    const cmCost =
+        baseStats.cmCost * level;
+
+    const rmCost =
+        baseStats.rmCost * level;
+
+    const buildTime =
+        baseStats.buildTime * level;
+
+    const oilUpkeep =
+        baseStats.oilUpkeep * level;
+
+    const moneyUpkeep =
+        baseStats.moneyUpkeep * level;
+
+
+    /*
+     * Update combat statistics
+     */
+
+    document.getElementById(
+        "strength-stat"
+    ).textContent =
+        formatNumber(strength);
+
+
+    document.getElementById(
+        "defence-stat"
+    ).textContent =
+        formatNumber(defence);
+
+
+    document.getElementById(
+        "movement-stat"
+    ).textContent =
+        formatNumber(movement);
+
+
+    document.getElementById(
+        "size-stat"
+    ).textContent =
+        formatNumber(size);
+
+
+    /*
+     * Update economics
+     */
+
+    document.getElementById(
+        "money-cost"
+    ).textContent =
+        formatMoney(moneyCost);
+
+
+    document.getElementById(
+        "cm-cost"
+    ).textContent =
+        formatNumber(cmCost) + " tons";
+
+
+    document.getElementById(
+        "rm-cost"
+    ).textContent =
+        formatNumber(rmCost) + " tons";
+
+
+    document.getElementById(
+        "build-time"
+    ).textContent =
+        formatNumber(buildTime) +
+        (buildTime === 1 ? " Turn" : " Turns");
+
+
+    document.getElementById(
+        "oil-upkeep"
+    ).textContent =
+        formatNumber(oilUpkeep) + " bbl";
+
+
+    document.getElementById(
+        "money-upkeep"
+    ).textContent =
+        formatMoney(moneyUpkeep);
+
+}
+
+
+formationSelector.addEventListener(
+    "change",
+    updateFormation
+);
+
+
+updateFormation();
+
+</script>
+
+{% endblock %}

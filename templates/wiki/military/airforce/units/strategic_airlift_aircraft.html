@@ -1,0 +1,597 @@
+{% extends 'wiki/wiki_base.html' %}
+
+{% block title %}
+Alterra - Strategic Airlift Aircraft | Frontlines Wiki
+{% endblock %}
+
+{% block breadcrumb %}
+
+<a href="{{ url_for('wiki_military') }}">Military</a>
+
+<span>/</span>
+
+<a href="{{ url_for('wiki_airforce_overview') }}">Air Force</a>
+
+<span>/</span>
+
+<span>Strategic Airlift Aircraft</span>
+
+{% endblock %}
+
+{% block wiki_content %}
+
+<div class="unit-page">
+
+    <!-- Unit Header -->
+
+    <div class="unit-page-header">
+
+        <div>
+
+            <h1>Strategic Airlift Aircraft</h1>
+
+            <span class="unit-classification">
+                AIR
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Unit Layout -->
+
+    <div class="unit-layout">
+
+
+        <!-- Left Column -->
+
+        <div class="unit-description">
+
+
+            <h2>Overview</h2>
+
+            <p>
+                Strategic Airlift Aircraft (SAA) are specialised
+                transport aircraft designed to rapidly deploy
+                ground forces across long distances. They provide
+                commanders with the ability to reposition eligible
+                formations between friendly airbases or deploy
+                forces directly into operational areas through
+                airdropping.
+            </p>
+
+
+            <h2>Role</h2>
+
+            <p>
+                The primary role of the Strategic Airlift Aircraft
+                is the strategic movement and deployment of ground
+                forces. SAAs can transport eligible ground units
+                and Attack Helicopters up to their own formation
+                size.
+            </p>
+
+            <p>
+                Armoured units cannot be transported by Strategic
+                Airlift Aircraft.
+            </p>
+
+
+            <h2>Strengths</h2>
+
+            <ul>
+
+                <li>
+                    Rapidly deploys ground forces across long
+                    distances.
+                </li>
+
+                <li>
+                    Can transport eligible formations between
+                    friendly airbases.
+                </li>
+
+                <li>
+                    Can airdrop eligible forces directly into
+                    operational areas.
+                </li>
+
+                <li>
+                    Can use Tankers as operational anchor points.
+                </li>
+
+            </ul>
+
+
+            <h2>Weaknesses</h2>
+
+            <ul>
+
+                <li>
+                    Cannot transport Armoured units.
+                </li>
+
+                <li>
+                    Cannot conduct offensive combat operations.
+                </li>
+
+                <li>
+                    Limited defensive capability.
+                </li>
+
+                <li>
+                    Vulnerable to enemy Air Defence during
+                    airdrop operations.
+                </li>
+
+            </ul>
+
+
+            <h2>Special Capability</h2>
+
+            <p>
+                Strategic Airlift Aircraft can conduct both
+                <strong>Standard Airlift</strong> and
+                <strong>Airdrop</strong> operations.
+            </p>
+
+            <p>
+                Standard Airlift allows eligible units to be
+                transported safely between friendly airbases.
+                Airdrop allows eligible units to be deployed
+                directly into friendly, contested, or
+                enemy-controlled sectors.
+            </p>
+
+
+            <h2>Recommended Employment</h2>
+
+            <p>
+                Use Strategic Airlift Aircraft to rapidly
+                reposition ground forces, reinforce distant
+                fronts, and deploy eligible formations into
+                operational areas. Use Standard Airlift for
+                safe strategic redeployment and Airdrop when
+                forces need to be inserted where conventional
+                deployment is not possible.
+            </p>
+
+
+        </div>
+
+
+        <!-- Right Unit Information Panel -->
+
+        <div class="unit-panel">
+
+
+            <!-- Formation -->
+
+            <div class="unit-panel-formation">
+
+                <label for="formation-level">
+                    Formation
+                </label>
+
+                <select id="formation-level">
+
+                    <option value="1">
+                        Pair
+                    </option>
+
+                    <option value="2">
+                        Flight
+                    </option>
+
+                    <option value="3">
+                        Squadron
+                    </option>
+
+                    <option value="4">
+                        Wing
+                    </option>
+
+                    <option value="5">
+                        Air Command
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Unit Icon -->
+
+            <div class="unit-panel-icon">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/unit_icons/SAA.png'
+                    ) }}"
+                    alt="Strategic Airlift Aircraft icon"
+                >
+
+            </div>
+
+
+            <!-- Resource Cost -->
+
+            <div class="unit-panel-section">
+
+                <h2>Resource Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money</span>
+
+                    <strong id="money-cost">
+                        $200,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Common Metal</span>
+
+                    <strong id="cm-cost">
+                        2,000 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Rare Metal</span>
+
+                    <strong id="rm-cost">
+                        0 tons
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Build Time</span>
+
+                    <strong id="build-time">
+                        4 Turns
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upkeep -->
+
+            <div class="unit-panel-section">
+
+                <h2>Upkeep Cost</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Money Upkeep</span>
+
+                    <strong id="money-upkeep">
+                        $2,000,000
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Oil Upkeep</span>
+
+                    <strong id="oil-upkeep">
+                        3,000 bbl
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Combat Statistics -->
+
+            <div class="unit-panel-section unit-combat-stats">
+
+                <h2>Combat Stats</h2>
+
+                <div class="unit-stat-row">
+
+                    <span>Strength</span>
+
+                    <strong id="strength-stat">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Defence</span>
+
+                    <strong id="defence-stat">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Movement</span>
+
+                    <strong id="movement-stat">
+                        10
+                    </strong>
+
+                </div>
+
+
+                <div class="unit-stat-row">
+
+                    <span>Size</span>
+
+                    <strong id="size-stat">
+                        3
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Operational Rules -->
+
+    <h2>Operational Rules</h2>
+
+    <div class="wiki-link-list">
+
+        <a href="{{ url_for('wiki_strategic_airlift') }}">
+
+            <strong>Strategic Airlift &amp; Airdropping</strong>
+
+            <span>
+                Learn how Strategic Airlift Aircraft transport
+                and deploy eligible ground formations.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_air_defence') }}">
+
+            <strong>Air Defence</strong>
+
+            <span>
+                Learn how Air Defence affects aircraft operating
+                within defended sectors.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_movement') }}">
+
+            <strong>Movement</strong>
+
+            <span>
+                Learn how military units move between sectors
+                and how movement interacts with combat.
+            </span>
+
+        </a>
+
+
+        <a href="{{ url_for('wiki_logistics') }}">
+
+            <strong>Logistics</strong>
+
+            <span>
+                Learn how military forces are supplied and
+                sustained during operations.
+            </span>
+
+        </a>
+
+    </div>
+
+
+    {% include 'partials/all_units.html' %}
+
+
+<script>
+
+const baseStats = {
+
+    strength: 0,
+
+    defence: 1,
+
+    movement: 10,
+
+    size: 3,
+
+    moneyCost: 200000000,
+
+    cmCost: 2000,
+
+    rmCost: 0,
+
+    buildTime: 4,
+
+    oilUpkeep: 3000,
+
+    moneyUpkeep: 2000000
+
+};
+
+
+const formationSelector =
+    document.getElementById("formation-level");
+
+
+function formatMoney(value) {
+
+    return "$" + value.toLocaleString("en-US");
+
+}
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString("en-US");
+
+}
+
+
+function updateFormation() {
+
+    const level =
+        Number(formationSelector.value);
+
+
+    /*
+     * Combat statistics
+     *
+     * Strength, Defence and Size scale
+     * with formation level.
+     *
+     * Movement remains fixed.
+     */
+
+    const strength =
+        baseStats.strength * level;
+
+    const defence =
+        baseStats.defence * level;
+
+    const movement =
+        baseStats.movement;
+
+    const size =
+        baseStats.size * level;
+
+
+    /*
+     * Economics
+     *
+     * All economic values scale
+     * with formation level.
+     */
+
+    const moneyCost =
+        baseStats.moneyCost * level;
+
+    const cmCost =
+        baseStats.cmCost * level;
+
+    const rmCost =
+        baseStats.rmCost * level;
+
+    const buildTime =
+        baseStats.buildTime * level;
+
+    const oilUpkeep =
+        baseStats.oilUpkeep * level;
+
+    const moneyUpkeep =
+        baseStats.moneyUpkeep * level;
+
+
+    /*
+     * Update combat statistics
+     */
+
+    document.getElementById(
+        "strength-stat"
+    ).textContent =
+        formatNumber(strength);
+
+
+    document.getElementById(
+        "defence-stat"
+    ).textContent =
+        formatNumber(defence);
+
+
+    document.getElementById(
+        "movement-stat"
+    ).textContent =
+        formatNumber(movement);
+
+
+    document.getElementById(
+        "size-stat"
+    ).textContent =
+        formatNumber(size);
+
+
+    /*
+     * Update economics
+     */
+
+    document.getElementById(
+        "money-cost"
+    ).textContent =
+        formatMoney(moneyCost);
+
+
+    document.getElementById(
+        "cm-cost"
+    ).textContent =
+        formatNumber(cmCost) + " tons";
+
+
+    document.getElementById(
+        "rm-cost"
+    ).textContent =
+        formatNumber(rmCost) + " tons";
+
+
+    document.getElementById(
+        "build-time"
+    ).textContent =
+        formatNumber(buildTime) +
+        (buildTime === 1 ? " Turn" : " Turns");
+
+
+    document.getElementById(
+        "oil-upkeep"
+    ).textContent =
+        formatNumber(oilUpkeep) + " bbl";
+
+
+    document.getElementById(
+        "money-upkeep"
+    ).textContent =
+        formatMoney(moneyUpkeep);
+
+}
+
+
+formationSelector.addEventListener(
+    "change",
+    updateFormation
+);
+
+
+updateFormation();
+
+</script>
+
+{% endblock %}
