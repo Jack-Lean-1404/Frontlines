@@ -422,6 +422,58 @@
 
     {% endif %}
 
+    <hr>
+
+    <h2>Transfer City</h2>
+
+    <form method="POST" action="/admin/transfer_city">
+
+        <!-- TRANSFER TYPE -->
+        <label>Transfer Type</label><br>
+
+        <select name="transfer_type" required>
+            <option value="city">Normal City</option>
+            <option value="capital">Capital</option>
+        </select>
+
+        <br><br>
+
+        <!-- FROM NATION -->
+        <label>From Nation</label><br>
+
+        <select name="from_nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- TO NATION -->
+        <label>To Nation</label><br>
+
+        <select name="to_nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Transfer City
+        </button>
+
+    </form>
+
 </body>
 
 {% include 'partials/footer.html' %}

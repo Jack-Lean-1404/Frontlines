@@ -2534,6 +2534,112 @@ def update_resource():
         )
     )
 
+# -------------------------
+# TRANSFER CITY
+# -------------------------
+@app.route("/admin/transfer_city", methods=["POST"])
+def transfer_city():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    # GET FORM DATA
+    from_nation_id = request.form.get("from_nation_id")
+    to_nation_id = request.form.get("to_nation_id")
+    transfer_type = request.form.get("transfer_type")
+
+    # PREVENT SAME NATION
+    if from_nation_id == to_nation_id:
+        return "Cannot transfer a city to the same nation.", 400
+
+    # CHECK TRANSFER TYPE
+    if transfer_type not in ["city", "capital"]:
+        return "Invalid transfer type.", 400
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # GET SOURCE NATION
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (from_nation_id,))
+
+    from_nation = cursor.fetchone()
+
+    # GET DESTINATION NATION
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (to_nation_id,))
+
+    to_nation = cursor.fetchone()
+
+    # CHECK NATIONS EXIST
+    if not from_nation or not to_nation:
+        cursor.close()
+        db.close()
+        return "Invalid nation.", 400
+
+    # CHECK SOURCE HAS A CITY
+    if from_nation["city_count"] <= 0:
+        cursor.close()
+        db.close()
+        return "Source nation has no cities to transfer.", 400
+
+    # CHECK SOURCE HAS A CAPITAL
+    if transfer_type == "capital" and from_nation["capital_count"] <= 0:
+        cursor.close()
+        db.close()
+        return "Source nation has no capitals to transfer.", 400
+
+    # -------------------------
+    # UPDATE CITY COUNTS
+    # -------------------------
+    cursor.execute("""
+        UPDATE frontlinesdb.nations
+        SET city_count = city_count - 1
+        WHERE nation_id = %s
+    """, (from_nation_id,))
+
+    cursor.execute("""
+        UPDATE frontlinesdb.nations
+        SET city_count = city_count + 1
+        WHERE nation_id = %s
+    """, (to_nation_id,))
+
+    # -------------------------
+    # UPDATE CAPITAL COUNTS
+    # -------------------------
+    if transfer_type == "capital":
+
+        cursor.execute("""
+            UPDATE frontlinesdb.nations
+            SET capital_count = capital_count - 1
+            WHERE nation_id = %s
+        """, (from_nation_id,))
+
+        cursor.execute("""
+            UPDATE frontlinesdb.nations
+            SET capital_count = capital_count + 1
+            WHERE nation_id = %s
+        """, (to_nation_id,))
+
+    # SAVE
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
+
 UNIT_WIKI_ROUTES = {
 
     # Army
