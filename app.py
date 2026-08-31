@@ -2534,6 +2534,50 @@ def update_resource():
         )
     )
 
+UNIT_WIKI_ROUTES = {
+
+    # Army
+    1: "wiki_motorised_infantry",
+    2: "wiki_mechanised_infantry",
+    3: "wiki_armoured",
+    4: "wiki_engineer",
+    5: "wiki_logistics_unit",
+    6: "wiki_headquarters",
+    7: "wiki_national_guard",
+
+    # Air Force
+    8: "wiki_air_superiority_fighter",
+    9: "wiki_multirole_fighter",
+    10: "wiki_attack_fighter",
+    11: "wiki_bomber",
+    12: "wiki_stealth_bomber",
+    13: "wiki_stealth_air_superiority_fighter",
+    14: "wiki_stealth_multirole_fighter",
+    15: "wiki_awacs",
+    16: "wiki_tanker",
+    17: "wiki_strategic_airlift_aircraft",
+    18: "wiki_mpa",
+    19: "wiki_nmrf",
+
+    # Navy
+    20: "wiki_corvette",
+    21: "wiki_frigate",
+    22: "wiki_destroyer",
+    23: "wiki_cruiser",
+    24: "wiki_supply_ship",
+    25: "wiki_amphibious",
+    26: "wiki_carrier",
+    27: "wiki_transport",
+
+    # Special
+    28: "wiki_helicopter",
+    29: "wiki_artillery_towed",
+    30: "wiki_artillery_mech",
+    31: "wiki_coastal_defence",
+    32: "wiki_anti_air",
+    33: "wiki_submarine"
+
+}
 
 @app.route("/api/unit/<int:unit_id>")
 def get_unit(unit_id):
@@ -2550,6 +2594,13 @@ def get_unit(unit_id):
     """, (unit_id,))
 
     unit = cursor.fetchone()
+
+    wiki_route = UNIT_WIKI_ROUTES.get(unit_id)
+
+    if wiki_route:
+        unit["wiki_url"] = url_for(wiki_route)
+    else:
+        unit["wiki_url"] = None
 
     cursor.execute("""
         SELECT tier_name

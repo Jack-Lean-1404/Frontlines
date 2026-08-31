@@ -4113,3 +4113,93 @@ button:hover {
     }
 
 }
+
+/* =========================================================
+   PRODUCTION - SELECTED UNIT
+   ========================================================= */
+
+.production-details {
+    padding: 20px;
+    height: fit-content;
+    box-sizing: border-box;
+}
+
+
+/* Header */
+
+.production-details-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+}
+
+.production-details-header h2 {
+    margin: 0 0 5px 0;
+    font-size: 24px;
+}
+
+.production-details-header p {
+    margin: 0;
+    color: #555;
+    text-transform: capitalize;
+}
+
+
+/* Sections */
+
+.production-details-section {
+    margin-bottom: 20px;
+}
+
+.production-details-section h3 {
+    margin: 0 0 10px 0;
+    font-size: 17px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+}
+
+
+/* Statistics */
+
+.production-details .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 25px;
+}
+
+.production-details .stat-grid div {
+    padding: 6px 0;
+}
+
+
+/* Actions */
+
+.production-details-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.production-details-actions button {
+    padding: 9px 16px;
+    border: none;
+    border-radius: 4px;
+    background: #2f6599;
+    color: white;
+    cursor: pointer;
+}
+
+.production-details-actions button:hover {
+    background: #24527d;
+}
+
+
+/* Wiki button */
+
+.production-details-actions .wiki-button {
+    background: #555;
+}
+
+.production-details-actions .wiki-button:hover {
+    background: #444;
+}

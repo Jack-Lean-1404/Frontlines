@@ -205,21 +205,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadUnitDetails(unitId) {
 
-    
+    const response =
+        await fetch(`/api/unit/${unitId}`);
 
-    const response = await fetch(`/api/unit/${unitId}`);
+    const data =
+        await response.json();
 
-    const data = await response.json();
+    const unit =
+        data.unit;
 
-    const unit = data.unit;
-    const resource_units = data.resource_units;
+    const resource_units =
+        data.resource_units;
 
-    const stats = getScaledStats(unit, unitId);
+    const stats =
+        getScaledStats(unit, unitId);
 
     const card =
-    document.querySelector(
-        `.unit-card[data-unit-id="${unitId}"]`
-    );
+        document.querySelector(
+            `.unit-card[data-unit-id="${unitId}"]`
+        );
 
     const tierSelector =
         card.querySelector(".tier-selector");
@@ -229,65 +233,72 @@ async function loadUnitDetails(unitId) {
             tierSelector.selectedIndex
         ].text;
 
-    const strengthsHtml =
-    unit.strengths
-        .split("\n")
-        .map(item => `<li>${item}</li>`)
-        .join("");
-
-    const weaknessesHtml =
-        unit.weaknesses
-            .split("\n")
-            .map(item => `<li>${item}</li>`)
-            .join("");
-
     document.getElementById("unit-details-panel")
         .innerHTML = `
 
-        <!-- Unit Wiki -->
-        <section class="unit-details">
+        <section class="production-details">
 
-            <div class="wiki-header">
+            <div class="production-details-header">
+
                 <h2>${unit.unit_name}</h2>
-                <p>${unit.unit_class} • ${organisationName}</p>
-            </div>
 
-            <div class="wiki-section">
-                <h3>Overview</h3>
                 <p>
-                    ${unit.overview}
+                    ${unit.unit_class} • ${organisationName}
                 </p>
+
             </div>
 
-            <div class="wiki-section">
+
+            <div class="production-details-section">
+
                 <h3>Combat Statistics</h3>
-
-                <div class="stat-grid">
-                    <div>Attack: ${stats.attack}</div>
-                    <div>Defence: ${stats.defence}</div>
-                    <div>Movement: ${stats.movement}</div>
-                    <div>Size: ${stats.size}</div>
-                </div>
-            </div>
-
-            <div class="wiki-section">
-                <h3>Economics</h3>
 
                 <div class="stat-grid">
 
                     <div>
-                        Cost:
+                        Attack:
+                        ${stats.attack}
+                    </div>
+
+                    <div>
+                        Defence:
+                        ${stats.defence}
+                    </div>
+
+                    <div>
+                        Movement:
+                        ${stats.movement}
+                    </div>
+
+                    <div>
+                        Size:
+                        ${stats.size}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="production-details-section">
+
+                <h3>Production Cost</h3>
+
+                <div class="stat-grid">
+
+                    <div>
+                        Money:
                         $${stats.moneyCost.toLocaleString()}
                     </div>
 
                     <div>
-                        CM Cost:
+                        Common Metal:
                         ${stats.cmCost}
                         ${resource_units["Common Metal"]}
                     </div>
 
                     <div>
-                        RM Cost:
+                        Rare Metal:
                         ${stats.rmCost}
                         ${resource_units["Rare Metal"]}
                     </div>
@@ -298,63 +309,87 @@ async function loadUnitDetails(unitId) {
                         Turns
                     </div>
 
+                </div>
+
+            </div>
+
+
+            <div class="production-details-section">
+
+                <h3>Upkeep</h3>
+
+                <div class="stat-grid">
+
                     <div>
-                        Oil Upkeep:
+                        Oil:
                         ${stats.oilUpkeep}
                         ${resource_units["Oil"]}
                     </div>
 
                     <div>
-                        Money Upkeep:
+                        Money:
                         $${stats.moneyUpkeep.toLocaleString()}
                     </div>
 
                 </div>
-            </div>
-
-            <div class="wiki-section">
-
-                <h3>Strengths</h3>
-
-                <ul>
-                    ${strengthsHtml}
-                </ul>
 
             </div>
 
-            <div class="wiki-section">
 
-                <h3>Weaknesses</h3>
+            <div class="production-details-actions">
 
-                <ul>
-                    ${weaknessesHtml}
-                </ul>
+                <button
+                    class="wiki-button"
+                    onclick="viewUnitWiki(${unit.unit_id})">
+                    View Unit Wiki
+                </button>
+
+                <button
+                    onclick="buildUnit(${unit.unit_id})">
+                    Build
+                </button>
 
             </div>
-
-            <div class="wiki-section">
-                <h3>Special Capabilities</h3>
-                <p>
-                    ${unit.special_capability}
-                </p>
-            </div>
-
-            <div class="wiki-section">
-                <h3>Recommended Employment</h3>
-                <p>
-                    ${unit.recommended_employment}
-                </p>
-            </div>
-
-            <button
-                onclick="buildUnit(${unit.unit_id})">
-                Build
-            </button>
 
         </section>
 
+    `;
 
-        `;
+}
+
+function viewUnitWiki(unitId) {
+
+    fetch(`/api/unit/${unitId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const wikiUrl =
+                data.unit.wiki_url;
+
+            if (wikiUrl) {
+
+                window.open(
+                    wikiUrl,
+                    "_blank"
+                );
+
+            } else {
+
+                console.error(
+                    "No wiki page found for this unit."
+                );
+
+            }
+
+        })
+        .catch(error => {
+
+            console.error(
+                "Failed to load unit wiki:",
+                error
+            );
+
+        });
 
 }
 
@@ -533,9 +568,6 @@ async function loadProductionLines() {
                             class="cancel-button"
                             onclick="cancelQueue(${active.queue_id})">
                             Cancel
-                        </button>
-
-
                         </button>
                     </div>
                 `;
