@@ -474,6 +474,206 @@
 
     </form>
 
+    <hr>
+
+    <h2>Add Building</h2>
+
+    <form method="POST" action="/admin/add_building">
+
+        <!-- NATION -->
+        <label>Nation</label><br>
+
+        <select name="nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- BUILDING -->
+        <label>Building</label><br>
+
+        <select name="building_id" id="buildingSelect" required>
+            <option value="">Select Building</option>
+
+            {% for building in buildings %}
+                <option value="{{ building.building_id }}">
+                    {{ building.building_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- RESOURCE -->
+        <div id="resourceContainer" style="display: none;">
+
+            <label>Resource</label><br>
+
+            <select name="resource_id" id="resourceSelect">
+                <option value="">Select Resource</option>
+            </select>
+
+            <br><br>
+
+        </div>
+
+        <button type="submit">
+            Add Building
+        </button>
+
+    </form>
+
+    <!-- BUILDING RESOURCE DATA -->
+    <div id="buildingResourceData" hidden>
+
+        {% for option in building_resource_options %}
+            <span
+                data-building-id="{{ option.building_id }}"
+                data-resource-id="{{ option.resource_id }}"
+                data-resource-name="{{ option.name }}"
+            ></span>
+        {% endfor %}
+
+    </div>
+
+    <hr>
+
+    <h2>Remove Building</h2>
+
+    <form method="POST" action="/admin/remove_building">
+
+        <!-- NATION -->
+        <label>Nation</label><br>
+
+        <select name="nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- BUILDING -->
+        <label>Building</label><br>
+
+        <select name="building_id" id="removeBuildingSelect" required>
+            <option value="">Select Building</option>
+
+            {% for building in buildings %}
+                <option value="{{ building.building_id }}">
+                    {{ building.building_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- RESOURCE -->
+        <div id="removeResourceContainer" style="display: none;">
+
+            <label>Resource</label><br>
+
+            <select
+                name="resource_id"
+                id="removeResourceSelect"
+            >
+                <option value="">Select Resource</option>
+            </select>
+
+            <br><br>
+
+        </div>
+
+        <button type="submit">
+            Remove Building
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h2>Transfer Building</h2>
+
+    <form method="POST" action="/admin/transfer_building">
+
+        <!-- BUILDING -->
+        <label>Building</label><br>
+
+        <select name="building_id" id="transferBuildingSelect" required>
+            <option value="">Select Building</option>
+
+            {% for building in buildings %}
+                <option value="{{ building.building_id }}">
+                    {{ building.building_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- RESOURCE -->
+        <div id="transferResourceContainer" style="display: none;">
+
+            <label>Resource</label><br>
+
+            <select
+                name="resource_id"
+                id="transferResourceSelect"
+            >
+                <option value="">Select Resource</option>
+            </select>
+
+            <br><br>
+
+        </div>
+
+        <!-- FROM NATION -->
+        <label>From Nation</label><br>
+
+        <select name="from_nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- TO NATION -->
+        <label>To Nation</label><br>
+
+        <select name="to_nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Transfer Building
+        </button>
+
+    </form>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
 </body>
 
 {% include 'partials/footer.html' %}

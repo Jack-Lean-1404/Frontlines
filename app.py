@@ -1658,11 +1658,40 @@ def admin_dashboard():
         nation_resources = cursor.fetchall()
 
     # -------------------------
-    # GET ALL RESOURCE TYPES
+    # GET ALL BUILDING TYPES
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.buildings
+    """)
+
+    buildings = cursor.fetchall()
+
+    # -------------------------
+    # GET BUILDING RESOURCE OPTIONS
+    # -------------------------
+    cursor.execute("""
+        SELECT
+            building_resource_outputs.building_id,
+            building_resource_outputs.resource_id,
+            resources.name
+        FROM frontlinesdb.building_resource_outputs
+
+        JOIN frontlinesdb.resources
+            ON building_resource_outputs.resource_id = resources.resource_id
+
+        WHERE resources.is_active = 1
+    """)
+
+    building_resource_options = cursor.fetchall()
+
+    # -------------------------
+    # GET ALL RESOURCES
     # -------------------------
     cursor.execute("""
         SELECT *
         FROM frontlinesdb.resources
+        WHERE is_active = 1
     """)
 
     resources = cursor.fetchall()
@@ -1679,7 +1708,9 @@ def admin_dashboard():
 
         selected_nation=selected_nation,
         nation_resources=nation_resources,
-        resources=resources
+        resources=resources,
+        buildings=buildings,
+        building_resource_options=building_resource_options
     )
 
 @app.route("/admin/process_turn", methods=["POST"])
@@ -2633,6 +2664,501 @@ def transfer_city():
         """, (to_nation_id,))
 
     # SAVE
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
+
+# -------------------------
+# ADD BUILDING
+# -------------------------
+@app.route("/admin/add_building", methods=["POST"])
+def add_building():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    # GET FORM DATA
+    nation_id = request.form.get("nation_id")
+    building_id = request.form.get("building_id")
+    resource_id = request.form.get("resource_id")
+
+    print("NATION:", nation_id)
+    print("BUILDING:", building_id)
+    print("RESOURCE:", resource_id)
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # -------------------------
+    # CHECK NATION EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (nation_id,))
+
+    nation = cursor.fetchone()
+
+    if not nation:
+        cursor.close()
+        db.close()
+        return "Invalid nation.", 400
+
+    # -------------------------
+    # CHECK BUILDING EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.buildings
+        WHERE building_id = %s
+    """, (building_id,))
+
+    building = cursor.fetchone()
+
+    if not building:
+        cursor.close()
+        db.close()
+        return "Invalid building.", 400
+
+    # -------------------------
+    # CONVERT EMPTY RESOURCE
+    # TO NULL
+    # -------------------------
+    if resource_id == "":
+        resource_id = None
+
+    # -------------------------
+    # CHECK RESOURCE IS VALID
+    # FOR THIS BUILDING
+    # -------------------------
+    if resource_id is not None:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.building_resource_outputs
+            WHERE building_id = %s
+            AND resource_id = %s
+        """, (building_id, resource_id))
+
+        valid_resource = cursor.fetchone()
+
+        if not valid_resource:
+            cursor.close()
+            db.close()
+            return "Invalid resource for this building.", 400
+
+    # -------------------------
+    # FIND EXISTING BUILDING
+    # -------------------------
+    if resource_id is None:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nation_buildings
+            WHERE nation_id = %s
+            AND building_id = %s
+            AND resource_id IS NULL
+        """, (nation_id, building_id))
+
+    else:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nation_buildings
+            WHERE nation_id = %s
+            AND building_id = %s
+            AND resource_id = %s
+        """, (nation_id, building_id, resource_id))
+
+    existing_building = cursor.fetchone()
+
+    # -------------------------
+    # INCREASE EXISTING
+    # BUILDING
+    # -------------------------
+    if existing_building:
+
+        cursor.execute("""
+            UPDATE frontlinesdb.nation_buildings
+            SET quantity = quantity + 1
+            WHERE nation_building_id = %s
+        """, (existing_building["nation_building_id"],))
+
+    # -------------------------
+    # CREATE NEW BUILDING
+    # -------------------------
+    else:
+
+        cursor.execute("""
+            INSERT INTO frontlinesdb.nation_buildings
+                (nation_id, building_id, quantity, resource_id)
+            VALUES
+                (%s, %s, 1, %s)
+        """, (nation_id, building_id, resource_id))
+
+    # -------------------------
+    # SAVE
+    # -------------------------
+    db.commit()
+
+    # DEBUG - CHECK SAVED BUILDING
+    cursor.execute("""
+        SELECT
+            nation_id,
+            building_id,
+            quantity,
+            resource_id
+        FROM frontlinesdb.nation_buildings
+        WHERE nation_id = %s
+        AND building_id = %s
+    """, (nation_id, building_id))
+
+    saved_buildings = cursor.fetchall()
+
+    print("SAVED BUILDINGS:", saved_buildings)
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
+
+# -------------------------
+# REMOVE BUILDING
+# -------------------------
+@app.route("/admin/remove_building", methods=["POST"])
+def remove_building():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    # GET FORM DATA
+    nation_id = request.form.get("nation_id")
+    building_id = request.form.get("building_id")
+    resource_id = request.form.get("resource_id")
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # -------------------------
+    # CHECK NATION EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (nation_id,))
+
+    nation = cursor.fetchone()
+
+    if not nation:
+        cursor.close()
+        db.close()
+        return "Invalid nation.", 400
+
+    # -------------------------
+    # CHECK BUILDING EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.buildings
+        WHERE building_id = %s
+    """, (building_id,))
+
+    building = cursor.fetchone()
+
+    if not building:
+        cursor.close()
+        db.close()
+        return "Invalid building.", 400
+
+    # -------------------------
+    # CONVERT EMPTY RESOURCE
+    # TO NULL
+    # -------------------------
+    if resource_id == "":
+        resource_id = None
+
+    # -------------------------
+    # CHECK RESOURCE IS VALID
+    # FOR THIS BUILDING
+    # -------------------------
+    if resource_id is not None:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.building_resource_outputs
+            WHERE building_id = %s
+            AND resource_id = %s
+        """, (building_id, resource_id))
+
+        valid_resource = cursor.fetchone()
+
+        if not valid_resource:
+            cursor.close()
+            db.close()
+            return "Invalid resource for this building.", 400
+
+    # -------------------------
+    # FIND EXISTING BUILDING
+    # -------------------------
+    if resource_id is None:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nation_buildings
+            WHERE nation_id = %s
+            AND building_id = %s
+            AND resource_id IS NULL
+            AND quantity > 0
+        """, (nation_id, building_id))
+
+    else:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nation_buildings
+            WHERE nation_id = %s
+            AND building_id = %s
+            AND resource_id = %s
+            AND quantity > 0
+        """, (nation_id, building_id, resource_id))
+
+    existing_building = cursor.fetchone()
+
+    # -------------------------
+    # CHECK BUILDING EXISTS
+    # -------------------------
+    if not existing_building:
+        cursor.close()
+        db.close()
+        return "Nation does not own this building.", 400
+
+    # -------------------------
+    # REMOVE ONE BUILDING
+    # -------------------------
+    cursor.execute("""
+        UPDATE frontlinesdb.nation_buildings
+        SET quantity = quantity - 1
+        WHERE nation_building_id = %s
+    """, (existing_building["nation_building_id"],))
+
+    # -------------------------
+    # SAVE
+    # -------------------------
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
+
+# -------------------------
+# TRANSFER BUILDING
+# -------------------------
+@app.route("/admin/transfer_building", methods=["POST"])
+def transfer_building():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    # GET FORM DATA
+    building_id = request.form.get("building_id")
+    resource_id = request.form.get("resource_id")
+    from_nation_id = request.form.get("from_nation_id")
+    to_nation_id = request.form.get("to_nation_id")
+
+    # PREVENT SAME NATION
+    if from_nation_id == to_nation_id:
+        return "Cannot transfer a building to the same nation.", 400
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # -------------------------
+    # CHECK SOURCE NATION
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (from_nation_id,))
+
+    from_nation = cursor.fetchone()
+
+    # -------------------------
+    # CHECK DESTINATION NATION
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (to_nation_id,))
+
+    to_nation = cursor.fetchone()
+
+    if not from_nation or not to_nation:
+        cursor.close()
+        db.close()
+        return "Invalid nation.", 400
+
+    # -------------------------
+    # CHECK BUILDING
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.buildings
+        WHERE building_id = %s
+    """, (building_id,))
+
+    building = cursor.fetchone()
+
+    if not building:
+        cursor.close()
+        db.close()
+        return "Invalid building.", 400
+
+    # -------------------------
+    # CONVERT EMPTY RESOURCE
+    # TO NULL
+    # -------------------------
+    if resource_id == "":
+        resource_id = None
+
+    # -------------------------
+    # CHECK RESOURCE IS VALID
+    # FOR THIS BUILDING
+    # -------------------------
+    if resource_id is not None:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.building_resource_outputs
+            WHERE building_id = %s
+            AND resource_id = %s
+        """, (building_id, resource_id))
+
+        valid_resource = cursor.fetchone()
+
+        if not valid_resource:
+            cursor.close()
+            db.close()
+            return "Invalid resource for this building.", 400
+
+    # -------------------------
+    # FIND SOURCE BUILDING
+    # -------------------------
+    if resource_id is None:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nation_buildings
+            WHERE nation_id = %s
+            AND building_id = %s
+            AND resource_id IS NULL
+            AND quantity > 0
+        """, (from_nation_id, building_id))
+
+    else:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nation_buildings
+            WHERE nation_id = %s
+            AND building_id = %s
+            AND resource_id = %s
+            AND quantity > 0
+        """, (from_nation_id, building_id, resource_id))
+
+    source_building = cursor.fetchone()
+
+    # -------------------------
+    # CHECK SOURCE OWNS BUILDING
+    # -------------------------
+    if not source_building:
+        cursor.close()
+        db.close()
+        return "Source nation does not own this building.", 400
+
+    # -------------------------
+    # REMOVE FROM SOURCE
+    # -------------------------
+    cursor.execute("""
+        UPDATE frontlinesdb.nation_buildings
+        SET quantity = quantity - 1
+        WHERE nation_building_id = %s
+    """, (source_building["nation_building_id"],))
+
+    # -------------------------
+    # FIND DESTINATION BUILDING
+    # -------------------------
+    if resource_id is None:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nation_buildings
+            WHERE nation_id = %s
+            AND building_id = %s
+            AND resource_id IS NULL
+        """, (to_nation_id, building_id))
+
+    else:
+
+        cursor.execute("""
+            SELECT *
+            FROM frontlinesdb.nation_buildings
+            WHERE nation_id = %s
+            AND building_id = %s
+            AND resource_id = %s
+        """, (to_nation_id, building_id, resource_id))
+
+    destination_building = cursor.fetchone()
+
+    # -------------------------
+    # ADD TO EXISTING
+    # DESTINATION BUILDING
+    # -------------------------
+    if destination_building:
+
+        cursor.execute("""
+            UPDATE frontlinesdb.nation_buildings
+            SET quantity = quantity + 1
+            WHERE nation_building_id = %s
+        """, (destination_building["nation_building_id"],))
+
+    # -------------------------
+    # CREATE DESTINATION ROW
+    # -------------------------
+    else:
+
+        cursor.execute("""
+            INSERT INTO frontlinesdb.nation_buildings
+                (nation_id, building_id, quantity, resource_id)
+            VALUES
+                (%s, %s, 1, %s)
+        """, (to_nation_id, building_id, resource_id))
+
+    # -------------------------
+    # SAVE
+    # -------------------------
     db.commit()
 
     cursor.close()
