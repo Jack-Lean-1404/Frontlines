@@ -55,17 +55,42 @@
 
                 </div>
 
+                {% if session["nation_id"] == alliance.founder_nation_id %}
+
+                    <section class="invite-button">
+
+                        <a
+                            href="{{ url_for(
+                                'invite_to_alliance',
+                                alliance_id=alliance.alliance_id
+                            ) }}"
+                            class="primary-button">
+
+                            Invite Nation
+
+                        </a>
+
+                    </section>
+
+                {% endif %}
+
                 <section class="invite-button">
-                    <a
-                        href="{{ url_for(
-                            'invite_to_alliance',
-                            alliance_id=alliance.alliance_id
-                        ) }}"
-                        class="primary-button">
 
-                        Invite Nation
+                    <form
+                         method="POST"
+                        action="{{ url_for('leave_alliance') }}"
+                        style="display: inline;">
 
-                    </a>
+                        <button
+                            type="submit"
+                            class="primary-button">
+
+                            Leave Alliance
+
+                        </button>
+
+                    </form>
+
                 </section>
 
             </div>

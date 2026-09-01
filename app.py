@@ -875,6 +875,92 @@ def alliance(alliance_id):
 
     )
 
+# -------------------------
+# LEAVE ALLIANCE
+# -------------------------
+@app.route("/alliance/leave", methods=["POST"])
+def leave_alliance():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    nation_id = session.get("nation_id")
+
+    if not nation_id:
+        return "No nation assigned.", 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # -------------------------
+    # FIND CURRENT ALLIANCE
+    # -------------------------
+    cursor.execute("""
+        SELECT
+            alliance_id
+        FROM alliance_members
+        WHERE nation_id = %s
+    """, (nation_id,))
+
+    membership = cursor.fetchone()
+
+    if not membership:
+        cursor.close()
+        conn.close()
+
+        return "Your nation is not in an alliance.", 400
+
+    alliance_id = membership["alliance_id"]
+
+    # -------------------------
+    # CHECK IF LEADER
+    # -------------------------
+    cursor.execute("""
+        SELECT
+            founder_nation_id
+        FROM alliances
+        WHERE alliance_id = %s
+    """, (alliance_id,))
+
+    alliance = cursor.fetchone()
+
+    if not alliance:
+        cursor.close()
+        conn.close()
+
+        return "Alliance not found.", 404
+
+    if alliance["founder_nation_id"] == nation_id:
+
+        cursor.close()
+        conn.close()
+
+        return "The alliance leader cannot leave the alliance.", 400
+
+    # -------------------------
+    # REMOVE MEMBER
+    # -------------------------
+    cursor.execute("""
+        DELETE FROM alliance_members
+        WHERE alliance_id = %s
+        AND nation_id = %s
+    """, (
+        alliance_id,
+        nation_id
+    ))
+
+    # -------------------------
+    # SAVE
+    # -------------------------
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    # Return to diplomacy
+    return redirect(url_for("diplomacy"))
+
 @app.route(
     "/alliance/<int:alliance_id>/invite",
     methods=["GET", "POST"]
