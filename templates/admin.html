@@ -673,6 +673,186 @@
 
     </form>
 
+    <hr>
+
+    <h2>Add Unit</h2>
+
+    <form method="POST" action="/admin/add_unit">
+
+        <!-- NATION -->
+        <label>Nation</label><br>
+
+        <select name="nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- UNIT -->
+        <label>Unit</label><br>
+
+        <select name="unit_id" required>
+            <option value="">Select Unit</option>
+
+            {% for unit in units %}
+                <option value="{{ unit.unit_id }}">
+                    {{ unit.unit_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- TIER -->
+        <label>Tier</label><br>
+
+        <select name="tier_level" required>
+            <option value="1">Tier 1</option>
+            <option value="2">Tier 2</option>
+            <option value="3">Tier 3</option>
+            <option value="4">Tier 4</option>
+            <option value="5">Tier 5</option>
+        </select>
+
+        <br><br>
+        
+        <button type="submit">
+            Add Unit
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h2>Remove Unit</h2>
+
+    <form method="POST" action="/admin/remove_unit">
+
+        <!-- NATION -->
+        <label>Nation</label><br>
+
+        <select name="nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- UNIT -->
+        <label>Unit</label><br>
+
+        <select name="unit_id" required>
+            <option value="">Select Unit</option>
+
+            {% for unit in units %}
+                <option value="{{ unit.unit_id }}">
+                    {{ unit.unit_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- TIER -->
+        <label>Tier</label><br>
+
+        <select name="tier_level" required>
+            <option value="1">Tier 1</option>
+            <option value="2">Tier 2</option>
+            <option value="3">Tier 3</option>
+            <option value="4">Tier 4</option>
+            <option value="5">Tier 5</option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Remove Unit
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h2>Transfer Unit</h2>
+
+    <form method="POST" action="/admin/transfer_unit">
+
+        <!-- UNIT -->
+        <label>Unit</label><br>
+
+        <select name="unit_id" required>
+            <option value="">Select Unit</option>
+
+            {% for unit in units %}
+                <option value="{{ unit.unit_id }}">
+                    {{ unit.unit_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- TIER -->
+        <label>Tier</label><br>
+
+        <select name="tier_level" required>
+            <option value="1">Tier 1</option>
+            <option value="2">Tier 2</option>
+            <option value="3">Tier 3</option>
+            <option value="4">Tier 4</option>
+            <option value="5">Tier 5</option>
+        </select>
+
+        <br><br>
+
+        <!-- FROM NATION -->
+        <label>From Nation</label><br>
+
+        <select name="from_nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <!-- TO NATION -->
+        <label>To Nation</label><br>
+
+        <select name="to_nation_id" required>
+            <option value="">Select Nation</option>
+
+            {% for nation in nations %}
+                <option value="{{ nation.nation_id }}">
+                    {{ nation.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Transfer Unit
+        </button>
+
+    </form>
+
 <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
 </body>
 

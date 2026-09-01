@@ -3166,6 +3166,375 @@ def transfer_building():
 
     return redirect(url_for("admin_dashboard"))
 
+# -------------------------
+# ADD UNIT
+# -------------------------
+@app.route("/admin/add_unit", methods=["POST"])
+def add_unit():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    # GET FORM DATA
+    nation_id = request.form.get("nation_id")
+    unit_id = request.form.get("unit_id")
+    tier_level = request.form.get("tier_level")
+
+    # -------------------------
+    # VALIDATE TIER
+    # -------------------------
+    try:
+        tier_level = int(tier_level)
+    except (TypeError, ValueError):
+        return "Invalid tier.", 400
+
+    if tier_level < 1:
+        return "Invalid tier.", 400
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # -------------------------
+    # CHECK NATION EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (nation_id,))
+
+    nation = cursor.fetchone()
+
+    if not nation:
+        cursor.close()
+        db.close()
+        return "Invalid nation.", 400
+
+    # -------------------------
+    # CHECK UNIT EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.units
+        WHERE unit_id = %s
+        AND is_active = 1
+    """, (unit_id,))
+
+    unit = cursor.fetchone()
+
+    if not unit:
+        cursor.close()
+        db.close()
+        return "Invalid unit.", 400
+
+    # -------------------------
+    # GET CURRENT GAME TURN
+    # -------------------------
+    cursor.execute("""
+        SELECT current_turn
+        FROM frontlinesdb.game_state
+        WHERE id = 1
+    """)
+
+    game_state = cursor.fetchone()
+
+    if not game_state:
+        cursor.close()
+        db.close()
+        return "Game state not found.", 500
+
+    current_turn = game_state["current_turn"]
+
+    # -------------------------
+    # CREATE ACTIVE UNIT
+    # -------------------------
+    cursor.execute("""
+        INSERT INTO frontlinesdb.nation_units
+        (
+            nation_id,
+            unit_id,
+            game_turn,
+            tier_level,
+            status,
+            created_at,
+            updated_at
+        )
+        VALUES
+        (
+            %s,
+            %s,
+            %s,
+            %s,
+            'active',
+            NOW(),
+            NOW()
+        )
+    """, (
+        nation_id,
+        unit_id,
+        current_turn,
+        tier_level
+    ))
+
+    # -------------------------
+    # SAVE
+    # -------------------------
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
+
+# -------------------------
+# REMOVE UNIT
+# -------------------------
+@app.route("/admin/remove_unit", methods=["POST"])
+def remove_unit():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    # GET FORM DATA
+    nation_id = request.form.get("nation_id")
+    unit_id = request.form.get("unit_id")
+    tier_level = request.form.get("tier_level")
+
+    # -------------------------
+    # VALIDATE TIER
+    # -------------------------
+    try:
+        tier_level = int(tier_level)
+    except (TypeError, ValueError):
+        return "Invalid tier.", 400
+
+    if tier_level < 1 or tier_level > 5:
+        return "Invalid tier.", 400
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # -------------------------
+    # CHECK NATION EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (nation_id,))
+
+    nation = cursor.fetchone()
+
+    if not nation:
+        cursor.close()
+        db.close()
+        return "Invalid nation.", 400
+
+    # -------------------------
+    # CHECK UNIT EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.units
+        WHERE unit_id = %s
+    """, (unit_id,))
+
+    unit = cursor.fetchone()
+
+    if not unit:
+        cursor.close()
+        db.close()
+        return "Invalid unit.", 400
+
+    # -------------------------
+    # FIND MATCHING ACTIVE UNIT
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nation_units
+        WHERE nation_id = %s
+        AND unit_id = %s
+        AND tier_level = %s
+        AND status = 'active'
+        LIMIT 1
+    """, (
+        nation_id,
+        unit_id,
+        tier_level
+    ))
+
+    nation_unit = cursor.fetchone()
+
+    # -------------------------
+    # CHECK UNIT EXISTS
+    # -------------------------
+    if not nation_unit:
+        cursor.close()
+        db.close()
+        return "Nation does not own this unit at this tier.", 400
+
+    # -------------------------
+    # REMOVE UNIT
+    # -------------------------
+    cursor.execute("""
+        DELETE FROM frontlinesdb.nation_units
+        WHERE nation_unit_id = %s
+    """, (
+        nation_unit["nation_unit_id"],
+    ))
+
+    # -------------------------
+    # SAVE
+    # -------------------------
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
+
+# -------------------------
+# TRANSFER UNIT
+# -------------------------
+@app.route("/admin/transfer_unit", methods=["POST"])
+def transfer_unit():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    # CHECK ADMIN
+    if session["role"] != "admin":
+        return "Access Denied", 403
+
+    # GET FORM DATA
+    unit_id = request.form.get("unit_id")
+    tier_level = request.form.get("tier_level")
+    from_nation_id = request.form.get("from_nation_id")
+    to_nation_id = request.form.get("to_nation_id")
+
+    # PREVENT SAME NATION
+    if from_nation_id == to_nation_id:
+        return "Cannot transfer a unit to the same nation.", 400
+
+    # -------------------------
+    # VALIDATE TIER
+    # -------------------------
+    try:
+        tier_level = int(tier_level)
+    except (TypeError, ValueError):
+        return "Invalid tier.", 400
+
+    if tier_level < 1 or tier_level > 5:
+        return "Invalid tier.", 400
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # -------------------------
+    # CHECK SOURCE NATION
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (from_nation_id,))
+
+    from_nation = cursor.fetchone()
+
+    # -------------------------
+    # CHECK DESTINATION NATION
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+    """, (to_nation_id,))
+
+    to_nation = cursor.fetchone()
+
+    if not from_nation or not to_nation:
+        cursor.close()
+        db.close()
+        return "Invalid nation.", 400
+
+    # -------------------------
+    # CHECK UNIT EXISTS
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.units
+        WHERE unit_id = %s
+    """, (unit_id,))
+
+    unit = cursor.fetchone()
+
+    if not unit:
+        cursor.close()
+        db.close()
+        return "Invalid unit.", 400
+
+    # -------------------------
+    # FIND SOURCE UNIT
+    # -------------------------
+    cursor.execute("""
+        SELECT *
+        FROM frontlinesdb.nation_units
+        WHERE nation_id = %s
+        AND unit_id = %s
+        AND tier_level = %s
+        AND status = 'active'
+        LIMIT 1
+    """, (
+        from_nation_id,
+        unit_id,
+        tier_level
+    ))
+
+    nation_unit = cursor.fetchone()
+
+    # -------------------------
+    # CHECK UNIT EXISTS
+    # -------------------------
+    if not nation_unit:
+        cursor.close()
+        db.close()
+        return "Source nation does not own this unit at this tier.", 400
+
+    # -------------------------
+    # TRANSFER UNIT
+    # -------------------------
+    cursor.execute("""
+        UPDATE frontlinesdb.nation_units
+        SET
+            nation_id = %s,
+            updated_at = NOW()
+        WHERE nation_unit_id = %s
+    """, (
+        to_nation_id,
+        nation_unit["nation_unit_id"]
+    ))
+
+    # -------------------------
+    # SAVE
+    # -------------------------
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return redirect(url_for("admin_dashboard"))
+
 UNIT_WIKI_ROUTES = {
 
     # Army
