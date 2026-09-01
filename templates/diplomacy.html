@@ -107,6 +107,71 @@
 
             </section>
 
+            <section class="dashboard-card">
+
+                <h2>All Alliances</h2>
+
+                {% if alliances %}
+
+                    {% for alliance in alliances %}
+
+                        <div class="diplomacy-card">
+
+                            <div class="diplomacy-left">
+
+                                <div>
+
+                                    <h3>
+                                        {{ alliance.alliance_name }}
+                                    </h3>
+
+                                    <span class="alliance-code">
+                                        [{{ alliance.alliance_code }}]
+                                    </span>
+
+                                    <p>
+                                        Leader:
+                                        {{ alliance.founder_name }}
+                                    </p>
+
+                                    <p>
+                                        Members:
+                                        {{ alliance.member_count }}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="diplomacy-right">
+
+                                <a
+                                    href="{{ url_for(
+                                        'alliance',
+                                        alliance_id=alliance.alliance_id
+                                    ) }}"
+                                    class="primary-button">
+
+                                    View Alliance
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p>
+                        No alliances currently exist.
+                    </p>
+
+                {% endif %}
+
+            </section>
+
             <h1>Diplomatic Relations</h1>
 
             <section class="dashboard-card">

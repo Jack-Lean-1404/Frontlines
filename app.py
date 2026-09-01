@@ -576,6 +576,44 @@ def diplomacy():
 
     current_alliance = cursor.fetchone()
 
+    # -------------------------
+    # GET ALL ALLIANCES
+    # -------------------------
+    cursor.execute("""
+        SELECT
+
+            a.alliance_id,
+            a.alliance_code,
+            a.alliance_name,
+            a.founder_nation_id,
+            a.created_turn,
+
+            n.name AS founder_name,
+
+            COUNT(am.nation_id) AS member_count
+
+        FROM alliances a
+
+        JOIN nations n
+            ON a.founder_nation_id = n.nation_id
+
+        LEFT JOIN alliance_members am
+            ON a.alliance_id = am.alliance_id
+
+        GROUP BY
+            a.alliance_id,
+            a.alliance_code,
+            a.alliance_name,
+            a.founder_nation_id,
+            a.created_turn,
+            n.name
+
+        ORDER BY
+            a.alliance_name
+    """)
+
+    alliances = cursor.fetchall()
+
     cursor.close()
     conn.close()
 
@@ -583,7 +621,8 @@ def diplomacy():
         "diplomacy.html",
         current_page="diplomacy",
         relations=relations,
-        current_alliance=current_alliance
+        current_alliance=current_alliance,
+        alliances=alliances
     )
 
 
@@ -859,6 +898,8 @@ def alliance(alliance_id):
     """, (alliance_id,))
 
     members = cursor.fetchall()
+
+    
 
     cursor.close()
     conn.close()
@@ -1191,6 +1232,72 @@ def invite_to_alliance(alliance_id):
         available_nations=available_nations
     )
 
+# -------------------------
+# DISBAND ALLIANCE
+# -------------------------
+@app.route("/alliance/disband", methods=["POST"])
+def disband_alliance():
+
+    # CHECK LOGIN
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    nation_id = session.get("nation_id")
+
+    if not nation_id:
+        return "No nation assigned.", 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # -------------------------
+    # FIND ALLIANCE
+    # -------------------------
+    cursor.execute("""
+        SELECT
+            alliance_id,
+            founder_nation_id
+        FROM alliances
+        WHERE founder_nation_id = %s
+    """, (nation_id,))
+
+    alliance = cursor.fetchone()
+
+    if not alliance:
+        cursor.close()
+        conn.close()
+
+        return "You are not the founder of an alliance.", 403
+
+    alliance_id = alliance["alliance_id"]
+
+    # -------------------------
+    # REMOVE MEMBERS
+    # -------------------------
+    cursor.execute("""
+        DELETE FROM alliance_members
+        WHERE alliance_id = %s
+    """, (alliance_id,))
+
+    # -------------------------
+    # DELETE ALLIANCE
+    # -------------------------
+    cursor.execute("""
+        DELETE FROM alliances
+        WHERE alliance_id = %s
+    """, (alliance_id,))
+
+    # -------------------------
+    # SAVE
+    # -------------------------
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for("diplomacy"))
+
+
 # Production Page
 @app.route("/production")
 def production():
@@ -1216,6 +1323,8 @@ def production():
 
     cursor.close()
     conn.close()
+
+    sync_production_lines(session["nation_id"])
 
     organisation_names = {}
 
@@ -2217,6 +2326,8 @@ def process_turn():
     # ===========================
     # START UNIT PRODUCTION
     # ===========================
+
+    sync_production_lines(session["nation_id"])
 
     cursor.execute("""
         SELECT line_id
@@ -3666,6 +3777,321 @@ UNIT_WIKI_ROUTES = {
 
 }
 
+def sync_production_lines(nation_id):
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # --------------------------------------------------
+    # Count Production Facilities
+    # --------------------------------------------------
+
+    cursor.execute("""
+        SELECT
+            building_id,
+            COALESCE(SUM(quantity), 0) AS quantity
+        FROM nation_buildings
+        WHERE nation_id = %s
+        AND building_id IN (5, 6, 7)
+        GROUP BY building_id
+    """, (nation_id,))
+
+    factory_counts = {
+        5: 0,  # Military Factory
+        6: 0,  # Aircraft Factory
+        7: 0   # Naval Shipyard
+    }
+
+    for row in cursor.fetchall():
+        factory_counts[row["building_id"]] = int(row["quantity"])
+
+    # --------------------------------------------------
+    # Production type mapping
+    # --------------------------------------------------
+
+    production_types = {
+        5: ("land", "Ground Line"),
+        6: ("air", "Air Line"),
+        7: ("sea", "Naval Line")
+    }
+
+    # --------------------------------------------------
+    # Sync each production type
+    # --------------------------------------------------
+
+    for building_id, (line_type, line_prefix) in production_types.items():
+
+        target_lines = factory_counts[building_id]
+
+        # --------------------------------------------------
+        # Count existing lines
+        # --------------------------------------------------
+
+        cursor.execute("""
+            SELECT COUNT(*) AS line_count
+            FROM production_lines
+            WHERE nation_id = %s
+            AND line_type = %s
+        """, (
+            nation_id,
+            line_type
+        ))
+
+        current_lines = cursor.fetchone()["line_count"]
+
+        # --------------------------------------------------
+        # ADD production lines
+        # --------------------------------------------------
+
+        while current_lines < target_lines:
+
+            # Find next line number
+            cursor.execute("""
+                SELECT COALESCE(
+                    MAX(
+                        CAST(
+                            SUBSTRING_INDEX(line_name, ' ', -1)
+                            AS UNSIGNED
+                        )
+                    ),
+                    0
+                ) + 1 AS next_number
+                FROM production_lines
+                WHERE nation_id = %s
+                AND line_type = %s
+            """, (
+                nation_id,
+                line_type
+            ))
+
+            next_number = cursor.fetchone()["next_number"]
+
+            # Find next globally available line ID
+            cursor.execute("""
+                SELECT COALESCE(MAX(line_id), 0) + 1 AS next_line_id
+                FROM production_lines
+            """)
+
+            next_line_id = cursor.fetchone()["next_line_id"]
+
+            cursor.execute("""
+                INSERT INTO production_lines
+                (
+                    line_id,
+                    nation_id,
+                    line_name,
+                    line_type
+                )
+                VALUES
+                (
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                )
+            """, (
+                next_line_id,
+                nation_id,
+                f"{line_prefix} {next_number}",
+                line_type
+            ))
+
+            current_lines += 1
+
+        # --------------------------------------------------
+        # REMOVE production lines
+        # --------------------------------------------------
+
+        while current_lines > target_lines:
+
+            # Find the highest-numbered line of this type
+            cursor.execute("""
+                SELECT line_id, line_name
+                FROM production_lines
+                WHERE nation_id = %s
+                AND line_type = %s
+                ORDER BY line_id DESC
+                LIMIT 1
+            """, (
+                nation_id,
+                line_type
+            ))
+
+            line = cursor.fetchone()
+
+            if not line:
+                break
+
+            line_id = line["line_id"]
+
+            # --------------------------------------------------
+            # Find currently producing project
+            # --------------------------------------------------
+
+            cursor.execute("""
+                SELECT
+                    pq.queue_id,
+                    pq.unit_id,
+                    pq.tier,
+                    pq.position,
+                    pq.turns_remaining
+                FROM production_queue pq
+                WHERE pq.line_id = %s
+                AND pq.position = 1
+                LIMIT 1
+            """, (line_id,))
+
+            active_project = cursor.fetchone()
+
+            # --------------------------------------------------
+            # Delete active project
+            #
+            # Resources are NOT refunded.
+            # --------------------------------------------------
+
+            if active_project:
+
+                cursor.execute("""
+                    DELETE FROM production_queue
+                    WHERE queue_id = %s
+                """, (
+                    active_project["queue_id"],
+                ))
+
+            # --------------------------------------------------
+            # Get remaining queued projects
+            # --------------------------------------------------
+
+            cursor.execute("""
+                SELECT
+                    queue_id,
+                    unit_id,
+                    tier,
+                    turns_remaining
+                FROM production_queue
+                WHERE line_id = %s
+                ORDER BY position
+            """, (line_id,))
+
+            queued_projects = cursor.fetchall()
+
+            # --------------------------------------------------
+            # Remove destroyed line's remaining queue
+            # temporarily.
+            # --------------------------------------------------
+
+            cursor.execute("""
+                DELETE FROM production_queue
+                WHERE line_id = %s
+            """, (line_id,))
+
+            # --------------------------------------------------
+            # Get remaining production lines
+            # --------------------------------------------------
+
+            cursor.execute("""
+                SELECT line_id
+                FROM production_lines
+                WHERE nation_id = %s
+                AND line_type = %s
+                AND line_id != %s
+                ORDER BY line_id
+            """, (
+                nation_id,
+                line_type,
+                line_id
+            ))
+
+            remaining_lines = cursor.fetchall()
+
+            # --------------------------------------------------
+            # Transfer queued projects to shortest line
+            # --------------------------------------------------
+
+            for project in queued_projects:
+
+                shortest_line = None
+                shortest_queue = None
+
+                for remaining_line in remaining_lines:
+
+                    cursor.execute("""
+                        SELECT COUNT(*) AS queue_size
+                        FROM production_queue
+                        WHERE line_id = %s
+                    """, (
+                        remaining_line["line_id"],
+                    ))
+
+                    queue_size = cursor.fetchone()["queue_size"]
+
+                    if (
+                        shortest_queue is None
+                        or queue_size < shortest_queue
+                    ):
+
+                        shortest_queue = queue_size
+                        shortest_line = remaining_line["line_id"]
+
+                if shortest_line is None:
+                    break
+
+                new_position = shortest_queue + 1
+
+                new_status = (
+                    "building"
+                    if new_position == 1
+                    else "queued"
+                )
+
+                cursor.execute("""
+                    INSERT INTO production_queue
+                    (
+                        line_id,
+                        unit_id,
+                        tier,
+                        position,
+                        turns_remaining,
+                        status
+                    )
+                    VALUES
+                    (
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        %s
+                    )
+                """, (
+                    shortest_line,
+                    project["unit_id"],
+                    project["tier"],
+                    new_position,
+                    project["turns_remaining"],
+                    new_status
+                ))
+
+            # --------------------------------------------------
+            # Delete production line
+            # --------------------------------------------------
+
+            cursor.execute("""
+                DELETE FROM production_lines
+                WHERE line_id = %s
+                AND nation_id = %s
+            """, (
+                line_id,
+                nation_id
+            ))
+
+            current_lines -= 1
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
 @app.route("/api/unit/<int:unit_id>")
 def get_unit(unit_id):
 
@@ -3735,6 +4161,7 @@ def build_unit():
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
+    
 
     cursor.execute("""
         SELECT *
@@ -3754,6 +4181,8 @@ def build_unit():
     (
         session["nation_id"],
     ))
+
+    sync_production_lines(session["nation_id"])
 
     resources = {
         row["resource_id"]: row["amount"]
@@ -4244,6 +4673,8 @@ def sync_construction_lines(nation_id):
 
     cursor.close()
     conn.close()
+
+
 
 @app.route("/api/build-building", methods=["POST"])
 def build_building():

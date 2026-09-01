@@ -74,24 +74,54 @@
 
                 {% endif %}
 
-                <section class="invite-button">
+                {% if session["nation_id"] in members | map(attribute="nation_id") | list %}
 
-                    <form
-                         method="POST"
-                        action="{{ url_for('leave_alliance') }}"
-                        style="display: inline;">
+                    <section class="invite-button">
 
-                        <button
-                            type="submit"
-                            class="primary-button">
+                        <form
+                            method="POST"
+                            action="{{ url_for('leave_alliance') }}"
+                            style="display: inline;">
 
-                            Leave Alliance
+                            <button
+                                type="submit"
+                                class="primary-button">
 
-                        </button>
+                                Leave Alliance
 
-                    </form>
+                            </button>
 
-                </section>
+                        </form>
+
+                    </section>
+
+                {% endif %}
+
+                {% if session["nation_id"] == alliance.founder_nation_id %}
+
+                    <section class="invite-button">
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('disband_alliance') }}"
+                            style="display: inline;"
+                            onsubmit="return confirm(
+                                'Are you sure you want to disband this alliance? This will remove all members and cannot be undone.'
+                            );">
+
+                            <button
+                                type="submit"
+                                class="primary-button">
+
+                                Disband Alliance
+
+                            </button>
+
+                        </form>
+
+                    </section>
+
+                {% endif %}
 
             </div>
 
