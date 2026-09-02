@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.333 50.011">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #231f20;
+      }
+
+      .cls-3 {
+        fill: #6abd45;
+      }
+
+      .cls-3, .cls-4 {
+        stroke: #010101;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-4, .cls-5 {
+        fill: none;
+      }
+
+      .cls-5 {
+        font-size: 20px;
+      }
+
+      .cls-5, .cls-2 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+      }
+
+      .cls-2 {
+        font-size: 12px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer_1">
+    <g>
+      <rect class="cls-4" x=".5" y=".5" width="79.333" height="49.011"/>
+      <text class="cls-5" transform="translate(26.757 33.375)"><tspan x="0" y="0">HQ</tspan></text>
+    </g>
+    <rect class="cls-3" x=".5" y=".5" width="79.333" height="49.011"/>
+    <text class="cls-2" transform="translate(36.278 13.149)"><tspan x="0" y="0">A</tspan></text>
+    <polygon class="cls-1" points="40.166 25.005 13.663 9.704 13.663 40.307 40.166 25.005"/>
+    <polygon class="cls-1" points="40.166 25.005 66.67 9.704 66.67 40.307 40.166 25.005"/>
+  </g>
+</svg>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68.349 68.349">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #231f20;
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 16px;
+      }
+
+      .cls-2 {
+        letter-spacing: -.015em;
+      }
+
+      .cls-3 {
+        letter-spacing: -.057em;
+      }
+
+      .cls-4 {
+        letter-spacing: -.053em;
+      }
+
+      .cls-5 {
+        fill: #ed2024;
+        stroke: #010101;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer_1">
+    <rect class="cls-5" x="10.51" y="10.51" width="47.33" height="47.33" transform="translate(-14.156 34.175) rotate(-45)"/>
+    <text class="cls-1" transform="translate(10.031 40.377)"><tspan class="cls-4" x="0" y="0">A</tspan><tspan class="cls-3" x="8.944" y="0">W</tspan><tspan class="cls-2" x="21.568" y="0">A</tspan><tspan x="31.12" y="0">CS</tspan></text>
+  </g>
+</svg>

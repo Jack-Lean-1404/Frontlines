@@ -89,10 +89,28 @@ body {
 
 
 /* ==================================================
+   UNITS LAYER
+================================================== */
+
+#units-layer {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 4260.94px;
+    height: 2722.26px;
+
+    pointer-events: none;
+}
+
+
+/* ==================================================
    UNIT COUNTER
 ================================================== */
 
-#test-unit {
+.unit-counter {
 
     position: absolute;
 
@@ -102,11 +120,13 @@ body {
 
     user-select: none;
 
+    pointer-events: auto;
+
     z-index: 10;
 }
 
 
-#test-unit.dragging {
+.unit-counter.dragging {
     cursor: grabbing;
 }
 
@@ -116,28 +136,17 @@ body {
 ================================================== */
 
 .counter-image {
-
     position: relative;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    background: white;
 }
 
-
 .counter-image img {
-
     display: block;
-
-    width: auto;
-    height: auto;
-
-    max-width: 24px;
-    max-height: 24px;
-
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
     user-select: none;
     pointer-events: none;
 }
@@ -148,24 +157,21 @@ body {
 ================================================== */
 
 .counter-tier {
-
     position: absolute;
-
     left: 50%;
     bottom: 100%;
-
     transform: translateX(-50%);
-
     margin-bottom: 1px;
-
     font-size: 4px;
     line-height: 1;
-
     color: black;
-
     white-space: nowrap;
-
     pointer-events: none;
+}
+
+.unit-counter.land .counter-tier,
+.unit-counter.sea .counter-tier {
+    margin-bottom: -4px;
 }
 
 
@@ -196,6 +202,38 @@ body {
     pointer-events: none;
 }
 
+.counter-number {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 2px;
+
+    font-size: 4px;
+    line-height: 1;
+    color: black;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.counter-custom-name {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    margin-top: 1px;
+
+    font-size: 4px;
+    line-height: 1;
+    color: black;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.unit-counter.land .counter-custom-name,
+.unit-counter.sea .counter-custom-name {
+    margin-top: -3px;
+}
 
 /* ==================================================
    COORDINATES
@@ -215,6 +253,7 @@ body {
     color: white;
 
     font-family: monospace;
+
     font-size: 14px;
 
     border: 1px solid #555;
@@ -243,6 +282,7 @@ body {
     color: white;
 
     font-family: monospace;
+
     font-size: 14px;
 
     border: 1px solid #555;
