@@ -490,6 +490,16 @@ def dashboard():
 def economy():
     return render_template("economy.html", current_page="economy")
 
+@app.route("/tabletop")
+def tabletop():
+    if "user_id" not in session:
+        return redirect(url_for("access"))
+
+    return render_template(
+        "tabletop.html",
+        current_page="tabletop"
+    )
+
 
 @app.route("/research")
 def research():
