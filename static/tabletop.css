@@ -1,0 +1,253 @@
+/* ==================================================
+   TABLETOP MAP
+================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    margin: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+
+body {
+    background: #111;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* ==================================================
+   MAP VIEWPORT
+================================================== */
+
+#map-viewport {
+
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #111;
+
+    cursor: grab;
+}
+
+
+#map-viewport.dragging {
+    cursor: grabbing;
+}
+
+
+/* ==================================================
+   MAP WORLD
+================================================== */
+
+#map-world {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 4260.94px;
+    height: 2722.26px;
+
+    transform-origin: 0 0;
+}
+
+
+/* ==================================================
+   SVG MAP
+================================================== */
+
+#game-map {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 4260.94px;
+    height: 2722.26px;
+
+    display: block;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+
+/* ==================================================
+   UNIT COUNTER
+================================================== */
+
+#test-unit {
+
+    position: absolute;
+
+    transform: translate(-50%, -50%);
+
+    cursor: grab;
+
+    user-select: none;
+
+    z-index: 10;
+}
+
+
+#test-unit.dragging {
+    cursor: grabbing;
+}
+
+
+/* ==================================================
+   UNIT IMAGE
+================================================== */
+
+.counter-image {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+}
+
+
+.counter-image img {
+
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 24px;
+    max-height: 24px;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+
+/* ==================================================
+   FORMATION TIER
+================================================== */
+
+.counter-tier {
+
+    position: absolute;
+
+    left: 50%;
+    bottom: 100%;
+
+    transform: translateX(-50%);
+
+    margin-bottom: 1px;
+
+    font-size: 4px;
+    line-height: 1;
+
+    color: black;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+}
+
+
+/* ==================================================
+   NATION CODE
+================================================== */
+
+.counter-nation {
+
+    position: absolute;
+
+    right: 100%;
+    top: 50%;
+
+    transform:
+        translateY(-50%)
+        rotate(-90deg);
+
+    margin-right: -2px;
+
+    font-size: 4px;
+    line-height: 1;
+
+    color: black;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+}
+
+
+/* ==================================================
+   COORDINATES
+================================================== */
+
+#coordinates {
+
+    position: fixed;
+
+    left: 20px;
+    bottom: 20px;
+
+    padding: 10px 14px;
+
+    background: rgba(0, 0, 0, 0.8);
+
+    color: white;
+
+    font-family: monospace;
+    font-size: 14px;
+
+    border: 1px solid #555;
+
+    border-radius: 4px;
+
+    z-index: 100;
+}
+
+
+/* ==================================================
+   ZOOM DISPLAY
+================================================== */
+
+#zoom-display {
+
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    padding: 10px 14px;
+
+    background: rgba(0, 0, 0, 0.8);
+
+    color: white;
+
+    font-family: monospace;
+    font-size: 14px;
+
+    border: 1px solid #555;
+
+    border-radius: 4px;
+
+    z-index: 100;
+}

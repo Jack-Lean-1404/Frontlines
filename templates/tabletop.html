@@ -8,595 +8,70 @@
 
     <title>Frontlines — Strategic Map</title>
 
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        body {
-            background: #111;
-            font-family: Arial, sans-serif;
-        }
-
-        /* --------------------------------
-           MAP VIEWPORT
-        -------------------------------- */
-
-        #map-viewport {
-            position: relative;
-
-            width: 100%;
-            height: 100%;
-
-            overflow: hidden;
-
-            background: #111;
-
-            cursor: grab;
-        }
-
-        #map-viewport.dragging {
-            cursor: grabbing;
-        }
-
-
-        /* --------------------------------
-           MAP WORLD
-        -------------------------------- */
-
-        #map-world {
-
-            position: absolute;
-
-            left: 0;
-            top: 0;
-
-            width: 4260.94px;
-            height: 2722.26px;
-
-            transform-origin: 0 0;
-        }
-
-
-        /* --------------------------------
-           SVG MAP
-        -------------------------------- */
-
-        #game-map {
-
-            position: absolute;
-
-            left: 0;
-            top: 0;
-
-            width: 4260.94px;
-            height: 2722.26px;
-
-            display: block;
-
-            user-select: none;
-            pointer-events: none;
-        }
-
-
-        /* =========================================
-        COUNTER
-        ========================================= */
-
-        #test-unit {
-
-            position: absolute;
-
-            /* The counter itself is positioned from
-            the centre of the unit image */
-            transform: translate(-50%, -50%);
-
-            cursor: grab;
-            user-select: none;
-
-            z-index: 10;
-        }
-
-
-        #test-unit.dragging {
-            cursor: grabbing;
-        }
-
-
-        /* =========================================
-        UNIT IMAGE
-        ========================================= */
-
-        .counter-image {
-
-            position: relative;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            background: white;
-        }
-
-
-        .counter-image img {
-
-            display: block;
-
-            width: auto;
-            height: auto;
-
-            max-width: 20px;
-            max-height: 20px;
-
-            object-fit: contain;
-
-            user-select: none;
-            pointer-events: none;
-        }
-
-
-        /* =========================================
-        FORMATION TIER
-        ========================================= */
-
-        .counter-tier {
-
-            position: absolute;
-
-            left: 50%;
-
-            bottom: 100%;
-
-            transform: translateX(-50%);
-
-            margin-bottom: 1px;
-
-            font-size: 4px;
-            line-height: 1;
-
-            color: black;
-
-            white-space: nowrap;
-
-            pointer-events: none;
-        }
-
-
-        /* =========================================
-        NATION CODE
-        ========================================= */
-
-        .counter-nation {
-
-            position: absolute;
-
-            right: 100%;
-
-            top: 50%;
-
-            transform:
-                translateY(-50%)
-                rotate(-90deg);
-
-            margin-right: -2px;
-
-            font-size: 4px;
-            line-height: 1;
-
-            color: black;
-
-            white-space: nowrap;
-
-            pointer-events: none;
-        }
-
-        /* --------------------------------
-           COORDINATE DISPLAY
-        -------------------------------- */
-
-        #coordinates {
-
-            position: fixed;
-
-            left: 20px;
-            bottom: 20px;
-
-            padding: 10px 14px;
-
-            background: rgba(0, 0, 0, 0.8);
-
-            color: white;
-
-            font-family: monospace;
-            font-size: 14px;
-
-            border: 1px solid #555;
-
-            border-radius: 4px;
-
-            z-index: 100;
-        }
-
-
-        /* --------------------------------
-           ZOOM DISPLAY
-        -------------------------------- */
-
-        #zoom-display {
-
-            position: fixed;
-
-            right: 20px;
-            bottom: 20px;
-
-            padding: 10px 14px;
-
-            background: rgba(0, 0, 0, 0.8);
-
-            color: white;
-
-            font-family: monospace;
-            font-size: 14px;
-
-            border: 1px solid #555;
-
-            border-radius: 4px;
-
-            z-index: 100;
-        }
-
-    </style>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='tabletop.css') }}"
+    >
 
 </head>
 
-
 <body>
 
+    <div id="map-viewport">
 
-<div id="map-viewport">
+        <div id="map-world">
 
-    <div id="map-world">
+            <img
+                id="game-map"
+                src="{{ url_for('static', filename='maps/Game-Map-test.svg') }}"
+                draggable="false"
+            >
 
-        <img
-            id="game-map"
-            src="{{ url_for('static', filename='maps/Game-Map-test.svg') }}"
-            draggable="false"
-        >
+            <div id="test-unit">
 
-        <div id="test-unit">
+                <div class="counter-tier">
+                    XXXXX
+                </div>
 
-            <div class="counter-tier">
-                XXXXX
-            </div>
+                <div class="counter-image">
 
-            <div class="counter-image">
-                <img
-                    src="{{ url_for('static', filename='images/unit_icons/Mechanised_Infantry.png') }}"
-                    draggable="false"
-                >
-            </div>
+                    <img
+                        id="unit-icon"
+                        src="{{ url_for('static', filename='images/unit_icons/Mechanised_Infantry.png') }}"
+                        draggable="false"
+                    >
 
-            <div class="counter-nation">
-                SATO
+                </div>
+
+                <div class="counter-nation">
+                    SATO
+                </div>
+
             </div>
 
         </div>
 
     </div>
 
-</div>
 
+    <div id="coordinates">
 
-<div id="coordinates">
-    X: <span id="coord-x">0</span>
-    Y: <span id="coord-y">0</span>
-</div>
+        X: <span id="coord-x">0</span>
+        Y: <span id="coord-y">0</span>
 
+    </div>
 
-<div id="zoom-display">
-    Zoom: <span id="zoom">100%</span>
-</div>
 
+    <div id="zoom-display">
 
-<script>
+        Zoom: <span id="zoom">100%</span>
 
-    /* ==================================================
-       MAP CONSTANTS
-    ================================================== */
+    </div>
 
-    const MAP_WIDTH = 4260.94;
-    const MAP_HEIGHT = 2722.26;
 
-
-    /* ==================================================
-       MAP STATE
-    ================================================== */
-
-    let scale = 1;
-
-    let panX = 0;
-    let panY = 0;
-
-    let isPanning = false;
-
-    let panStartX = 0;
-    let panStartY = 0;
-
-    let startPanX = 0;
-    let startPanY = 0;
-
-
-    /* ==================================================
-       TEST UNIT POSITION
-    ================================================== */
-
-    let unitX = 1500;
-    let unitY = 1000;
-
-
-    /* ==================================================
-       ELEMENTS
-    ================================================== */
-
-    const viewport =
-        document.getElementById("map-viewport");
-
-    const world =
-        document.getElementById("map-world");
-
-    const unit =
-        document.getElementById("test-unit");
-
-    const coordX =
-        document.getElementById("coord-x");
-
-    const coordY =
-        document.getElementById("coord-y");
-
-    const zoomDisplay =
-        document.getElementById("zoom");
-
-
-    /* ==================================================
-       RENDER
-    ================================================== */
-
-    function render() {
-
-        world.style.transform =
-            `translate(${panX}px, ${panY}px) scale(${scale})`;
-
-        unit.style.left =
-            `${unitX}px`;
-
-        unit.style.top =
-            `${unitY}px`;
-
-        coordX.textContent =
-            unitX.toFixed(1);
-
-        coordY.textContent =
-            unitY.toFixed(1);
-
-        zoomDisplay.textContent =
-            `${Math.round(scale * 100)}%`;
-    }
-
-
-    /* ==================================================
-       MAP PAN
-    ================================================== */
-
-    viewport.addEventListener("mousedown", function(event) {
-
-        if (event.target === unit) {
-            return;
-        }
-
-        isPanning = true;
-
-        viewport.classList.add("dragging");
-
-        panStartX = event.clientX;
-        panStartY = event.clientY;
-
-        startPanX = panX;
-        startPanY = panY;
-    });
-
-
-    window.addEventListener("mousemove", function(event) {
-
-        if (!isPanning) {
-            return;
-        }
-
-        panX =
-            startPanX +
-            (event.clientX - panStartX);
-
-        panY =
-            startPanY +
-            (event.clientY - panStartY);
-
-        render();
-    });
-
-
-    window.addEventListener("mouseup", function() {
-
-        isPanning = false;
-
-        viewport.classList.remove("dragging");
-    });
-
-
-    /* ==================================================
-       UNIT DRAG
-    ================================================== */
-
-    let draggingUnit = false;
-
-    let unitStartMouseX = 0;
-    let unitStartMouseY = 0;
-
-    let unitStartX = 0;
-    let unitStartY = 0;
-
-
-    unit.addEventListener("mousedown", function(event) {
-
-        event.stopPropagation();
-
-        draggingUnit = true;
-
-        unit.classList.add("dragging");
-
-        unitStartMouseX = event.clientX;
-        unitStartMouseY = event.clientY;
-
-        unitStartX = unitX;
-        unitStartY = unitY;
-    });
-
-
-    window.addEventListener("mousemove", function(event) {
-
-        if (!draggingUnit) {
-            return;
-        }
-
-        const deltaX =
-            (event.clientX - unitStartMouseX)
-            / scale;
-
-        const deltaY =
-            (event.clientY - unitStartMouseY)
-            / scale;
-
-
-        unitX =
-            unitStartX + deltaX;
-
-        unitY =
-            unitStartY + deltaY;
-
-
-        /* Keep unit inside map */
-
-        unitX =
-            Math.max(
-                0,
-                Math.min(MAP_WIDTH, unitX)
-            );
-
-        unitY =
-            Math.max(
-                0,
-                Math.min(MAP_HEIGHT, unitY)
-            );
-
-
-        render();
-    });
-
-
-    window.addEventListener("mouseup", function() {
-
-        draggingUnit = false;
-
-        unit.classList.remove("dragging");
-    });
-
-
-    /* ==================================================
-       ZOOM
-    ================================================== */
-
-    viewport.addEventListener(
-        "wheel",
-        function(event) {
-
-            event.preventDefault();
-
-
-            const zoomFactor =
-                event.deltaY < 0
-                    ? 1.1
-                    : 0.9;
-
-
-            const oldScale = scale;
-
-            let newScale =
-                scale * zoomFactor;
-
-
-            newScale =
-                Math.max(
-                    0.25,
-                    Math.min(10, newScale)
-                );
-
-
-            /* ------------------------------------------
-               Zoom around mouse position
-            ------------------------------------------ */
-
-            const rect =
-                viewport.getBoundingClientRect();
-
-
-            const mouseX =
-                event.clientX - rect.left;
-
-            const mouseY =
-                event.clientY - rect.top;
-
-
-            const mapX =
-                (mouseX - panX) / oldScale;
-
-            const mapY =
-                (mouseY - panY) / oldScale;
-
-
-            scale = newScale;
-
-
-            panX =
-                mouseX - mapX * scale;
-
-            panY =
-                mouseY - mapY * scale;
-
-
-            render();
-
-        },
-        { passive: false }
-    );
-
-
-    /* ==================================================
-       INITIAL RENDER
-    ================================================== */
-
-    render();
-
-</script>
-
+    <script
+        src="{{ url_for('static', filename='js/tabletop.js') }}"
+    ></script>
 
 </body>
 
