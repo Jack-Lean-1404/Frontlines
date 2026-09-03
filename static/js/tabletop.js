@@ -146,7 +146,7 @@ function createUnitCounter(
     counter.dataset.unitId =
         unitData.nation_unit_id;
 
-    if (!unitData.isOwn) {
+    if (!unitData.canMove) {
         counter.classList.add("not-owned");
     }
 
@@ -205,7 +205,7 @@ function createUnitCounter(
 
         // Only allow the player's own units
         // to be selected or dragged.
-        if (!unitData.isOwn) {
+        if (!unitData.canMove) {
             return;
         }
 

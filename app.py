@@ -7198,6 +7198,8 @@ def get_tabletop():
 
         units = cursor.fetchall()
 
+        is_admin = session.get("role") == "admin"
+
         for unit in units:
 
             unit["nationCode"] = unit["nation_code"]
@@ -7208,6 +7210,11 @@ def get_tabletop():
 
             unit["isOwn"] = (
                 unit["nation_id"] == current_nation_id
+            )
+
+            unit["canMove"] = (
+                unit["nation_id"] == current_nation_id
+                or is_admin
             )
 
         return jsonify(units)
@@ -7246,21 +7253,30 @@ def move_tabletop_unit(nation_unit_id):
 
         # Make sure this unit belongs to the logged-in player's nation
         cursor.execute("""
-            SELECT nation_unit_id
+            SELECT nation_unit_id, nation_id
             FROM nation_units
             WHERE nation_unit_id = %s
-              AND nation_id = %s
-              AND status = 'active'
+            AND status = 'active'
         """, (
             nation_unit_id,
-            session["nation_id"]
         ))
 
         unit = cursor.fetchone()
 
         if not unit:
             return jsonify({
-                "error": "Unit not found or not owned by you"
+                "error": "Unit not found"
+            }), 404
+
+
+        # Normal players can only move their own units.
+        # Admins can move units belonging to any nation.
+        if (
+            unit["nation_id"] != session["nation_id"]
+            and session.get("role") != "admin"
+        ):
+            return jsonify({
+                "error": "Unit not owned by you"
             }), 403
 
         # Create or update tabletop position
