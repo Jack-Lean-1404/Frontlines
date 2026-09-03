@@ -123,6 +123,11 @@ let selectedUnit = null;
 
 let draggingUnit = false;
 
+let unitMouseDown = false;
+let unitHasMoved = false;
+
+const UNIT_DRAG_THRESHOLD = 4;
+
 let unitStartMouseX = 0;
 let unitStartMouseY = 0;
 
@@ -199,92 +204,105 @@ function createUnitCounter(
         counter.style.top = `${unitData.y}px`;
     }
 
-    counter.addEventListener("mousedown", function(event) {
+    counter.addEventListener(
+        "mousedown",
+        function(event) {
 
-        event.stopPropagation();
+            event.stopPropagation();
 
-        // Only allow the player's own units
-        // to be selected or dragged.
-        if (!unitData.canMove) {
-            return;
+            // Cannot interact with units
+            // the player is not allowed to move.
+            if (!unitData.canMove) {
+                return;
+            }
+
+            document
+            .querySelectorAll(".unit-counter.selected")
+            .forEach(function(counter) {
+
+                counter.classList.remove(
+                    "selected"
+                );
+            });
+
+            selectedUnit = unitData;
+
+            counter.classList.add("selected");
+
+            unitMouseDown = true;
+            draggingUnit = false;
+            unitHasMoved = false;
+
+            unitStartMouseX = event.clientX;
+            unitStartMouseY = event.clientY;
+
+
+            // ==========================================
+            // UNPLACED UNIT
+            // ==========================================
+
+            if (
+                unitData.x === null ||
+                unitData.y === null
+            ) {
+
+                // Move counter from deployment tray
+                // into the map layer.
+                unitsLayer.appendChild(counter);
+
+                counter.style.position = "absolute";
+
+                counter.style.transform =
+                    "translate(-50%, -50%)";
+
+
+                // Convert mouse position to map coordinates.
+                const rect =
+                    viewport.getBoundingClientRect();
+
+                const mapX =
+                    (
+                        event.clientX -
+                        rect.left -
+                        panX
+                    ) / scale;
+
+                const mapY =
+                    (
+                        event.clientY -
+                        rect.top -
+                        panY
+                    ) / scale;
+
+
+                unitStartX = mapX;
+                unitStartY = mapY;
+
+                unitData.x = mapX;
+                unitData.y = mapY;
+
+
+                counter.style.left =
+                    `${mapX}px`;
+
+                counter.style.top =
+                    `${mapY}px`;
+
+                updateCoordinates(unitData);
+            }
+
+            else {
+
+                unitStartX =
+                    unitData.x;
+
+                unitStartY =
+                    unitData.y;
+
+                updateCoordinates(unitData);
+            }
         }
-
-        selectedUnit = unitData;
-        draggingUnit = true;
-
-        counter.classList.add("dragging");
-
-        unitStartMouseX = event.clientX;
-        unitStartMouseY = event.clientY;
-
-
-        /* ------------------------------------------
-        UNPLACED UNIT
-        ------------------------------------------ */
-
-        if (
-            unitData.x === null ||
-            unitData.y === null
-        ) {
-
-            // Move counter from deployment tray
-            // into the map layer
-            unitsLayer.appendChild(counter);
-
-            counter.style.position = "absolute";
-            counter.style.transform =
-                "translate(-50%, -50%)";
-
-
-            // Get viewport position
-            const rect =
-                viewport.getBoundingClientRect();
-
-
-            // Convert mouse position to map coordinates
-            const mapX =
-                (event.clientX - rect.left - panX) / scale;
-
-            const mapY =
-                (event.clientY - rect.top - panY) / scale;
-
-
-            // Set starting map position
-            unitStartX = mapX;
-            unitStartY = mapY;
-
-
-            // Set unit position
-            unitData.x = mapX;
-            unitData.y = mapY;
-
-
-            // Position counter
-            counter.style.left =
-                `${mapX}px`;
-
-            counter.style.top =
-                `${mapY}px`;
-
-
-            updateCoordinates(unitData);
-
-        }
-
-
-        /* ------------------------------------------
-        ALREADY PLACED UNIT
-        ------------------------------------------ */
-
-        else {
-
-            unitStartX = unitData.x;
-            unitStartY = unitData.y;
-
-            updateCoordinates(unitData);
-        }
-
-    });
+    );
 
     if (addToMap) {
         unitsLayer.appendChild(counter);
@@ -420,6 +438,20 @@ viewport.addEventListener(
     "mousedown",
     function(event) {
 
+        if (!event.target.closest(".unit-counter")) {
+
+           document
+                .querySelectorAll(".unit-counter.selected")
+                .forEach(function(counter) {
+
+                    counter.classList.remove(
+                        "selected"
+                    );
+                });
+
+            selectedUnit = null;
+        }
+
         if (
             event.target.closest(".unit-counter")
         ) {
@@ -498,30 +530,55 @@ window.addEventListener(
     function(event) {
 
         if (
-            !draggingUnit ||
+            !unitMouseDown ||
             !selectedUnit
         ) {
             return;
         }
 
 
-        const deltaX =
-            (
-                event.clientX -
-                unitStartMouseX
-            ) / scale;
+        // ==========================================
+        // DETERMINE WHETHER THIS IS A DRAG
+        // ==========================================
 
+        const mouseDeltaX =
+            event.clientX -
+            unitStartMouseX;
+
+        const mouseDeltaY =
+            event.clientY -
+            unitStartMouseY;
+
+
+        const distance =
+            Math.sqrt(
+                mouseDeltaX * mouseDeltaX +
+                mouseDeltaY * mouseDeltaY
+            );
+
+
+        if (
+            !draggingUnit &&
+            distance < UNIT_DRAG_THRESHOLD
+        ) {
+            return;
+        }
+
+
+        // Mouse moved enough to count as a drag.
+        draggingUnit = true;
+        unitHasMoved = true;
+
+
+        const deltaX =
+            mouseDeltaX / scale;
 
         const deltaY =
-            (
-                event.clientY -
-                unitStartMouseY
-            ) / scale;
+            mouseDeltaY / scale;
 
 
         selectedUnit.x =
             unitStartX + deltaX;
-
 
         selectedUnit.y =
             unitStartY + deltaY;
@@ -539,7 +596,6 @@ window.addEventListener(
                     selectedUnit.x
                 )
             );
-
 
         selectedUnit.y =
             Math.max(
@@ -563,7 +619,6 @@ window.addEventListener(
                 selectedUnit,
                 counter
             );
-
         }
 
 
@@ -574,24 +629,44 @@ window.addEventListener(
 );
 
 
-window.addEventListener("mouseup", function() {
+window.addEventListener(
+    "mouseup",
+    function() {
 
-    if (selectedUnit && draggingUnit) {
+        if (
+            selectedUnit &&
+            unitMouseDown
+        ) {
 
-        const counter =
-            document.querySelector(
-                `[data-unit-id="${selectedUnit.nation_unit_id}"]`
-            );
+            const counter =
+                document.querySelector(
+                    `[data-unit-id="${selectedUnit.nation_unit_id}"]`
+                );
 
-        if (counter) {
-            counter.classList.remove("dragging");
+
+            if (counter) {
+
+                counter.classList.remove(
+                    "dragging"
+                );
+            }
+
+
+            // Only save if the unit was actually moved.
+            if (draggingUnit) {
+
+                saveUnitPosition(
+                    selectedUnit
+                );
+            }
         }
 
-        saveUnitPosition(selectedUnit);
-    }
 
-    draggingUnit = false;
-});
+        unitMouseDown = false;
+        draggingUnit = false;
+        unitHasMoved = false;
+    }
+);
 
 
 /* ==================================================

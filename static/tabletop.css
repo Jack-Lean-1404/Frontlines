@@ -339,3 +339,7 @@ body {
     transform: none;
     flex: 0 0 auto;
 }
+
+.unit-counter.selected {
+    filter: drop-shadow(0 0 3px white);
+}
