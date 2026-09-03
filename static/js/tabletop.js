@@ -28,6 +28,8 @@ let startPanY = 0;
    TEST UNITS
 ================================================== */
 
+let units = [];
+
 const testUnits = [
     {
         id: 1,
@@ -67,6 +69,25 @@ const testUnits = [
     }
 ];
 
+async function loadUnits() {
+    try {
+        const response = await fetch("/api/tabletop");
+
+        if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+        }
+
+        units = await response.json();
+
+        console.log("Tabletop units loaded:", units);
+
+        renderUnits();
+
+    } catch (error) {
+        console.error("Failed to load tabletop units:", error);
+    }
+}
+
 
 /* ==================================================
    ELEMENTS
@@ -90,6 +111,9 @@ const coordY =
 const zoomDisplay =
     document.getElementById("zoom");
 
+const deploymentUnits =
+    document.getElementById("deployment-units");
+
 
 /* ==================================================
    UNIT STATE
@@ -110,22 +134,33 @@ let unitStartY = 0;
    CREATE UNIT COUNTER
 ================================================== */
 
-function createUnitCounter(unitData) {
+function createUnitCounter(
+    unitData,
+    addToMap = true
+) {
     const counter = document.createElement("div");
-    counter.className = `unit-counter ${unitData.type}`;
-    counter.dataset.unitId = unitData.id;
+
+    counter.className =
+        `unit-counter ${unitData.unit_class}`;
+
+    counter.dataset.unitId =
+        unitData.nation_unit_id;
+
+    if (!unitData.isOwn) {
+        counter.classList.add("not-owned");
+    }
 
     // Formation size
     const tier = document.createElement("div");
     tier.className = "counter-tier";
-    tier.textContent = "X".repeat(unitData.tierLevel);
+    tier.textContent = "X".repeat(unitData.tier_level);
 
     // Unit image
     const imageContainer = document.createElement("div");
     imageContainer.className = "counter-image";
 
     const image = document.createElement("img");
-    image.src = unitData.unitIcon;
+    image.src = getUnitIcon(unitData);
     image.draggable = false;
 
     // Nation code
@@ -136,7 +171,8 @@ function createUnitCounter(unitData) {
     // Formation number
     const formationNumber = document.createElement("div");
     formationNumber.className = "counter-number";
-    formationNumber.textContent = getOrdinal(unitData.formationNumber);
+    formationNumber.textContent =
+        getOrdinal(unitData.formationNumber);
 
     // Custom formation name
     const customName = document.createElement("div");
@@ -154,11 +190,24 @@ function createUnitCounter(unitData) {
     counter.appendChild(formationNumber);
     counter.appendChild(customName);
 
-    counter.style.left = `${unitData.x}px`;
-    counter.style.top = `${unitData.y}px`;
+    // Position only if already placed
+    if (
+        unitData.x !== null &&
+        unitData.y !== null
+    ) {
+        counter.style.left = `${unitData.x}px`;
+        counter.style.top = `${unitData.y}px`;
+    }
 
     counter.addEventListener("mousedown", function(event) {
+
         event.stopPropagation();
+
+        // Only allow the player's own units
+        // to be selected or dragged.
+        if (!unitData.isOwn) {
+            return;
+        }
 
         selectedUnit = unitData;
         draggingUnit = true;
@@ -167,13 +216,79 @@ function createUnitCounter(unitData) {
 
         unitStartMouseX = event.clientX;
         unitStartMouseY = event.clientY;
-        unitStartX = unitData.x;
-        unitStartY = unitData.y;
 
-        updateCoordinates(unitData);
+
+        /* ------------------------------------------
+        UNPLACED UNIT
+        ------------------------------------------ */
+
+        if (
+            unitData.x === null ||
+            unitData.y === null
+        ) {
+
+            // Move counter from deployment tray
+            // into the map layer
+            unitsLayer.appendChild(counter);
+
+            counter.style.position = "absolute";
+            counter.style.transform =
+                "translate(-50%, -50%)";
+
+
+            // Get viewport position
+            const rect =
+                viewport.getBoundingClientRect();
+
+
+            // Convert mouse position to map coordinates
+            const mapX =
+                (event.clientX - rect.left - panX) / scale;
+
+            const mapY =
+                (event.clientY - rect.top - panY) / scale;
+
+
+            // Set starting map position
+            unitStartX = mapX;
+            unitStartY = mapY;
+
+
+            // Set unit position
+            unitData.x = mapX;
+            unitData.y = mapY;
+
+
+            // Position counter
+            counter.style.left =
+                `${mapX}px`;
+
+            counter.style.top =
+                `${mapY}px`;
+
+
+            updateCoordinates(unitData);
+
+        }
+
+
+        /* ------------------------------------------
+        ALREADY PLACED UNIT
+        ------------------------------------------ */
+
+        else {
+
+            unitStartX = unitData.x;
+            unitStartY = unitData.y;
+
+            updateCoordinates(unitData);
+        }
+
     });
 
-    unitsLayer.appendChild(counter);
+    if (addToMap) {
+        unitsLayer.appendChild(counter);
+    }
 
     return counter;
 }
@@ -208,15 +323,39 @@ function getOrdinal(number) {
 function renderUnits() {
 
     unitsLayer.innerHTML = "";
+    deploymentUnits.innerHTML = "";
 
+    for (const unitData of units) {
 
-    for (const unitData of testUnits) {
-
-        createUnitCounter(unitData);
-
+        if (
+            unitData.x === null ||
+            unitData.y === null
+        ) {
+            createDeploymentUnit(unitData);
+        } else {
+            createUnitCounter(unitData);
+        }
     }
 }
 
+function createDeploymentUnit(unitData) {
+
+    const counter = createUnitCounter(
+        unitData,
+        false
+    );
+
+    counter.classList.add("deployment-unit");
+
+    counter.style.position = "relative";
+    counter.style.left = "";
+    counter.style.top = "";
+    counter.style.transform = "none";
+
+    deploymentUnits.appendChild(counter);
+
+    return counter;
+}
 
 /* ==================================================
    UPDATE UNIT POSITION
@@ -414,7 +553,7 @@ window.addEventListener(
 
         const counter =
             document.querySelector(
-                `[data-unit-id="${selectedUnit.id}"]`
+                `[data-unit-id="${selectedUnit.nation_unit_id}"]`
             );
 
 
@@ -435,32 +574,24 @@ window.addEventListener(
 );
 
 
-window.addEventListener(
-    "mouseup",
-    function() {
+window.addEventListener("mouseup", function() {
 
-        if (selectedUnit) {
+    if (selectedUnit && draggingUnit) {
 
-            const counter =
-                document.querySelector(
-                    `[data-unit-id="${selectedUnit.id}"]`
-                );
+        const counter =
+            document.querySelector(
+                `[data-unit-id="${selectedUnit.nation_unit_id}"]`
+            );
 
-
-            if (counter) {
-
-                counter.classList.remove(
-                    "dragging"
-                );
-
-            }
-
+        if (counter) {
+            counter.classList.remove("dragging");
         }
 
-
-        draggingUnit = false;
+        saveUnitPosition(selectedUnit);
     }
-);
+
+    draggingUnit = false;
+});
 
 
 /* ==================================================
@@ -560,10 +691,193 @@ viewport.addEventListener(
 );
 
 
+function getUnitIcon(unitData) {
+
+    const iconName = unitData.unit_icon
+        .replace(".png", "")
+        .toLowerCase();
+
+
+    const iconMap = {
+        "national_guard": "ng",
+        "motorised": "moto",
+        "mechanised": "mech",
+        "artillery": "art",
+        "engineer": "eng",
+        "hq": "hq",
+        "logistics": "logi",
+        "armoured": "arm",
+
+        "af": "af",
+        "asf": "asf",
+        "ah": "ah",
+        "sbomb": "sbomb",
+
+        "lcs": "lcs",
+        "ss": "ss"
+    };
+
+
+    const fileName =
+        iconMap[iconName];
+
+
+    if (!fileName) {
+
+        console.error(
+            "No tabletop icon found for:",
+            unitData.unit_icon
+        );
+
+        return "";
+    }
+
+
+    // ==========================================
+    // DETERMINE ASSET FOLDER
+    // ==========================================
+
+    let folder;
+
+
+    if (
+        iconName === "ah" ||
+        iconName === "artillery"
+    ) {
+
+        folder = "Land";
+
+    } else if (
+        iconName === "ss"
+    ) {
+
+        folder = "Sea";
+
+    } else if (
+        unitData.unit_class === "land"
+    ) {
+
+        folder = "Land";
+
+    } else if (
+        unitData.unit_class === "air"
+    ) {
+
+        folder = "Air";
+
+    } else if (
+        unitData.unit_class === "sea"
+    ) {
+
+        folder = "Sea";
+
+    } else {
+
+        console.error(
+            "No folder mapping for:",
+            unitData.unit_icon,
+            unitData.unit_class
+        );
+
+        return "";
+    }
+
+
+    // ==========================================
+    // DETERMINE RELATIONSHIP
+    // ==========================================
+
+    const relationship =
+        unitData.relationship
+            ? unitData.relationship.toLowerCase()
+            : "neutral";
+
+
+    let relationshipSuffix;
+
+
+    switch (relationship) {
+
+        case "friendly":
+            relationshipSuffix = "f";
+            break;
+
+        case "allied":
+            relationshipSuffix = "a";
+            break;
+
+        case "neutral":
+            relationshipSuffix = "n";
+            break;
+
+        case "hostile":
+            relationshipSuffix = "e";
+            break;
+
+        default:
+
+            console.error(
+                "Unknown unit relationship:",
+                unitData.relationship
+            );
+
+            relationshipSuffix = "n";
+            break;
+    }
+
+
+    // ==========================================
+    // RETURN TABLETOP ICON
+    // ==========================================
+
+    return `/static/images/unit_icons/${folder}/${fileName}_${relationshipSuffix}.svg`;
+}
+
+async function saveUnitPosition(unitData) {
+
+    try {
+
+        const response = await fetch(
+            `/api/tabletop/move/${unitData.nation_unit_id}`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    x: unitData.x,
+                    y: unitData.y
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.error || "Failed to save position"
+            );
+        }
+
+        console.log(
+            "Unit position saved:",
+            result
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Failed to save unit position:",
+            error
+        );
+    }
+}
+
 /* ==================================================
    INITIALISE
 ================================================== */
 
-renderUnits();
-
+loadUnits();
 render();

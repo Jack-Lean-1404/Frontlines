@@ -2440,6 +2440,38 @@ def process_turn():
 
         if turns_remaining <= 0:
 
+            # -------------------------
+            # GET NEXT FORMATION NUMBER
+            # -------------------------
+
+            # Lock the nation row so formation
+            # numbers remain sequential.
+            cursor.execute("""
+                SELECT nation_id
+                FROM nations
+                WHERE nation_id = %s
+                FOR UPDATE
+            """, (
+                unit["nation_id"],
+            ))
+
+            cursor.fetchone()
+
+            cursor.execute("""
+                SELECT
+                    COALESCE(MAX(formation_number), 0) AS max_number
+                FROM nation_units
+                WHERE nation_id = %s
+                AND unit_id = %s
+            """, (
+                unit["nation_id"],
+                unit["unit_id"]
+            ))
+
+            formation_number = (
+                cursor.fetchone()["max_number"] + 1
+            )
+
             cursor.execute("""
                 INSERT INTO nation_units
                 (
@@ -2447,6 +2479,8 @@ def process_turn():
                     unit_id,
                     game_turn,
                     tier_level,
+                    formation_number,
+                    custom_name,
                     status,
                     created_at,
                     updated_at
@@ -2457,6 +2491,8 @@ def process_turn():
                     %s,
                     %s,
                     %s,
+                    %s,
+                    NULL,
                     'active',
                     NOW(),
                     NOW()
@@ -2466,16 +2502,8 @@ def process_turn():
                 unit["nation_id"],
                 unit["unit_id"],
                 next_turn,
-                unit["tier"]
-            ))
-
-            cursor.execute("""
-                DELETE
-                FROM production_queue
-                WHERE queue_id = %s
-            """,
-            (
-                unit["queue_id"],
+                unit["tier"],
+                formation_number
             ))
 
             print(
@@ -3458,8 +3486,36 @@ def add_unit():
     current_turn = game_state["current_turn"]
 
     # -------------------------
-    # CREATE ACTIVE UNIT
+    # GET NEXT FORMATION NUMBER
     # -------------------------
+
+    # Lock the nation row so two formations
+    # of the same type cannot receive
+    # the same formation number.
+    cursor.execute("""
+        SELECT nation_id
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+        FOR UPDATE
+    """, (nation_id,))
+
+    cursor.fetchone()
+
+    cursor.execute("""
+        SELECT
+            COALESCE(MAX(formation_number), 0) AS max_number
+        FROM frontlinesdb.nation_units
+        WHERE nation_id = %s
+        AND unit_id = %s
+    """, (
+        nation_id,
+        unit_id
+    ))
+
+    formation_number = (
+        cursor.fetchone()["max_number"] + 1
+    )
+
     cursor.execute("""
         INSERT INTO frontlinesdb.nation_units
         (
@@ -3467,6 +3523,8 @@ def add_unit():
             unit_id,
             game_turn,
             tier_level,
+            formation_number,
+            custom_name,
             status,
             created_at,
             updated_at
@@ -3477,6 +3535,8 @@ def add_unit():
             %s,
             %s,
             %s,
+            %s,
+            NULL,
             'active',
             NOW(),
             NOW()
@@ -3485,7 +3545,8 @@ def add_unit():
         nation_id,
         unit_id,
         current_turn,
-        tier_level
+        tier_level,
+        formation_number
     ))
 
     # -------------------------
@@ -3719,16 +3780,50 @@ def transfer_unit():
         return "Source nation does not own this unit at this tier.", 400
 
     # -------------------------
+    # GET NEXT FORMATION NUMBER
+    # IN DESTINATION NATION
+    # -------------------------
+
+    cursor.execute("""
+        SELECT nation_id
+        FROM frontlinesdb.nations
+        WHERE nation_id = %s
+        FOR UPDATE
+    """, (
+        to_nation_id,
+    ))
+
+    cursor.fetchone()
+
+    cursor.execute("""
+        SELECT
+            COALESCE(MAX(formation_number), 0) AS max_number
+        FROM frontlinesdb.nation_units
+        WHERE nation_id = %s
+        AND unit_id = %s
+    """, (
+        to_nation_id,
+        unit_id
+    ))
+
+    formation_number = (
+        cursor.fetchone()["max_number"] + 1
+    )
+
+    # -------------------------
     # TRANSFER UNIT
     # -------------------------
     cursor.execute("""
         UPDATE frontlinesdb.nation_units
         SET
             nation_id = %s,
+            formation_number = %s,
+            custom_name = NULL,
             updated_at = NOW()
         WHERE nation_unit_id = %s
     """, (
         to_nation_id,
+        formation_number,
         nation_unit["nation_unit_id"]
     ))
 
@@ -6981,6 +7076,233 @@ def under_construction():
         "under_construction.html",
         current_page=None
     )
+
+@app.route("/api/tabletop")
+def get_tabletop():
+
+    if "user_id" not in session:
+        return jsonify({
+            "error": "Not authenticated"
+        }), 401
+
+    current_nation_id = session["nation_id"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        cursor.execute("""
+            SELECT
+                nu.nation_unit_id,
+                nu.nation_id,
+                nu.unit_id,
+                nu.game_turn,
+                nu.tier_level,
+                nu.formation_number,
+                nu.custom_name,
+                nu.status,
+
+                n.nation_code,
+
+                u.unit_name,
+                u.unit_icon,
+                u.unit_class,
+                u.unit_group,
+
+                tp.tabletop_piece_id,
+                tp.x,
+                tp.y,
+                tp.rotation,
+                tp.scale,
+
+                CASE
+
+                    /* Your own units */
+                    WHEN nu.nation_id = %s
+                        THEN 'Friendly'
+
+                    /* Nations in the same alliance */
+                    WHEN EXISTS (
+                        SELECT 1
+                        FROM alliance_members am1
+
+                        JOIN alliance_members am2
+                            ON am1.alliance_id = am2.alliance_id
+
+                        WHERE am1.nation_id = %s
+                        AND am2.nation_id = nu.nation_id
+                    )
+                        THEN 'Allied'
+
+                    /* Diplomatic relationship */
+                    WHEN EXISTS (
+                        SELECT 1
+                        FROM diplomatic_relations dr
+                        WHERE
+                            (
+                                dr.nation_a = %s
+                                AND dr.nation_b = nu.nation_id
+                            )
+                            OR
+                            (
+                                dr.nation_b = %s
+                                AND dr.nation_a = nu.nation_id
+                            )
+                    )
+                        THEN (
+                            SELECT dr.relationship
+                            FROM diplomatic_relations dr
+                            WHERE
+                                (
+                                    dr.nation_a = %s
+                                    AND dr.nation_b = nu.nation_id
+                                )
+                                OR
+                                (
+                                    dr.nation_b = %s
+                                    AND dr.nation_a = nu.nation_id
+                                )
+                            LIMIT 1
+                        )
+
+                    /* No relationship recorded */
+                    ELSE 'Neutral'
+
+                END AS relationship
+
+            FROM nation_units nu
+
+            JOIN nations n
+                ON nu.nation_id = n.nation_id
+
+            JOIN units u
+                ON nu.unit_id = u.unit_id
+
+            LEFT JOIN tabletop_pieces tp
+                ON nu.nation_unit_id = tp.nation_unit_id
+
+            WHERE nu.status = 'active'
+
+            ORDER BY
+                nu.nation_id,
+                nu.unit_id,
+                nu.formation_number
+        """, (
+            current_nation_id,
+            current_nation_id,
+            current_nation_id,
+            current_nation_id,
+            current_nation_id,
+            current_nation_id
+        ))
+
+        units = cursor.fetchall()
+
+        for unit in units:
+
+            unit["nationCode"] = unit["nation_code"]
+
+            unit["formationNumber"] = unit["formation_number"]
+
+            unit["customName"] = unit["custom_name"]
+
+            unit["isOwn"] = (
+                unit["nation_id"] == current_nation_id
+            )
+
+        return jsonify(units)
+
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route("/api/tabletop/move/<int:nation_unit_id>", methods=["POST"])
+def move_tabletop_unit(nation_unit_id):
+
+    if "user_id" not in session:
+        return jsonify({
+            "error": "Not authenticated"
+        }), 401
+
+    data = request.get_json()
+
+    if not data:
+        return jsonify({
+            "error": "No data provided"
+        }), 400
+
+    x = data.get("x")
+    y = data.get("y")
+
+    if x is None or y is None:
+        return jsonify({
+            "error": "Missing x or y"
+        }), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+
+        # Make sure this unit belongs to the logged-in player's nation
+        cursor.execute("""
+            SELECT nation_unit_id
+            FROM nation_units
+            WHERE nation_unit_id = %s
+              AND nation_id = %s
+              AND status = 'active'
+        """, (
+            nation_unit_id,
+            session["nation_id"]
+        ))
+
+        unit = cursor.fetchone()
+
+        if not unit:
+            return jsonify({
+                "error": "Unit not found or not owned by you"
+            }), 403
+
+        # Create or update tabletop position
+        cursor.execute("""
+            INSERT INTO tabletop_pieces (
+                nation_unit_id,
+                x,
+                y
+            )
+            VALUES (%s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                x = VALUES(x),
+                y = VALUES(y)
+        """, (
+            nation_unit_id,
+            x,
+            y
+        ))
+
+        conn.commit()
+
+        return jsonify({
+            "success": True,
+            "nation_unit_id": nation_unit_id,
+            "x": x,
+            "y": y
+        })
+
+    except Exception as e:
+
+        conn.rollback()
+
+        print("Error moving tabletop unit:", e)
+
+        return jsonify({
+            "error": "Failed to save unit position"
+        }), 500
+
+    finally:
+
+        cursor.close()
+        conn.close()
 
 # ============================================================
 # FRONTLINES WIKI ROUTES

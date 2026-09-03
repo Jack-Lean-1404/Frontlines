@@ -170,6 +170,7 @@ body {
 }
 
 .unit-counter.land .counter-tier,
+.unit-counter.special .counter-tier,
 .unit-counter.sea .counter-tier {
     margin-bottom: -4px;
 }
@@ -190,7 +191,7 @@ body {
         translateY(-50%)
         rotate(-90deg);
 
-    margin-right: -2px;
+    margin-right: -1px;
 
     font-size: 4px;
     line-height: 1;
@@ -231,8 +232,13 @@ body {
 }
 
 .unit-counter.land .counter-custom-name,
+.unit-counter.special .counter-custom-name,
 .unit-counter.sea .counter-custom-name {
     margin-top: -3px;
+}
+
+.unit-counter.not-owned {
+    cursor: default;
 }
 
 /* ==================================================
@@ -290,4 +296,46 @@ body {
     border-radius: 4px;
 
     z-index: 100;
+}
+
+#deployment-tray {
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    width: 220px;
+    max-height: 70vh;
+
+    padding: 10px;
+
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid #555;
+    border-radius: 4px;
+
+    color: white;
+
+    z-index: 100;
+}
+
+#deployment-title {
+    margin-bottom: 10px;
+
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#deployment-units {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#deployment-units .unit-counter {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    flex: 0 0 auto;
 }
