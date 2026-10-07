@@ -24,7 +24,7 @@ ANTI_AIR_STEALTH_HIT_CHANCE = 20
 SEAD_SUCCESS_CHANCE = 60
 
 # Helicopter
-HELICOPTER_DESTROYED_CHANCE = 25
+HELICOPTER_HIT_CHANCE = 25
 
 # Submarine
 SUBMARINE_ATTACK_FAILED_CHANCE = 25
@@ -544,6 +544,225 @@ def resolve_air_defence(request):
         )
     }
 
+def resolve_sead(request):
+    """
+    Resolve a Suppression of Enemy Air Defences (SEAD) mission.
+
+    The targeted Anti-Air unit fires first. If the attacking aircraft
+    survives, it has a fixed 60% chance to destroy the Anti-Air unit.
+
+    SEAD success is not affected by Strength or Defence.
+    """
+
+    attacker = request["attacker"]
+    defender = request["defender"]
+
+    # --------------------------------------------------------
+    # AIR DEFENCE FIRES FIRST
+    # --------------------------------------------------------
+
+    air_defence_request = {
+        "combat_type": "air_defence",
+        "attacker": defender,
+        "defender": attacker,
+        "context": {},
+        "special": {}
+    }
+
+    air_defence = resolve_air_defence(
+        air_defence_request
+    )
+
+    # --------------------------------------------------------
+    # AIRCRAFT DESTROYED
+    # --------------------------------------------------------
+
+    if air_defence["defender"]["destroyed"]:
+
+        return {
+            "combat_type": "sead",
+            "success": True,
+            "outcome": "aircraft_destroyed",
+
+            "attacker": {
+                "unit_id": attacker.get("unit_id"),
+                "unit_name": attacker.get("unit_name"),
+                "formation_size_before": attacker["formation_size"],
+                "formation_size_after": (
+                    air_defence["defender"]["formation_size_after"]
+                ),
+                "destroyed": True
+            },
+
+            "defender": {
+                "unit_id": defender.get("unit_id"),
+                "unit_name": defender.get("unit_name"),
+                "formation_size_before": defender["formation_size"],
+                "formation_size_after": defender["formation_size"],
+                "destroyed": False
+            },
+
+            "air_defence": air_defence,
+
+            "sead": {
+                "roll": None,
+                "success_chance": SEAD_SUCCESS_CHANCE,
+                "success": False
+            },
+
+            "effects": air_defence["effects"],
+
+            "description": (
+                f"{attacker.get('unit_name', 'Aircraft')} "
+                f"was destroyed by "
+                f"{defender.get('unit_name', 'Anti-Air')} "
+                f"before the SEAD attack could proceed."
+            )
+        }
+
+    # --------------------------------------------------------
+    # SEAD ATTACK
+    # --------------------------------------------------------
+
+    roll = random.randint(1, 100)
+
+    success = roll <= SEAD_SUCCESS_CHANCE
+
+    # --------------------------------------------------------
+    # SEAD SUCCESS
+    # --------------------------------------------------------
+
+    if success:
+
+        defender_size_before = defender["formation_size"]
+
+        defender_size_after = max(
+            0,
+            defender_size_before - 1
+        )
+
+        defender_destroyed = (
+            defender_size_after == 0
+        )
+
+        effects = list(
+            air_defence["effects"]
+        )
+
+        effects.append({
+            "type": "formation_loss",
+            "target": defender.get("unit_id"),
+            "amount": 1,
+            "description": (
+                f"{defender.get('unit_name', 'Anti-Air')} "
+                f"lost 1 formation size to the SEAD attack."
+            )
+        })
+
+        if defender_destroyed:
+
+            effects.append({
+                "type": "destruction",
+                "target": defender.get("unit_id"),
+                "description": (
+                    f"{defender.get('unit_name', 'Anti-Air')} "
+                    f"formation size reached zero and "
+                    f"the unit was destroyed."
+                )
+            })
+
+        return {
+            "combat_type": "sead",
+            "success": True,
+            "outcome": (
+                "air_defence_destroyed"
+                if defender_destroyed
+                else "air_defence_damaged"
+            ),
+
+            "attacker": {
+                "unit_id": attacker.get("unit_id"),
+                "unit_name": attacker.get("unit_name"),
+                "formation_size_before": attacker["formation_size"],
+                "formation_size_after": (
+                    air_defence["defender"]["formation_size_after"]
+                ),
+                "destroyed": False
+            },
+
+            "defender": {
+                "unit_id": defender.get("unit_id"),
+                "unit_name": defender.get("unit_name"),
+                "formation_size_before": defender_size_before,
+                "formation_size_after": defender_size_after,
+                "destroyed": defender_destroyed
+            },
+
+            "air_defence": air_defence,
+
+            "sead": {
+                "roll": roll,
+                "success_chance": SEAD_SUCCESS_CHANCE,
+                "success": True
+            },
+
+            "effects": effects,
+
+            "description": (
+                f"{attacker.get('unit_name', 'Aircraft')} "
+                f"successfully conducted SEAD against "
+                f"{defender.get('unit_name', 'Anti-Air')}, "
+                f"reducing its formation from "
+                f"{defender_size_before} to "
+                f"{defender_size_after}."
+            )
+        }
+
+    # --------------------------------------------------------
+    # SEAD FAILED
+    # --------------------------------------------------------
+
+    return {
+        "combat_type": "sead",
+        "success": True,
+        "outcome": "sead_failed",
+
+        "attacker": {
+            "unit_id": attacker.get("unit_id"),
+            "unit_name": attacker.get("unit_name"),
+            "formation_size_before": attacker["formation_size"],
+            "formation_size_after": (
+                air_defence["defender"]["formation_size_after"]
+            ),
+            "destroyed": False
+        },
+
+        "defender": {
+            "unit_id": defender.get("unit_id"),
+            "unit_name": defender.get("unit_name"),
+            "formation_size_before": defender["formation_size"],
+            "formation_size_after": defender["formation_size"],
+            "destroyed": False
+        },
+
+        "air_defence": air_defence,
+
+        "sead": {
+            "roll": roll,
+            "success_chance": SEAD_SUCCESS_CHANCE,
+            "success": False
+        },
+
+        "effects": air_defence["effects"],
+
+        "description": (
+            f"{attacker.get('unit_name', 'Aircraft')} "
+            f"failed to destroy "
+            f"{defender.get('unit_name', 'Anti-Air')} "
+            f"with the SEAD attack."
+        )
+    }
+
 
 def resolve_air_to_ground_combat(request):
     attacker = request["attacker"]
@@ -552,13 +771,18 @@ def resolve_air_to_ground_combat(request):
     context = request.get("context", {})
     special = request.get("special", {})
 
+    is_helicopter = (
+        attacker.get("capabilities", {})
+        .get("helicopter", False)
+    )
+
+    air_defence_unit = special.get("air_defence_unit")
+
     # --------------------------------------------------------
     # AIR DEFENCE
     # --------------------------------------------------------
 
     air_defence = None
-
-    air_defence_unit = special.get("air_defence_unit")
 
     if (
         air_defence_unit is not None
@@ -745,14 +969,21 @@ def resolve_air_to_ground_combat(request):
 
     helicopter_risk = None
 
-    is_helicopter = (
-        attacker.get("capabilities", {})
-        .get("helicopter", False)
-    )
-
     if is_helicopter:
 
-        helicopter_risk = resolve_helicopter_risk()
+        helicopter_risk = resolve_helicopter_risk(
+            attacker_size_after
+        )
+
+    # Final attacker formation after helicopter risk
+    
+    final_attacker_size_after = attacker_size_after
+
+    if helicopter_risk is not None:
+
+        final_attacker_size_after = (
+            helicopter_risk["formation_size_after"]
+        )
 
     # --------------------------------------------------------
     # EFFECTS
@@ -761,7 +992,6 @@ def resolve_air_to_ground_combat(request):
     effects = []
 
     if air_defence is not None:
-
         effects.extend(
             air_defence["effects"]
         )
@@ -789,19 +1019,30 @@ def resolve_air_to_ground_combat(request):
             )
         })
 
-    if (
-        helicopter_risk is not None
-        and helicopter_risk["destroyed"]
-    ):
+    if helicopter_risk is not None:
 
-        effects.append({
-            "type": "destruction",
-            "target": attacker.get("unit_id"),
-            "description": (
-                f"{attacker.get('unit_name', 'Helicopter')} "
-                f"was destroyed after the ground attack."
-            )
-        })
+        if helicopter_risk["hit"]:
+
+            effects.append({
+                "type": "formation_loss",
+                "target": attacker.get("unit_id"),
+                "amount": 1,
+                "description": (
+                    f"{attacker.get('unit_name', 'Helicopter')} "
+                    f"lost 1 formation size due to helicopter risk."
+                )
+            })
+
+        if helicopter_risk["destroyed"]:
+
+            effects.append({
+                "type": "destruction",
+                "target": attacker.get("unit_id"),
+                "description": (
+                    f"{attacker.get('unit_name', 'Helicopter')} "
+                    f"formation size reached zero and the unit was destroyed."
+                )
+            })
 
     # --------------------------------------------------------
     # RESULT
@@ -816,10 +1057,9 @@ def resolve_air_to_ground_combat(request):
             "unit_id": attacker.get("unit_id"),
             "unit_name": attacker.get("unit_name"),
             "formation_size_before": attacker_size_before,
-            "formation_size_after": attacker_size_after,
+            "formation_size_after": final_attacker_size_after,
             "destroyed": (
-                helicopter_risk is not None
-                and helicopter_risk["destroyed"]
+                final_attacker_size_after == 0
             )
         },
 
@@ -1532,14 +1772,24 @@ def resolve_strategic_bombing_combat(request):
         )
     }
 
-def resolve_helicopter_risk():
+def resolve_helicopter_risk(formation_size):
     roll = random.randint(1, 100)
 
-    destroyed = roll <= HELICOPTER_DESTROYED_CHANCE
+    hit = roll <= HELICOPTER_HIT_CHANCE
+
+    formation_size_after = max(
+        0,
+        formation_size - 1
+    ) if hit else formation_size
+
+    destroyed = formation_size_after == 0
 
     return {
         "roll": roll,
-        "destruction_chance": HELICOPTER_DESTROYED_CHANCE,
+        "hit_chance": HELICOPTER_HIT_CHANCE,
+        "hit": hit,
+        "formation_size_before": formation_size,
+        "formation_size_after": formation_size_after,
         "destroyed": destroyed
     }
 
@@ -1555,6 +1805,9 @@ def resolve_battle(request):
 
     if combat_type == "air_defence":
         return resolve_air_defence(request)
+
+    if combat_type == "sead":
+        return resolve_sead(request)
 
     if combat_type == "air_to_ground":
         return resolve_air_to_ground_combat(request)
@@ -1781,35 +2034,39 @@ if __name__ == "__main__":
 
 
     # ========================================================
-    # TEST 3: HELICOPTER WITH AIR DEFENCE
+    # TEST 3: SEAD ATTACK
     # ========================================================
 
-    helicopter_with_aa = {
-        "combat_type": "air_to_ground",
+    sead_attack = {
+        "combat_type": "sead",
 
         "attacker": {
             "unit_id": 220,
-            "unit_name": "Attack Helicopter",
+            "unit_name": "SEAD Aircraft",
             "unit_class": "Air",
-            "unit_type": "Attack Helicopter",
+            "unit_type": "Fighter",
             "strength": 10,
             "defence": 6,
             "formation_size": 3,
+
             "capabilities": {
-                "helicopter": True,
-                "stealth": False
+                "stealth": True,
+                "sead": True
             }
         },
 
         "defender": {
             "unit_id": 221,
-            "unit_name": "Tank Battalion",
+            "unit_name": "Anti-Air Battery",
             "unit_class": "Ground",
-            "unit_type": "Armoured",
-            "strength": 12,
-            "defence": 10,
-            "formation_size": 3,
-            "capabilities": {}
+            "unit_type": "Anti-Air",
+            "strength": 5,
+            "defence": 8,
+            "formation_size": 2,
+
+            "capabilities": {
+                "anti_air": True
+            }
         },
 
         "context": {
@@ -1817,115 +2074,70 @@ if __name__ == "__main__":
             "defender": {}
         },
 
-        "special": {
-
-            "air_defence_unit": {
-                "unit_id": 222,
-                "unit_name": "Anti-Air Battery",
-                "unit_class": "Ground",
-                "unit_type": "Anti-Air",
-                "strength": 5,
-                "defence": 8,
-                "formation_size": 2,
-                "capabilities": {
-                    "anti_air": True
-                }
-            }
-        }
+        "special": {}
     }
 
+
     result_3 = resolve_battle(
-        helicopter_with_aa
+        sead_attack
     )
+
 
     print("\n")
     print("=" * 60)
-    print("TEST 3: HELICOPTER WITH AIR DEFENCE")
+    print("TEST 3: SEAD ATTACK")
     print("=" * 60)
+
 
     print("\nOutcome:")
     print(result_3["outcome"])
 
+
     print("\nAir Defence:")
 
-    if result_3["air_defence"] is not None:
-
-        print(
-            "Roll:",
-            result_3["air_defence"]["roll"]
-        )
-
-        print(
-            "Hit Chance:",
-            result_3["air_defence"]["hit_chance"]
-        )
-
-        print(
-            "Formation:",
-            result_3["air_defence"]["defender"]
-            ["formation_size_before"],
-            "->",
-            result_3["air_defence"]["defender"]
-            ["formation_size_after"]
-        )
-
-    print("\nHelicopter:")
+    print(
+        "Roll:",
+        result_3["air_defence"]["roll"]
+    )
 
     print(
-        "Formation:",
-        result_3["attacker"]["formation_size_before"],
+        "Hit Chance:",
+        result_3["air_defence"]["hit_chance"]
+    )
+
+    print(
+        "Aircraft Formation:",
+        result_3["air_defence"]["defender"]
+        ["formation_size_before"],
         "->",
-        result_3["attacker"]["formation_size_after"]
+        result_3["air_defence"]["defender"]
+        ["formation_size_after"]
+    )
+
+
+    print("\nSEAD:")
+
+    print(
+        "Roll:",
+        result_3["sead"]["roll"]
     )
 
     print(
-        "Destroyed:",
-        result_3["attacker"]["destroyed"]
-    )
-
-    print("\nGround Unit:")
-
-    print(
-        "Formation:",
-        result_3["defender"]["formation_size_before"],
-        "->",
-        result_3["defender"]["formation_size_after"]
+        "Success Chance:",
+        result_3["sead"]["success_chance"]
     )
 
     print(
-        "Destroyed:",
-        result_3["defender"]["destroyed"]
+        "Success:",
+        result_3["sead"]["success"]
     )
 
-    print("\nHelicopter Risk:")
-
-    if result_3["helicopter_risk"] is not None:
-
-        print(
-            "Roll:",
-            result_3["helicopter_risk"]["roll"]
-        )
-
-        print(
-            "Destruction Chance:",
-            result_3["helicopter_risk"]
-            ["destruction_chance"]
-        )
-
-        print(
-            "Destroyed:",
-            result_3["helicopter_risk"]
-            ["destroyed"]
-        )
-
-    else:
-
-        print("No helicopter risk applied.")
 
     print("\nEffects:")
 
     for effect in result_3["effects"]:
         print(effect)
+
 
     print("\nDescription:")
     print(result_3["description"])
