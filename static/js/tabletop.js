@@ -135,6 +135,13 @@ let unitStartX = 0;
 let unitStartY = 0;
 
 
+// ==========================================
+// COMBAT CONTEXT MENU STATE
+// ==========================================
+
+let contextTargetUnit = null;
+let combatContextMenu = null;
+
 /* ==================================================
    CREATE UNIT COUNTER
 ================================================== */
@@ -204,11 +211,153 @@ function createUnitCounter(
         counter.style.top = `${unitData.y}px`;
     }
 
+    counter.addEventListener("contextmenu", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        // Remove an existing menu.
+        document.querySelectorAll(".combat-context-menu")
+            .forEach(menu => menu.remove());
+
+        // Require an owned attacking unit.
+        if (!selectedUnit || !selectedUnit.isOwn) {
+            console.log("Select one of your own units first.");
+            return;
+        }
+
+        // Only allow hostile targets.
+        if (unitData.relationship !== "Hostile") {
+            console.log("You can only attack hostile units.");
+            return;
+        }
+
+        // Prevent attacking the selected unit itself.
+        if (
+            selectedUnit.nation_unit_id ===
+            unitData.nation_unit_id
+        ) {
+            console.log("You cannot attack the same unit.");
+            return;
+        }
+
+        // Create the menu.
+        const menu = document.createElement("div");
+        menu.className = "combat-context-menu";
+
+        Object.assign(menu.style, {
+            position: "fixed",
+            left: event.clientX + "px",
+            top: event.clientY + "px",
+            zIndex: "99999",
+            backgroundColor: "#222",
+            color: "white",
+            padding: "6px",
+            border: "1px solid #666",
+            borderRadius: "4px"
+        });
+
+        // Create the Attack option.
+        const attackButton = document.createElement("button");
+        attackButton.textContent = "Attack";
+        attackButton.type = "button";
+
+        attackButton.addEventListener("click", function() {
+            if (!selectedUnit) {
+                console.log("Select your own attacking unit first.");
+                menu.remove();
+                return;
+            }
+
+            if (
+                selectedUnit.nation_unit_id ===
+                unitData.nation_unit_id
+            ) {
+                console.log("You cannot attack your own selected unit.");
+                menu.remove();
+                return;
+            }
+
+            menu.remove();
+
+            const attacker = selectedUnit;
+            const target = unitData;
+
+            // Create confirmation overlay.
+            const overlay = document.createElement("div");
+
+            Object.assign(overlay.style, {
+                position: "fixed",
+                inset: "0",
+                backgroundColor: "rgba(0, 0, 0, 0.65)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: "100000"
+            });
+
+            // Create confirmation window.
+            const dialog = document.createElement("div");
+
+            Object.assign(dialog.style, {
+                backgroundColor: "#222",
+                color: "white",
+                padding: "24px",
+                border: "1px solid #666",
+                borderRadius: "8px",
+                minWidth: "300px",
+                fontFamily: "Arial, sans-serif"
+            });
+
+            const title = document.createElement("h3");
+            title.textContent = "Confirm Attack";
+
+            const details = document.createElement("p");
+            details.textContent =
+                `${attacker.unit_name} (${attacker.nationCode}) attacks ` +
+                `${target.unit_name} (${target.nationCode}).`;
+
+            const confirmButton = document.createElement("button");
+            confirmButton.textContent = "Confirm Attack";
+
+            const cancelButton = document.createElement("button");
+            cancelButton.textContent = "Cancel";
+            cancelButton.style.marginLeft = "8px";
+
+            cancelButton.addEventListener("click", function() {
+                overlay.remove();
+            });
+
+            confirmButton.addEventListener("click", function() {
+                console.log("Attack confirmed.");
+                console.log("Attacker:", attacker);
+                console.log("Target:", target);
+
+                overlay.remove();
+            });
+
+            dialog.appendChild(title);
+            dialog.appendChild(details);
+            dialog.appendChild(details);
+            dialog.appendChild(confirmButton);
+            dialog.appendChild(cancelButton);
+
+            overlay.appendChild(dialog);
+            document.body.appendChild(overlay);
+        });
+
+        menu.appendChild(attackButton);
+        document.body.appendChild(menu);
+    });
+
     counter.addEventListener(
         "mousedown",
         function(event) {
 
             event.stopPropagation();
+
+            if (event.button !== 0) {
+                return;
+            }
 
             // Cannot interact with units
             // the player is not allowed to move.
