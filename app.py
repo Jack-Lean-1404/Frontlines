@@ -24,6 +24,11 @@ from economy import (
     get_rm_consumption
 )
 
+from combat import (
+    validate_attack, 
+    resolve_combat
+)
+
 load_dotenv(dotenv_path=".env")
 
 app = Flask(__name__)
@@ -31,7 +36,7 @@ app.secret_key = os.getenv("SECRET_KEY")
 
 # print(os.getenv("SECRET_KEY"))
 
-# DATABASE CONNECTION FUNCTION Witth the following code, we can connect to the database whenever we need to by calling the get_db_connection() function
+# DATABASE CONNECTION FUNCTION With the following code, we can connect to the database whenever we need to by calling the get_db_connection() function
 def get_db_connection():
     return mysql.connector.connect(
         host=os.getenv("DB_HOST"),
@@ -7222,6 +7227,268 @@ def get_tabletop():
     finally:
         cursor.close()
         conn.close()
+
+
+
+
+@app.route("/api/tabletop/combat/validate", methods=["POST"])
+def validate_tabletop_combat():
+
+    # --------------------------------------------------
+    # 1. AUTHENTICATION
+    # --------------------------------------------------
+
+    if "user_id" not in session:
+        return jsonify({
+            "success": False,
+            "error": "Not authenticated"
+        }), 401
+
+    data = request.get_json(silent=True) or {}
+
+    attacker_id = data.get("attacker_id")
+    defender_id = data.get("defender_id")
+
+    if attacker_id is None or defender_id is None:
+        return jsonify({
+            "success": False,
+            "error": "Attacker and defender IDs are required."
+        }), 400
+
+    try:
+        attacker_id = int(attacker_id)
+        defender_id = int(defender_id)
+
+    except (TypeError, ValueError):
+        return jsonify({
+            "success": False,
+            "error": "Unit IDs must be valid integers."
+        }), 400
+
+    if attacker_id <= 0 or defender_id <= 0:
+        return jsonify({
+            "success": False,
+            "error": "Unit IDs must be positive integers."
+        }), 400
+
+    if attacker_id == defender_id:
+        return jsonify({
+            "success": False,
+            "error": "A unit cannot attack itself."
+        }), 400
+
+    is_admin = session.get("role") == "admin"
+
+    # --------------------------------------------------
+    # 2. LOAD BOTH ACTIVE UNITS
+    # --------------------------------------------------
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        cursor.execute("""
+            SELECT
+                nu.nation_unit_id,
+                nu.nation_id,
+                nu.formation_number,
+                nu.status,
+                u.unit_name
+
+            FROM nation_units nu
+
+            JOIN units u
+                ON nu.unit_id = u.unit_id
+
+            WHERE nu.nation_unit_id IN (%s, %s)
+              AND nu.status = 'active'
+        """, (
+            attacker_id,
+            defender_id
+        ))
+
+        rows = cursor.fetchall()
+
+        units = {
+            row["nation_unit_id"]: row
+            for row in rows
+        }
+
+        attacker = units.get(attacker_id)
+        defender = units.get(defender_id)
+
+        if not attacker or not defender:
+            return jsonify({
+                "success": False,
+                "error": (
+                    "One or both units were not found "
+                    "or are inactive."
+                )
+            }), 404
+
+        # --------------------------------------------------
+        # 3. OWNERSHIP CHECK
+        # Administrators bypass this restriction.
+        # --------------------------------------------------
+
+        if (
+            not is_admin
+            and attacker["nation_id"] != session.get("nation_id")
+        ):
+            return jsonify({
+                "success": False,
+                "error": (
+                    "You cannot attack using another "
+                    "nation's unit."
+                )
+            }), 403
+
+        # --------------------------------------------------
+        # 4. DIPLOMATIC RESTRICTIONS
+        # Administrators bypass these restrictions.
+        # --------------------------------------------------
+
+        if not is_admin:
+
+            # Players cannot attack their own nation.
+            if attacker["nation_id"] == defender["nation_id"]:
+                return jsonify({
+                    "success": True,
+                    "allowed": False,
+                    "reason": (
+                        "You cannot attack a unit belonging "
+                        "to the same nation."
+                    )
+                })
+
+            # Check whether the nations share an alliance.
+            cursor.execute("""
+                SELECT 1
+                FROM alliance_members am1
+
+                JOIN alliance_members am2
+                    ON am1.alliance_id = am2.alliance_id
+
+                WHERE am1.nation_id = %s
+                  AND am2.nation_id = %s
+
+                LIMIT 1
+            """, (
+                attacker["nation_id"],
+                defender["nation_id"]
+            ))
+
+            if cursor.fetchone():
+                return jsonify({
+                    "success": True,
+                    "allowed": False,
+                    "reason": (
+                        "You cannot attack an allied nation."
+                    )
+                })
+
+            # Check the diplomatic relationship.
+            cursor.execute("""
+                SELECT relationship
+                FROM diplomatic_relations
+
+                WHERE (
+                    nation_a = %s
+                    AND nation_b = %s
+                )
+                OR (
+                    nation_a = %s
+                    AND nation_b = %s
+                )
+
+                LIMIT 1
+            """, (
+                attacker["nation_id"],
+                defender["nation_id"],
+                defender["nation_id"],
+                attacker["nation_id"]
+            ))
+
+            diplomacy = cursor.fetchone()
+
+            if (
+                not diplomacy
+                or str(
+                    diplomacy["relationship"]
+                ).casefold() != "hostile"
+            ):
+                return jsonify({
+                    "success": True,
+                    "allowed": False,
+                    "reason": (
+                        "You can only attack nations "
+                        "with a Hostile diplomatic relationship."
+                    )
+                })
+
+        # --------------------------------------------------
+        # 5. ATTACK-MATRIX VALIDATION
+        # Administrators bypass the attack matrix.
+        # --------------------------------------------------
+
+        if is_admin:
+
+            permission = {
+                "allowed": True,
+                "attacker": attacker["unit_name"],
+                "defender": defender["unit_name"],
+                "reason": (
+                    "Administrator override: attack permitted."
+                )
+            }
+
+        else:
+
+            permission = validate_attack(
+                attacker["unit_name"],
+                defender["unit_name"]
+            )
+
+        if not permission["allowed"]:
+            return jsonify({
+                "success": True,
+                "allowed": False,
+                "reason": permission["reason"],
+                "attacker": permission["attacker"],
+                "defender": permission["defender"]
+            })
+
+        # --------------------------------------------------
+        # 6. ATTACK PERMITTED
+        # No battle is resolved and no data is changed.
+        # --------------------------------------------------
+
+        return jsonify({
+            "success": True,
+            "allowed": True,
+            "reason": permission["reason"],
+            "attacker": permission["attacker"],
+            "defender": permission["defender"],
+            "attacker_id": attacker_id,
+            "defender_id": defender_id
+        })
+
+    except Exception as e:
+
+        print("Combat validation error:", e)
+
+        return jsonify({
+            "success": False,
+            "error": (
+                "An error occurred while validating the attack."
+            )
+        }), 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
 
 @app.route("/api/tabletop/move/<int:nation_unit_id>", methods=["POST"])
 def move_tabletop_unit(nation_unit_id):
