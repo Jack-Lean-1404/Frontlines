@@ -327,13 +327,78 @@ function createUnitCounter(
                 overlay.remove();
             });
 
-            confirmButton.addEventListener("click", function() {
-                console.log("Attack confirmed.");
-                console.log("Attacker:", attacker);
-                console.log("Target:", target);
+            
+            confirmButton.addEventListener("click", async function() {
 
-                overlay.remove();
+                confirmButton.disabled = true;
+                confirmButton.textContent = "Validating...";
+                cancelButton.disabled = true;
+
+                try {
+
+                    const response = await fetch(
+                        "/api/tabletop/combat/validate",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                attacker_id: attacker.nation_unit_id,
+                                defender_id: target.nation_unit_id
+                            })
+                        }
+                    );
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(
+                            result.error || "The attack could not be validated."
+                        );
+                    }
+
+                    if (!result.allowed) {
+                        alert(
+                            result.reason || "This attack is not permitted."
+                        );
+
+                        confirmButton.disabled = false;
+                        confirmButton.textContent = "Confirm Attack";
+                        cancelButton.disabled = false;
+
+                        return;
+                    }
+
+                    console.log("Attack validated successfully.");
+                    console.log("Attacker:", attacker);
+                    console.log("Target:", target);
+                    console.log("Validation result:", result);
+
+                    alert(
+                        "Attack permitted!\n\n" +
+                        result.attacker + " attacks " + result.defender + ".\n\n" +
+                        "Combat resolution has not been implemented yet."
+                    );
+
+                    overlay.remove();
+
+                } catch (error) {
+
+                    console.error("Attack validation failed:", error);
+
+                    alert(
+                        "Attack validation failed:\n" + error.message
+                    );
+
+                    confirmButton.disabled = false;
+                    confirmButton.textContent = "Confirm Attack";
+                    cancelButton.disabled = false;
+                }
             });
+
 
             dialog.appendChild(title);
             dialog.appendChild(details);
